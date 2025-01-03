@@ -1,35 +1,44 @@
-// TODO: Put public facing types in this file.
-
-import 'dart:ffi';
-import 'dart:math';
+import 'package:freezed_annotation/freezed_annotation.dart';
+part 'sd_replay_parser_base.freezed.dart';
 
 const String PARSER_VERSION = "0.1";
 /// Checks if you are awesome. Spoiler: you are.
 class SdReplayParser {
 
-  SdReplay parse(Map<String, dynamic> sdJson) {
+  SdReplayData parse(Map<String, dynamic> sdJson) {
 
-    List<dynamic> players = sdJson['players'];
-    if (players.length != 2) {
+    List<dynamic> playerNames = sdJson['players'];
+    if (playerNames.length != 2) {
       throw ParsingException("Replay does not have 2 players");
     }
-    List<String> logs = sdJson['log'].toString().split('\n');
-    Map<String, dynamic> moveUsages = {};
-    Map<String, List<String>> leads = {};
+
+    List<PlayerData> playerDataList = [PlayerData(playerNames[0].toString()), PlayerData(playerNames[1].toString())];
+
     String winner = '';
+    List<String> logs = sdJson['log'].toString().split('\n');
     for (String log in logs) {
-      print(log);
       final List<String> tokens = log.split("|");
       if (tokens.length < 2) continue;
-
+      PlayerData playerData = playerDataList[tokens.length > 2 && tokens[2].startsWith('p2') ? 1 : 0];
       switch(tokens[1]) {
+        case "move":
+          // e.g. p1a: Rillaboom
+          final String pokemonName = _pokemonName(tokens[2].split(':').last.trim());
+          final String moveName = tokens[3];
+          playerData._incrUsage(pokemonName, moveName);
+          break;
         case "switch":
           // listen to this event for leads
-          final index = int.parse(tokens[2][1]) - 1;
-          final List<String> playerLeads = leads.putIfAbsent(players[index], () => []);
-          if (playerLeads.length < 2) {
-            playerLeads.add(_pokemonName(tokens[3].split(',')[0]));
+          if (playerData.leads.length < 2) {
+            // e.g. "Rillaboom, L50, F"
+            playerData.leads.add(_pokemonName(tokens[3].split(',')[0]));
           }
+          break;
+        case "-terastallize":
+          playerData.terastallization = Terastallization(
+            pokemon: _pokemonName(tokens[2].split(':').last.trim()),
+            type: tokens[3]
+          );
           break;
         case "win":
           winner = tokens[2];
@@ -37,39 +46,64 @@ class SdReplayParser {
       }
     }
 
-    return SdReplay(
-        players: players.map((e) => e.toString()).toList(),
+    return SdReplayData(
+        player1: playerDataList.first,
+        player2: playerDataList.last,
         uploadTime: sdJson['uploadtime'],
         formatId: sdJson['formatid'],
         rating: sdJson['rating'],
-        leads: leads,
-        moveUsages: moveUsages,
         winner: winner,
         parserVersion: PARSER_VERSION
     );
   }
-
   String _pokemonName(String rawName) => rawName;
 }
 
+@freezed
+class Terastallization with _$Terastallization {
+  const factory Terastallization({
+    required String pokemon,
+    required String type,
+  }) = _Terastallization;
+}
 
-class SdReplay {
-  final List<String> players;
+class PlayerData {
+  final String name;
+  final List<String> leads = [];
+  Terastallization? terastallization;
+  // pokemonName -> moveName -> count
+  final Map<String, Map<String, int>> moveUsages = {};
+
+  PlayerData(this.name);
+
+  void _incrUsage(String pokemonName, String moveName) {
+    final Map<String, int> moveMap = moveUsages.putIfAbsent(pokemonName, () => {});
+    moveMap.update(moveName, (count) => count + 1, ifAbsent: () => 1);
+  }
+}
+
+class SdReplayData {
+  final PlayerData player1;
+  final PlayerData player2;
   final int uploadTime;
   final String formatId;
   final int rating;
   final String parserVersion;
-  // playerName -> pokemonName -> moveName -> count
-  final Map<String, dynamic> moveUsages;
-  // playerName -> List<pokemonName>
-  final Map<String, List<String>> leads;
   final String winner;
 
-  SdReplay({
-    required this.players, required this.uploadTime, required this.formatId,
-    required this.rating, required this.parserVersion, required this.moveUsages,
-    required this.leads, required this.winner
+  PlayerData get winnerPlayer => player1.name == winner ? player1 : player2;
+
+  SdReplayData({
+    required this.player1, required this.player2, required this.uploadTime, required this.formatId,
+    required this.rating, required this.parserVersion,
+    required this.winner
   });
+
+  PlayerData? getPlayer(String playerName) {
+    if (player1.name == playerName) return player1;
+    if (player2.name == playerName) return player2;
+    return null;
+  }
 }
 
 class ParsingException implements Exception {
