@@ -1,9 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'sd_replay_parser_base.freezed.dart';
 
+RegExp _RATING_LOG_REGEX = RegExp(r"(.*?)'s rating: (\d+) .*?&rarr;.*?<strong>(\d+)</strong>");
+
 const String PARSER_VERSION = "0.1";
 /// Checks if you are awesome. Spoiler: you are.
 class SdReplayParser {
+
 
   SdReplayData parse(Map<String, dynamic> sdJson) {
 
@@ -17,7 +20,6 @@ class SdReplayParser {
     String winner = '';
     List<String> logs = sdJson['log'].toString().split('\n');
     for (String log in logs) {
-      print(log);
       final List<String> tokens = log.split("|");
       if (tokens.length < 2) continue;
       PlayerData playerData = playerDataList[tokens.length > 2 && tokens[2].startsWith('p2') ? 1 : 0];
@@ -29,6 +31,18 @@ class SdReplayParser {
           break;
         case "poke":
           playerData.team.add(tokens[3].split(',').first); // e.g. Chien-Pao, L50
+          break;
+        case "raw":
+          var match = _RATING_LOG_REGEX.firstMatch(log.substring(5));
+          if (match != null) {
+            // Extract the name, first number, and second number
+            String name = match.group(1)!;
+            int beforeRating = int.parse(match.group(2)!);
+            int afterRating = int.parse(match.group(3)!);
+            playerData = name == playerDataList.first.name ? playerDataList.first : playerDataList.last;
+            playerData.beforeRating = beforeRating;
+            playerData.afterRating = afterRating;
+          }
           break;
         case "switch":
           // we want a list to keep track of leads and still have unique elements
@@ -74,6 +88,8 @@ class PlayerData {
   final String name;
   final List<String> team = [];
   final List<String> selection = [];
+  int? beforeRating;
+  int? afterRating;
   List<String> get leads => selection.sublist(0, 2);
 
   Terastallization? terastallization;
