@@ -22,10 +22,28 @@ void main() {
 
       PlayerData player1 = replay.player1;
       expect(player1.leads, ['Rillaboom', 'Raging Bolt'], reason: 'Player 1 has incorrect leads');
+      expect(player1.selection, ['Rillaboom', 'Raging Bolt', 'Calyrex-Shadow', 'Ogerpon-Hearthflame']);
+      expect(player1.team, [
+        'Calyrex-Shadow',
+        'Incineroar',
+        'Rillaboom',
+        'Urshifu-*', // TODO handle urshifu
+        'Raging Bolt',
+        'Ogerpon-Hearthflame'
+      ]);
       expect(player1.terastallization, Terastallization(pokemon: 'Raging Bolt', type: 'Electric'));
 
       PlayerData player2 = replay.player2;
       expect(player2.leads, ['Miraidon', 'Entei'], reason: 'Player 2 has incorrect leads');
+      expect(player2.selection, ['Miraidon', 'Entei', 'Whimsicott', 'Chien-Pao']);
+      expect(player2.team, [
+        'Miraidon',
+        'Entei',
+        'Chien-Pao',
+        'Iron Hands',
+        'Whimsicott',
+        'Ogerpon-Cornerstone'
+      ]);
       expect(player2.terastallization, Terastallization(pokemon: 'Entei', type: 'Normal'));
 
       expect(replay.winner, 'jarmanvgc');

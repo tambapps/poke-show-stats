@@ -17,21 +17,24 @@ class SdReplayParser {
     String winner = '';
     List<String> logs = sdJson['log'].toString().split('\n');
     for (String log in logs) {
+      print(log);
       final List<String> tokens = log.split("|");
       if (tokens.length < 2) continue;
       PlayerData playerData = playerDataList[tokens.length > 2 && tokens[2].startsWith('p2') ? 1 : 0];
       switch(tokens[1]) {
         case "move":
-          // e.g. p1a: Rillaboom
-          final String pokemonName = _pokemonName(tokens[2].split(':').last.trim());
+          final String pokemonName = _pokemonName(tokens[2].split(':').last.trim()); // e.g. p1a: Rillaboom
           final String moveName = tokens[3];
           playerData._incrUsage(pokemonName, moveName);
           break;
+        case "poke":
+          playerData.team.add(tokens[3].split(',').first); // e.g. Chien-Pao, L50
+          break;
         case "switch":
-          // listen to this event for leads
-          if (playerData.leads.length < 2) {
-            // e.g. "Rillaboom, L50, F"
-            playerData.leads.add(_pokemonName(tokens[3].split(',')[0]));
+          // we want a list to keep track of leads and still have unique elements
+          String pokemon = _pokemonName(tokens[3].split(',')[0]); // e.g. "Rillaboom, L50, F"
+          if (!playerData.selection.contains(pokemon)) {
+            playerData.selection.add(pokemon);
           }
           break;
         case "-terastallize":
@@ -69,7 +72,10 @@ class Terastallization with _$Terastallization {
 
 class PlayerData {
   final String name;
-  final List<String> leads = [];
+  final List<String> team = [];
+  final List<String> selection = [];
+  List<String> get leads => selection.sublist(0, 2);
+
   Terastallization? terastallization;
   // pokemonName -> moveName -> count
   final Map<String, Map<String, int>> moveUsages = {};
