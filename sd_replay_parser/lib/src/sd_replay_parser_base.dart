@@ -44,6 +44,7 @@ class SdReplayParser {
             playerData.afterRating = afterRating;
           }
           break;
+        case "drag":
         case "switch":
           // we want a list to keep track of leads and still have unique elements
           String pokemon = _pokemonName(tokens[3].split(',')[0]); // e.g. "Rillaboom, L50, F"
