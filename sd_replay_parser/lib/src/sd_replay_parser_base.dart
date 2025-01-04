@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-part 'sd_replay_parser_base.freezed.dart';
+part 'sd_replay_parser_base.g.dart';
 
 RegExp _RATING_LOG_REGEX = RegExp(r"(.*?)'s rating: (\d+) .*?&rarr;.*?<strong>(\d+)</strong>");
 
@@ -15,7 +15,7 @@ class SdReplayParser {
       throw ParsingException("Replay does not have 2 players");
     }
 
-    List<PlayerData> playerDataList = [PlayerData(playerNames[0].toString()), PlayerData(playerNames[1].toString())];
+    List<PlayerData> playerDataList = [PlayerData.name(playerNames[0].toString()), PlayerData.name(playerNames[1].toString())];
 
     String winner = '';
     List<String> logs = sdJson['log'].toString().split('\n');
@@ -80,34 +80,59 @@ class SdReplayParser {
   }
 }
 
-@freezed
-class Terastallization with _$Terastallization {
-  const factory Terastallization({
-    required String pokemon,
-    required String type,
-  }) = _Terastallization;
+@JsonSerializable()
+class Terastallization {
+  final String pokemon;
+  final String type;
+  const Terastallization({
+    required this.pokemon,
+    required this.type,
+  });
+
+  factory Terastallization.fromJson(Map<String, dynamic> json) => _$TerastallizationFromJson(json);
+  Map<String, dynamic> toJson() => _$TerastallizationToJson(this);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Terastallization &&
+          runtimeType == other.runtimeType &&
+          pokemon == other.pokemon &&
+          type == other.type;
+
+  @override
+  int get hashCode => pokemon.hashCode ^ type.hashCode;
 }
 
+@JsonSerializable()
 class PlayerData {
   final String name;
-  final List<String> team = [];
-  final List<String> selection = [];
+  final List<String> team;
+  final List<String> selection;
   int? beforeRating;
   int? afterRating;
   List<String> get leads => selection.sublist(0, 2);
-
   Terastallization? terastallization;
   // pokemonName -> moveName -> count
-  final Map<String, Map<String, int>> moveUsages = {};
+  final Map<String, Map<String, int>> moveUsages;
 
-  PlayerData(this.name);
+  PlayerData.name(String name): this(name: name, team: [], selection: [], moveUsages: {},);
+
+  PlayerData({required this.name, required this.team, required this.selection, this.beforeRating,
+    this.afterRating, this.terastallization, required this.moveUsages});
+
 
   void _incrUsage(String pokemonName, String moveName) {
     final Map<String, int> moveMap = moveUsages.putIfAbsent(pokemonName, () => {});
     moveMap.update(moveName, (count) => count + 1, ifAbsent: () => 1);
   }
+
+  factory PlayerData.fromJson(Map<String, dynamic> json) => _$PlayerDataFromJson(json);
+  Map<String, dynamic> toJson() => _$PlayerDataToJson(this);
+
 }
 
+@JsonSerializable()
 class SdReplayData {
   final PlayerData player1;
   final PlayerData player2;
@@ -130,6 +155,9 @@ class SdReplayData {
     if (player2.name == playerName) return player2;
     return null;
   }
+
+  factory SdReplayData.fromJson(Map<String, dynamic> json) => _$SdReplayDataFromJson(json);
+  Map<String, dynamic> toJson() => _$SdReplayDataToJson(this);
 }
 
 class ParsingException implements Exception {
