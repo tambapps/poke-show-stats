@@ -1,9 +1,11 @@
 import 'package:app/data.dart';
+import 'package:app/theme/dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 
 class ReplayEntriesComponent extends StatefulWidget {
@@ -30,6 +32,7 @@ class _ReplayEntriesComponentState extends State<ReplayEntriesComponent> {
 
   @override
   Widget build(BuildContext context) {
+    final rowTitleTextStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
     return Column(
       children: [
         Padding(padding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 8.0)),
@@ -48,31 +51,49 @@ class _ReplayEntriesComponentState extends State<ReplayEntriesComponent> {
                 1: FractionColumnWidth(0.3),
                 2: FractionColumnWidth(0.3),
                 3: FractionColumnWidth(0.2),
+                4: FractionColumnWidth(0.1),
               },
               children: [
                 TableRow(children: [
-                  Center(child: Text(''),),
-                  Center(child: Text('Replay URL'),),
-                  Center(child: Text('Opponent\'s Team'),),
-                  Center(child: Text('Notes'),),
+                  Center(child: Text('', style: rowTitleTextStyle,),),
+                  Center(child: Text('Replay URL', style: rowTitleTextStyle),),
+                  Center(child: Text('Opposing Team', style: rowTitleTextStyle),),
+                  Center(child: Text('Notes', style: rowTitleTextStyle),),
+                  Center(child: Text('', style: rowTitleTextStyle,),),
                 ]),
                ...widget.replays.asMap().entries.map((entry) {
                  final number = entry.key + 1;
                  final Replay replay = entry.value;
+                 final replayLink = replay.uri.toString().replaceFirst('.json', '');
                  return TableRow(
                    children: [
                      Center(child: Text(number.toString()),),
-                     Center(child: Text(replay.uri.toString().replaceFirst('.json', ''), overflow: TextOverflow.ellipsis),),
+                     Center(
+                       child: TextButton(
+                         onPressed: () => _openLink(replayLink),
+                         child: Text(replayLink, overflow: TextOverflow.ellipsis, style: TextStyle(
+                           color: Colors.blue,
+                           decoration: TextDecoration.underline,
+                         ),),
+                       ),),
                      Center(child: Row(
                  mainAxisAlignment: MainAxisAlignment.center,
                        children: replay.data.player1.team
-                           .map((pokemon) => Tooltip(message: pokemon, child: Icon(Icons.catching_pokemon, size: 20.0),))
+                           .map((pokemon) =>
+                           Padding(padding: EdgeInsets.symmetric(horizontal: 4), child:
+                           Tooltip(message: pokemon, child:
+                           Image(width: pokemonLogoSize, height: pokemonLogoSize, fit: BoxFit.contain,
+                               image: AssetImage("pokemon-sprites/${pokemon.replaceAll(' ', '-')}.png"),
+                               errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                                 return Icon(Icons.catching_pokemon, size: pokemonLogoSize);
+                               }),),))
                            .toList(),
                      ),),
                      Center(child: Text(replay.notes ?? ''),),
+                     Center(child: IconButton(icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => widget.onRemoveReplay(replay))),
                    ],
                  );
-               }).toList()
+               })
               ],
             ),
             Padding(
@@ -100,6 +121,19 @@ class _ReplayEntriesComponentState extends State<ReplayEntriesComponent> {
         ),
       ],
     );
+  }
+
+  void _openLink(String link) async {
+    final Uri uri = Uri.parse(link);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication, // Opens browser or Chrome Tabs on mobile
+        webOnlyWindowName: '_blank',         // Opens a new tab on the web
+      );
+    } else {
+      throw "Could not launch $link";
+    }
   }
 
   Future<Replay> _fetchReplay(String input) async {

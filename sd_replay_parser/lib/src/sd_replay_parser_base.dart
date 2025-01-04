@@ -30,7 +30,7 @@ class SdReplayParser {
           playerData._incrUsage(pokemonName, moveName);
           break;
         case "poke":
-          playerData.team.add(tokens[3].split(',').first); // e.g. Chien-Pao, L50
+          playerData.team.add(_pokemonName(tokens[3].split(',').first)); // e.g. Chien-Pao, L50
           break;
         case "raw":
           var match = _RATING_LOG_REGEX.firstMatch(log.substring(5));
@@ -74,7 +74,10 @@ class SdReplayParser {
         parserVersion: PARSER_VERSION
     );
   }
-  String _pokemonName(String rawName) => rawName;
+  String _pokemonName(String rawName) {
+    if (rawName.contains("Urshifu")) return "Urshifu";
+    return rawName;
+  }
 }
 
 @freezed

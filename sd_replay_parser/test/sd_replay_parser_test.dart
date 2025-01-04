@@ -27,7 +27,7 @@ void main() {
         'Calyrex-Shadow',
         'Incineroar',
         'Rillaboom',
-        'Urshifu-*', // TODO handle urshifu
+        'Urshifu',
         'Raging Bolt',
         'Ogerpon-Hearthflame'
       ]);
