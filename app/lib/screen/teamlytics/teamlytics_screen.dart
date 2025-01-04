@@ -1,5 +1,6 @@
 import 'package:app/data.dart';
 import 'package:app/screen/teamlytics/replay_entries.dart';
+import 'package:app/service/storage_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,17 @@ class TeamlyticsScreen extends StatefulWidget {
 class _TeamlyticsScreenState extends State<TeamlyticsScreen> {
   int _selectedIndex = 0; // To track the selected tab
   List<Replay> replays = [];
+  StorageService storageService = StorageService();
 
+  @override
+  void initState() {
+    storageService.loadReplays().then((storageReplays) => setState(() {
+      // TODO check version of replays. If any of them has a different version than the current,
+      //  we need to fetch it refresh it to the latest version
+      replays = storageReplays;
+    }));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,12 +90,14 @@ class _TeamlyticsScreenState extends State<TeamlyticsScreen> {
   void _onAddReplay(Replay replay) {
     setState(() {
       replays.add(replay);
+      storageService.saveReplays(replays);
     });
   }
 
   void _onRemoveReplay(Replay replay) {
     setState(() {
       replays.remove(replay);
+      storageService.saveReplays(replays);
     });
   }
 }
