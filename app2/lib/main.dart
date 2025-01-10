@@ -9,7 +9,12 @@ import 'ui/core/localization/applocalization.dart';
 import 'ui/core/themes/theme.dart';
 
 void main() {
+  // TODO remove or change this. Maybe remove the library?
   Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((record) {
+    print('${record.level.name}: ${record.time}: ${record.message}');
+  });
+
 
   runApp(
     MultiProvider(

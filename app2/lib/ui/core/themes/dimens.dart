@@ -14,6 +14,8 @@ abstract final class Dimens {
   /// General vertical padding used to separate UI items
   static const paddingVertical = 24.0;
 
+  static const pokemonLogoSize = 40.0;
+
   /// Horizontal padding for screen edges
   double get paddingScreenHorizontal;
 

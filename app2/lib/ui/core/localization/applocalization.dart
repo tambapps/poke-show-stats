@@ -16,6 +16,7 @@ class AppLocalization {
     'home': 'Home',
     'replayEntries': 'Replay Entries',
     'usageStats': 'Usage Stats',
+    'sdNames': 'Showdown names',
   };
 
   // If string for "label" does not exist, will show "[LABEL]"
@@ -25,6 +26,7 @@ class AppLocalization {
   String get home => _get('home');
   String get replayEntries => _get('replayEntries');
   String get usageStats => _get('usageStats');
+  String get showdownNames => _get('sdNames');
 
   String selected(int value) =>
       _get('selected').replaceAll('{1}', value.toString());

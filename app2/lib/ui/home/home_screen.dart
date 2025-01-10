@@ -1,5 +1,9 @@
 import 'package:app2/ui/core/widgets.dart';
+import 'package:app2/ui/home/config/home_config_screen.dart';
+import 'package:app2/ui/home/replay_entries/replay_entries.dart';
+import 'package:app2/ui/home/replay_entries/replay_entries_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../core/localization/applocalization.dart';
 import '../core/themes/dimens.dart';
@@ -20,7 +24,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends AbstractState<HomeScreen> {
 
   @override
-  Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens) {
+  Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -34,8 +38,12 @@ class _HomeScreenState extends AbstractState<HomeScreen> {
           ),
           body: TabBarView(
             children: [
-              Center(child: Text("Content for Tab 1")),
-              Center(child: Text("Content for Tab 2")),
+              ListenableBuilder(
+                  listenable: widget.viewModel,
+                  builder: (context, _) => HomeConfigComponent(homeViewModel: widget.viewModel)),
+              ListenableBuilder(
+                  listenable: widget.viewModel,
+                  builder: (context, _) => ReplayEntriesComponent(homeViewModel: widget.viewModel, viewModel: ReplayEntriesViewModel(pokemonImageService: context.read(), replayParser: context.read()),)),
               Center(child: Text("Content for Tab 3")),
             ],
           )
