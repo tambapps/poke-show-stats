@@ -1,6 +1,9 @@
 Combusken:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/combusken.png"
   artwork: "https://www.pokepedia.fr/images/thumb/7/7c/Galifeu-RS.png/623px-Galifeu-RS.png"
+Urshifu:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/urshifu.png"
+  artwork: "https://www.pokepedia.fr/images/a/ac/Shifours_%28Style_Mille_Poings%29-EB.png"
 Virizion:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/virizion.png"
   artwork: "https://www.pokepedia.fr/images/thumb/d/d1/Viridium-NB.png/426px-Viridium-NB.png"
@@ -592,6 +595,12 @@ Chandelure:
 Calyrex:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/calyrex.png"
   artwork: "https://www.pokepedia.fr/images/thumb/a/ac/Sylveroy-EB.png/432px-Sylveroy-EB.png"
+Calyrex-Shadow:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/calyrex-shadow-rider.png"
+  artwork: "https://www.pokepedia.fr/images/0/0c/Sylveroy%2C_le_Cavalier_d%27Effroi-EB.png"
+Calyrex-Ice:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/calyrex-ice-rider.png"
+  artwork: "https://www.pokepedia.fr/images/b/b5/Sylveroy%2C_le_Cavalier_du_Froid-EB.png"
 Fletchling:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/fletchling.png"
   artwork: "https://www.pokepedia.fr/images/thumb/a/a7/Passerouge-XY.png/708px-Passerouge-XY.png"
@@ -1141,6 +1150,15 @@ Bronzor:
 Ogerpon:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/ogerpon.png"
   artwork: "https://www.pokepedia.fr/images/thumb/8/82/Ogerpon_%28Masque_Turquoise%2C_masqu%C3%A9%29-EV.png/474px-Ogerpon_%28Masque_Turquoise%2C_masqu%C3%A9%29-EV.png"
+Ogerpon-Cornerstone:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/ogerpon-cornerstone.png"
+  artwork: "https://www.pokepedia.fr/images/5/54/Ogerpon_%28Masque_de_la_Pierre%29-EV.png"
+Ogerpon-Hearthflame:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/ogerpon-hearthflame.png"
+  artwork: "https://www.pokepedia.fr/images/2/26/Ogerpon_%28Masque_du_Fourneau%29-EV.png"
+Ogerpon-Wellspring:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/ogerpon-wellspring.png"
+  artwork: "https://www.pokepedia.fr/images/1/1d/Ogerpon_%28Masque_du_Puits%29-EV.png"
 Combee:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/combee.png"
   artwork: "https://www.pokepedia.fr/images/thumb/c/ce/Apitrini-DP.png/800px-Apitrini-DP.png"
