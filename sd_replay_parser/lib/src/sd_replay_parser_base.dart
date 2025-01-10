@@ -138,7 +138,7 @@ class SdReplayData {
   final PlayerData player2;
   final int uploadTime;
   final String formatId;
-  final int rating;
+  final int? rating;
   final String parserVersion;
   final String winner;
 
