@@ -14,6 +14,8 @@ class AppLocalization {
 
   static const _strings = <String, String>{
     'home': 'Home',
+    'replayEntries': 'Replay Entries',
+    'usageStats': 'Usage Stats',
   };
 
   // If string for "label" does not exist, will show "[LABEL]"
@@ -21,6 +23,8 @@ class AppLocalization {
       _strings[label] ?? '[${label.toUpperCase()}]';
 
   String get home => _get('home');
+  String get replayEntries => _get('replayEntries');
+  String get usageStats => _get('usageStats');
 
   String selected(int value) =>
       _get('selected').replaceAll('{1}', value.toString());
