@@ -1,10 +1,8 @@
 import 'dart:convert';
 
 import 'package:app2/ui/home/home_viewmodel.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:logging/logging.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
@@ -23,7 +21,6 @@ class ReplayEntriesViewModel extends ChangeNotifier {
   bool _loading = false;
   bool get loading => _loading;
 
-
   void loadReplay(HomeViewModel homeViewModel) {
     if (loading) return;
     String input = addReplayURIController.text.trim();
@@ -32,7 +29,6 @@ class ReplayEntriesViewModel extends ChangeNotifier {
     _fetchReplay(input)
         .then((replay) => homeViewModel.addReplay(replay))
         .catchError((error) {
-      Logger.root.log(Level.WARNING, "Couldn't fetch replay", error=error);
       _setLoading(false);
       String errorMessage;
       if (error is FormatException) {
@@ -74,7 +70,6 @@ class ReplayEntriesViewModel extends ChangeNotifier {
     }
     final data = jsonDecode(response.body);
     SdReplayData replayData = replayParser.parse(data);
-    Logger.root.log(Level.WARNING, "${data} ${uri}");
     return Replay(uri: uri, data: replayData);
   }
 

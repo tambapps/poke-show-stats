@@ -75,12 +75,7 @@ class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent>
                           children: replay.data.player1.team
                               .map((pokemon) =>
                               Padding(padding: EdgeInsets.symmetric(horizontal: 4), child:
-                              Tooltip(message: pokemon, child:
-                              Image(width: Dimens.pokemonLogoSize, height: Dimens.pokemonLogoSize, fit: BoxFit.contain,
-                                  image: AssetImage("pokemon-sprites_DELETEME/${pokemon.replaceAll(' ', '-')}.png"),
-                                  errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-                                    return Icon(Icons.catching_pokemon, size: Dimens.pokemonLogoSize);
-                                  }),),))
+                              Tooltip(message: pokemon, child: widget.viewModel.pokemonImageService.getSprite(pokemon),),))
                               .toList(),
                         ),),
                         Center(child: Text(replay.notes ?? ''),),
