@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'sd_replay_parser_base.dart';
+part of 'model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -50,7 +50,7 @@ SdReplayData _$SdReplayDataFromJson(Map<String, dynamic> json) => SdReplayData(
       player2: PlayerData.fromJson(json['player2'] as Map<String, dynamic>),
       uploadTime: (json['uploadTime'] as num).toInt(),
       formatId: json['formatId'] as String,
-      rating: (json['rating'] as num).toInt(),
+      rating: (json['rating'] as num?)?.toInt(),
       parserVersion: json['parserVersion'] as String,
       winner: json['winner'] as String,
     );
