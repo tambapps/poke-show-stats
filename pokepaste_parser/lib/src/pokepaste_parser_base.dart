@@ -13,6 +13,9 @@ class PokepasteParser {
       Pokemon pokemon = Pokemon(moves: []);
       String line = lines.removeFirst();
       List<String> firstLineFields = line.split("@");
+      if (firstLineFields.length != 2) {
+        throw PokepasteParsingException("Invalid pokepaste");
+      }
       String firstPart = firstLineFields.first.trim();
       if (firstPart.contains('(')) {
         pokemon.gender = firstPart.substring(firstPart.indexOf('(') + 1, firstPart.indexOf(')'));
@@ -39,6 +42,9 @@ class PokepasteParser {
       }
       pokemon.ivs ??= Stats.withDefault(31);
       pokemons.add(pokemon);
+    }
+    if (pokemons.isEmpty) {
+      throw PokepasteParsingException("No pokemon was found");
     }
     return Pokepaste(pokemons);
   }
@@ -74,4 +80,14 @@ class PokepasteParser {
   }
 
   String _extractLeft(String line) => line.substring(line.indexOf(': ') + 2).trim();
+}
+
+
+class PokepasteParsingException implements Exception {
+  final String message;
+
+  PokepasteParsingException(this.message);
+
+  @override
+  String toString() => 'FetchDataException: $message';
 }
