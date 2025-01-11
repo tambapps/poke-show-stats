@@ -1,5 +1,4 @@
-import 'package:flutter/foundation.dart';
-
+import 'package:flutter/material.dart';
 import '../../data/models/replay.dart';
 import '../../data/services/pokemon_image_service.dart';
 
@@ -9,7 +8,7 @@ class HomeViewModel extends ChangeNotifier {
 
   final PokemonImageService pokemonImageService;
 
-  final List<String> sdNames = [];
+  final List<String> sdNames = ['blue fakinaway', 'jarmanvgc'];
   List<Replay> replays = [];
   String? pokepasteUrl;
 
@@ -29,6 +28,18 @@ class HomeViewModel extends ChangeNotifier {
 
   void removeReplay(Replay replay) {
     replays.remove(replay);
+    notifyListeners();
+  }
+
+  void addSdName(String sdName) {
+    if (!sdNames.contains(sdName)) {
+      sdNames.add(sdName);
+      notifyListeners();
+    }
+  }
+
+  void removeSdName(String sdName) {
+    sdNames.remove(sdName);
     notifyListeners();
   }
 }

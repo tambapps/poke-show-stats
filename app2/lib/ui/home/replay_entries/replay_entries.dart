@@ -21,6 +21,7 @@ class ReplayEntriesComponent extends StatefulWidget {
 
 class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent> {
 
+  // TODO display win rate
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     return Column(
@@ -101,7 +102,7 @@ class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent>
                     ),
                     const SizedBox(width: 16),
                     ElevatedButton(
-                      onPressed: () => widget.viewModel.loadReplay(widget.homeViewModel),
+                      onPressed: () => widget.viewModel.loadReplay(),
                       child: const Text('Add'),
                     ),
                   ],

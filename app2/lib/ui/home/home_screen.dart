@@ -1,5 +1,6 @@
 import 'package:app2/ui/core/widgets.dart';
 import 'package:app2/ui/home/config/home_config_screen.dart';
+import 'package:app2/ui/home/config/home_config_viewmodel.dart';
 import 'package:app2/ui/home/replay_entries/replay_entries.dart';
 import 'package:app2/ui/home/replay_entries/replay_entries_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -40,10 +41,10 @@ class _HomeScreenState extends AbstractState<HomeScreen> {
             children: [
               ListenableBuilder(
                   listenable: widget.viewModel,
-                  builder: (context, _) => HomeConfigComponent(homeViewModel: widget.viewModel)),
+                  builder: (context, _) => HomeConfigComponent(homeViewModel: widget.viewModel, viewModel: HomeConfigViewModel(homeViewModel: widget.viewModel),)),
               ListenableBuilder(
                   listenable: widget.viewModel,
-                  builder: (context, _) => ReplayEntriesComponent(homeViewModel: widget.viewModel, viewModel: ReplayEntriesViewModel(pokemonImageService: context.read(), replayParser: context.read()),)),
+                  builder: (context, _) => ReplayEntriesComponent(homeViewModel: widget.viewModel, viewModel: ReplayEntriesViewModel(pokemonImageService: context.read(), replayParser: context.read(), homeViewModel: widget.viewModel),)),
               Center(child: Text("Content for Tab 3")),
             ],
           )
