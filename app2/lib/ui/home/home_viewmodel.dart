@@ -11,7 +11,12 @@ class HomeViewModel extends ChangeNotifier {
 
   final List<String> sdNames = ['blue fakinaway', 'jarmanvgc'];
   List<Replay> replays = [];
-  Pokepaste? pokepaste;
+  Pokepaste? _pokepaste;
+  Pokepaste? get pokepaste => _pokepaste;
+  set pokepaste(Pokepaste? value) {
+    _pokepaste = value;
+    notifyListeners();
+  }
 
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;

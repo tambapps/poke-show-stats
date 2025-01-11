@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
+import 'package:pokepaste_parser/pokepaste_parser.dart';
 import '../home_viewmodel.dart';
-import 'package:http/http.dart' as http;
 
 class HomeConfigViewModel extends ChangeNotifier {
 
-  HomeConfigViewModel({required this.homeViewModel});
+  HomeConfigViewModel({required this.homeViewModel, required this.pokepasteParser});
 
   final HomeViewModel homeViewModel;
+  final PokepasteParser pokepasteParser;
   final TextEditingController sdNameController = TextEditingController();
   final TextEditingController pokepasteController = TextEditingController();
 
@@ -18,26 +18,20 @@ class HomeConfigViewModel extends ChangeNotifier {
 
   void loadPokepaste() async {
     String input = pokepasteController.text.trim();
-    if (!input.startsWith('https://pokepast.es/')) {
+    _setLoading(true);
+    Pokepaste pokepaste;
+    try {
+      pokepaste = pokepasteParser.parse(input);
+    } on PokepasteParsingException catch(e) {
       errorMessage('This is not a pokepaste URL');
       return;
     }
-    Uri uri;
-    try {
-      uri = Uri.parse(input);
-    }  on FormatException {
-      errorMessage("Invalid URL");
-      return;
+    if (pokepaste.pokemons.isEmpty) {
+      errorMessage('Pokepaste does not have any pokemon');
     }
-
-    _setLoading(true);
-    final response = await http.get(uri);
-    if (response.statusCode != 200) {
-      errorMessage("Error while fetching pokepaste (response code ${response.statusCode})");
-      return;
-    }
-    print(response.body);
     pokepasteController.clear();
+    homeViewModel.pokepaste = pokepaste;
+    _setLoading(false);
   }
 
   void _setLoading(bool loading) {

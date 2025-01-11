@@ -41,7 +41,7 @@ class _HomeScreenState extends AbstractState<HomeScreen> {
             children: [
               ListenableBuilder(
                   listenable: widget.viewModel,
-                  builder: (context, _) => HomeConfigComponent(homeViewModel: widget.viewModel, viewModel: HomeConfigViewModel(homeViewModel: widget.viewModel),)),
+                  builder: (context, _) => HomeConfigComponent(homeViewModel: widget.viewModel, viewModel: HomeConfigViewModel(homeViewModel: widget.viewModel, pokepasteParser: context.read()),)),
               ListenableBuilder(
                   listenable: widget.viewModel,
                   builder: (context, _) => ReplayEntriesComponent(homeViewModel: widget.viewModel, viewModel: ReplayEntriesViewModel(pokemonImageService: context.read(), replayParser: context.read(), homeViewModel: widget.viewModel),)),

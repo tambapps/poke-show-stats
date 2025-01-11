@@ -14,6 +14,16 @@ class PokemonImageService {
   Widget getSprite(String pokemon) {
     Uri? uri = getSpriteUri(pokemon);
     if (uri == null) return _getDefaultSprite();
+    return _getImageWidget(uri);
+  }
+
+  Widget getArtwork(String pokemon, {double width = Dimens.pokemonLogoSize, double height = Dimens.pokemonLogoSize}) {
+    Uri? uri = getArtworkUri(pokemon);
+    if (uri == null) return _getDefaultSprite();
+    return _getImageWidget(uri, width: width, height: height);
+  }
+
+  Widget _getImageWidget(Uri uri, {double width = Dimens.pokemonLogoSize, double height = Dimens.pokemonLogoSize}) {
     // TODO doesn't work now but should work once this https://github.com/flutter/flutter/issues/160127
     //  will be included in the latest stable release and I upgrade.
     //    for now use the flag flutter run -d chrome --web-renderer html
@@ -21,8 +31,8 @@ class PokemonImageService {
       imageUrl: uri.toString(),
       // needed in order for image loading to work even with CORS
       //imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
-      width: Dimens.pokemonLogoSize,
-      height: Dimens.pokemonLogoSize,
+      width: width,
+      height: height,
       fit: BoxFit.contain,
       placeholder: (context, url) => CircularProgressIndicator(),
       errorWidget: (context, url, error) => _getDefaultSprite(),
