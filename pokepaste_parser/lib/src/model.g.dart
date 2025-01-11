@@ -10,16 +10,20 @@ Pokepaste _$PokepasteFromJson(Map<String, dynamic> json) => Pokepaste(
       (json['pokemons'] as List<dynamic>)
           .map((e) => Pokemon.fromJson(e as Map<String, dynamic>))
           .toList(),
-    );
+    )..url = json['url'] as String?;
 
 Map<String, dynamic> _$PokepasteToJson(Pokepaste instance) => <String, dynamic>{
       'pokemons': instance.pokemons,
+      'url': instance.url,
     };
 
 Pokemon _$PokemonFromJson(Map<String, dynamic> json) => Pokemon(
       name: json['name'] as String? ?? "",
-      item: json['item'] as String? ?? "",
+      gender: json['gender'] as String?,
+      item: json['item'] as String?,
       ability: json['ability'] as String? ?? "",
+      teraType: json['teraType'] as String? ?? "",
+      nature: json['nature'] as String? ?? "",
       level: (json['level'] as num?)?.toInt() ?? 50,
       moves:
           (json['moves'] as List<dynamic>?)?.map((e) => e as String).toList() ??
@@ -34,8 +38,11 @@ Pokemon _$PokemonFromJson(Map<String, dynamic> json) => Pokemon(
 
 Map<String, dynamic> _$PokemonToJson(Pokemon instance) => <String, dynamic>{
       'name': instance.name,
+      'gender': instance.gender,
       'item': instance.item,
       'ability': instance.ability,
+      'teraType': instance.teraType,
+      'nature': instance.nature,
       'level': instance.level,
       'moves': instance.moves,
       'ivs': instance.ivs,

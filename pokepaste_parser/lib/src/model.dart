@@ -18,6 +18,7 @@ bool listEquals<T>(List<T> l1, List<T> l2) { // note doesn't handle deep lists
 class Pokepaste {
 
   List<Pokemon> pokemons;
+  String? url;
 
   Pokepaste(this.pokemons);
 
