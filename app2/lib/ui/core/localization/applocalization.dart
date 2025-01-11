@@ -18,8 +18,8 @@ class AppLocalization {
     'usageStats': 'Usage Stats',
     'sdNames': 'Showdown names',
     'addSdName': 'Add name',
-    'pokepasteUrl': 'Pokepaste URL',
-    'enterUrl': 'Enter URL',
+    'pokepaste': 'Pokepaste',
+    'pasteSomething': 'Paste something here!',
     'load': 'Load',
   };
 
@@ -32,8 +32,8 @@ class AppLocalization {
   String get usageStats => _get('usageStats');
   String get showdownNames => _get('sdNames');
   String get addSdName => _get('addSdName');
-  String get pokepasteUrl => _get('pokepasteUrl');
-  String get enterUrl => _get('enterUrl');
+  String get pokepaste => _get('pokepaste');
+  String get pasteSomething => _get('pasteSomething');
   String get load => _get('load');
 
   String selected(int value) =>

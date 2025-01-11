@@ -37,6 +37,8 @@ dependencies:
   logging: ^1.3.0
   sd_replay_parser:
     path: ../sd_replay_parser
+  pokepaste_parser:
+    path: ../pokepaste_parser
   http: ^1.2.2
   fluttertoast: ^8.2.10
   url_launcher: ^6.3.1

@@ -10,14 +10,14 @@ class HomeConfigViewModel extends ChangeNotifier {
 
   final HomeViewModel homeViewModel;
   final TextEditingController sdNameController = TextEditingController();
-  final TextEditingController pokepasteUrlController = TextEditingController();
+  final TextEditingController pokepasteController = TextEditingController();
 
   // TODO use me
   bool _loading = false;
   bool get loading => _loading;
 
   void loadPokepaste() async {
-    String input = pokepasteUrlController.text.trim();
+    String input = pokepasteController.text.trim();
     if (!input.startsWith('https://pokepast.es/')) {
       errorMessage('This is not a pokepaste URL');
       return;
@@ -37,7 +37,7 @@ class HomeConfigViewModel extends ChangeNotifier {
       return;
     }
     print(response.body);
-    pokepasteUrlController.clear();
+    pokepasteController.clear();
   }
 
   void _setLoading(bool loading) {

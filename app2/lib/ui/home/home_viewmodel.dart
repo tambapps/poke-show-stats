@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokepaste_parser/pokepaste_parser.dart';
 import '../../data/models/replay.dart';
 import '../../data/services/pokemon_image_service.dart';
 
@@ -10,7 +11,7 @@ class HomeViewModel extends ChangeNotifier {
 
   final List<String> sdNames = ['blue fakinaway', 'jarmanvgc'];
   List<Replay> replays = [];
-  String? pokepasteUrl;
+  Pokepaste? pokepaste;
 
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;

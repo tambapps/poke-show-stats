@@ -68,36 +68,36 @@ class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
   }
 
   List<Widget> pokepasteWidget(AppLocalization localization, ThemeData theme) {
-    final title = Text(localization.pokepasteUrl, style: theme.textTheme.titleLarge,);
-    if (widget.homeViewModel.pokepasteUrl == null) {
+    final title = Text(localization.pokepaste, style: theme.textTheme.titleLarge,);
+    if (widget.homeViewModel.pokepaste == null) {
       return [
-        Row(
-          children: [
-            title,
-            Padding(padding: EdgeInsets.symmetric(horizontal: 8)),
-            SizedBox(
-              width: 450,
-              // TODO change pokepaste URL to pokepaste content. we cannot fetch pokepaste URL due to CORS.
-              //  this should be a big multiline TextField
-              child: TextField(
-                controller: widget.viewModel.pokepasteUrlController,
-                onSubmitted: (value) {
-                  widget.homeViewModel.addSdName(value);
-                  widget.viewModel.sdNameController.clear();
-                },
-                decoration: InputDecoration(
-                  labelText: localization.enterUrl,
-                  border: OutlineInputBorder(),
-                ),
-              )
-              ,
+        title,
+        Padding(padding: EdgeInsets.symmetric(vertical: 8)),
+        SizedBox(
+          width: double.infinity,
+          //  this should be a big multiline TextField
+          child: TextField(
+            maxLines: null,
+            controller: widget.viewModel.pokepasteController,
+            onSubmitted: (value) {
+              widget.homeViewModel.addSdName(value);
+              widget.viewModel.sdNameController.clear();
+            },
+            decoration: InputDecoration(
+              labelText: localization.pasteSomething,
+              border: OutlineInputBorder(),
             ),
-            Padding(padding: EdgeInsets.symmetric(horizontal: 12)),
-            OutlinedButton(
-              onPressed: () => widget.viewModel.loadPokepaste(),
-              child: Text(localization.load,),
-            )
-          ],
+          )
+          ,
+        ),
+        Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+        Align(
+          alignment: Alignment.topRight,
+          child: OutlinedButton(
+            onPressed: () => widget.viewModel.loadPokepaste(),
+            child: Text(localization.load,),
+          )
+          ,
         )
       ];
     }
