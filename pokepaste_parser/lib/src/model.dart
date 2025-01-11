@@ -130,6 +130,8 @@ class Stats {
     specialDefense: defaultValue,
   );
 
+  bool all(bool Function(int) predicate) => predicate(hp) && predicate(speed)
+      && predicate(attack) && predicate(defense) && predicate(specialAttack) && predicate(specialDefense);
 
   factory Stats.fromJson(Map<String, dynamic> json) => _$StatsFromJson(json);
   Map<String, dynamic> toJson() => _$StatsToJson(this);
