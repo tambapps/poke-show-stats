@@ -12,7 +12,7 @@ class SdReplayParser {
 
     List<dynamic> playerNames = sdJson['players'];
     if (playerNames.length != 2) {
-      throw ParsingException("Replay does not have 2 players");
+      throw SdReplayParsingException("Replay does not have 2 players");
     }
 
     List<PlayerData> playerDataList = [PlayerData.name(playerNames[0].toString()), PlayerData.name(playerNames[1].toString())];
@@ -85,10 +85,10 @@ class SdReplayParser {
 }
 
 
-class ParsingException implements Exception {
+class SdReplayParsingException implements Exception {
   final String message;
 
-  ParsingException(this.message);
+  SdReplayParsingException(this.message);
 
   @override
   String toString() => 'FetchDataException: $message';
