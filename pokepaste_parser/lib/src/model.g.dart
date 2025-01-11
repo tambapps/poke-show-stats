@@ -17,11 +17,13 @@ Map<String, dynamic> _$PokepasteToJson(Pokepaste instance) => <String, dynamic>{
     };
 
 Pokemon _$PokemonFromJson(Map<String, dynamic> json) => Pokemon(
-      name: json['name'] as String,
-      item: json['item'] as String,
-      ability: json['ability'] as String,
-      level: json['level'] as String,
-      moves: (json['moves'] as List<dynamic>).map((e) => e as String).toList(),
+      name: json['name'] as String? ?? "",
+      item: json['item'] as String? ?? "",
+      ability: json['ability'] as String? ?? "",
+      level: (json['level'] as num?)?.toInt() ?? 50,
+      moves:
+          (json['moves'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              const [],
       ivs: json['ivs'] == null
           ? null
           : Stats.fromJson(json['ivs'] as Map<String, dynamic>),
