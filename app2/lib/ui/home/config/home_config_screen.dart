@@ -25,8 +25,7 @@ class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     const padding = EdgeInsets.symmetric(horizontal: 128);
     //       padding: EdgeInsets.symmetric(vertical: 36, horizontal: 128),
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return ListView(
       children: [
         SizedBox(height: 36,),
         Padding(padding: padding, child: Row(
@@ -75,21 +74,18 @@ class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
       return [
         title,
         Padding(padding: EdgeInsets.symmetric(vertical: 8)),
-        Flexible( // so that the textField grows without overflowing
-          //  this should be a big multiline TextField
-          child: Padding(
-              padding: padding,
-            child: TextField(
-              maxLines: null,
-              controller: widget.viewModel.pokepasteController,
-              onSubmitted: (value) {
-                widget.homeViewModel.addSdName(value);
-                widget.viewModel.sdNameController.clear();
-              },
-              decoration: InputDecoration(
-                labelText: localization.pasteSomething,
-                border: OutlineInputBorder(),
-              ),
+        Padding(
+          padding: padding,
+          child: TextField(
+            maxLines: null,
+            controller: widget.viewModel.pokepasteController,
+            onSubmitted: (value) {
+              widget.homeViewModel.addSdName(value);
+              widget.viewModel.sdNameController.clear();
+            },
+            decoration: InputDecoration(
+              labelText: localization.pasteSomething,
+              border: OutlineInputBorder(),
             ),
           ),
         ),
@@ -110,13 +106,13 @@ class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
     List<Row> pokemonRows = [];
     List<Widget> rowChildren = [];
     for (int i = 0; i < 3 && i < pokemons.length; i++) {
-      rowChildren.add(Expanded(flex: 1, child: pokemonWidget(pokemons[i]),));
+      rowChildren.add(Expanded(flex: 1, child: Padding(padding: EdgeInsets.symmetric(horizontal: 32), child: pokemonWidget(pokemons[i]),),));
     }
     pokemonRows.add(Row(children: rowChildren,));
     if (pokemons.length > 3) {
       rowChildren = [];
       for (int i = 3; i < pokemons.length; i++) {
-        rowChildren.add(Expanded(flex: 1, child: pokemonWidget(pokemons[i]),));
+        rowChildren.add(Expanded(flex: 1, child: Padding(padding: EdgeInsets.symmetric(horizontal: 32), child: pokemonWidget(pokemons[i]),),));
       }
       pokemonRows.add(Row(children: rowChildren,));
     }
@@ -148,7 +144,7 @@ class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
     }
     return Row(
       children: [
-        Expanded(flex: 1, child: widget.homeViewModel.pokemonImageService.getArtwork(pokemon.name, width: 150, height: 150),),
+        Expanded(flex: 1, child: widget.homeViewModel.pokemonImageService.getArtwork(pokemon.name),),
         Expanded(flex: 1, child: Text(buffer.toString()))
       ],
     );
