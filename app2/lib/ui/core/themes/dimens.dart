@@ -16,6 +16,10 @@ abstract final class Dimens {
 
   static const pokemonLogoSize = 60.0;
 
+  static const teraSpriteSize = 64.0;
+
+  static const itemSpriteSize = 50.0;
+
   /// Horizontal padding for screen edges
   double get paddingScreenHorizontal;
 

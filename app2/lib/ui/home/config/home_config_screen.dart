@@ -167,7 +167,7 @@ class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
                   right: 0,
                   child: Tooltip(
                     message: pokemon.teraType,
-                    child: widget.homeViewModel.pokemonImageService.getTeraTypeSprite(pokemon.teraType, width: 64, height: 64),
+                    child: widget.homeViewModel.pokemonImageService.getTeraTypeSprite(pokemon.teraType, width: Dimens.teraSpriteSize, height: Dimens.teraSpriteSize),
                   ),
                 ),
                 if (pokemon.item != null) Positioned(
@@ -175,7 +175,7 @@ class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
                   right: 0,
                   child: Tooltip(
                     message: pokemon.item,
-                    child: widget.homeViewModel.pokemonImageService.getItemSprite(pokemon.item!, width: 64, height: 64),
+                    child: widget.homeViewModel.pokemonImageService.getItemSprite(pokemon.item!, width: Dimens.itemSpriteSize, height: Dimens.itemSpriteSize),
                   ),
                 )
 
