@@ -104,14 +104,10 @@ class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
     }
     final pokemons = pokepaste.pokemons;
     List<Row> pokemonRows = [];
-    List<Widget> rowChildren = [];
-    for (int i = 0; i < 3 && i < pokemons.length; i++) {
-      rowChildren.add(Expanded(flex: 1, child: Padding(padding: EdgeInsets.symmetric(horizontal: 32), child: pokemonWidget(pokemons[i]),),));
-    }
-    pokemonRows.add(Row(children: rowChildren,));
-    if (pokemons.length > 3) {
-      rowChildren = [];
-      for (int i = 3; i < pokemons.length; i++) {
+    int nbRows = (pokemons.length % 3 == 0 ? pokemons.length / 2 : pokemons.length / 2 + 1).toInt();
+    for (int row = 0; row < nbRows; row++) {
+      List<Widget> rowChildren = [];
+      for (int i = row * 3; i < row * 3 + 3 && i < pokemons.length; i++) {
         rowChildren.add(Expanded(flex: 1, child: Padding(padding: EdgeInsets.symmetric(horizontal: 32), child: pokemonWidget(pokemons[i]),),));
       }
       pokemonRows.add(Row(children: rowChildren,));
