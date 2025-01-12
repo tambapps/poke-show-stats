@@ -69,10 +69,10 @@ class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
 
   List<Widget> pokepasteWidget(AppLocalization localization, ThemeData theme, EdgeInsets padding) {
     final pokepaste = widget.homeViewModel.pokepaste;
-    final title = Padding(padding: padding, child: Text(localization.pokepaste, style: theme.textTheme.titleLarge,),);
+    final title = Text(localization.pokepaste, style: theme.textTheme.titleLarge,);
     if (pokepaste == null) {
       return [
-        title,
+        Padding(padding: padding, child: title,),
         Padding(padding: EdgeInsets.symmetric(vertical: 8)),
         Padding(
           padding: padding,
@@ -113,7 +113,20 @@ class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
       pokemonRows.add(Row(children: rowChildren,));
     }
     return [
-      title,
+      Padding(
+        padding: padding,
+        child: Row(
+          children: [
+            title,
+            SizedBox(width: 16,),
+            OutlinedButton(
+              onPressed: () => widget.viewModel.removePokepaste(),
+              child: Text(localization.change,),
+            )
+          ],
+        ),
+      ),
+      SizedBox(height: 16,),
       ...pokemonRows
     ];
   }

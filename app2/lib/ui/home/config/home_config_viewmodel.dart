@@ -49,4 +49,8 @@ class HomeConfigViewModel extends ChangeNotifier {
       textColor: Colors.white,
       fontSize: 16.0,
     );  }
+
+  void removePokepaste() {
+    homeViewModel.pokepaste = null;
+  }
 }

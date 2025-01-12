@@ -21,6 +21,7 @@ class AppLocalization {
     'pokepaste': 'Pokepaste',
     'pasteSomething': 'Paste something here!',
     'load': 'Load',
+    'change': 'Change',
   };
 
   // If string for "label" does not exist, will show "[LABEL]"
@@ -35,6 +36,7 @@ class AppLocalization {
   String get pokepaste => _get('pokepaste');
   String get pasteSomething => _get('pasteSomething');
   String get load => _get('load');
+  String get change => _get('change');
 
   String selected(int value) =>
       _get('selected').replaceAll('{1}', value.toString());
