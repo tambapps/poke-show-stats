@@ -13,7 +13,8 @@ List<SingleChildWidget> get providers {
       lazy: true,
       initialData: PokemonImageService(),
       create: (context) async => PokemonImageService(
-        mappings: loadYaml(await rootBundle.loadString('assets/pokemon-sprite-urls.yaml'))
+        pokemon_mappings: loadYaml(await rootBundle.loadString('assets/pokemon-sprite-urls.yaml')),
+        item_mappings: loadYaml(await rootBundle.loadString('assets/items-mapping.yaml'))
       ), // will load the yaml mapping
     ),
     Provider(

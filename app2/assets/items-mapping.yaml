@@ -1,0 +1,396 @@
+Black-Belt:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/blackbelt.png"
+Smooth-Rock:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/smoothrock.png"
+Razor-Claw:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/razorclaw.png"
+Metronome:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/metronome.png"
+Rindo-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/rindoberry.png"
+Fairy-Feather:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/fairyfeather.png"
+Lansat-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/lansatberry.png"
+Iron-Ball:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/ironball.png"
+Float-Stone:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/floatstone.png"
+Griseous-Orb:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/griseousorb.png"
+Mystic-Water:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/mysticwater.png"
+Choice-Scarf:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/choicescarf.png"
+Expert-Belt:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/expertbelt.png"
+Choice-Specs:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/choicespecs.png"
+Silk-Scarf:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/silkscarf.png"
+Colbur-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/colburberry.png"
+Air-Balloon:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/airballoon.png"
+Pecha-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/pechaberry.png"
+Burn-Drive:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/burndrive.png"
+Dragon-Fang:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/dragonfang.png"
+Passho-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/passhoberry.png"
+Binding-Band:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/bindingband.png"
+White-Herb:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/whiteherb.png"
+Shed-Shell:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/shedshell.png"
+Leppa-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/leppaberry.png"
+Lustrous-Orb:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/lustrousorb.png"
+Silver-Powder:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/silverpowder.png"
+Wide-Lens:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/widelens.png"
+Power-Anklet:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/poweranklet.png"
+Absorb-Bulb:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/absorbbulb.png"
+Insect-Plate:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/insectplate.png"
+Ganlon-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/ganlonberry.png"
+Power-Weight:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/powerweight.png"
+Eject-Pack:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/ejectpack.png"
+Shuca-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/shucaberry.png"
+Zap-Plate:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/zapplate.png"
+Aspear-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/aspearberry.png"
+Lax-Incense:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/laxincense.png"
+Muscle-Band:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/muscleband.png"
+Metal-Powder:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/metalpowder.png"
+Kasib-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/kasibberry.png"
+Choice-Band:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/choiceband.png"
+Chople-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/chopleberry.png"
+Adrenaline-Orb:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/adrenalineorb.png"
+Thick-Club:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/thickclub.png"
+Red-Nectar:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/rednectar.png"
+Cheri-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/cheriberry.png"
+Sitrus-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/sitrusberry.png"
+Draco-Plate:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/dracoplate.png"
+Quick-Powder:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/quickpowder.png"
+Mental-Herb:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/mentalherb.png"
+Quick-Claw:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/quickclaw.png"
+Booster-Energy:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/boosterenergy.png"
+Fist-Plate:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/fistplate.png"
+Leftovers:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/leftovers.png"
+Wise-Glasses:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/wiseglasses.png"
+Ring-Target:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/ringtarget.png"
+Damp-Rock:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/damprock.png"
+Life-Orb:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/lifeorb.png"
+Toxic-Plate:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/toxicplate.png"
+Power-Band:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/powerband.png"
+Cornerstone-Mask:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/cornerstonemask.png"
+Chesto-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/chestoberry.png"
+Coba-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/cobaberry.png"
+Spooky-Plate:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/spookyplate.png"
+Haban-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/habanberry.png"
+Throat-Spray:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/throatspray.png"
+Lucky-Punch:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/luckypunch.png"
+Terrain-Extender:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/terrainextender.png"
+Icicle-Plate:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/icicleplate.png"
+Grip-Claw:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/gripclaw.png"
+Splash-Plate:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/splashplate.png"
+Weakness-Policy:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/weaknesspolicy.png"
+Lagging-Tail:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/laggingtail.png"
+Oran-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/oranberry.png"
+Black-Sludge:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/blacksludge.png"
+Razor-Fang:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/razorfang.png"
+Sky-Plate:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/skyplate.png"
+Toxic-Orb:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/toxicorb.png"
+Wave-Incense:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/waveincense.png"
+Stick:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/stick.png"
+Rose-Incense:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/roseincense.png"
+Aguav-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/aguavberry.png"
+Soul-Dew:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/souldew.png"
+Douse-Drive:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/dousedrive.png"
+Kings-Rock:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/kingsrock.png"
+Pixie-Plate:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/pixieplate.png"
+Grassy-Seed:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/grassyseed.png"
+Legend-Plate:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/legendplate.png"
+Wacan-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/wacanberry.png"
+Yellow-Nectar:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/yellownectar.png"
+Charti-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/chartiberry.png"
+Focus-Sash:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/focussash.png"
+Payapa-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/payapaberry.png"
+Full-Incense:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/fullincense.png"
+Room-Service:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/roomservice.png"
+Custap-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/custapberry.png"
+Spell-Tag:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/spelltag.png"
+Shock-Drive:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/shockdrive.png"
+Purple-Nectar:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/purplenectar.png"
+Never-Melt-Ice:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/nevermeltice.png"
+Sticky-Barb:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/stickybarb.png"
+Iapapa-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/iapapaberry.png"
+Chilan-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/chilanberry.png"
+Macho-Brace:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/machobrace.png"
+Cell-Battery:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/cellbattery.png"
+Roseli-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/roseliberry.png"
+Rowap-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/rowapberry.png"
+Power-Bracer:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/powerbracer.png"
+Petaya-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/petayaberry.png"
+Electric-Seed:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/electricseed.png"
+Persim-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/persimberry.png"
+Lum-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/lumberry.png"
+Figy-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/figyberry.png"
+Maranga-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/marangaberry.png"
+Utility-Umbrella:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/utilityumbrella.png"
+Micle-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/micleberry.png"
+Light-Ball:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/lightball.png"
+Jaboca-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/jabocaberry.png"
+Smoke-Ball:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/smokeball.png"
+Blank-Plate:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/blankplate.png"
+Eject-Button:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/ejectbutton.png"
+Odd-Incense:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/oddincense.png"
+Big-Root:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/bigroot.png"
+Flame-Plate:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/flameplate.png"
+Snowball:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/snowball.png"
+Babiri-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/babiriberry.png"
+Red-Card:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/redcard.png"
+Hearthflame-Mask:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/hearthflamemask.png"
+Power-Lens:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/powerlens.png"
+Icy-Rock:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/icyrock.png"
+Kebia-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/kebiaberry.png"
+Power-Belt:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/powerbelt.png"
+Wellspring-Mask:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/wellspringmask.png"
+Liechi-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/liechiberry.png"
+Dread-Plate:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/dreadplate.png"
+Hard-Stone:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/hardstone.png"
+Protective-Pads:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/protectivepads.png"
+Pass-Orb:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/passorb.png"
+Magnet:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/magnet.png"
+Soft-Sand:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/softsand.png"
+Covert-Cloak:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/covertcloak.png"
+Punching-Glove:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/punchingglove.png"
+Destiny-Knot:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/destinyknot.png"
+Rawst-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/rawstberry.png"
+Rocky-Helmet:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/rockyhelmet.png"
+Tanga-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/tangaberry.png"
+Light-Clay:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/lightclay.png"
+Earth-Plate:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/earthplate.png"
+Blunder-Policy:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/blunderpolicy.png"
+Sea-Incense:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/seaincense.png"
+Misty-Seed:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/mistyseed.png"
+Stone-Plate:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/stoneplate.png"
+Charcoal:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/charcoal.png"
+Kee-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/keeberry.png"
+Deep-Sea-Tooth:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/deepseatooth.png"
+Heavy-Duty-Boots:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/heavydutyboots.png"
+Miracle-Seed:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/miracleseed.png"
+Salac-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/salacberry.png"
+Mago-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/magoberry.png"
+Scope-Lens:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/scopelens.png"
+Psychic-Seed:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/psychicseed.png"
+Bright-Powder:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/brightpowder.png"
+Iron-Plate:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/ironplate.png"
+Flame-Orb:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/flameorb.png"
+Rock-Incense:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/rockincense.png"
+Wiki-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/wikiberry.png"
+Mirror-Herb:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/mirrorherb.png"
+Zoom-Lens:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/zoomlens.png"
+Luminous-Moss:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/luminousmoss.png"
+Enigma-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/enigmaberry.png"
+Metal-Coat:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/metalcoat.png"
+Eviolite:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/eviolite.png"
+Focus-Band:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/focusband.png"
+Power-Herb:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/powerherb.png"
+Safety-Goggles:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/safetygoggles.png"
+Adamant-Orb:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/adamantorb.png"
+Clear-Amulet:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/clearamulet.png"
+Black-Glasses:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/blackglasses.png"
+Occa-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/occaberry.png"
+Shell-Bell:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/shellbell.png"
+Pink-Nectar:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/pinknectar.png"
+Assault-Vest:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/assaultvest.png"
+Heat-Rock:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/heatrock.png"
+Ability-Shield:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/abilityshield.png"
+Rusted-Shield:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/rustedshield.png"
+Yache-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/yacheberry.png"
+Loaded-Dice:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/loadeddice.png"
+Sharp-Beak:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/sharpbeak.png"
+Starf-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/starfberry.png"
+Mind-Plate:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/mindplate.png"
+Apicot-Berry:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/apicotberry.png"
+Meadow-Plate:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/meadowplate.png"
+Rusted-Sword:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/rustedsword.png"
+Poison-Barb:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/poisonbarb.png"
+Chill-Drive:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/chilldrive.png"
+Deep-Sea-Scale:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/deepseascale.png"
+Twisted-Spoon:
+  spriteUrl: "https://www.serebii.net/itemdex/sprites/sv/twistedspoon.png"

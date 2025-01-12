@@ -118,14 +118,8 @@ class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
     ];
   }
 
-  // TODO display images for tera type and item (with tooltip).
   Widget pokemonWidget(Pokemon pokemon) {
     StringBuffer buffer = StringBuffer();
-    buffer.write(pokemon.name);
-    if (pokemon.item != null) {
-      buffer.write(" @ ${pokemon.item}");
-    }
-    buffer.writeln();
     if (pokemon.level != 50) {
       buffer.writeln("Level: ${pokemon.level}");
     }
@@ -152,7 +146,7 @@ class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
                   scale: 0.65,
                   child: Tooltip(
                     message: pokemon.name,
-                    child: widget.homeViewModel.pokemonImageService.getArtwork(pokemon.name),
+                    child: widget.homeViewModel.pokemonImageService.getPokemonArtwork(pokemon.name),
                   ),
                 ),
                 Positioned(
@@ -162,7 +156,16 @@ class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
                     message: pokemon.teraType,
                     child: widget.homeViewModel.pokemonImageService.getTeraTypeSprite(pokemon.teraType, width: 64, height: 64),
                   ),
+                ),
+                if (pokemon.item != null) Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: Tooltip(
+                    message: pokemon.item,
+                    child: widget.homeViewModel.pokemonImageService.getItemSprite(pokemon.item!, width: 64, height: 64),
+                  ),
                 )
+
               ],
             ),
           ),
