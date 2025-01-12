@@ -21,8 +21,6 @@ class PokemonImageService {
 
   Widget getItemSprite(String itemName, {double? width, double? height}) {
     Uri? uri = _getKey(itemName, 'spriteUrl', _item_mappings);
-    print('yoooooo');
-    print(uri);
     if (uri == null) return _getDefaultSprite();
     return _getImageWidget(uri, width: width, height: height);
   }

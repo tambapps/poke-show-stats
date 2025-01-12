@@ -195,8 +195,16 @@ class _MobileHomeConfigComponentState extends _HomeConfigComponentState {
 
   @override
   List<Widget> pokepasteWidget(AppLocalization localization, ThemeData theme, EdgeInsets padding, Widget title, Pokepaste pokepaste) {
-    // TODO: implement pokepasteWidget
-    throw UnimplementedError();
+    return [
+      title,
+      Padding(
+        padding: padding,
+        child: Column(
+          children: pokepaste.pokemons.map((pokemon) => pokemonWidget(pokemon)).toList(),
+        ),
+      ),
+    ];
+
   }
 }
 
