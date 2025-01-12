@@ -23,8 +23,7 @@ class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    const padding = EdgeInsets.symmetric(horizontal: 128);
-    //       padding: EdgeInsets.symmetric(vertical: 36, horizontal: 128),
+    final padding = EdgeInsets.symmetric(horizontal: dimens.defaultScreenMargin);
     return ListView(
       children: [
         SizedBox(height: 36,),

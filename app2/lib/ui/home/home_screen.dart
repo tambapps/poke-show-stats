@@ -26,28 +26,31 @@ class _HomeScreenState extends AbstractState<HomeScreen> {
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-          appBar: TabBar(
-            onTap: (index) => widget.viewModel.onTabSelected(index),
-            tabs: [
-              Tab(text: localization.home),
-              Tab(text: localization.replayEntries),
-              Tab(text: localization.usageStats),
-            ],
-          ),
-          body: TabBarView(
-            children: [
-              ListenableBuilder(
-                  listenable: widget.viewModel,
-                  builder: (context, _) => HomeConfigComponent(homeViewModel: widget.viewModel, viewModel: HomeConfigViewModel(homeViewModel: widget.viewModel, pokepasteParser: context.read()),)),
-              ListenableBuilder(
-                  listenable: widget.viewModel,
-                  builder: (context, _) => ReplayEntriesComponent(homeViewModel: widget.viewModel, viewModel: ReplayEntriesViewModel(pokemonImageService: context.read(), replayParser: context.read(), homeViewModel: widget.viewModel),)),
-              Center(child: Text("Content for Tab 3")),
-            ],
-          )
+    return Padding(
+      padding: EdgeInsets.only(top: dimens.screenBoundsTopMargin),
+      child: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+            appBar: TabBar(
+              onTap: (index) => widget.viewModel.onTabSelected(index),
+              tabs: [
+                Tab(text: localization.home),
+                Tab(text: localization.replayEntries),
+                Tab(text: localization.usageStats),
+              ],
+            ),
+            body: TabBarView(
+              children: [
+                ListenableBuilder(
+                    listenable: widget.viewModel,
+                    builder: (context, _) => HomeConfigComponent(homeViewModel: widget.viewModel, viewModel: HomeConfigViewModel(homeViewModel: widget.viewModel, pokepasteParser: context.read()),)),
+                ListenableBuilder(
+                    listenable: widget.viewModel,
+                    builder: (context, _) => ReplayEntriesComponent(homeViewModel: widget.viewModel, viewModel: ReplayEntriesViewModel(pokemonImageService: context.read(), replayParser: context.read(), homeViewModel: widget.viewModel),)),
+                Center(child: Text("Content for Tab 3")),
+              ],
+            )
+        ),
       ),
     );
   }
