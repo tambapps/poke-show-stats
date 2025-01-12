@@ -4,6 +4,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../utils.dart' as utils;
+
 abstract final class Dimens {
   const Dimens();
 
@@ -13,6 +15,7 @@ abstract final class Dimens {
 
   static const itemSpriteSize = 50.0;
 
+  bool get isMobile;
   /// screen bounds
   double get screenBoundsTopMargin;
   double get defaultScreenMargin;
@@ -25,11 +28,8 @@ abstract final class Dimens {
   static const Dimens mobile = _DimensMobile();
 
   /// Get dimensions definition based on screen size
-  factory Dimens.of(BuildContext context) =>
-      switch (MediaQuery.sizeOf(context).width) {
-        > 600 => desktop,
-        _ => mobile,
-      };
+  factory Dimens.of(BuildContext context) => utils.isMobile(context) ? mobile : desktop;
+
 }
 
 /// Mobile dimensions
@@ -43,6 +43,9 @@ final class _DimensMobile extends Dimens {
 
   @override
   final double screenBoundsTopMargin = 32.0;
+
+  @override
+  final bool isMobile = true;
 
   const _DimensMobile();
 }
@@ -58,6 +61,9 @@ final class _DimensDesktop extends Dimens {
 
   @override
   final double screenBoundsTopMargin = 0.0;
+
+  @override
+  final bool isMobile = false;
 
   const _DimensDesktop();
 }

@@ -11,15 +11,16 @@ import '../../core/themes/dimens.dart';
 class HomeConfigComponent extends StatefulWidget {
   final HomeViewModel homeViewModel;
   final HomeConfigViewModel viewModel;
+  final bool isMobile;
 
-  const HomeConfigComponent({super.key, required this.homeViewModel, required this.viewModel});
+  const HomeConfigComponent({super.key, required this.homeViewModel, required this.viewModel, required this.isMobile});
 
 
   @override
-  _HomeConfigComponentState createState() => _HomeConfigComponentState();
+  _HomeConfigComponentState createState() => isMobile ? _MobileHomeConfigComponentState() : _DesktopHomeConfigComponentState();
 }
 
-class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
+abstract class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
@@ -59,72 +60,53 @@ class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
           ),),
         SizedBox(height: 32,),
         // pokepaste
-        ...pokepasteWidget(localization, theme, padding)
+        ...pokepaste(localization, theme, padding)
       ],
     );
   }
 
-  List<Widget> pokepasteWidget(AppLocalization localization, ThemeData theme, EdgeInsets padding) {
+  List<Widget> pokepasteWidget(AppLocalization localization, ThemeData theme, EdgeInsets padding, Widget title, Pokepaste pokepaste);
+
+  List<Widget> pokepaste(AppLocalization localization, ThemeData theme, EdgeInsets padding) {
     final pokepaste = widget.homeViewModel.pokepaste;
     final title = Text(localization.pokepaste, style: theme.textTheme.titleLarge,);
     if (pokepaste == null) {
-      return [
-        Padding(padding: padding, child: title,),
-        Padding(padding: EdgeInsets.symmetric(vertical: 8)),
-        Padding(
-          padding: padding,
-          child: TextField(
-            maxLines: null,
-            controller: widget.viewModel.pokepasteController,
-            onSubmitted: (value) {
-              widget.homeViewModel.addSdName(value);
-              widget.viewModel.sdNameController.clear();
-            },
-            decoration: InputDecoration(
-              labelText: localization.pasteSomething,
-              border: OutlineInputBorder(),
-            ),
-          ),
-        ),
-        SizedBox(height: 20,),
-        Padding(
-            padding: padding,
-          child: Align(
-            alignment: Alignment.topRight,
-            child: OutlinedButton(
-              onPressed: () => widget.viewModel.loadPokepaste(),
-              child: Text(localization.load,),
-            ),
-          ),
-        )
-      ];
+      return pokepasteForm(localization, theme, padding, title);
+    } else {
+      return pokepasteWidget(localization, theme, padding, title, pokepaste);
     }
-    final pokemons = pokepaste.pokemons;
-    List<Row> pokemonRows = [];
-    int nbRows = (pokemons.length % 3 == 0 ? pokemons.length / 2 : pokemons.length / 2 + 1).toInt();
-    for (int row = 0; row < nbRows; row++) {
-      List<Widget> rowChildren = [];
-      for (int i = row * 3; i < row * 3 + 3 && i < pokemons.length; i++) {
-        rowChildren.add(Expanded(flex: 1, child: Padding(padding: EdgeInsets.symmetric(horizontal: 32), child: pokemonWidget(pokemons[i]),),));
-      }
-      pokemonRows.add(Row(children: rowChildren,));
-    }
+  }
+
+  List<Widget> pokepasteForm(AppLocalization localization, ThemeData theme, EdgeInsets padding, Widget title) {
     return [
+      Padding(padding: padding, child: title,),
+      Padding(padding: EdgeInsets.symmetric(vertical: 8)),
       Padding(
         padding: padding,
-        child: Row(
-          children: [
-            title,
-            SizedBox(width: 16,),
-            OutlinedButton(
-              onPressed: () => widget.viewModel.removePokepaste(),
-              child: Text(localization.change,),
-            )
-          ],
+        child: TextField(
+          maxLines: null,
+          controller: widget.viewModel.pokepasteController,
+          onSubmitted: (value) {
+            widget.homeViewModel.addSdName(value);
+            widget.viewModel.sdNameController.clear();
+          },
+          decoration: InputDecoration(
+            labelText: localization.pasteSomething,
+            border: OutlineInputBorder(),
+          ),
         ),
       ),
-      SizedBox(height: 16,),
-      ...pokemonRows
+      SizedBox(height: 20,),
+      Padding(
+        padding: padding,
+        child: Align(
+          alignment: Alignment.topRight,
+          child: OutlinedButton(
+            onPressed: () => widget.viewModel.loadPokepaste(),
+            child: Text(localization.load,),
+          ),
+        ),
+      )
     ];
   }
 
@@ -207,4 +189,48 @@ class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
     }
     return statStrings.join(" / ");
   }
+}
+
+class _MobileHomeConfigComponentState extends _HomeConfigComponentState {
+
+  @override
+  List<Widget> pokepasteWidget(AppLocalization localization, ThemeData theme, EdgeInsets padding, Widget title, Pokepaste pokepaste) {
+    // TODO: implement pokepasteWidget
+    throw UnimplementedError();
+  }
+}
+
+class _DesktopHomeConfigComponentState extends _HomeConfigComponentState {
+
+  @override
+  List<Widget> pokepasteWidget(AppLocalization localization, ThemeData theme, EdgeInsets padding, Widget title, Pokepaste pokepaste) {
+    final pokemons = pokepaste.pokemons;
+    List<Row> pokemonRows = [];
+    int nbRows = (pokemons.length % 3 == 0 ? pokemons.length / 2 : pokemons.length / 2 + 1).toInt();
+    for (int row = 0; row < nbRows; row++) {
+      List<Widget> rowChildren = [];
+      for (int i = row * 3; i < row * 3 + 3 && i < pokemons.length; i++) {
+        rowChildren.add(Expanded(flex: 1, child: Padding(padding: EdgeInsets.symmetric(horizontal: 32), child: pokemonWidget(pokemons[i]),),));
+      }
+      pokemonRows.add(Row(children: rowChildren,));
+    }
+    return [
+      Padding(
+        padding: padding,
+        child: Row(
+          children: [
+            title,
+            SizedBox(width: 16,),
+            OutlinedButton(
+              onPressed: () => widget.viewModel.removePokepaste(),
+              child: Text(localization.change,),
+            )
+          ],
+        ),
+      ),
+      SizedBox(height: 16,),
+      ...pokemonRows
+    ];
+  }
+
 }
