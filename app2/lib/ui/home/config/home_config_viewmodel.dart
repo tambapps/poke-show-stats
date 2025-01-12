@@ -59,7 +59,7 @@ class HomeConfigViewModel extends ChangeNotifier {
         hint: localization.enterSdName,
         confirmButtonText: localization.add,
         localization: localization,
-        validator: (text) => text.trim().isNotEmpty,
+        validator: (text) => text.trim().isNotEmpty && text.length <= 18,
         onSuccess: (sdName) => homeViewModel.addSdName(sdName)
     );
   }

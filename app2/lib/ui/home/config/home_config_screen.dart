@@ -38,17 +38,25 @@ class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
             )
           ],
         ),),
-        Padding(padding: padding, child: Row(
-          children: [
-            ...widget.homeViewModel.sdNames.map((sdName) {
-              return Padding(padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(children: [
-                    Text("- $sdName"),
-                    IconButton(icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => widget.homeViewModel.removeSdName(sdName))
-                  ],));
-            })
-          ],
-        ),),
+        Padding(
+          padding: padding,
+          child: GridView.builder(
+              shrinkWrap: true, // Makes the GridView wrap its content
+              itemCount: widget.homeViewModel.sdNames.length,
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: dimens.sdNamesMaxCrossAxisExtent, // Maximum width of each grid item
+                mainAxisSpacing: 10, // Spacing between rows
+                crossAxisSpacing: 10, // Spacing between columns
+                childAspectRatio: 4, // Aspect ratio of each grid item
+              ),
+              itemBuilder: (context, index) {
+                final sdName = widget.homeViewModel.sdNames[index];
+                return Row(children: [
+                  Container(constraints: BoxConstraints(maxWidth: dimens.sdNameMaxWidth), child: Tooltip(message: sdName, child: Text(sdName, overflow: TextOverflow.ellipsis,),),),
+                  IconButton(padding: EdgeInsets.zero, icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => widget.homeViewModel.removeSdName(sdName))
+                ],);
+              }
+          ),),
         SizedBox(height: 32,),
         // pokepaste
         ...pokepasteWidget(localization, theme, padding)

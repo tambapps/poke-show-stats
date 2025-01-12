@@ -17,6 +17,10 @@ abstract final class Dimens {
   double get screenBoundsTopMargin;
   double get defaultScreenMargin;
 
+  /** home config screen dimensions **/
+  double get sdNamesMaxCrossAxisExtent;
+  double get sdNameMaxWidth;
+
   static const Dimens desktop = _DimensDesktop();
   static const Dimens mobile = _DimensMobile();
 
@@ -32,6 +36,10 @@ abstract final class Dimens {
 final class _DimensMobile extends Dimens {
   @override
   final double defaultScreenMargin = 8.0;
+  @override
+  final double sdNamesMaxCrossAxisExtent = 270.0;
+  @override
+  final double sdNameMaxWidth = 110.0;
 
   @override
   final double screenBoundsTopMargin = 32.0;
@@ -41,6 +49,10 @@ final class _DimensMobile extends Dimens {
 
 /// Desktop/Web dimensions
 final class _DimensDesktop extends Dimens {
+  @override
+  final double sdNamesMaxCrossAxisExtent = 200.0;
+  @override
+  final double sdNameMaxWidth = 200.0;
   @override
   final double defaultScreenMargin = 128.0;
 
