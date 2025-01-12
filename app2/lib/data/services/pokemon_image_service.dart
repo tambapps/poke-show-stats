@@ -11,10 +11,14 @@ class PokemonImageService {
 
   final Map<dynamic, dynamic> mappings;
 
-  Widget getSprite(String pokemon) {
+  Widget getPokemonSprite(String pokemon) {
     Uri? uri = getSpriteUri(pokemon);
     if (uri == null) return _getDefaultSprite();
     return _getImageWidget(uri, width: Dimens.pokemonLogoSize, height: Dimens.pokemonLogoSize);
+  }
+
+  Widget getTeraTypeSprite(String type, {double? width, double? height}) {
+    return Image(image: AssetImage('assets/images/tera-types/$type.png'), width: width, height: height,);
   }
 
   Widget getArtwork(String pokemon, {double? width, double? height}) {

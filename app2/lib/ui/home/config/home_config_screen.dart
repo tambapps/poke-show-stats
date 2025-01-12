@@ -126,8 +126,9 @@ class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
       buffer.write(" @ ${pokemon.item}");
     }
     buffer.writeln();
-    buffer.writeln(pokemon.level);
-    buffer.writeln("Tera type: ${pokemon.teraType}");
+    if (pokemon.level != 50) {
+      buffer.writeln("Level: ${pokemon.level}");
+    }
     if (pokemon.evs != null && !pokemon.evs!.all((stat) => stat == 0)) {
       buffer.writeln("Evs: ${statsString(pokemon.evs!, 0)}");
     }
@@ -138,11 +139,36 @@ class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
     for (String move in pokemon.moves) {
       buffer.writeln("- $move");
     }
-    return Row(
-      children: [
-        Expanded(flex: 1, child: widget.homeViewModel.pokemonImageService.getArtwork(pokemon.name),),
-        Expanded(flex: 1, child: Text(buffer.toString()))
-      ],
+    return SizedBox(
+      height: 350,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 15,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Transform.scale(
+                  scale: 0.65,
+                  child: Tooltip(
+                    message: pokemon.name,
+                    child: widget.homeViewModel.pokemonImageService.getArtwork(pokemon.name),
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Tooltip(
+                    message: pokemon.teraType,
+                    child: widget.homeViewModel.pokemonImageService.getTeraTypeSprite(pokemon.teraType, width: 64, height: 64),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Expanded(flex: 10, child: Text(buffer.toString()))
+        ],
+      ),
     );
   }
 
