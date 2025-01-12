@@ -27,24 +27,14 @@ class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
     return ListView(
       children: [
         SizedBox(height: 36,),
-        Padding(padding: padding, child: Row(
+        Padding(padding: padding,
+          child: Row(
           children: [
             Text(localization.showdownNames, style: theme.textTheme.titleLarge,),
             Padding(padding: EdgeInsets.symmetric(horizontal: 8)),
-            SizedBox(
-              width: 200,
-              child: TextField(
-                controller: widget.viewModel.sdNameController,
-                onSubmitted: (value) {
-                  widget.homeViewModel.addSdName(value);
-                  widget.viewModel.sdNameController.clear();
-                },
-                decoration: InputDecoration(
-                  labelText: localization.addSdName,
-                  //   border: OutlineInputBorder(),
-                ),
-              )
-              ,
+            OutlinedButton(
+              onPressed: () => widget.viewModel.addSdNameDialog(context, localization),
+              child: Text(localization.add,),
             )
           ],
         ),),

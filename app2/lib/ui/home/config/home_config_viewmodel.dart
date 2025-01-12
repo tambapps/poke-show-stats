@@ -1,6 +1,8 @@
+import 'package:app2/ui/core/localization/applocalization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
+import '../../core/dialogs.dart';
 import '../home_viewmodel.dart';
 
 class HomeConfigViewModel extends ChangeNotifier {
@@ -50,6 +52,17 @@ class HomeConfigViewModel extends ChangeNotifier {
       fontSize: 16.0,
     );  }
 
+  void addSdNameDialog(BuildContext context, AppLocalization localization) {
+    showTextInputDialog(
+        context,
+        title: localization.addSdName,
+        hint: localization.enterSdName,
+        confirmButtonText: localization.add,
+        localization: localization,
+        validator: (text) => text.trim().isNotEmpty,
+        onSuccess: (sdName) => homeViewModel.addSdName(sdName)
+    );
+  }
   void removePokepaste() {
     homeViewModel.pokepaste = null;
   }

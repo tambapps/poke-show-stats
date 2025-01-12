@@ -17,11 +17,15 @@ class AppLocalization {
     'replayEntries': 'Replay Entries',
     'usageStats': 'Usage Stats',
     'sdNames': 'Showdown names',
-    'addSdName': 'Add name',
+    'addSdName': 'Add Pokemon Showdown name',
+    'enterSdName': 'Enter name',
     'pokepaste': 'Pokepaste',
     'pasteSomething': 'Paste something here!',
     'load': 'Load',
     'change': 'Change',
+    'add': 'Add',
+    'ok': 'OK',
+    'cancel': 'Cancel',
   };
 
   // If string for "label" does not exist, will show "[LABEL]"
@@ -33,10 +37,14 @@ class AppLocalization {
   String get usageStats => _get('usageStats');
   String get showdownNames => _get('sdNames');
   String get addSdName => _get('addSdName');
+  String get enterSdName => _get('enterSdName');
   String get pokepaste => _get('pokepaste');
   String get pasteSomething => _get('pasteSomething');
   String get load => _get('load');
   String get change => _get('change');
+  String get add => _get('add');
+  String get cancel => _get('cancel');
+  String get ok => _get('ok');
 
   String selected(int value) =>
       _get('selected').replaceAll('{1}', value.toString());
