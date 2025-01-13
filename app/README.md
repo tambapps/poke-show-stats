@@ -1,10 +1,4 @@
-# Note to self
-
-The pokemon image are actually cropped so that the pokemon are displayed with similar size, using the below command
-
-```shell
-magick input.png -trim output.png
-```
+# app2
 
 A new Flutter project.
 
