@@ -112,19 +112,19 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
 
   Widget pokemonWidget(Pokemon pokemon) {
     StringBuffer buffer = StringBuffer();
-    if (pokemon.level != 50) {
+    if (pokemon.level != null && pokemon.level != 50) {
       buffer.writeln("Level: ${pokemon.level}");
     }
     if (pokemon.evs != null && !pokemon.evs!.all((stat) => stat == 0)) {
       buffer.writeln("Evs: ${statsString(pokemon.evs!, 0)}");
     }
-    buffer.writeln("${pokemon.nature} Nature");
+    if (pokemon.nature != null) {
+      buffer.writeln("${pokemon.nature} Nature");
+    }
     if (pokemon.ivs != null && !pokemon.ivs!.all((stat) => stat == 31)) {
       buffer.writeln("Ivs: ${statsString(pokemon.ivs!, 31)}");
     }
-    for (String move in pokemon.moves) {
-      buffer.writeln("- $move");
-    }
+    List<Widget> moveWidget = pokemon.moves.map((move) => _moveWidget(move)).toList();
     return SizedBox(
       height: 350,
       child: Row(
@@ -136,34 +136,47 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
               children: [
                 Transform.scale(
                   scale: 0.65,
-                  child: Tooltip(
-                    message: pokemon.name,
-                    child: widget.homeViewModel.pokemonImageService.getPokemonArtwork(pokemon.name),
-                  ),
+                  child: widget.homeViewModel.pokemonImageService.getPokemonArtwork(pokemon.name),
                 ),
                 Positioned(
                   top: 0,
                   right: 0,
-                  child: Tooltip(
-                    message: pokemon.teraType,
-                    child: widget.homeViewModel.pokemonImageService.getTeraTypeSprite(pokemon.teraType, width: Dimens.teraSpriteSize, height: Dimens.teraSpriteSize),
-                  ),
+                  child: widget.homeViewModel.pokemonImageService.getTeraTypeSprite(pokemon.teraType, width: Dimens.teraSpriteSize, height: Dimens.teraSpriteSize),
                 ),
                 if (pokemon.item != null) Positioned(
                   bottom: 0,
                   right: 0,
-                  child: Tooltip(
-                    message: pokemon.item,
-                    child: widget.homeViewModel.pokemonImageService.getItemSprite(pokemon.item!, width: Dimens.itemSpriteSize, height: Dimens.itemSpriteSize),
-                  ),
+                  child: widget.homeViewModel.pokemonImageService.getItemSprite(pokemon.item!, width: Dimens.itemSpriteSize, height: Dimens.itemSpriteSize),
                 )
 
               ],
             ),
           ),
-          Expanded(flex: 10, child: Text(buffer.toString()))
+          Expanded(
+              flex: 10,
+              child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(buffer.toString()),
+                  ...moveWidget
+                ],
+              )
+          )
         ],
       ),
+    );
+  }
+
+  Widget _moveWidget(String move) {
+    // TODO have a cache of moves to fetch right type and type
+    return Row(
+      children: [
+        widget.homeViewModel.pokemonImageService.getTypeSprite('electric', width: 25.0, height: 25.0),
+        SizedBox(width: 8,),
+        widget.homeViewModel.pokemonImageService.getCategorySprite('physical', width: 32.0, height: 32.0),
+        SizedBox(width: 8,),
+        Text(move, overflow: TextOverflow.ellipsis,)
+      ],
     );
   }
 

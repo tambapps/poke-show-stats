@@ -16,23 +16,50 @@ class PokemonImageService {
   Widget getPokemonSprite(String pokemon) {
     Uri? uri = _getPokemonSpriteUri(pokemon);
     if (uri == null) return _getDefaultSprite();
-    return _getImageWidget(uri, width: Dimens.pokemonLogoSize, height: Dimens.pokemonLogoSize);
+    return Tooltip(
+      message: pokemon,
+      child: _getImageWidget(uri, width: Dimens.pokemonLogoSize, height: Dimens.pokemonLogoSize),
+    );
   }
 
   Widget getItemSprite(String itemName, {double? width, double? height}) {
     Uri? uri = _getKey(itemName, 'spriteUrl', _item_mappings);
     if (uri == null) return _getDefaultSprite();
-    return _getImageWidget(uri, width: width, height: height);
+    return Tooltip(
+      message: itemName,
+      child: _getImageWidget(uri, width: width, height: height),
+    );
   }
 
+  // if the guy doesn't respond just use the ones here https://www.pokepedia.fr/Cat%C3%A9gorie:Image_de_type_de_Pok%C3%A9mon_%C3%89carlate_et_Violet
   Widget getTeraTypeSprite(String type, {double? width, double? height}) {
-    return Image(image: AssetImage('assets/images/tera-types/$type.png'), width: width, height: height,);
+    return Tooltip(
+      message: type,
+      child: Image(image: AssetImage('assets/images/tera-types/${type.toLowerCase()}.png'), width: width, height: height,),
+    );
+  }
+
+  Widget getTypeSprite(String type, {double? width, double? height}) {
+    return Tooltip(
+      message: type,
+      child: Image(image: AssetImage('assets/images/moves/${type.toLowerCase()}.png'), width: width, height: height,),
+    );
+  }
+
+  Widget getCategorySprite(String moveType, {double? width, double? height}) {
+    return Tooltip(
+      message: moveType,
+      child: Image(image: AssetImage('assets/images/moves/${moveType.toLowerCase()}.png'), width: width, height: height,),
+    );
   }
 
   Widget getPokemonArtwork(String pokemon, {double? width, double? height}) {
     Uri? uri = _getPokemonArtworkUri(pokemon);
     if (uri == null) return _getDefaultSprite();
-    return _getImageWidget(uri, width: width, height: height);
+    return Tooltip(
+      message: pokemon,
+      child: _getImageWidget(uri, width: width, height: height),
+    );
   }
 
   Widget _getImageWidget(Uri uri, {double? width, double? height}) {

@@ -76,7 +76,7 @@ class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent>
                           children: replay.data.player1.team
                               .map((pokemon) =>
                               Padding(padding: EdgeInsets.symmetric(horizontal: 4), child:
-                              Tooltip(message: pokemon, child: widget.viewModel.pokemonImageService.getPokemonSprite(pokemon),),))
+                              widget.viewModel.pokemonImageService.getPokemonSprite(pokemon),))
                               .toList(),
                         ),),
                         Center(child: Text(replay.notes ?? ''),),
