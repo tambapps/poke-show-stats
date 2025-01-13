@@ -209,7 +209,16 @@ class _MobileHomeConfigComponentState extends _HomeConfigComponentState {
   @override
   List<Widget> pokepasteWidget(AppLocalization localization, Dimens dimens, ThemeData theme, EdgeInsets padding, Widget title, Pokepaste pokepaste) {
     return [
-      title,
+      Row(
+        children: [
+          title,
+          SizedBox(width: 16,),
+          OutlinedButton(
+            onPressed: () => widget.viewModel.removePokepaste(),
+            child: Text(localization.change,),
+          )
+        ],
+      ),
       Padding(
         padding: padding,
         child: Column(
