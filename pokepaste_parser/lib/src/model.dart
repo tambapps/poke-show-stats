@@ -47,8 +47,8 @@ class Pokemon {
   String? item;
   String ability;
   String teraType;
-  String nature;
-  int level;
+  String? nature;
+  int? level;
   List<String> moves;
   Stats? ivs;
   Stats? evs;
@@ -59,8 +59,8 @@ class Pokemon {
     this.item,
     this.ability = "",
     this.teraType = "",
-    this.nature = "",
-    this.level = 50,
+    this.nature,
+    this.level,
     this.moves = const [],
     this.ivs,
     this.evs

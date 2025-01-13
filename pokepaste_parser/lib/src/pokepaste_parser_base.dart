@@ -40,7 +40,6 @@ class PokepasteParser {
           pokemon.moves.add(line.substring(2));
         }
       }
-      pokemon.ivs ??= Stats.withDefault(31);
       pokemons.add(pokemon);
     }
     if (pokemons.isEmpty) {
