@@ -60,20 +60,20 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
           ),),
         SizedBox(height: 32,),
         // pokepaste
-        ...pokepaste(localization, theme, padding)
+        ...pokepaste(localization, dimens, theme, padding)
       ],
     );
   }
 
-  List<Widget> pokepasteWidget(AppLocalization localization, ThemeData theme, EdgeInsets padding, Widget title, Pokepaste pokepaste);
+  List<Widget> pokepasteWidget(AppLocalization localization, Dimens dimens, ThemeData theme, EdgeInsets padding, Widget title, Pokepaste pokepaste);
 
-  List<Widget> pokepaste(AppLocalization localization, ThemeData theme, EdgeInsets padding) {
+  List<Widget> pokepaste(AppLocalization localization, Dimens dimens, ThemeData theme, EdgeInsets padding) {
     final pokepaste = widget.homeViewModel.pokepaste;
     final title = Text(localization.pokepaste, style: theme.textTheme.titleLarge,);
     if (pokepaste == null) {
       return pokepasteForm(localization, theme, padding, title);
     } else {
-      return pokepasteWidget(localization, theme, padding, title, pokepaste);
+      return pokepasteWidget(localization, dimens, theme, padding, title, pokepaste);
     }
   }
 
@@ -110,7 +110,7 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
     ];
   }
 
-  Widget pokemonWidget(Pokemon pokemon) {
+  Widget pokemonWidget(Dimens dimens, Pokemon pokemon) {
     StringBuffer buffer = StringBuffer();
     if (pokemon.level != null && pokemon.level != 50) {
       buffer.writeln("Level: ${pokemon.level}");
@@ -130,7 +130,7 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
       child: Row(
         children: [
           Expanded(
-            flex: 15,
+            flex: dimens.pokemonArtworkFlex,
             child: Stack(
               alignment: Alignment.center,
               children: [
@@ -153,7 +153,7 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
             ),
           ),
           Expanded(
-              flex: 10,
+              flex: dimens.pokemonSheetFlex,
               child: Column(
                   mainAxisSize: MainAxisSize.min,
                 children: [
@@ -207,13 +207,13 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
 class _MobileHomeConfigComponentState extends _HomeConfigComponentState {
 
   @override
-  List<Widget> pokepasteWidget(AppLocalization localization, ThemeData theme, EdgeInsets padding, Widget title, Pokepaste pokepaste) {
+  List<Widget> pokepasteWidget(AppLocalization localization, Dimens dimens, ThemeData theme, EdgeInsets padding, Widget title, Pokepaste pokepaste) {
     return [
       title,
       Padding(
         padding: padding,
         child: Column(
-          children: pokepaste.pokemons.map((pokemon) => pokemonWidget(pokemon)).toList(),
+          children: pokepaste.pokemons.map((pokemon) => pokemonWidget(dimens, pokemon)).toList(),
         ),
       ),
     ];
@@ -224,14 +224,14 @@ class _MobileHomeConfigComponentState extends _HomeConfigComponentState {
 class _DesktopHomeConfigComponentState extends _HomeConfigComponentState {
 
   @override
-  List<Widget> pokepasteWidget(AppLocalization localization, ThemeData theme, EdgeInsets padding, Widget title, Pokepaste pokepaste) {
+  List<Widget> pokepasteWidget(AppLocalization localization, Dimens dimens, ThemeData theme, EdgeInsets padding, Widget title, Pokepaste pokepaste) {
     final pokemons = pokepaste.pokemons;
     List<Row> pokemonRows = [];
     int nbRows = (pokemons.length % 3 == 0 ? pokemons.length / 2 : pokemons.length / 2 + 1).toInt();
     for (int row = 0; row < nbRows; row++) {
       List<Widget> rowChildren = [];
       for (int i = row * 3; i < row * 3 + 3 && i < pokemons.length; i++) {
-        rowChildren.add(Expanded(flex: 1, child: Padding(padding: EdgeInsets.symmetric(horizontal: 32), child: pokemonWidget(pokemons[i]),),));
+        rowChildren.add(Expanded(flex: 1, child: Padding(padding: EdgeInsets.symmetric(horizontal: 32), child: pokemonWidget(dimens, pokemons[i]),),));
       }
       pokemonRows.add(Row(children: rowChildren,));
     }

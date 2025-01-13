@@ -23,6 +23,8 @@ abstract final class Dimens {
   /** home config screen dimensions **/
   double get sdNamesMaxCrossAxisExtent;
   double get sdNameMaxWidth;
+  int get pokemonArtworkFlex;
+  int get pokemonSheetFlex;
 
   static const Dimens desktop = _DimensDesktop();
   static const Dimens mobile = _DimensMobile();
@@ -45,6 +47,11 @@ final class _DimensMobile extends Dimens {
   final double screenBoundsTopMargin = 32.0;
 
   @override
+  final int pokemonArtworkFlex = 1;
+  @override
+  final int pokemonSheetFlex = 1;
+
+  @override
   final bool isMobile = true;
 
   const _DimensMobile();
@@ -61,6 +68,11 @@ final class _DimensDesktop extends Dimens {
 
   @override
   final double screenBoundsTopMargin = 0.0;
+
+  @override
+  final int pokemonArtworkFlex = 15;
+  @override
+  final int pokemonSheetFlex = 10;
 
   @override
   final bool isMobile = false;
