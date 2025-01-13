@@ -25,7 +25,6 @@ void main() {
             level: 50,
             teraType: 'Fairy',
             evs: Stats(specialAttack: 252, specialDefense: 4, speed: 252),
-            ivs: Stats.withDefault(31),
             nature: 'Modest',
             moves: ['Volt Switch', 'Draco Meteor', 'Electro Drift', 'Dazzling Gleam']
         ),
@@ -36,7 +35,6 @@ void main() {
             level: 50,
             teraType: 'Normal',
             evs: Stats(hp: 140, attack: 252, specialDefense: 116),
-            ivs: Stats.withDefault(31),
             nature: 'Adamant',
             moves: ['Sacred Fire', 'Crunch', 'Stomping Tantrum', 'Extreme Speed']
         ),
@@ -47,7 +45,6 @@ void main() {
             level: 50,
             teraType: 'Stellar',
             evs: Stats(attack: 252, speed: 252),
-            ivs: Stats.withDefault(31),
             nature: 'Jolly',
             moves: ['Icicle Crash', 'Sucker Punch', 'Sacred Sword', 'Protect']
         ),
@@ -81,7 +78,6 @@ void main() {
             level: 50,
             teraType: 'Rock',
             evs: Stats(attack: 252, speed: 252),
-            ivs: Stats.withDefault(31),
             nature: 'Adamant',
             moves: ['Ivy Cudgel', 'Horn Leech', 'Spiky Shield', 'Follow Me']
         )
