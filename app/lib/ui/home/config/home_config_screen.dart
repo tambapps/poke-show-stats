@@ -170,7 +170,6 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
       listenable: widget.viewModel,
       builder: (context, _) {
         final move = widget.viewModel.pokemonMoves[moveName];
-        print("yoooooo: $moveName => $move ${widget.viewModel.hashCode}");
         Widget moveWidget = Text(moveName, overflow: TextOverflow.ellipsis, textAlign: TextAlign.start,);
         if (move == null) {
           return moveWidget;
@@ -181,7 +180,7 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
             SizedBox(width: 8,),
             widget.viewModel.pokemonImageService.getCategorySprite(move.category, width: 32.0, height: 32.0),
             SizedBox(width: 8,),
-            moveWidget
+            Flexible(child: Tooltip(message: moveName,child: moveWidget,))
           ],
         );
       },

@@ -64,7 +64,6 @@ class HomeConfigViewModel extends ChangeNotifier {
         if (move != null) {
           // need to re instantiate in order for Flutter to detect changes
           _pokemonMoves = Map.from(_pokemonMoves)..[moveName] = move;
-          print("yipiiii $moveName ${_pokemonMoves.hashCode} ${this.hashCode} ${this.hasListeners}");
           notifyListeners();
         }
       });

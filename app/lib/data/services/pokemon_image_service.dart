@@ -34,7 +34,7 @@ class PokemonImageService {
   // if the guy doesn't respond just use the ones here https://www.pokepedia.fr/Cat%C3%A9gorie:Image_de_type_de_Pok%C3%A9mon_%C3%89carlate_et_Violet
   Widget getTeraTypeSprite(String type, {double? width, double? height}) {
     return Tooltip(
-      message: type,
+      message: "Tera $type",
       child: Image(image: AssetImage('assets/images/tera-types/${type.toLowerCase()}.png'), width: width, height: height,),
     );
   }

@@ -4,6 +4,12 @@ Combusken:
 Urshifu:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/urshifu.png"
   artwork: "https://www.pokepedia.fr/images/a/ac/Shifours_%28Style_Mille_Poings%29-EB.png"
+Urshifu-Rapid-Strike:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/urshifu.png"
+  artwork: "https://www.pokepedia.fr/images/a/ac/Shifours_%28Style_Mille_Poings%29-EB.png"
+Urshifu-Single-Strike:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/urshifu.png"
+  artwork: "https://www.pokepedia.fr/images/7/73/Shifours_%28Style_Poing_Final%29-EB.png"
 Virizion:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/virizion.png"
   artwork: "https://www.pokepedia.fr/images/thumb/d/d1/Viridium-NB.png/426px-Viridium-NB.png"
