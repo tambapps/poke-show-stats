@@ -110,7 +110,10 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
   }
 
   Widget pokemonWidget(Dimens dimens, Pokemon pokemon) {
-    List<Widget> moveWidget = pokemon.moves.map((move) => _moveWidget(move)).toList();
+    Widget moveWidget = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: pokemon.moves.map((move) => _moveWidget(move)).toList(),
+    );
     return SizedBox(
       height: dimens.pokepastePokemonHeight,
       child: Row(
@@ -144,7 +147,8 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   if (pokemon.ivs != null || pokemon.evs != null) _statsWidget(pokemon.ivs, pokemon.evs, pokemon.nature),
-                  ...moveWidget
+                  SizedBox(height: 8,),
+                  moveWidget
                 ],
               )
           )
@@ -197,6 +201,7 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
           return moveWidget;
         }
         return Row(
+            mainAxisSize: MainAxisSize.min,
           children: [
             widget.viewModel.pokemonImageService.getTypeSprite(move.type, width: 25.0, height: 25.0),
             SizedBox(width: 8,),

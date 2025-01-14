@@ -72,9 +72,9 @@ final class _DimensDesktop extends Dimens {
   @override
   final double defaultScreenMargin = 128.0;
   @override
-  final double pokepastePokemonHeight = 350.0;
+  final double pokepastePokemonHeight = 250.0;
   @override
-  final double pokepastePokemonIconsOffset = 50.0;
+  final double pokepastePokemonIconsOffset = 25;
 
   @override
   final double screenBoundsTopMargin = 0.0;
