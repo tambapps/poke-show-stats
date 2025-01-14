@@ -46,7 +46,7 @@ class _HomeScreenState extends AbstractState<HomeScreen> {
                     builder: (context, _) => HomeConfigComponent(viewModel: HomeConfigViewModel(homeViewModel: widget.viewModel, pokepasteParser: context.read(), pokeApi: context.read()), isMobile: dimens.isMobile,)),
                 ListenableBuilder(
                     listenable: widget.viewModel,
-                    builder: (context, _) => ReplayEntriesComponent(homeViewModel: widget.viewModel, viewModel: ReplayEntriesViewModel(pokemonImageService: context.read(), replayParser: context.read(), homeViewModel: widget.viewModel),)),
+                    builder: (context, _) => ReplayEntriesComponent(viewModel: ReplayEntriesViewModel(replayParser: context.read(), homeViewModel: widget.viewModel),)),
                 Center(child: Text("Content for Tab 3")),
               ],
             )

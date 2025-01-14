@@ -13,11 +13,12 @@ import '../../../data/services/pokemon_image_service.dart';
 class ReplayEntriesViewModel extends ChangeNotifier {
 
   ReplayEntriesViewModel({
-    required this.pokemonImageService,
     required this.replayParser,
     required this.homeViewModel});
 
-  final PokemonImageService pokemonImageService;
+  PokemonImageService get pokemonImageService => homeViewModel.pokemonImageService;
+  List<Replay> get replays => homeViewModel.replays;
+
   final SdReplayParser replayParser;
   final HomeViewModel homeViewModel;
   final TextEditingController addReplayURIController = TextEditingController();
@@ -81,4 +82,6 @@ class ReplayEntriesViewModel extends ChangeNotifier {
     _loading = loading;
     notifyListeners();
   }
+
+  void removeReplay(Replay replay) => homeViewModel.removeReplay(replay);
 }

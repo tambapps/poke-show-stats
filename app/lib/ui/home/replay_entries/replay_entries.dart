@@ -9,10 +9,9 @@ import '../../core/themes/dimens.dart';
 
 
 class ReplayEntriesComponent extends StatefulWidget {
-  final HomeViewModel homeViewModel;
   final ReplayEntriesViewModel viewModel;
 
-  const ReplayEntriesComponent({super.key, required this.homeViewModel, required this.viewModel});
+  const ReplayEntriesComponent({super.key, required this.viewModel});
 
 
   @override
@@ -38,7 +37,7 @@ class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent>
           ),),
         SingleChildScrollView(
           child: Column(children: [
-            if (widget.homeViewModel.replays.isNotEmpty)
+            if (widget.viewModel.replays.isNotEmpty)
               Table(
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                 columnWidths: {
@@ -56,7 +55,7 @@ class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent>
                     Center(child: Text('Notes', style: theme.textTheme.titleMedium),),
                     Center(child: Text('', style: theme.textTheme.titleMedium,),),
                   ]),
-                  ...widget.homeViewModel.replays.asMap().entries.map((entry) {
+                  ...widget.viewModel.replays.asMap().entries.map((entry) {
                     final number = entry.key + 1;
                     final Replay replay = entry.value;
                     final replayLink = replay.uri.toString().replaceFirst('.json', '');
@@ -80,7 +79,7 @@ class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent>
                               .toList(),
                         ),),
                         Center(child: Text(replay.notes ?? ''),),
-                        Center(child: IconButton(icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => widget.homeViewModel.removeReplay(replay))),
+                        Center(child: IconButton(icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => widget.viewModel.removeReplay(replay))),
                       ],
                     );
                   })
