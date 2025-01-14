@@ -109,19 +109,6 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
   }
 
   Widget pokemonWidget(Dimens dimens, Pokemon pokemon) {
-    StringBuffer buffer = StringBuffer();
-    if (pokemon.level != null && pokemon.level != 50) {
-      buffer.writeln("Level: ${pokemon.level}");
-    }
-    if (pokemon.evs != null && !pokemon.evs!.all((stat) => stat == 0)) {
-      buffer.writeln("Evs: ${statsString(pokemon.evs!, 0)}");
-    }
-    if (pokemon.nature != null) {
-      buffer.writeln("${pokemon.nature} Nature");
-    }
-    if (pokemon.ivs != null && !pokemon.ivs!.all((stat) => stat == 31)) {
-      buffer.writeln("Ivs: ${statsString(pokemon.ivs!, 31)}");
-    }
     List<Widget> moveWidget = pokemon.moves.map((move) => _moveWidget(move)).toList();
     return SizedBox(
       height: dimens.pokepastePokemonHeight,
@@ -156,7 +143,7 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
               child: Column(
                   mainAxisSize: MainAxisSize.min,
                 children: [
-                  _statsWidget(),
+                  if (pokemon.ivs != null || pokemon.evs != null) _statsWidget(pokemon.ivs, pokemon.evs, pokemon.nature),
                   ...moveWidget
                 ],
               )
@@ -166,18 +153,33 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
     );
   }
 
-  Widget _statsWidget() {
+  Widget _statsWidget(Stats? ivs, Stats? evs, String? nature) {
+    // TODO compute bonus based on nature
     return Row(
       children: [
-        Text('HP'),
-        Text('Atk'),
-        Text('Def'),
-        Text('SpA'),
-        Text('SpD'),
-        Text('Spe'),
-      ].map((w) => Expanded(child: w)).toList(),
+        _statWidget('HP', ivs?.hp, evs?.hp, 0),
+        _statWidget('Atk', ivs?.attack, evs?.attack, 0),
+        _statWidget('Def', ivs?.defense, evs?.defense, 0),
+        _statWidget('SpA', ivs?.specialAttack, evs?.specialAttack, 0),
+        _statWidget('SpD', ivs?.specialDefense, evs?.specialDefense, 0),
+        _statWidget('Spe', ivs?.speed, evs?.speed, 0),
+      ],
     );
   }
+
+  Widget _statWidget(String statName, int? iv, int? ev, int bonus) {
+    // TODO bonus  1  = +nature -1 = -nature 0 = neutral
+    return Expanded(
+      child: Column(
+        children: [
+          Text(statName),
+          Text((ev ?? 0).toString(), style: TextStyle(fontWeight: FontWeight.bold)),
+          Text((iv ?? 31).toString()),
+        ],
+      ),
+    );
+  }
+
   Widget _moveWidget(String moveName) {
     return ListenableBuilder(
       listenable: widget.viewModel,
@@ -198,29 +200,6 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
         );
       },
     );
-  }
-
-  String statsString(Stats stats, int defaultValue) {
-    List<String> statStrings = [];
-    if (stats.hp != defaultValue) {
-      statStrings.add("${stats.hp} HP");
-    }
-    if (stats.attack != defaultValue) {
-      statStrings.add("${stats.attack} Atk");
-    }
-    if (stats.defense != defaultValue) {
-      statStrings.add("${stats.defense} Def");
-    }
-    if (stats.specialAttack != defaultValue) {
-      statStrings.add("${stats.specialAttack} SpA");
-    }
-    if (stats.specialDefense != defaultValue) {
-      statStrings.add("${stats.specialDefense} SpD");
-    }
-    if (stats.speed != defaultValue) {
-      statStrings.add("${stats.speed} Spe");
-    }
-    return statStrings.join(" / ");
   }
 }
 

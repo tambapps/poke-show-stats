@@ -80,7 +80,7 @@ class PokemonImageService {
 
   Widget _getDefaultSprite({String? tooltip}) {
     final widget = Icon(Icons.catching_pokemon, size: Dimens.pokemonLogoSize);
-    return tooltip != null ? Tooltip(message: "foo", child: widget,) : widget;
+    return tooltip != null ? Tooltip(message: tooltip, child: widget,) : widget;
   }
 
   Uri? _getPokemonSpriteUri(String pokemon) => _getKey(pokemon, 'sprite', _pokemon_mappings);

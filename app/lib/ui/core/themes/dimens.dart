@@ -45,17 +45,17 @@ final class _DimensMobile extends Dimens {
   @override
   final double sdNameMaxWidth = 110.0;
   @override
-  final double pokepastePokemonHeight = 300.0;
+  final double pokepastePokemonHeight = 250.0;
   @override
-  final double pokepastePokemonIconsOffset = 37.5;
+  final double pokepastePokemonIconsOffset = 25;
 
   @override
   final double screenBoundsTopMargin = 32.0;
 
   @override
-  final int pokemonArtworkFlex = 1;
+  final int pokemonArtworkFlex = 35;
   @override
-  final int pokemonSheetFlex = 1;
+  final int pokemonSheetFlex = 65;
 
   @override
   final bool isMobile = true;
