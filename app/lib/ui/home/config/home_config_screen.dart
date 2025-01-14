@@ -141,7 +141,7 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
           Expanded(
               flex: dimens.pokemonSheetFlex,
               child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   if (pokemon.ivs != null || pokemon.evs != null) _statsWidget(pokemon.ivs, pokemon.evs, pokemon.nature),
                   ...moveWidget
@@ -157,24 +157,24 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
     // TODO compute bonus based on nature
     return Row(
       children: [
-        _statWidget('HP', ivs?.hp, evs?.hp, 0),
-        _statWidget('Atk', ivs?.attack, evs?.attack, 0),
-        _statWidget('Def', ivs?.defense, evs?.defense, 0),
-        _statWidget('SpA', ivs?.specialAttack, evs?.specialAttack, 0),
-        _statWidget('SpD', ivs?.specialDefense, evs?.specialDefense, 0),
-        _statWidget('Spe', ivs?.speed, evs?.speed, 0),
+        _statWidget('HP', ivs?.hp, evs?.hp, 0, Colors.cyan),
+        _statWidget('Atk', ivs?.attack, evs?.attack, 0, Colors.deepOrange),
+        _statWidget('Def', ivs?.defense, evs?.defense, 0, null),
+        _statWidget('SpA', ivs?.specialAttack, evs?.specialAttack, 0, null),
+        _statWidget('SpD', ivs?.specialDefense, evs?.specialDefense, 0, null),
+        _statWidget('Spe', ivs?.speed, evs?.speed, 0, null),
       ],
     );
   }
 
-  Widget _statWidget(String statName, int? iv, int? ev, int bonus) {
+  Widget _statWidget(String statName, int? iv, int? ev, int bonus, Color? color) {
     // TODO bonus  1  = +nature -1 = -nature 0 = neutral
     return Expanded(
       child: Column(
         children: [
-          Text(statName),
-          Text((ev ?? 0).toString(), style: TextStyle(fontWeight: FontWeight.bold)),
-          Text((iv ?? 31).toString()),
+          Text(statName, style: TextStyle(color: color),),
+          Text((ev ?? 0).toString(), style: TextStyle(color: color, fontWeight: FontWeight.bold)),
+          Text((iv ?? 31).toString(), style: TextStyle(color: color)),
         ],
       ),
     );
