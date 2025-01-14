@@ -180,15 +180,20 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
         color = Colors.cyan;
         break;
     }
-    return Expanded(
-      child: Column(
-        children: [
-          Text(statName, style: TextStyle(color: color),),
-          Text((ev ?? 0).toString(), style: TextStyle(color: color, fontWeight: FontWeight.bold)),
-          Text((iv ?? 31).toString(), style: TextStyle(color: color)),
-        ],
-      ),
+    Widget body = Column(
+      children: [
+        Text(statName, style: TextStyle(color: color),),
+        Text((ev ?? 0).toString(), style: TextStyle(color: color, fontWeight: FontWeight.bold)),
+        Text((iv ?? 31).toString(), style: TextStyle(color: color)),
+      ],
     );
+    if (bonus != Natures.neutral) {
+      body = Tooltip(
+        message: bonus == Natures.bonus ? "Bonus" : "Malus",
+        child: body,
+      );
+    }
+    return Expanded(child: body,);
   }
 
   Widget _moveWidget(String moveName) {
