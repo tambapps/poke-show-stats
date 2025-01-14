@@ -1,3 +1,7 @@
+import 'dart:collection';
+
+import 'package:app2/data/services/pokeapi.dart';
+import 'package:app2/data/services/pokemon_image_service.dart';
 import 'package:app2/ui/core/localization/applocalization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -7,12 +11,26 @@ import '../home_viewmodel.dart';
 
 class HomeConfigViewModel extends ChangeNotifier {
 
-  HomeConfigViewModel({required this.homeViewModel, required this.pokepasteParser});
+  HomeConfigViewModel({required this.homeViewModel,
+    required this.pokepasteParser, required this.pokeApi}) {
+    if (homeViewModel.pokepaste != null) {
+      _loadPokepasteMoves(homeViewModel.pokepaste!);
+    }
+  }
+
+  // home view model properties
+  List<String> get sdNames => homeViewModel.sdNames;
+  Pokepaste? get pokepaste => homeViewModel.pokepaste;
+  PokemonImageService get pokemonImageService => homeViewModel.pokemonImageService;
 
   final HomeViewModel homeViewModel;
   final PokepasteParser pokepasteParser;
+  final PokeApi pokeApi;
   final TextEditingController sdNameController = TextEditingController();
   final TextEditingController pokepasteController = TextEditingController();
+
+  Map<String, Move> _pokemonMoves = {};
+  Map<String, Move> get pokemonMoves => _pokemonMoves;
 
   // TODO use me
   bool _loading = false;
@@ -34,6 +52,23 @@ class HomeConfigViewModel extends ChangeNotifier {
     pokepasteController.clear();
     homeViewModel.pokepaste = pokepaste;
     _setLoading(false);
+  }
+
+  void _loadPokepasteMoves(Pokepaste pokepaste) {
+    Set<String> moves = HashSet();
+    for (Pokemon pokemon in pokepaste.pokemons) {
+      moves.addAll(pokemon.moves);
+    }
+    for (String moveName in moves) {
+      pokeApi.getMove(moveName).then((move) {
+        if (move != null) {
+          // need to re instantiate in order for Flutter to detect changes
+          _pokemonMoves = Map.from(_pokemonMoves)..[moveName] = move;
+          print("yipiiii $moveName ${_pokemonMoves.hashCode} ${this.hashCode} ${this.hasListeners}");
+          notifyListeners();
+        }
+      });
+    }
   }
 
   void _setLoading(bool loading) {
@@ -66,4 +101,8 @@ class HomeConfigViewModel extends ChangeNotifier {
   void removePokepaste() {
     homeViewModel.pokepaste = null;
   }
+
+  void removeSdName(String sdName) => homeViewModel.removeSdName(sdName);
+
+  void addSdName(String sdName) => homeViewModel.addSdName(sdName);
 }

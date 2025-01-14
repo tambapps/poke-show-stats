@@ -7,6 +7,8 @@ import 'package:provider/single_child_widget.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
 import 'package:yaml/yaml.dart';
 
+import '../data/services/pokeapi.dart';
+
 List<SingleChildWidget> get providers {
   return [
     FutureProvider(
@@ -24,6 +26,10 @@ List<SingleChildWidget> get providers {
     Provider(
       lazy: true,
       create: (context) => PokepasteParser(),
+    ),
+    Provider(
+      lazy: true,
+      create: (context) => PokeApi(),
     )
   ];
 }

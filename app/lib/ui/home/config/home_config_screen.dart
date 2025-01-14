@@ -1,6 +1,5 @@
 import 'package:app2/ui/core/widgets.dart';
 import 'package:app2/ui/home/config/home_config_viewmodel.dart';
-import 'package:app2/ui/home/home_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 
@@ -9,11 +8,10 @@ import '../../core/themes/dimens.dart';
 
 
 class HomeConfigComponent extends StatefulWidget {
-  final HomeViewModel homeViewModel;
   final HomeConfigViewModel viewModel;
   final bool isMobile;
 
-  const HomeConfigComponent({super.key, required this.homeViewModel, required this.viewModel, required this.isMobile});
+  const HomeConfigComponent({super.key, required this.viewModel, required this.isMobile});
 
 
   @override
@@ -43,7 +41,7 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
           padding: padding,
           child: GridView.builder(
               shrinkWrap: true, // Makes the GridView wrap its content
-              itemCount: widget.homeViewModel.sdNames.length,
+              itemCount: widget.viewModel.sdNames.length,
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: dimens.sdNamesMaxCrossAxisExtent, // Maximum width of each grid item
                 mainAxisSpacing: 10, // Spacing between rows
@@ -51,10 +49,10 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
                 childAspectRatio: 4, // Aspect ratio of each grid item
               ),
               itemBuilder: (context, index) {
-                final sdName = widget.homeViewModel.sdNames[index];
+                final sdName = widget.viewModel.sdNames[index];
                 return Row(children: [
                   Container(constraints: BoxConstraints(maxWidth: dimens.sdNameMaxWidth), child: Tooltip(message: sdName, child: Text(sdName, overflow: TextOverflow.ellipsis,),),),
-                  IconButton(padding: EdgeInsets.zero, icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => widget.homeViewModel.removeSdName(sdName))
+                  IconButton(padding: EdgeInsets.zero, icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => widget.viewModel.removeSdName(sdName))
                 ],);
               }
           ),),
@@ -68,7 +66,7 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
   List<Widget> pokepasteWidget(AppLocalization localization, Dimens dimens, ThemeData theme, EdgeInsets padding, Widget title, Pokepaste pokepaste);
 
   List<Widget> pokepaste(AppLocalization localization, Dimens dimens, ThemeData theme, EdgeInsets padding) {
-    final pokepaste = widget.homeViewModel.pokepaste;
+    final pokepaste = widget.viewModel.pokepaste;
     final title = Text(localization.pokepaste, style: theme.textTheme.titleLarge,);
     if (pokepaste == null) {
       return pokepasteForm(localization, theme, padding, title);
@@ -87,7 +85,7 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
           maxLines: null,
           controller: widget.viewModel.pokepasteController,
           onSubmitted: (value) {
-            widget.homeViewModel.addSdName(value);
+            widget.viewModel.addSdName(value);
             widget.viewModel.sdNameController.clear();
           },
           decoration: InputDecoration(
@@ -136,17 +134,17 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
               children: [
                 Transform.scale(
                   scale: 0.65,
-                  child: widget.homeViewModel.pokemonImageService.getPokemonArtwork(pokemon.name),
+                  child: widget.viewModel.pokemonImageService.getPokemonArtwork(pokemon.name),
                 ),
                 Positioned(
                   top: 0,
                   right: 0,
-                  child: widget.homeViewModel.pokemonImageService.getTeraTypeSprite(pokemon.teraType, width: Dimens.teraSpriteSize, height: Dimens.teraSpriteSize),
+                  child: widget.viewModel.pokemonImageService.getTeraTypeSprite(pokemon.teraType, width: Dimens.teraSpriteSize, height: Dimens.teraSpriteSize),
                 ),
                 if (pokemon.item != null) Positioned(
                   bottom: 0,
                   right: 0,
-                  child: widget.homeViewModel.pokemonImageService.getItemSprite(pokemon.item!, width: Dimens.itemSpriteSize, height: Dimens.itemSpriteSize),
+                  child: widget.viewModel.pokemonImageService.getItemSprite(pokemon.item!, width: Dimens.itemSpriteSize, height: Dimens.itemSpriteSize),
                 )
 
               ],
@@ -167,16 +165,26 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
     );
   }
 
-  Widget _moveWidget(String move) {
-    // TODO have a cache of moves to fetch right type and type
-    return Row(
-      children: [
-        widget.homeViewModel.pokemonImageService.getTypeSprite('electric', width: 25.0, height: 25.0),
-        SizedBox(width: 8,),
-        widget.homeViewModel.pokemonImageService.getCategorySprite('physical', width: 32.0, height: 32.0),
-        SizedBox(width: 8,),
-        Text(move, overflow: TextOverflow.ellipsis,)
-      ],
+  Widget _moveWidget(String moveName) {
+    return ListenableBuilder(
+      listenable: widget.viewModel,
+      builder: (context, _) {
+        final move = widget.viewModel.pokemonMoves[moveName];
+        print("yoooooo: $moveName => $move ${widget.viewModel.hashCode}");
+        Widget moveWidget = Text(moveName, overflow: TextOverflow.ellipsis, textAlign: TextAlign.start,);
+        if (move == null) {
+          return moveWidget;
+        }
+        return Row(
+          children: [
+            widget.viewModel.pokemonImageService.getTypeSprite(move.type, width: 25.0, height: 25.0),
+            SizedBox(width: 8,),
+            widget.viewModel.pokemonImageService.getCategorySprite(move.category, width: 32.0, height: 32.0),
+            SizedBox(width: 8,),
+            moveWidget
+          ],
+        );
+      },
     );
   }
 
