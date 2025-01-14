@@ -80,9 +80,9 @@ final class _DimensDesktop extends Dimens {
   final double screenBoundsTopMargin = 0.0;
 
   @override
-  final int pokemonArtworkFlex = 15;
+  final int pokemonArtworkFlex = 45;
   @override
-  final int pokemonSheetFlex = 10;
+  final int pokemonSheetFlex = 55;
 
   @override
   final bool isMobile = false;

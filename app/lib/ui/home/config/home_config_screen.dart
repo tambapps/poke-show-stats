@@ -1,3 +1,4 @@
+import 'package:app2/ui/core/pokeutils.dart';
 import 'package:app2/ui/core/widgets.dart';
 import 'package:app2/ui/home/config/home_config_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -134,7 +135,6 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
                   right: 0,
                   child: widget.viewModel.pokemonImageService.getItemSprite(pokemon.item!, width: Dimens.itemSpriteSize, height: Dimens.itemSpriteSize),
                 )
-
               ],
             ),
           ),
@@ -154,21 +154,28 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
   }
 
   Widget _statsWidget(Stats? ivs, Stats? evs, String? nature) {
-    // TODO compute bonus based on nature
     return Row(
       children: [
-        _statWidget('HP', ivs?.hp, evs?.hp, 0, Colors.cyan),
-        _statWidget('Atk', ivs?.attack, evs?.attack, 0, Colors.deepOrange),
-        _statWidget('Def', ivs?.defense, evs?.defense, 0, null),
-        _statWidget('SpA', ivs?.specialAttack, evs?.specialAttack, 0, null),
-        _statWidget('SpD', ivs?.specialDefense, evs?.specialDefense, 0, null),
-        _statWidget('Spe', ivs?.speed, evs?.speed, 0, null),
+        _statWidget('HP', ivs?.hp, evs?.hp, Natures.neutral),
+        _statWidget('Atk', ivs?.attack, evs?.attack, nature != null ? Natures.attackBonus(nature) : Natures.neutral),
+        _statWidget('Def', ivs?.defense, evs?.defense, nature != null ? Natures.defenseBonus(nature) : Natures.neutral),
+        _statWidget('SpA', ivs?.specialAttack, evs?.specialAttack, nature != null ? Natures.specialAttackBonus(nature) : Natures.neutral),
+        _statWidget('SpD', ivs?.specialDefense, evs?.specialDefense, nature != null ? Natures.specialDefenseBonus(nature) : Natures.neutral),
+        _statWidget('Spe', ivs?.speed, evs?.speed, nature != null ? Natures.speedBonus(nature) : Natures.neutral),
       ],
     );
   }
 
-  Widget _statWidget(String statName, int? iv, int? ev, int bonus, Color? color) {
-    // TODO bonus  1  = +nature -1 = -nature 0 = neutral
+  Widget _statWidget(String statName, int? iv, int? ev, int bonus) {
+    Color? color;
+    switch (bonus) {
+      case Natures.bonus:
+        color = Colors.deepOrange;
+        break;
+      case Natures.malus:
+        color = Colors.cyan;
+        break;
+    }
     return Expanded(
       child: Column(
         children: [
