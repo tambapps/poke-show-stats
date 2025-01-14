@@ -156,7 +156,7 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
               child: Column(
                   mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(buffer.toString()),
+                  _statsWidget(),
                   ...moveWidget
                 ],
               )
@@ -166,6 +166,18 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
     );
   }
 
+  Widget _statsWidget() {
+    return Row(
+      children: [
+        Text('HP'),
+        Text('Atk'),
+        Text('Def'),
+        Text('SpA'),
+        Text('SpD'),
+        Text('Spe'),
+      ].map((w) => Expanded(child: w)).toList(),
+    );
+  }
   Widget _moveWidget(String moveName) {
     return ListenableBuilder(
       listenable: widget.viewModel,

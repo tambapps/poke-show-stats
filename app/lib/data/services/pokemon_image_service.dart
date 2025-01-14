@@ -15,19 +15,19 @@ class PokemonImageService {
 
   Widget getPokemonSprite(String pokemon) {
     Uri? uri = _getPokemonSpriteUri(pokemon);
-    if (uri == null) return _getDefaultSprite();
+    if (uri == null) return _getDefaultSprite(tooltip: pokemon);
     return Tooltip(
       message: pokemon,
-      child: _getImageWidget(uri, width: Dimens.pokemonLogoSize, height: Dimens.pokemonLogoSize),
+      child: _getImageWidget(uri, width: Dimens.pokemonLogoSize, height: Dimens.pokemonLogoSize, tooltip: pokemon),
     );
   }
 
   Widget getItemSprite(String itemName, {double? width, double? height}) {
     Uri? uri = _getKey(itemName, 'spriteUrl', _item_mappings);
-    if (uri == null) return _getDefaultSprite();
+    if (uri == null) return _getDefaultSprite(tooltip: itemName);
     return Tooltip(
       message: itemName,
-      child: _getImageWidget(uri, width: width, height: height),
+      child: _getImageWidget(uri, width: width, height: height, tooltip: itemName),
     );
   }
 
@@ -55,14 +55,14 @@ class PokemonImageService {
 
   Widget getPokemonArtwork(String pokemon, {double? width, double? height}) {
     Uri? uri = _getPokemonArtworkUri(pokemon);
-    if (uri == null) return _getDefaultSprite();
+    if (uri == null) return _getDefaultSprite(tooltip: pokemon);
     return Tooltip(
       message: pokemon,
-      child: _getImageWidget(uri, width: width, height: height),
+      child: _getImageWidget(uri, width: width, height: height, tooltip: pokemon),
     );
   }
 
-  Widget _getImageWidget(Uri uri, {double? width, double? height}) {
+  Widget _getImageWidget(Uri uri, {double? width, double? height, String? tooltip}) {
     // TODO doesn't work now but should work once this https://github.com/flutter/flutter/issues/160127
     //  will be included in the latest stable release and I upgrade.
     //    for now use the flag flutter run -d chrome --web-renderer html
@@ -74,11 +74,14 @@ class PokemonImageService {
       height: height,
       fit: BoxFit.contain,
       placeholder: (context, url) => CircularProgressIndicator(),
-      errorWidget: (context, url, error) => _getDefaultSprite(),
+      errorWidget: (context, url, error) => _getDefaultSprite(tooltip: tooltip),
     );
   }
 
-  Widget _getDefaultSprite() => Icon(Icons.catching_pokemon, size: Dimens.pokemonLogoSize);
+  Widget _getDefaultSprite({String? tooltip}) {
+    final widget = Icon(Icons.catching_pokemon, size: Dimens.pokemonLogoSize);
+    return tooltip != null ? Tooltip(message: "foo", child: widget,) : widget;
+  }
 
   Uri? _getPokemonSpriteUri(String pokemon) => _getKey(pokemon, 'sprite', _pokemon_mappings);
   Uri? _getPokemonArtworkUri(String pokemon) => _getKey(pokemon, 'artwork', _pokemon_mappings);
