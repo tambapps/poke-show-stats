@@ -124,12 +124,13 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
     }
     List<Widget> moveWidget = pokemon.moves.map((move) => _moveWidget(move)).toList();
     return SizedBox(
-      height: 350,
+      height: dimens.pokepastePokemonHeight,
       child: Row(
         children: [
           Expanded(
             flex: dimens.pokemonArtworkFlex,
             child: Stack(
+              fit: StackFit.expand,
               alignment: Alignment.center,
               children: [
                 Transform.scale(
@@ -137,12 +138,12 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
                   child: widget.viewModel.pokemonImageService.getPokemonArtwork(pokemon.name),
                 ),
                 Positioned(
-                  top: 0,
-                  right: 0,
+                  top: dimens.pokepastePokemonIconsOffset,
+                  left: 0,
                   child: widget.viewModel.pokemonImageService.getTeraTypeSprite(pokemon.teraType, width: Dimens.teraSpriteSize, height: Dimens.teraSpriteSize),
                 ),
                 if (pokemon.item != null) Positioned(
-                  bottom: 0,
+                  bottom: dimens.pokepastePokemonIconsOffset,
                   right: 0,
                   child: widget.viewModel.pokemonImageService.getItemSprite(pokemon.item!, width: Dimens.itemSpriteSize, height: Dimens.itemSpriteSize),
                 )

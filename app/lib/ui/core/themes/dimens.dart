@@ -23,6 +23,8 @@ abstract final class Dimens {
   /** home config screen dimensions **/
   double get sdNamesMaxCrossAxisExtent;
   double get sdNameMaxWidth;
+  double get pokepastePokemonHeight;
+  double get pokepastePokemonIconsOffset;
   int get pokemonArtworkFlex;
   int get pokemonSheetFlex;
 
@@ -42,6 +44,10 @@ final class _DimensMobile extends Dimens {
   final double sdNamesMaxCrossAxisExtent = 270.0;
   @override
   final double sdNameMaxWidth = 110.0;
+  @override
+  final double pokepastePokemonHeight = 300.0;
+  @override
+  final double pokepastePokemonIconsOffset = 37.5;
 
   @override
   final double screenBoundsTopMargin = 32.0;
@@ -65,6 +71,10 @@ final class _DimensDesktop extends Dimens {
   final double sdNameMaxWidth = 200.0;
   @override
   final double defaultScreenMargin = 128.0;
+  @override
+  final double pokepastePokemonHeight = 350.0;
+  @override
+  final double pokepastePokemonIconsOffset = 50.0;
 
   @override
   final double screenBoundsTopMargin = 0.0;
