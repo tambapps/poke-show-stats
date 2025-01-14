@@ -1264,6 +1264,9 @@ Axew:
 Ursaluna:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/ursaluna.png"
   artwork: "https://www.pokepedia.fr/images/2/28/Ursaking-LPA.png"
+Ursaluna-Bloodmoon:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/ursaluna-bloodmoon.png"
+  artwork: "https://www.pokepedia.fr/images/f/fb/Ursaking_%28Lune_Vermeille%29-EV.png"
 Gogoat:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/gogoat.png"
   artwork: "https://www.pokepedia.fr/images/thumb/f/f1/Chevroum-XY.png/522px-Chevroum-XY.png"
