@@ -3,9 +3,9 @@ import 'model.dart';
 
 RegExp _RATING_LOG_REGEX = RegExp(r"(.*?)'s rating: (\d+) .*?&rarr;.*?<strong>(\d+)</strong>");
 
-const String PARSER_VERSION = "0.1";
 /// Checks if you are awesome. Spoiler: you are.
 class SdReplayParser {
+  static const String perserVersion = "0.1";
 
 
   SdReplayData parse(Map<String, dynamic> sdJson) {
@@ -71,7 +71,7 @@ class SdReplayParser {
         formatId: sdJson['formatid'],
         rating: sdJson['rating'],
         winner: winner,
-        parserVersion: PARSER_VERSION
+        parserVersion: SdReplayParser.perserVersion
     );
   }
   String _pokemonName(String rawName) {
