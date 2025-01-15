@@ -98,4 +98,11 @@ class ReplayEntriesViewModel extends ChangeNotifier {
     if (sdNames.isEmpty) return 0;
     return sdNames.contains(replay.data.winnerPlayer.name) ? 1 : -1;
   }
+
+  PlayerData getOpposingPlayer(Replay replay) {
+    if (sdNames.isEmpty) {
+      return replay.data.player1;
+    }
+    return sdNames.contains(replay.data.player2.name) ? replay.data.player1 : replay.data.player2;
+  }
 }

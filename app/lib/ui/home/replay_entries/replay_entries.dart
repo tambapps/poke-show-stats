@@ -2,6 +2,7 @@ import 'package:app2/ui/core/widgets.dart';
 import 'package:app2/ui/home/home_viewmodel.dart';
 import 'package:app2/ui/home/replay_entries/replay_entries_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:sd_replay_parser/sd_replay_parser.dart';
 
 import '../../../data/models/replay.dart';
 import '../../core/localization/applocalization.dart';
@@ -66,6 +67,7 @@ class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent>
                     } else if (winStatus == -1) {
                       color = Colors.redAccent.withAlpha(50);
                     }
+                    final PlayerData opposingPlayer = widget.viewModel.getOpposingPlayer(replay);
                     return TableRow(
                         decoration: BoxDecoration(color: color),
                       children: [
@@ -80,7 +82,7 @@ class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent>
                           ),),
                         Center(child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: replay.data.player1.team
+                          children: opposingPlayer.team
                               .map((pokemon) =>
                               Padding(padding: EdgeInsets.symmetric(horizontal: 4), child:
                               widget.viewModel.pokemonImageService.getPokemonSprite(pokemon),))
