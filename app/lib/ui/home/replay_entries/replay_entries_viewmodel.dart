@@ -34,19 +34,20 @@ class ReplayEntriesViewModel extends ChangeNotifier {
       _errorToast("Duplicate entry");
       return;
     }
+    Uri uri;
+    try {
+      uri = Uri.parse(input.endsWith('.json') ? input : "$input.json");
+    } on FormatException {
+      _errorToast("Invalid URI");
+      return;
+    }
     addReplayURIController.clear();
     _setLoading(true);
-    _fetchReplay(input)
-        .then((replay) => homeViewModel.addReplay(replay))
+    _fetchReplayData(uri)
+        .then((replayData) => homeViewModel.addReplay(uri, replayData))
         .catchError((error) {
       _setLoading(false);
-      String errorMessage;
-      if (error is FormatException) {
-        errorMessage = "Invalid URI";
-      } else {
-        errorMessage = error.message;
-      }
-      _errorToast(errorMessage);
+      _errorToast(error.message);
     })
         .then((_) => _setLoading(false));
   }
@@ -76,15 +77,13 @@ class ReplayEntriesViewModel extends ChangeNotifier {
     }
   }
 
-  Future<Replay> _fetchReplay(String input) async {
-    Uri uri = Uri.parse(input.endsWith('.json') ? input : "$input.json");
+  Future<SdReplayData> _fetchReplayData(Uri uri) async {
     final response = await http.get(uri);
     if (response.statusCode != 200) {
       throw Exception("Error while fetching replay (response code ${response.statusCode})");
     }
     final data = jsonDecode(response.body);
-    SdReplayData replayData = replayParser.parse(data);
-    return Replay(uri: uri, data: replayData);
+    return replayParser.parse(data);
   }
 
   void _setLoading(bool loading) {
@@ -94,15 +93,4 @@ class ReplayEntriesViewModel extends ChangeNotifier {
 
   void removeReplay(Replay replay) => homeViewModel.removeReplay(replay);
 
-  getWinStatus(Replay replay) {
-    if (sdNames.isEmpty) return 0;
-    return sdNames.contains(replay.data.winnerPlayer.name) ? 1 : -1;
-  }
-
-  PlayerData getOpposingPlayer(Replay replay) {
-    if (sdNames.isEmpty) {
-      return replay.data.player1;
-    }
-    return sdNames.contains(replay.data.player2.name) ? replay.data.player1 : replay.data.player2;
-  }
 }

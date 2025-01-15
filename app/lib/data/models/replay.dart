@@ -7,9 +7,17 @@ class Replay {
   final Uri uri;
   final SdReplayData data;
   final String? notes;
+  final GameOutput gameOutput;
+  final PlayerData opposingPlayer;
 
-  Replay({required this.uri, required this.data, this.notes});
+  Replay({required this.uri, required this.data, required this.gameOutput,
+    required this.opposingPlayer,
+    this.notes});
 
   factory Replay.fromJson(Map<String, dynamic> json) => _$ReplayFromJson(json);
   Map<String, dynamic> toJson() => _$ReplayToJson(this);
+}
+
+enum GameOutput {
+  WIN, LOSS, UNKNOWN
 }

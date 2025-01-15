@@ -4,6 +4,7 @@ import 'package:app2/data/models/teamlytic.dart';
 import 'package:app2/data/services/save_service.dart';
 import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
+import 'package:sd_replay_parser/sd_replay_parser.dart';
 import '../../data/models/replay.dart';
 import '../../data/services/pokeapi.dart';
 import '../../data/services/pokemon_image_service.dart';
@@ -44,10 +45,32 @@ class HomeViewModel extends ChangeNotifier {
     _selectedIndex = index;
   }
 
-  void addReplay(Replay replay) {
+  void addReplay(Uri uri, SdReplayData replayData) {
+    final PlayerData opposingPlayer = _computeOpposingPlayer(replayData);
+    GameOutput output = _computeGameOutput(replayData);
+    Replay replay = Replay(uri: uri, data: replayData, opposingPlayer: opposingPlayer, gameOutput: output);
     _teamlytic.replays = [...replays, replay];
     notifyListeners();
     _save();
+  }
+
+  GameOutput _computeGameOutput(SdReplayData replayData) {
+    if (sdNames.isEmpty) {
+      return GameOutput.UNKNOWN;
+    } else if (sdNames.contains(replayData.winnerPlayer.name)) {
+      return GameOutput.WIN;
+    } else if (sdNames.contains(replayData.player1.name) || sdNames.contains(replayData.player2.name)) {
+      return GameOutput.LOSS;
+    }
+    // the game doesn't reference the player
+    return GameOutput.UNKNOWN;
+  }
+
+  PlayerData _computeOpposingPlayer(SdReplayData replayData) {
+    if (sdNames.isEmpty) {
+      return replayData.player1;
+    }
+    return sdNames.contains(replayData.player2.name) ? replayData.player1 : replayData.player2;
   }
 
   void removeReplay(Replay replay) {
@@ -56,18 +79,29 @@ class HomeViewModel extends ChangeNotifier {
     _save();
   }
 
-  void addSdName(String sdName) {
+  // async to avoid freezing the UI
+  void addSdName(String sdName) async {
     if (!sdNames.contains(sdName)) {
       _teamlytic.sdNames = [...sdNames, sdName];
+      _recomputeReplayOutputs();
       notifyListeners();
       _save();
     }
   }
 
-  void removeSdName(String sdName) {
+  // async to avoid freezing the UI
+  void removeSdName(String sdName) async {
     _teamlytic.sdNames = [...sdNames]..remove(sdName);
+    _recomputeReplayOutputs();
     notifyListeners();
     _save();
+  }
+
+  void _recomputeReplayOutputs() {
+    List<Replay> updatedReplays = replays.map((replay) {
+      return Replay(uri: replay.uri, data: replay.data, gameOutput: _computeGameOutput(replay.data), opposingPlayer: _computeOpposingPlayer(replay.data));
+    }).toList();
+    _teamlytic.replays = updatedReplays;
   }
 
   void _save() async => await saveService.storeSave(_teamlytic);

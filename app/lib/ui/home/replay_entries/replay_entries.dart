@@ -62,14 +62,12 @@ class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent>
                         final number = entry.key + 1;
                         final Replay replay = entry.value;
                         final replayLink = replay.uri.toString().replaceFirst('.json', '');
-                        final winStatus = widget.viewModel.getWinStatus(replay);
                         Color? color;
-                        if (winStatus == 1) {
+                        if (replay.gameOutput == GameOutput.WIN) {
                           color = Colors.greenAccent.withAlpha(50);
-                        } else if (winStatus == -1) {
+                        } else if (replay.gameOutput == GameOutput.LOSS) {
                           color = Colors.redAccent.withAlpha(50);
                         }
-                        final PlayerData opposingPlayer = widget.viewModel.getOpposingPlayer(replay);
                         return TableRow(
                           decoration: BoxDecoration(color: color),
                           children: [
@@ -84,7 +82,7 @@ class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent>
                               ),),
                             Center(child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: opposingPlayer.team
+                              children: replay.opposingPlayer.team
                                   .map((pokemon) =>
                                   Padding(padding: EdgeInsets.symmetric(horizontal: 4), child:
                                   widget.viewModel.pokemonImageService.getPokemonSprite(pokemon),))

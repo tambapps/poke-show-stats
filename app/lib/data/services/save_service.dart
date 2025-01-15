@@ -142,10 +142,18 @@ class SaveServiceImpl implements SaveService {
           continue;
         }
         final data = jsonDecode(response.body);
-        SdReplayData replayData = _replayParser.parse(data);
-        replays.add(Replay(uri: uri, data: replayData));
+        SdReplayData fetchedReplayData = _replayParser.parse(data);
+        String opposingPlayerName = replayJson['opposingPlayer']['name'];
+        String? gameOutputStr = replayJson['gameOutput'];
+        GameOutput output = GameOutput.values.firstWhere(
+              (e) => e.name == gameOutputStr,
+          orElse: () => GameOutput.UNKNOWN,
+        );
+        PlayerData opposingPlayer = fetchedReplayData.getPlayer(opposingPlayerName) ?? fetchedReplayData.player1;
+        replays.add(Replay(uri: uri, data: fetchedReplayData, opposingPlayer: opposingPlayer, gameOutput: output));
+      } else {
+        replays.add(Replay.fromJson(replayJson));
       }
-      replays.add(Replay.fromJson(replayJson));
     }
     return replays;
   }
