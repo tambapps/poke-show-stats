@@ -1,16 +1,21 @@
+import 'dart:collection';
+
 import 'package:app2/data/models/teamlytic.dart';
 import 'package:app2/data/services/save_service.dart';
 import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 import '../../data/models/replay.dart';
+import '../../data/services/pokeapi.dart';
 import '../../data/services/pokemon_image_service.dart';
 
 class HomeViewModel extends ChangeNotifier {
 
-  HomeViewModel({required this.pokemonImageService, required this.saveService});
+  HomeViewModel({required this.pokemonImageService, required this.saveService, required this.pokeApi});
 
   final PokemonImageService pokemonImageService;
   final SaveService saveService;
+  final PokeApi pokeApi;
+
   Teamlytic _teamlytic = Teamlytic(saveName: '', sdNames: [], replays: [], pokepaste: null);
   // TODO hack for now as we cannot select multiple saves
   final String saveName = "default";
@@ -20,9 +25,15 @@ class HomeViewModel extends ChangeNotifier {
   Pokepaste? get pokepaste => _teamlytic.pokepaste;
   set pokepaste(Pokepaste? value) {
     _teamlytic.pokepaste = value;
+    if (value != null) {
+      _loadPokepasteMoves(value);
+    }
     notifyListeners();
     _save();
   }
+
+  Map<String, Move> _pokemonMoves = {};
+  Map<String, Move> get pokemonMoves => _pokemonMoves;
 
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;
@@ -63,6 +74,32 @@ class HomeViewModel extends ChangeNotifier {
 
   void loadSave() async {
     _teamlytic = await saveService.loadSave(saveName);
+    Pokepaste? pokepaste = _teamlytic.pokepaste;
+    if (pokepaste != null) {
+      _loadPokepasteMoves(pokepaste);
+    }
+    notifyListeners();
+  }
+
+  void _loadPokepasteMoves(Pokepaste pokepaste) async {
+    // collect all moves to load
+    Set<String> moves = HashSet();
+    for (Pokemon pokemon in pokepaste.pokemons) {
+      moves.addAll(pokemon.moves);
+    }
+    Map<String, Move> pokemonMoves = {};
+    for (String moveName in moves) {
+      try {
+        Move? move = await pokeApi.getMove(moveName);
+        if (move != null) {
+          pokemonMoves[moveName] = move;
+          notifyListeners();
+        }
+      } catch(_) {
+        // do nothing
+      }
+    }
+    _pokemonMoves = pokemonMoves;
     notifyListeners();
   }
 }

@@ -197,25 +197,20 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
   }
 
   Widget _moveWidget(String moveName) {
-    return ListenableBuilder(
-      listenable: widget.viewModel,
-      builder: (context, _) {
-        final move = widget.viewModel.pokemonMoves[moveName];
-        Widget moveWidget = Text(moveName, overflow: TextOverflow.ellipsis, textAlign: TextAlign.start,);
-        if (move == null) {
-          return moveWidget;
-        }
-        return Row(
-            mainAxisSize: MainAxisSize.min,
-          children: [
-            widget.viewModel.pokemonImageService.getTypeSprite(move.type, width: 25.0, height: 25.0),
-            SizedBox(width: 8,),
-            widget.viewModel.pokemonImageService.getCategorySprite(move.category, width: 32.0, height: 32.0),
-            SizedBox(width: 8,),
-            Flexible(child: Tooltip(message: moveName,child: moveWidget,))
-          ],
-        );
-      },
+    final move = widget.viewModel.pokemonMoves[moveName];
+    Widget moveWidget = Text(moveName, overflow: TextOverflow.ellipsis, textAlign: TextAlign.start,);
+    if (move == null) {
+      return moveWidget;
+    }
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        widget.viewModel.pokemonImageService.getTypeSprite(move.type, width: 25.0, height: 25.0),
+        SizedBox(width: 8,),
+        widget.viewModel.pokemonImageService.getCategorySprite(move.category, width: 32.0, height: 32.0),
+        SizedBox(width: 8,),
+        Flexible(child: Tooltip(message: moveName,child: moveWidget,))
+      ],
     );
   }
 }

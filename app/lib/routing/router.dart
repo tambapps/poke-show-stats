@@ -13,7 +13,7 @@ GoRouter router() => GoRouter(
     GoRoute(
       path: Routes.home,
       builder: (context, state) => HomeScreen(
-        viewModel: HomeViewModel(pokemonImageService: context.read(), saveService: context.read()),
+        viewModel: HomeViewModel(pokemonImageService: context.read(), saveService: context.read(), pokeApi: context.read()),
       ),
     ),
   ],
