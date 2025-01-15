@@ -59,7 +59,15 @@ class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent>
                     final number = entry.key + 1;
                     final Replay replay = entry.value;
                     final replayLink = replay.uri.toString().replaceFirst('.json', '');
+                    final winStatus = widget.viewModel.getWinStatus(replay);
+                    Color? color;
+                    if (winStatus == 1) {
+                      color = Colors.greenAccent.withAlpha(50);
+                    } else if (winStatus == -1) {
+                      color = Colors.redAccent.withAlpha(50);
+                    }
                     return TableRow(
+                        decoration: BoxDecoration(color: color),
                       children: [
                         Center(child: Text(number.toString()),),
                         Center(

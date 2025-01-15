@@ -18,6 +18,7 @@ class ReplayEntriesViewModel extends ChangeNotifier {
 
   PokemonImageService get pokemonImageService => homeViewModel.pokemonImageService;
   List<Replay> get replays => homeViewModel.replays;
+  List<String> get sdNames => homeViewModel.sdNames;
 
   final SdReplayParser replayParser;
   final HomeViewModel homeViewModel;
@@ -29,6 +30,10 @@ class ReplayEntriesViewModel extends ChangeNotifier {
   void loadReplay() {
     if (loading) return;
     String input = addReplayURIController.text.trim();
+    if (replays.any((replay) => replay.uri.toString().replaceFirst('.json', '') == input.replaceFirst('.json', ''))) {
+      _errorToast("Duplicate entry");
+      return;
+    }
     addReplayURIController.clear();
     _setLoading(true);
     _fetchReplay(input)
@@ -41,17 +46,21 @@ class ReplayEntriesViewModel extends ChangeNotifier {
       } else {
         errorMessage = error.message;
       }
-      Fluttertoast.showToast(
-        msg: errorMessage,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+      _errorToast(errorMessage);
     })
         .then((_) => _setLoading(false));
+  }
+
+  void _errorToast(String errorMessage) {
+    Fluttertoast.showToast(
+      msg: errorMessage,
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
   }
 
   void openLink(String link) async {
@@ -84,4 +93,9 @@ class ReplayEntriesViewModel extends ChangeNotifier {
   }
 
   void removeReplay(Replay replay) => homeViewModel.removeReplay(replay);
+
+  getWinStatus(Replay replay) {
+    if (sdNames.isEmpty) return 0;
+    return sdNames.contains(replay.data.winnerPlayer.name) ? 1 : -1;
+  }
 }
