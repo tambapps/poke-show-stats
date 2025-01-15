@@ -36,88 +36,91 @@ class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent>
             valueColor: AlwaysStoppedAnimation(Colors.blue), // Progress color
             minHeight: 2.0, // Height of the progress bar
           ),),
-        SingleChildScrollView(
-          child: Column(children: [
-            if (widget.viewModel.replays.isNotEmpty)
-              Table(
-                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                columnWidths: {
-                  0: FractionColumnWidth(0.1),
-                  1: FractionColumnWidth(0.3),
-                  2: FractionColumnWidth(0.3),
-                  3: FractionColumnWidth(0.2),
-                  4: FractionColumnWidth(0.1),
-                },
-                children: [
-                  TableRow(children: [
-                    Center(child: Text('', style: theme.textTheme.titleMedium,),),
-                    Center(child: Text('Replay URL', style: theme.textTheme.titleMedium),),
-                    Center(child: Text('Opposing Team', style: theme.textTheme.titleMedium),),
-                    Center(child: Text('Notes', style: theme.textTheme.titleMedium),),
-                    Center(child: Text('', style: theme.textTheme.titleMedium,),),
-                  ]),
-                  ...widget.viewModel.replays.asMap().entries.map((entry) {
-                    final number = entry.key + 1;
-                    final Replay replay = entry.value;
-                    final replayLink = replay.uri.toString().replaceFirst('.json', '');
-                    final winStatus = widget.viewModel.getWinStatus(replay);
-                    Color? color;
-                    if (winStatus == 1) {
-                      color = Colors.greenAccent.withAlpha(50);
-                    } else if (winStatus == -1) {
-                      color = Colors.redAccent.withAlpha(50);
-                    }
-                    final PlayerData opposingPlayer = widget.viewModel.getOpposingPlayer(replay);
-                    return TableRow(
-                        decoration: BoxDecoration(color: color),
-                      children: [
-                        Center(child: Text(number.toString()),),
-                        Center(
-                          child: TextButton(
-                            onPressed: () => widget.viewModel.openLink(replayLink),
-                            child: Text(replayLink, overflow: TextOverflow.ellipsis, style: TextStyle(
-                              color: Colors.blue,
-                              decoration: TextDecoration.underline,
+
+        Expanded(
+            child: SingleChildScrollView(
+              child: Column(children: [
+                if (widget.viewModel.replays.isNotEmpty)
+                  Table(
+                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                    columnWidths: {
+                      0: FractionColumnWidth(0.1),
+                      1: FractionColumnWidth(0.3),
+                      2: FractionColumnWidth(0.3),
+                      3: FractionColumnWidth(0.2),
+                      4: FractionColumnWidth(0.1),
+                    },
+                    children: [
+                      TableRow(children: [
+                        Center(child: Text('', style: theme.textTheme.titleMedium,),),
+                        Center(child: Text('Replay URL', style: theme.textTheme.titleMedium),),
+                        Center(child: Text('Opposing Team', style: theme.textTheme.titleMedium),),
+                        Center(child: Text('Notes', style: theme.textTheme.titleMedium),),
+                        Center(child: Text('', style: theme.textTheme.titleMedium,),),
+                      ]),
+                      ...widget.viewModel.replays.asMap().entries.map((entry) {
+                        final number = entry.key + 1;
+                        final Replay replay = entry.value;
+                        final replayLink = replay.uri.toString().replaceFirst('.json', '');
+                        final winStatus = widget.viewModel.getWinStatus(replay);
+                        Color? color;
+                        if (winStatus == 1) {
+                          color = Colors.greenAccent.withAlpha(50);
+                        } else if (winStatus == -1) {
+                          color = Colors.redAccent.withAlpha(50);
+                        }
+                        final PlayerData opposingPlayer = widget.viewModel.getOpposingPlayer(replay);
+                        return TableRow(
+                          decoration: BoxDecoration(color: color),
+                          children: [
+                            Center(child: Text(number.toString()),),
+                            Center(
+                              child: TextButton(
+                                onPressed: () => widget.viewModel.openLink(replayLink),
+                                child: Text(replayLink, overflow: TextOverflow.ellipsis, style: TextStyle(
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.underline,
+                                ),),
+                              ),),
+                            Center(child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: opposingPlayer.team
+                                  .map((pokemon) =>
+                                  Padding(padding: EdgeInsets.symmetric(horizontal: 4), child:
+                                  widget.viewModel.pokemonImageService.getPokemonSprite(pokemon),))
+                                  .toList(),
                             ),),
-                          ),),
-                        Center(child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: opposingPlayer.team
-                              .map((pokemon) =>
-                              Padding(padding: EdgeInsets.symmetric(horizontal: 4), child:
-                              widget.viewModel.pokemonImageService.getPokemonSprite(pokemon),))
-                              .toList(),
-                        ),),
-                        Center(child: Text(replay.notes ?? ''),),
-                        Center(child: IconButton(icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => widget.viewModel.removeReplay(replay))),
-                      ],
-                    );
-                  })
-                ],
-              ),
-            Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 32),
-                child: Row(
-                  children: [
-                    Expanded(
-                      // TODO there is a problem when hovering on it targetElement == domElement... should be fixed in flutter release 3.28
-                      child: TextField(
-                        controller: widget.viewModel.addReplayURIController,
-                        decoration: const InputDecoration(
-                          labelText: 'Replay URL',
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    ElevatedButton(
-                      onPressed: () => widget.viewModel.loadReplay(),
-                      child: const Text('Add'),
-                    ),
-                  ],
-                ))
-          ],),
+                            Center(child: Text(replay.notes ?? ''),),
+                            Center(child: IconButton(icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => widget.viewModel.removeReplay(replay))),
+                          ],
+                        );
+                      })
+                    ],
+                  ),
+              ],),
+            )
         ),
+        Padding(
+            padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 32, top: 16),
+            child: Row(
+              children: [
+                Expanded(
+                  // TODO there is a problem when hovering on it targetElement == domElement... should be fixed in flutter release 3.28
+                  child: TextField(
+                    controller: widget.viewModel.addReplayURIController,
+                    decoration: const InputDecoration(
+                      labelText: 'Replay URL',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                ElevatedButton(
+                  onPressed: () => widget.viewModel.loadReplay(),
+                  child: const Text('Add'),
+                ),
+              ],
+            ))
       ],
     );
   }
