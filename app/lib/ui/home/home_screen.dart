@@ -25,6 +25,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends AbstractState<HomeScreen> {
 
   @override
+  void initState() {
+    widget.viewModel.loadSave();
+    super.initState();
+  }
+  @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     return Padding(
       padding: EdgeInsets.only(top: dimens.screenBoundsTopMargin),

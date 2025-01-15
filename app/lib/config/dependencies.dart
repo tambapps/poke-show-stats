@@ -1,3 +1,5 @@
+import 'package:app2/data/services/save_service.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'package:app2/data/services/pokemon_image_service.dart';
@@ -12,7 +14,6 @@ import '../data/services/pokeapi.dart';
 List<SingleChildWidget> get providers {
   return [
     FutureProvider(
-      lazy: true,
       initialData: PokemonImageService(),
       create: (context) async => PokemonImageService(
         pokemon_mappings: loadYaml(await rootBundle.loadString('assets/pokemon-sprite-urls.yaml')),
@@ -20,16 +21,20 @@ List<SingleChildWidget> get providers {
       ), // will load the yaml mapping
     ),
     Provider(
-      lazy: true,
       create: (context) => SdReplayParser(),
     ),
     Provider(
-      lazy: true,
       create: (context) => PokepasteParser(),
     ),
     Provider(
-      lazy: true,
       create: (context) => PokeApi(),
+    ),
+    Provider<SaveStorage>(
+      create: (context) => kIsWeb ? WebSaveStorage() : MobileSaveStorage(),
+    ),
+    ProxyProvider2<SaveStorage, SdReplayParser, SaveService>(
+      create: (context) => DummySaveService(),
+      update: (context, saveStorage, replayParser,_) => SaveServiceImpl(storage: saveStorage, replayParser: replayParser),
     )
   ];
 }
