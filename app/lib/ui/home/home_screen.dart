@@ -1,7 +1,9 @@
 import 'package:app2/ui/core/widgets.dart';
 import 'package:app2/ui/home/config/home_config_screen.dart';
 import 'package:app2/ui/home/config/home_config_viewmodel.dart';
-import 'package:app2/ui/home/replay_entries/replay_entries.dart';
+import 'package:app2/ui/home/game_by_game/game_by_game_screen.dart';
+import 'package:app2/ui/home/game_by_game/game_by_game_viewmodel.dart';
+import 'package:app2/ui/home/replay_entries/replay_entries_screen.dart';
 import 'package:app2/ui/home/replay_entries/replay_entries_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -52,7 +54,9 @@ class _HomeScreenState extends AbstractState<HomeScreen> {
                 ListenableBuilder(
                     listenable: widget.viewModel,
                     builder: (context, _) => ReplayEntriesComponent(viewModel: ReplayEntriesViewModel(replayParser: context.read(), homeViewModel: widget.viewModel),)),
-                Center(child: Text("Content for Tab 3")),
+                ListenableBuilder(
+                    listenable: widget.viewModel,
+                    builder: (context, _) => GameByGameComponent(viewModel: GameByGameViewModel(homeViewModel: widget.viewModel),)),
               ],
             )
         ),
