@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer' as developer;
 
 import 'package:app2/data/models/replay.dart';
 import 'package:app2/data/models/teamlytic.dart';
@@ -133,8 +134,10 @@ class SaveServiceImpl implements SaveService {
       final String? version = replayJson['data']['parserVersion'];
       if (version != SdReplayParser.perserVersion) {
         Uri uri = Uri.parse(replayJson['uri'] as String);
+        developer.log("Replay $uri has different version ($version) than the app's current replay version (${SdReplayParser.perserVersion}). Reloading it...");
         final response = await http.get(uri);
         if (response.statusCode != 200) {
+          developer.log("Error: Failed to reload replay $uri. Got status code ${response.statusCode}");
           // maybe I should handle this better. e.g. allow having a replay without data and add a reload button in the UI
           continue;
         }
