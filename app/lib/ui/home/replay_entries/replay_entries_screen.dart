@@ -49,11 +49,11 @@ class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent>
                   4: 1,
                 },
                 headRow: [
-                  Center(child: Text('', style: theme.textTheme.titleMedium,),),
-                  Center(child: Text('Replay URL', style: theme.textTheme.titleMedium),),
-                  Center(child: Text('Opposing Team', style: theme.textTheme.titleMedium),),
-                  Center(child: Text('Notes', style: theme.textTheme.titleMedium),),
-                  Center(child: Text('', style: theme.textTheme.titleMedium,),),
+                  Center(child: Text('', style: theme.textTheme.titleMedium, textAlign: TextAlign.center),),
+                  Center(child: Text('Replay URL', style: theme.textTheme.titleMedium, textAlign: TextAlign.center,),),
+                  Center(child: Text('Opposing Team', style: theme.textTheme.titleMedium, textAlign: TextAlign.center),),
+                  Center(child: Text('Notes', style: theme.textTheme.titleMedium, textAlign: TextAlign.center),),
+                  Center(child: Text('', style: theme.textTheme.titleMedium, textAlign: TextAlign.center),),
                 ],
                 rowBuilder: (context, index) {
                   final Replay replay = widget.viewModel.replays[index];

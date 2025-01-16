@@ -26,7 +26,7 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
     final padding = EdgeInsets.symmetric(horizontal: dimens.defaultScreenMargin);
     return ListView(
       children: [
-        SizedBox(height: 36,),
+        SizedBox(height: dimens.homeConfigScreenTopPadding,),
         Padding(padding: padding,
           child: Row(
           children: [

@@ -86,9 +86,11 @@ class _MobileHomeScreenState extends _AbstractHomeScreenState {
 
   @override
   Widget body(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
+    final double navigationBarHeight = MediaQuery.of(context).viewPadding.bottom;
     return Column(children: [
       Expanded(child: tabBarView(context, localization, dimens, theme)),
-      tabBar(context, localization, dimens, theme, true)
+      tabBar(context, localization, dimens, theme, true),
+      SizedBox(height: navigationBarHeight,)
     ],);
   }
 }

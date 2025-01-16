@@ -25,6 +25,7 @@ abstract final class Dimens {
   double get sdNameMaxWidth;
   double get pokepastePokemonHeight;
   double get pokepastePokemonIconsOffset;
+  double get homeConfigScreenTopPadding;
   int get pokemonArtworkFlex;
   int get pokemonSheetFlex;
 
@@ -47,7 +48,9 @@ final class _DimensMobile extends Dimens {
   @override
   final double pokepastePokemonHeight = 250.0;
   @override
-  final double pokepastePokemonIconsOffset = 25;
+  final double pokepastePokemonIconsOffset = 25.0;
+  @override
+  final double homeConfigScreenTopPadding = 0;
 
   @override
   final double screenBoundsTopMargin = 32.0;
@@ -74,7 +77,9 @@ final class _DimensDesktop extends Dimens {
   @override
   final double pokepastePokemonHeight = 250.0;
   @override
-  final double pokepastePokemonIconsOffset = 25;
+  final double pokepastePokemonIconsOffset = 25.0;
+  @override
+  final double homeConfigScreenTopPadding = 36;
 
   @override
   final double screenBoundsTopMargin = 0.0;
