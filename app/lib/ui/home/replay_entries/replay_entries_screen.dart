@@ -1,4 +1,5 @@
 import 'package:app2/ui/core/widgets.dart';
+import 'package:app2/ui/core/widgets/grid_listview.dart';
 import 'package:app2/ui/home/home_viewmodel.dart';
 import 'package:app2/ui/home/replay_entries/replay_entries_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,6 @@ class ReplayEntriesComponent extends StatefulWidget {
 
 class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent> {
 
-  // TODO display win rate
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     return Column(
@@ -38,64 +38,55 @@ class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent>
           ),),
 
         Expanded(
-            child: SingleChildScrollView(
-              child: Column(children: [
-                if (widget.viewModel.replays.isNotEmpty)
-                  Table(
-                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                    columnWidths: {
-                      0: FractionColumnWidth(0.1),
-                      1: FractionColumnWidth(0.3),
-                      2: FractionColumnWidth(0.3),
-                      3: FractionColumnWidth(0.2),
-                      4: FractionColumnWidth(0.1),
-                    },
-                    children: [
-                      TableRow(children: [
-                        Center(child: Text('', style: theme.textTheme.titleMedium,),),
-                        Center(child: Text('Replay URL', style: theme.textTheme.titleMedium),),
-                        Center(child: Text('Opposing Team', style: theme.textTheme.titleMedium),),
-                        Center(child: Text('Notes', style: theme.textTheme.titleMedium),),
-                        Center(child: Text('', style: theme.textTheme.titleMedium,),),
-                      ]),
-                      ...widget.viewModel.replays.asMap().entries.map((entry) {
-                        final number = entry.key + 1;
-                        final Replay replay = entry.value;
-                        final replayLink = replay.uri.toString().replaceFirst('.json', '');
-                        Color? color;
-                        if (replay.gameOutput == GameOutput.WIN) {
-                          color = Colors.greenAccent.withAlpha(50);
-                        } else if (replay.gameOutput == GameOutput.LOSS) {
-                          color = Colors.redAccent.withAlpha(50);
-                        }
-                        return TableRow(
-                          decoration: BoxDecoration(color: color),
-                          children: [
-                            Center(child: Text(number.toString()),),
-                            Center(
-                              child: TextButton(
-                                onPressed: () => widget.viewModel.openLink(replayLink),
-                                child: Text(replayLink, overflow: TextOverflow.ellipsis, style: TextStyle(
-                                  color: Colors.blue,
-                                  decoration: TextDecoration.underline,
-                                ),),
-                              ),),
-                            Center(child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: replay.opposingPlayer.team
-                                  .map((pokemon) =>
-                                  Padding(padding: EdgeInsets.symmetric(horizontal: 4), child:
-                                  widget.viewModel.pokemonImageService.getPokemonSprite(pokemon),))
-                                  .toList(),
+            child: GridListView(
+                columnWeights: {
+                  0: 1,
+                  1: 3,
+                  2: 3,
+                  3: 2,
+                  4: 1,
+                },
+                headRow: [
+                  Center(child: Text('', style: theme.textTheme.titleMedium,),),
+                  Center(child: Text('Replay URL', style: theme.textTheme.titleMedium),),
+                  Center(child: Text('Opposing Team', style: theme.textTheme.titleMedium),),
+                  Center(child: Text('Notes', style: theme.textTheme.titleMedium),),
+                  Center(child: Text('', style: theme.textTheme.titleMedium,),),
+                ],
+                rowBuilder: (context, index) {
+                  final Replay replay = widget.viewModel.replays[index];
+                  final replayLink = replay.uri.toString().replaceFirst('.json', '');
+                  Color? color; // TODO use it
+                  if (replay.gameOutput == GameOutput.WIN) {
+                    color = Colors.greenAccent.withAlpha(50);
+                  } else if (replay.gameOutput == GameOutput.LOSS) {
+                    color = Colors.redAccent.withAlpha(50);
+                  }
+                  return GridListViewRow(decoration: BoxDecoration(color: color),
+                      children: [
+                        Center(child: Text((index + 1).toString()),),
+                        Center(
+                          child: TextButton(
+                            onPressed: () => widget.viewModel.openLink(replayLink),
+                            child: Text(replayLink, overflow: TextOverflow.ellipsis, style: TextStyle(
+                              color: Colors.blue,
+                              decoration: TextDecoration.underline,
                             ),),
-                            Center(child: Text(replay.notes ?? ''),),
-                            Center(child: IconButton(icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => widget.viewModel.removeReplay(replay))),
-                          ],
-                        );
-                      })
-                    ],
-                  ),
-              ],),
+                          ),),
+                        Center(child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: replay.opposingPlayer.team
+                              .map((pokemon) =>
+                              Padding(padding: EdgeInsets.symmetric(horizontal: 4), child:
+                              widget.viewModel.pokemonImageService.getPokemonSprite(pokemon),))
+                              .toList(),
+                        ),),
+                        Center(child: Text(replay.notes ?? ''),),
+                        Center(child: IconButton(icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => widget.viewModel.removeReplay(replay))),
+                      ]
+                  );
+                },
+                itemCount: widget.viewModel.replays.length
             )
         ),
         Padding(

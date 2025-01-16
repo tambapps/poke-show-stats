@@ -39,7 +39,6 @@ class HomeConfigViewModel extends ChangeNotifier {
     if (pokepaste.pokemons.isEmpty) {
       errorMessage('Pokepaste does not have any pokemon');
     }
-    pokepasteController.clear();
     homeViewModel.pokepaste = pokepaste;
     _setLoading(false);
   }
