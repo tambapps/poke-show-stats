@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
+import 'dart:io';
 
 import 'package:app2/data/models/replay.dart';
 import 'package:app2/data/models/teamlytic.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,24 +19,54 @@ abstract class SaveStorage {
 
 
 class MobileSaveStorage implements SaveStorage {
+  static const _saveNamesKey = '_saveNames';
+
+  // uses SharedPreferences for save names, file for the resst
+
   @override
-  Future<String?> loadSaveJson(String saveName) {
-    // TODO: implement loadSaveJson
-    throw UnimplementedError();
+  Future<String?> loadSaveJson(String saveName) async {
+    try {
+      final directory = await _getSavesDirectory();
+      final file = File('${directory.path}/$saveName.json');
+      if (!await file.exists()) {
+        return null; // Return null if the file doesn't exist
+      }
+      return await file.readAsString();
+    } catch (e) {
+      developer.log('Error loading save $saveName', error: e);
+      return null;
+    }
   }
 
   @override
-  Future<List<String>> listSaveNames() {
-    // TODO: implement loadSaveNames
-    throw UnimplementedError();
+  Future<bool> storeSave(String saveName, String json) async {
+    try {
+      // Get the app's documents directory
+      final directory = await _getSavesDirectory();
+      final file = File('${directory.path}/$saveName.json');
+      await file.writeAsString(json, flush: true);
+      return true;
+    } catch (e) {
+      developer.log('Error storing save $saveName', error: e);
+      return false;
+    }
   }
 
   @override
-  Future<bool> storeSave(String saveName, String json) {
-    // TODO: implement saveSave
-    throw UnimplementedError();
+  Future<List<String>> listSaveNames() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList(_saveNamesKey) ?? [];
   }
 
+  Future<Directory> _getSavesDirectory() async {
+    final rootDir = await getApplicationDocumentsDirectory();
+    final saveDirPath = '${rootDir.path}/saves';
+    final savesDirectory = Directory(saveDirPath);
+    if (!await savesDirectory.exists()) {
+      await savesDirectory.create(recursive: true);
+    }
+    return savesDirectory;
+  }
 }
 
 class WebSaveStorage implements SaveStorage {

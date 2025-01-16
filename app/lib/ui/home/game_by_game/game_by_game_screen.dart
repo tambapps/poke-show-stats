@@ -1,10 +1,7 @@
 
-import 'dart:math';
-
 import 'package:app2/data/models/replay.dart';
 import 'package:flutter/material.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/localization/applocalization.dart';
 import '../../core/themes/dimens.dart';
@@ -14,15 +11,16 @@ import 'game_by_game_viewmodel.dart';
 
 class GameByGameComponent extends StatefulWidget {
   final GameByGameViewModel viewModel;
+  final bool isMobile;
 
-  const GameByGameComponent({super.key, required this.viewModel});
+  const GameByGameComponent({super.key, required this.viewModel, required this.isMobile});
 
 
   @override
-  _GameByGameComponentState createState() => _GameByGameComponentState();
+  State createState() => isMobile ? _MobileGameByGameComponentState() : _DesktopGameByGameComponentState();
 }
 
-class _GameByGameComponentState extends AbstractState<GameByGameComponent> {
+abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGameComponent> {
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
@@ -44,15 +42,16 @@ class _GameByGameComponentState extends AbstractState<GameByGameComponent> {
 
   }
 
+  Widget playWidgetContainer(List<Widget> children);
+
   Widget _gbgWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay) {
     return Column(children: [
       _gbgHeader(context, localization, dimens, theme, replay),
       SizedBox(height: 16.0,),
-      Row(
-        children: [
+      playWidgetContainer([
         Expanded(child: _playerWidget(context, localization, dimens, theme, replay, replay.otherPlayer),),
         Expanded(child: _playerWidget(context, localization, dimens, theme, replay, replay.opposingPlayer),),
-      ],),
+      ]),
     ],);
   }
 
@@ -128,4 +127,17 @@ class _GameByGameComponentState extends AbstractState<GameByGameComponent> {
     }).toList();
     return Row(mainAxisSize: MainAxisSize.min, children: children,);
   }
+}
+
+class _MobileGameByGameComponentState extends _AbstractGameByGameComponentState {
+
+  @override
+  Widget playWidgetContainer(List<Widget> children) => Column(children: children,);
+
+}
+
+class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState {
+
+  @override
+  Widget playWidgetContainer(List<Widget> children) => Row(children: children,);
 }
