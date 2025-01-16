@@ -13,12 +13,12 @@ class PokemonImageService {
   final Map<dynamic, dynamic> _pokemon_mappings;
   final Map<dynamic, dynamic> _item_mappings;
 
-  Widget getPokemonSprite(String pokemon) {
+  Widget getPokemonSprite(String pokemon, {double width = Dimens.pokemonLogoSize, double height = Dimens.pokemonLogoSize}) {
     Uri? uri = _getPokemonSpriteUri(pokemon);
     if (uri == null) return _getDefaultSprite(tooltip: pokemon);
     return Tooltip(
       message: pokemon,
-      child: _getImageWidget(uri, width: Dimens.pokemonLogoSize, height: Dimens.pokemonLogoSize, tooltip: pokemon),
+      child: _getImageWidget(uri, width: width, height: height, tooltip: pokemon),
     );
   }
 

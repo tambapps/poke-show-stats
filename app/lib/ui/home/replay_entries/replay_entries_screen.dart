@@ -22,6 +22,87 @@ class ReplayEntriesComponent extends StatefulWidget {
 
 abstract class _AbstractReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent> {
 
+  Widget addReplayRow() => Row(
+    children: [
+      Expanded(
+        child: TextField(
+          maxLines: null,
+          controller: widget.viewModel.addReplayURIController,
+          decoration: const InputDecoration(
+            labelText: 'Replay URL(s)',
+            border: OutlineInputBorder(),
+          ),
+        )
+        ,
+      ),
+      const SizedBox(width: 16),
+      ElevatedButton(
+        onPressed: () => widget.viewModel.loadReplays(),
+        child: const Text('Add'),
+      ),
+    ],
+  );
+
+  Widget cancelButton(Replay replay) => IconButton(icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => widget.viewModel.removeReplay(replay));
+
+  Widget opponentTeamWidget(Replay replay) => Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: replay.opposingPlayer.team
+        .map((pokemon) =>
+        Padding(padding: EdgeInsets.symmetric(horizontal: 4), child:
+            // TODO MAKE DIMENSION PLATFORM SPECIFIC AND PASS 40/50 FOR ANDROID THROUGH ARGUMENTS WIDTH AND HEIGHT
+        widget.viewModel.pokemonImageService.getPokemonSprite(pokemon),))
+        .toList(),
+  );
+
+  Widget replayLinkWidget(String replayLink) => TextButton(
+    onPressed: () => openLink(replayLink.replaceFirst('.json', '')),
+    child: Text(replayLink, overflow: TextOverflow.ellipsis, style: TextStyle(
+      color: Colors.blue,
+      decoration: TextDecoration.underline,
+    ),),
+  );
+
+  Color? getGameOutputColor(Replay replay) {
+    if (replay.gameOutput == GameOutput.WIN) {
+      return AppColors.winBackgroundColor;
+    } else if (replay.gameOutput == GameOutput.LOSS) {
+      return AppColors.looseBackgroundColor;
+    }
+    return null;
+  }
+}
+
+class _MobileReplayEntriesComponentState extends _AbstractReplayEntriesComponentState {
+
+  @override
+  Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
+    return ListView.separated(itemBuilder: (context, index) {
+      final Replay replay = widget.viewModel.replays[index];
+      final replayLink = replay.uri.toString().replaceFirst('.json', '');
+      Color? color = getGameOutputColor(replay);
+      return Container(
+        decoration: BoxDecoration(color: color),
+        child: Column(
+          children: [
+            Text((index + 1).toString()),
+            replayLinkWidget(replayLink),
+            opponentTeamWidget(replay),
+            if (replay.notes != null && replay.notes!.isNotEmpty)Text(replay.notes ?? '')
+          ],),
+      );
+    }, separatorBuilder: (context, index) {
+      return Padding(padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 64.0), child: Divider(
+        color: Colors.grey,
+        thickness: 2,
+        height: 1,
+      ),);
+    }, itemCount: widget.viewModel.replays.length);
+  }
+}
+
+class _DesktopReplayEntriesComponentState extends _AbstractReplayEntriesComponentState {
+
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     return Column(
@@ -56,12 +137,7 @@ abstract class _AbstractReplayEntriesComponentState extends AbstractState<Replay
                 rowBuilder: (context, index) {
                   final Replay replay = widget.viewModel.replays[index];
                   final replayLink = replay.uri.toString().replaceFirst('.json', '');
-                  Color? color; // TODO use it
-                  if (replay.gameOutput == GameOutput.WIN) {
-                    color = AppColors.winBackgroundColor;
-                  } else if (replay.gameOutput == GameOutput.LOSS) {
-                    color = AppColors.looseBackgroundColor;
-                  }
+                  Color? color = getGameOutputColor(replay);
                   return GridListViewRow(decoration: BoxDecoration(color: color),
                       children: [
                         Center(child: Text((index + 1).toString()),),
@@ -78,54 +154,9 @@ abstract class _AbstractReplayEntriesComponentState extends AbstractState<Replay
         ),
         Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 32, top: 16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    maxLines: null,
-                    controller: widget.viewModel.addReplayURIController,
-                    decoration: const InputDecoration(
-                      labelText: 'Replay URL(s)',
-                      border: OutlineInputBorder(),
-                    ),
-                  )
-                  ,
-                ),
-                const SizedBox(width: 16),
-                ElevatedButton(
-                  onPressed: () => widget.viewModel.loadReplays(),
-                  child: const Text('Add'),
-                ),
-              ],
-            ))
+            child: addReplayRow())
       ],
     );
   }
-
-  Widget cancelButton(Replay replay) => IconButton(icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => widget.viewModel.removeReplay(replay));
-
-  Widget opponentTeamWidget(Replay replay) => Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: replay.opposingPlayer.team
-        .map((pokemon) =>
-        Padding(padding: EdgeInsets.symmetric(horizontal: 4), child:
-        widget.viewModel.pokemonImageService.getPokemonSprite(pokemon),))
-        .toList(),
-  );
-
-  Widget replayLinkWidget(String replayLink) => TextButton(
-    onPressed: () => openLink(replayLink.replaceFirst('.json', '')),
-    child: Text(replayLink, overflow: TextOverflow.ellipsis, style: TextStyle(
-      color: Colors.blue,
-      decoration: TextDecoration.underline,
-    ),),
-  );
-}
-
-class _MobileReplayEntriesComponentState extends _AbstractReplayEntriesComponentState {
-
-}
-
-class _DesktopReplayEntriesComponentState extends _AbstractReplayEntriesComponentState {
 
 }
