@@ -1,10 +1,8 @@
 import 'package:app2/ui/core/themes/colors.dart';
 import 'package:app2/ui/core/widgets.dart';
 import 'package:app2/ui/core/widgets/grid_listview.dart';
-import 'package:app2/ui/home/home_viewmodel.dart';
 import 'package:app2/ui/home/replay_entries/replay_entries_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:sd_replay_parser/sd_replay_parser.dart';
 
 import '../../../data/models/replay.dart';
 import '../../core/localization/applocalization.dart';
@@ -14,15 +12,15 @@ import '../../core/utils.dart';
 
 class ReplayEntriesComponent extends StatefulWidget {
   final ReplayEntriesViewModel viewModel;
+  final bool isMobile;
 
-  const ReplayEntriesComponent({super.key, required this.viewModel});
-
+  const ReplayEntriesComponent({super.key, required this.viewModel, required this.isMobile});
 
   @override
-  _ReplayEntriesComponentState createState() => _ReplayEntriesComponentState();
+  State createState() => isMobile ? _MobileReplayEntriesComponentState() : _DesktopReplayEntriesComponentState();
 }
 
-class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent> {
+abstract class _AbstractReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent> {
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
@@ -68,23 +66,10 @@ class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent>
                       children: [
                         Center(child: Text((index + 1).toString()),),
                         Center(
-                          child: TextButton(
-                            onPressed: () => openLink(replayLink.replaceFirst('.json', '')),
-                            child: Text(replayLink, overflow: TextOverflow.ellipsis, style: TextStyle(
-                              color: Colors.blue,
-                              decoration: TextDecoration.underline,
-                            ),),
-                          ),),
-                        Center(child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: replay.opposingPlayer.team
-                              .map((pokemon) =>
-                              Padding(padding: EdgeInsets.symmetric(horizontal: 4), child:
-                              widget.viewModel.pokemonImageService.getPokemonSprite(pokemon),))
-                              .toList(),
-                        ),),
+                          child: replayLinkWidget(replayLink),),
+                        Center(child: opponentTeamWidget(replay),),
                         Center(child: Text(replay.notes ?? ''),),
-                        Center(child: IconButton(icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => widget.viewModel.removeReplay(replay))),
+                        Center(child: cancelButton(replay)),
                       ]
                   );
                 },
@@ -116,4 +101,31 @@ class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent>
       ],
     );
   }
+
+  Widget cancelButton(Replay replay) => IconButton(icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => widget.viewModel.removeReplay(replay));
+
+  Widget opponentTeamWidget(Replay replay) => Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: replay.opposingPlayer.team
+        .map((pokemon) =>
+        Padding(padding: EdgeInsets.symmetric(horizontal: 4), child:
+        widget.viewModel.pokemonImageService.getPokemonSprite(pokemon),))
+        .toList(),
+  );
+
+  Widget replayLinkWidget(String replayLink) => TextButton(
+    onPressed: () => openLink(replayLink.replaceFirst('.json', '')),
+    child: Text(replayLink, overflow: TextOverflow.ellipsis, style: TextStyle(
+      color: Colors.blue,
+      decoration: TextDecoration.underline,
+    ),),
+  );
+}
+
+class _MobileReplayEntriesComponentState extends _AbstractReplayEntriesComponentState {
+
+}
+
+class _DesktopReplayEntriesComponentState extends _AbstractReplayEntriesComponentState {
+
 }
