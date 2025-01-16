@@ -96,7 +96,8 @@ class _GameByGameComponentState extends AbstractState<GameByGameComponent> {
 
     return Column(children: [
       Text(isOpponent ? localization.opponent : localization.you),
-      // TODO display elo
+      if (player.beforeElo != null && player.afterElo != null)
+        Text("Elo: ${player.beforeElo} -> ${player.afterElo}"),
       _playerPickWidget(context, localization, dimens, theme, replay, player)
     ],);
   }
