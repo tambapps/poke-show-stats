@@ -27,22 +27,21 @@ class _GameByGameComponentState extends AbstractState<GameByGameComponent> {
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     // TODO add filters
-    return Expanded(
-        child: ListView.separated(
-            itemBuilder: (context, index) {
-              final replay = widget.viewModel.replays[index];
-              return _gbgWidget(context, localization, dimens, theme, replay);
-            },
-            separatorBuilder: (context, index) {
-              return Padding(padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 64.0), child: Divider(
-                color: Colors.grey,
-                thickness: 2,
-                height: 1,
-              ),);
-            },
-            itemCount: widget.viewModel.replays.length
-        )
+    return ListView.separated(
+        itemBuilder: (context, index) {
+          final replay = widget.viewModel.replays[index];
+          return _gbgWidget(context, localization, dimens, theme, replay);
+        },
+        separatorBuilder: (context, index) {
+          return Padding(padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 64.0), child: Divider(
+            color: Colors.grey,
+            thickness: 2,
+            height: 1,
+          ),);
+        },
+        itemCount: widget.viewModel.replays.length
     );
+
   }
 
   Widget _gbgWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay) {
