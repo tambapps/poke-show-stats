@@ -15,7 +15,7 @@ class AppLocalization {
   static const _strings = <String, String>{
     'home': 'Home',
     'replayEntries': 'Replay Entries',
-    'usageStats': 'Usage Stats',
+    'gameByGame': 'Game by Game',
     'sdNames': 'Showdown names',
     'addSdName': 'Add Pokemon Showdown name',
     'enterSdName': 'Enter name',
@@ -26,6 +26,8 @@ class AppLocalization {
     'add': 'Add',
     'ok': 'OK',
     'cancel': 'Cancel',
+    'yourPick': 'Your Pick',
+    'theirPick': 'Their Pick',
   };
 
   // If string for "label" does not exist, will show "[LABEL]"
@@ -34,7 +36,7 @@ class AppLocalization {
 
   String get home => _get('home');
   String get replayEntries => _get('replayEntries');
-  String get usageStats => _get('usageStats');
+  String get gameByGame => _get('gameByGame');
   String get showdownNames => _get('sdNames');
   String get addSdName => _get('addSdName');
   String get enterSdName => _get('enterSdName');
@@ -45,6 +47,8 @@ class AppLocalization {
   String get add => _get('add');
   String get cancel => _get('cancel');
   String get ok => _get('ok');
+  String get yourPick => _get('yourPick');
+  String get theirPick => _get('theirPick');
 
   String selected(int value) =>
       _get('selected').replaceAll('{1}', value.toString());

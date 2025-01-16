@@ -43,7 +43,7 @@ class _HomeScreenState extends AbstractState<HomeScreen> {
               tabs: [
                 Tab(text: localization.home),
                 Tab(text: localization.replayEntries),
-                Tab(text: localization.usageStats),
+                Tab(text: localization.gameByGame),
               ],
             ),
             body: TabBarView(
@@ -56,7 +56,7 @@ class _HomeScreenState extends AbstractState<HomeScreen> {
                     builder: (context, _) => ReplayEntriesComponent(viewModel: ReplayEntriesViewModel(replayParser: context.read(), homeViewModel: widget.viewModel),)),
                 ListenableBuilder(
                     listenable: widget.viewModel,
-                    builder: (context, _) => GameByGameComponent(viewModel: GameByGameViewModel(homeViewModel: widget.viewModel),)),
+                    builder: (context, _) => GameByGameComponent(viewModel: GameByGameViewModel(homeViewModel: widget.viewModel, pokemonImageService: context.read()),)),
               ],
             )
         ),

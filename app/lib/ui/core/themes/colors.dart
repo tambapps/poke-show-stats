@@ -15,6 +15,9 @@ abstract final class AppColors {
   static const blackTransparent = Color(0x4D000000);
   static const red1 = Color(0xFFE74C3C);
 
+  static final winBackgroundColor = Colors.greenAccent.withAlpha(50);
+  static final looseBackgroundColor = Colors.redAccent.withAlpha(50);
+
   static const lightColorScheme = ColorScheme(
     brightness: Brightness.light,
     primary: AppColors.black1,

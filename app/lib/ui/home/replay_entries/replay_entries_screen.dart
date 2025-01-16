@@ -1,3 +1,4 @@
+import 'package:app2/ui/core/themes/colors.dart';
 import 'package:app2/ui/core/widgets.dart';
 import 'package:app2/ui/core/widgets/grid_listview.dart';
 import 'package:app2/ui/home/home_viewmodel.dart';
@@ -58,9 +59,9 @@ class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent>
                   final replayLink = replay.uri.toString().replaceFirst('.json', '');
                   Color? color; // TODO use it
                   if (replay.gameOutput == GameOutput.WIN) {
-                    color = Colors.greenAccent.withAlpha(50);
+                    color = AppColors.winBackgroundColor;
                   } else if (replay.gameOutput == GameOutput.LOSS) {
-                    color = Colors.redAccent.withAlpha(50);
+                    color = AppColors.looseBackgroundColor;
                   }
                   return GridListViewRow(decoration: BoxDecoration(color: color),
                       children: [

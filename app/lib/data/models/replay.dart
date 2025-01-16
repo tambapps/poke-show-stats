@@ -10,6 +10,9 @@ class Replay {
   final GameOutput gameOutput;
   final PlayerData opposingPlayer;
 
+  // other because it may not be self, if the match doesn't stare self
+  PlayerData get otherPlayer => data.player1.name == opposingPlayer.name ? data.player2 : data.player1;
+
   Replay({required this.uri, required this.data, required this.gameOutput,
     required this.opposingPlayer,
     this.notes});
