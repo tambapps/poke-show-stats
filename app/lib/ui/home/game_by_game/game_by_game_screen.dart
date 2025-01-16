@@ -85,12 +85,33 @@ class _GameByGameComponentState extends AbstractState<GameByGameComponent> {
     ],);
   }
 
-  // TODO displayed who terad by display the tera icon on the specific pokemon
   Widget _playerPickWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay, PlayerData player) {
     List<List<Widget>> childrenPairs = [];
     for (int pair = 0; pair < 2; pair++) {
       List<String> pokemons = player.selection.sublist(pair * 2, min(player.selection.length, pair * 2 + 2));
-      childrenPairs.add(pokemons.map((pokemon) => widget.viewModel.pokemonImageService.getPokemonSprite(pokemon)).toList());
+      childrenPairs.add(pokemons.map((pokemon) {
+        final String? teraType = player.terastallization?.pokemon == pokemon ? player.terastallization?.type : null;
+        return SizedBox(
+          height: 128.0,
+          width: 128.0,
+          child: Stack(
+            fit: StackFit.expand,
+            alignment: Alignment.center,
+            children: [
+              Transform.scale(
+                scale: 0.65,
+                child: widget.viewModel.pokemonImageService.getPokemonArtwork(pokemon),
+              ),
+              if (teraType != null)
+                Positioned(
+                  top: dimens.pokepastePokemonIconsOffset,
+                  right: 0,
+                  child: widget.viewModel.pokemonImageService.getTeraTypeSprite(teraType, width: 50, height: 50),
+                ),
+            ],
+          ),
+        );
+      }).toList());
     }
     bool isOpponent = replay.opposingPlayer.name == player.name;
     return Column(children: [
