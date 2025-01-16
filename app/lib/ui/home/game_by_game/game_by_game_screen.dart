@@ -47,9 +47,12 @@ class _GameByGameComponentState extends AbstractState<GameByGameComponent> {
   Widget _gbgWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay) {
     return Column(children: [
       _gbgHeader(context, localization, dimens, theme, replay),
-      _playerWidget(context, localization, dimens, theme, replay, replay.otherPlayer),
-      SizedBox(width: 8,),
-      _playerWidget(context, localization, dimens, theme, replay, replay.opposingPlayer),
+      SizedBox(height: 16.0,),
+      Row(
+        children: [
+        Expanded(child: _playerWidget(context, localization, dimens, theme, replay, replay.otherPlayer),),
+        Expanded(child: _playerWidget(context, localization, dimens, theme, replay, replay.opposingPlayer),),
+      ],),
     ],);
   }
 
@@ -89,43 +92,39 @@ class _GameByGameComponentState extends AbstractState<GameByGameComponent> {
   }
 
   Widget _playerWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay, PlayerData player) {
-    return Row(children: [
+    bool isOpponent = replay.opposingPlayer.name == player.name;
+
+    return Column(children: [
+      Text(isOpponent ? localization.opponent : localization.you),
+      // TODO display elo
       _playerPickWidget(context, localization, dimens, theme, replay, player)
     ],);
   }
 
   Widget _playerPickWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay, PlayerData player) {
-    List<List<Widget>> childrenPairs = [];
-    for (int pair = 0; pair < 2; pair++) {
-      List<String> pokemons = player.selection.sublist(pair * 2, min(player.selection.length, pair * 2 + 2));
-      childrenPairs.add(pokemons.map((pokemon) {
-        final String? teraType = player.terastallization?.pokemon == pokemon ? player.terastallization?.type : null;
-        return SizedBox(
-          height: 128.0,
-          width: 128.0,
-          child: Stack(
-            fit: StackFit.expand,
-            alignment: Alignment.center,
-            children: [
-              Transform.scale(
-                scale: 0.65,
-                child: widget.viewModel.pokemonImageService.getPokemonArtwork(pokemon),
+    List<Widget> children = player.selection.map((pokemon) {
+      final String? teraType = player.terastallization?.pokemon == pokemon ? player.terastallization?.type : null;
+      return SizedBox(
+        height: 128.0,
+        width: 128.0,
+        child: Stack(
+          fit: StackFit.expand,
+          alignment: Alignment.center,
+          children: [
+            Transform.scale(
+              scale: 0.65,
+              child: widget.viewModel.pokemonImageService.getPokemonArtwork(pokemon),
+            ),
+            if (teraType != null)
+              Positioned(
+                top: dimens.pokepastePokemonIconsOffset,
+                right: 0,
+                child: widget.viewModel.pokemonImageService.getTeraTypeSprite(teraType, width: 50, height: 50),
               ),
-              if (teraType != null)
-                Positioned(
-                  top: dimens.pokepastePokemonIconsOffset,
-                  right: 0,
-                  child: widget.viewModel.pokemonImageService.getTeraTypeSprite(teraType, width: 50, height: 50),
-                ),
-            ],
-          ),
-        );
-      }).toList());
-    }
-    bool isOpponent = replay.opposingPlayer.name == player.name;
-    return Column(children: [
-      Text(isOpponent ? localization.theirPick : localization.yourPick),
-      ...childrenPairs.map((pair)=> Row(children: pair,))
-    ],);
+          ],
+        ),
+      );
+    }).toList();
+    return Row(mainAxisSize: MainAxisSize.min, children: children,);
   }
 }

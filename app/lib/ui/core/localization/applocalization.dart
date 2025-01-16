@@ -26,8 +26,8 @@ class AppLocalization {
     'add': 'Add',
     'ok': 'OK',
     'cancel': 'Cancel',
-    'yourPick': 'Your Pick',
-    'theirPick': 'Their Pick',
+    'you': 'You',
+    'opponent': 'Opponent',
   };
 
   // If string for "label" does not exist, will show "[LABEL]"
@@ -47,8 +47,8 @@ class AppLocalization {
   String get add => _get('add');
   String get cancel => _get('cancel');
   String get ok => _get('ok');
-  String get yourPick => _get('yourPick');
-  String get theirPick => _get('theirPick');
+  String get you => _get('you');
+  String get opponent => _get('opponent');
 
   String selected(int value) =>
       _get('selected').replaceAll('{1}', value.toString());
