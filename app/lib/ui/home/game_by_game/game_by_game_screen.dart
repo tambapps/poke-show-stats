@@ -2,12 +2,13 @@
 import 'dart:math';
 
 import 'package:app2/data/models/replay.dart';
-import 'package:app2/ui/core/themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/localization/applocalization.dart';
 import '../../core/themes/dimens.dart';
+import '../../core/utils.dart';
 import '../../core/widgets.dart';
 import 'game_by_game_viewmodel.dart';
 
@@ -67,15 +68,24 @@ class _GameByGameComponentState extends AbstractState<GameByGameComponent> {
             .toList(),
       ),
       SizedBox(width: 16,),
-
       if (replay.gameOutput != GameOutput.UNKNOWN)
-        Container(
-          decoration: BoxDecoration(
-            color: replay.gameOutput == GameOutput.WIN ? Colors.green : Colors.red,
-            borderRadius: BorderRadius.circular(10), // Rounded corners
-          ),
-          child:  SizedBox(width: 45, height: 45,
-            child: Center(child: Text(replay.gameOutput == GameOutput.WIN ? 'W' : 'L', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),),),),)
+        ...[
+          Container(
+            decoration: BoxDecoration(
+              color: replay.gameOutput == GameOutput.WIN ? Colors.green : Colors.red,
+              borderRadius: BorderRadius.circular(10), // Rounded corners
+            ),
+            child:  SizedBox(width: 45, height: 45,
+              child: Center(child: Text(replay.gameOutput == GameOutput.WIN ? 'W' : 'L', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),),),),),
+          SizedBox(width: 16,),
+        ],
+      TextButton(
+        onPressed: () => openLink(replay.uri.toString().replaceFirst('.json', '')),
+        child: Text('Replay', overflow: TextOverflow.ellipsis, style: TextStyle(
+          color: Colors.blue,
+          decoration: TextDecoration.underline,
+        ),),
+      )
     ],);
   }
 

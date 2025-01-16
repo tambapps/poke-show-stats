@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
 import 'package:http/http.dart' as http;
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../data/models/replay.dart';
 import '../../../data/services/pokemon_image_service.dart';
@@ -78,19 +77,6 @@ class ReplayEntriesViewModel extends ChangeNotifier {
       textColor: Colors.white,
       fontSize: 16.0,
     );
-  }
-
-  void openLink(String link) async {
-    final Uri uri = Uri.parse(link);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(
-        uri,
-        mode: LaunchMode.externalApplication, // Opens browser or Chrome Tabs on mobile
-        webOnlyWindowName: '_blank',         // Opens a new tab on the web
-      );
-    } else {
-      throw "Could not launch $link";
-    }
   }
 
   Future<SdReplayData> _fetchReplayData(Uri uri) async {

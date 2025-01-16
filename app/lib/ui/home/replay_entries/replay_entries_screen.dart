@@ -9,6 +9,7 @@ import 'package:sd_replay_parser/sd_replay_parser.dart';
 import '../../../data/models/replay.dart';
 import '../../core/localization/applocalization.dart';
 import '../../core/themes/dimens.dart';
+import '../../core/utils.dart';
 
 
 class ReplayEntriesComponent extends StatefulWidget {
@@ -68,7 +69,7 @@ class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent>
                         Center(child: Text((index + 1).toString()),),
                         Center(
                           child: TextButton(
-                            onPressed: () => widget.viewModel.openLink(replayLink),
+                            onPressed: () => openLink(replayLink.replaceFirst('.json', '')),
                             child: Text(replayLink, overflow: TextOverflow.ellipsis, style: TextStyle(
                               color: Colors.blue,
                               decoration: TextDecoration.underline,
