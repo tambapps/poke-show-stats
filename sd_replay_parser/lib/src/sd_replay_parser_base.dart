@@ -37,11 +37,11 @@ class SdReplayParser {
           if (match != null) {
             // Extract the name, first number, and second number
             String name = match.group(1)!;
-            int beforeRating = int.parse(match.group(2)!);
-            int afterRating = int.parse(match.group(3)!);
+            int beforeElo = int.parse(match.group(2)!);
+            int afterElo = int.parse(match.group(3)!);
             playerData = name == playerDataList.first.name ? playerDataList.first : playerDataList.last;
-            playerData.beforeRating = beforeRating;
-            playerData.afterRating = afterRating;
+            playerData.beforeElo = beforeElo;
+            playerData.afterElo = afterElo;
           }
           break;
         case "drag":

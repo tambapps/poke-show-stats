@@ -30,8 +30,8 @@ class PlayerData {
   final String name;
   final List<String> team;
   final List<String> selection;
-  int? beforeRating;
-  int? afterRating;
+  int? beforeElo;
+  int? afterElo;
   List<String> get leads => selection.sublist(0, 2);
   Terastallization? terastallization;
   // pokemonName -> moveName -> count
@@ -39,8 +39,8 @@ class PlayerData {
 
   PlayerData.name(String name): this(name: name, team: [], selection: [], moveUsages: {},);
 
-  PlayerData({required this.name, required this.team, required this.selection, this.beforeRating,
-    this.afterRating, this.terastallization, required this.moveUsages});
+  PlayerData({required this.name, required this.team, required this.selection, this.beforeElo,
+    this.afterElo, this.terastallization, required this.moveUsages});
 
 
   void incrUsage(String pokemonName, String moveName) {

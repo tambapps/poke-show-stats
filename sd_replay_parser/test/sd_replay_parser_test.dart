@@ -32,8 +32,8 @@ void main() {
         'Ogerpon-Hearthflame'
       ]);
       expect(player1.terastallization, Terastallization(pokemon: 'Raging Bolt', type: 'Electric'));
-      expect(player1.beforeRating, 1358);
-      expect(player1.afterRating, 1332);
+      expect(player1.beforeElo, 1358);
+      expect(player1.afterElo, 1332);
 
       PlayerData player2 = replay.player2;
       expect(player2.leads, ['Miraidon', 'Entei'], reason: 'Player 2 has incorrect leads');
@@ -47,8 +47,8 @@ void main() {
         'Ogerpon-Cornerstone'
       ]);
       expect(player2.terastallization, Terastallization(pokemon: 'Entei', type: 'Normal'));
-      expect(player2.beforeRating, 1256);
-      expect(player2.afterRating, 1288);
+      expect(player2.beforeElo, 1256);
+      expect(player2.afterElo, 1288);
 
       expect(replay.winner, 'jarmanvgc');
       expect(replay.winnerPlayer, player2);

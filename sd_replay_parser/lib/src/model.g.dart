@@ -23,8 +23,8 @@ PlayerData _$PlayerDataFromJson(Map<String, dynamic> json) => PlayerData(
       team: (json['team'] as List<dynamic>).map((e) => e as String).toList(),
       selection:
           (json['selection'] as List<dynamic>).map((e) => e as String).toList(),
-      beforeRating: (json['beforeRating'] as num?)?.toInt(),
-      afterRating: (json['afterRating'] as num?)?.toInt(),
+      beforeElo: (json['beforeElo'] as num?)?.toInt(),
+      afterElo: (json['afterElo'] as num?)?.toInt(),
       terastallization: json['terastallization'] == null
           ? null
           : Terastallization.fromJson(
@@ -39,8 +39,8 @@ Map<String, dynamic> _$PlayerDataToJson(PlayerData instance) =>
       'name': instance.name,
       'team': instance.team,
       'selection': instance.selection,
-      'beforeRating': instance.beforeRating,
-      'afterRating': instance.afterRating,
+      'beforeElo': instance.beforeElo,
+      'afterElo': instance.afterElo,
       'terastallization': instance.terastallization,
       'moveUsages': instance.moveUsages,
     };
