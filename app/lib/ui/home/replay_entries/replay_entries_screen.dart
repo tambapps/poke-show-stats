@@ -95,16 +95,15 @@ class _ReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent>
               children: [
                 Expanded(
                   // TODO there is a problem when hovering on it targetElement == domElement... should be fixed in flutter release 3.28
-                  child: Flexible(
-                      child: TextField(
-                        maxLines: null,
-                        controller: widget.viewModel.addReplayURIController,
-                        decoration: const InputDecoration(
-                          labelText: 'Replay URL(s)',
-                          border: OutlineInputBorder(),
-                        ),
-                      )
-                  ),
+                  child: TextField(
+                    maxLines: null,
+                    controller: widget.viewModel.addReplayURIController,
+                    decoration: const InputDecoration(
+                      labelText: 'Replay URL(s)',
+                      border: OutlineInputBorder(),
+                    ),
+                  )
+                  ,
                 ),
                 const SizedBox(width: 16),
                 ElevatedButton(
