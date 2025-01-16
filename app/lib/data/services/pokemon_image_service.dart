@@ -63,13 +63,12 @@ class PokemonImageService {
   }
 
   Widget _getImageWidget(Uri uri, {double? width, double? height, String? tooltip}) {
-    // TODO doesn't work now but should work once this https://github.com/flutter/flutter/issues/160127
-    //  will be included in the latest stable release and I upgrade.
-    //    for now use the flag flutter run -d chrome --web-renderer html
+    // use the flag flutter run "--web-renderer html" to make this work.
+    // don't forget to use it also when building the release app
     return CachedNetworkImage(
       imageUrl: uri.toString(),
       // needed in order for image loading to work even with CORS
-      //imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
+      // tried using imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet, but it doesn't work. So  I use the --web-renderer html flag
       width: width,
       height: height,
       fit: BoxFit.contain,
