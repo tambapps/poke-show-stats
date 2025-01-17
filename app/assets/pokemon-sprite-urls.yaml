@@ -228,6 +228,9 @@ Gyarados:
   artwork: "https://www.pokepedia.fr/images/thumb/f/f2/L%C3%A9viator-RFVF.png/492px-L%C3%A9viator-RFVF.png"
 Zamazenta:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/zamazenta.png"
+  artwork: "https://www.pokepedia.fr/images/5/5a/Zamazenta_%28H%C3%A9ros_Aguerri%29-EB.png"
+Zamazenta-Crowned:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/zamazenta-crowned.png"
   artwork: "https://www.pokepedia.fr/images/thumb/c/cf/Zamazenta_%28Bouclier_Supr%C3%AAme%29-EB.png/522px-Zamazenta_%28Bouclier_Supr%C3%AAme%29-EB.png"
 Seaking:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/seaking.png"
