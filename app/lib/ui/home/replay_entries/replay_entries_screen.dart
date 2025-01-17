@@ -49,9 +49,7 @@ abstract class _AbstractReplayEntriesComponentState extends AbstractState<Replay
     mainAxisAlignment: MainAxisAlignment.center,
     children: replay.opposingPlayer.team
         .map((pokemon) =>
-        Padding(padding: EdgeInsets.symmetric(horizontal: 4), child:
-            // TODO MAKE DIMENSION PLATFORM SPECIFIC AND PASS 40/50 FOR ANDROID THROUGH ARGUMENTS WIDTH AND HEIGHT
-        widget.viewModel.pokemonImageService.getPokemonSprite(pokemon),))
+    Expanded(child: widget.viewModel.pokemonImageService.getPokemonSprite(pokemon)))
         .toList(),
   );
 
@@ -77,27 +75,38 @@ class _MobileReplayEntriesComponentState extends _AbstractReplayEntriesComponent
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    return ListView.separated(itemBuilder: (context, index) {
-      final Replay replay = widget.viewModel.replays[index];
-      final replayLink = replay.uri.toString().replaceFirst('.json', '');
-      Color? color = getGameOutputColor(replay);
-      return Container(
-        decoration: BoxDecoration(color: color),
-        child: Column(
-          children: [
-            Text((index + 1).toString()),
-            replayLinkWidget(replayLink),
-            opponentTeamWidget(replay),
-            if (replay.notes != null && replay.notes!.isNotEmpty)Text(replay.notes ?? '')
-          ],),
-      );
-    }, separatorBuilder: (context, index) {
-      return Padding(padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 64.0), child: Divider(
-        color: Colors.grey,
-        thickness: 2,
-        height: 1,
-      ),);
-    }, itemCount: widget.viewModel.replays.length);
+    return Column(children: [
+      Flexible(flex: 9,
+          fit: FlexFit.loose, // this is because we want this component to shrink when we open the keyboard
+          child: ListView.separated(itemBuilder: (context, index) {
+            final Replay replay = widget.viewModel.replays[index];
+            final replayLink = replay.uri.toString().replaceFirst('.json', '');
+            Color? color = getGameOutputColor(replay);
+            return Container(
+              decoration: BoxDecoration(color: color),
+              child: Column(
+                children: [
+                  Text((index + 1).toString()),
+                  replayLinkWidget(replayLink),
+                  opponentTeamWidget(replay),
+                  if (replay.notes != null && replay.notes!.isNotEmpty) Text(replay.notes ?? ''),
+                  cancelButton(replay)
+                ],),
+            );
+          }, separatorBuilder: (context, index) {
+            return Padding(padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 64.0), child: Divider(
+              color: Colors.grey,
+              thickness: 2,
+              height: 1,
+            ),);
+          }, itemCount: widget.viewModel.replays.length)
+      ),
+      Padding(
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16),
+          child: ConstrainedBox(constraints: BoxConstraints(
+            maxHeight: 200, // give max height to prevent from overflowing
+          ), child: addReplayRow(),))
+    ],);
   }
 }
 
