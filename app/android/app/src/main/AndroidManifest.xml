@@ -2,6 +2,14 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
+    <queries>
+        <!-- allow to open links using url_launcher -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+    </queries>
     <application
         android:label="app2"
         android:name="${applicationName}"
