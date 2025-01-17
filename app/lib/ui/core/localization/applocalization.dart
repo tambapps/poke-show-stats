@@ -28,6 +28,14 @@ class AppLocalization {
     'cancel': 'Cancel',
     'you': 'You',
     'opponent': 'Opponent',
+    'editNotes': 'Edit notes',
+    'addNotes': 'Add notes',
+    'notes': 'Notes',
+    'save': 'Save',
+    'replay': 'Replay',
+    'replayUrl': 'Replay URL',
+    'replayUrls': 'Replay URL(s)',
+    'opposingTeam': 'Opposing Team',
   };
 
   // If string for "label" does not exist, will show "[LABEL]"
@@ -49,6 +57,14 @@ class AppLocalization {
   String get ok => _get('ok');
   String get you => _get('you');
   String get opponent => _get('opponent');
+  String get editNotes => _get('editNotes');
+  String get addNotes => _get('addNotes');
+  String get notes => _get('notes');
+  String get save => _get('save');
+  String get replay => _get('replay');
+  String get replayUrl => _get('replayUrl');
+  String get replayUrls => _get('replayUrls');
+  String get opposingTeam => _get('opposingTeam');
 
   String selected(int value) =>
       _get('selected').replaceAll('{1}', value.toString());

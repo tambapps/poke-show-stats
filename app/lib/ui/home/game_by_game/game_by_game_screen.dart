@@ -65,7 +65,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
           final noteEditingContext = widget.viewModel.replayNoteEditingContextMap[replay];
           if (noteEditingContext == null) {
             if (replay.notes?.trim().isEmpty ?? true) {
-              return OutlinedButton(onPressed: () => widget.viewModel.editNote(replay), child: Text("Add notes"));
+              return OutlinedButton(onPressed: () => widget.viewModel.editNote(replay), child: Text(localization.addNotes));
             } else {
               return Row(children: [
                 Expanded(
@@ -73,7 +73,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
                 const SizedBox(width: 16),
                 OutlinedButton(
                   onPressed: () => widget.viewModel.editNote(replay),
-                  child: const Text('Edit notes'),
+                  child: Text(localization.editNotes),
                 ),
                 const SizedBox(width: 16),
               ],);
@@ -88,8 +88,8 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
                     ), child: TextField(
                       maxLines: null,
                       controller: noteEditingContext.controller,
-                      decoration: const InputDecoration(
-                        labelText: 'Notes',
+                      decoration: InputDecoration(
+                        labelText: localization.notes,
                         border: OutlineInputBorder(),
                       ),
                     ),)
@@ -97,7 +97,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
                 const SizedBox(width: 16),
                 OutlinedButton(
                   onPressed: () => widget.viewModel.saveNotes(replay, noteEditingContext.controller.text),
-                  child: const Text('Save'),
+                  child: Text(localization.save),
                 ),
                 const SizedBox(width: 16),
               ],),
@@ -134,7 +134,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
         ],
       TextButton(
         onPressed: () => openLink(replay.uri.toString().replaceFirst('.json', '')),
-        child: Text('Replay', overflow: TextOverflow.ellipsis, style: TextStyle(
+        child: Text(localization.replay, overflow: TextOverflow.ellipsis, style: TextStyle(
           color: Colors.blue,
           decoration: TextDecoration.underline,
         ),),

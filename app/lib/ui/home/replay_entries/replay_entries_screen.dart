@@ -22,14 +22,14 @@ class ReplayEntriesComponent extends StatefulWidget {
 
 abstract class _AbstractReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent> {
 
-  Widget addReplayRow() => Row(
+  Widget addReplayRow(AppLocalization localization) => Row(
     children: [
       Expanded(
         child: TextField(
           maxLines: null,
           controller: widget.viewModel.addReplayURIController,
-          decoration: const InputDecoration(
-            labelText: 'Replay URL(s)',
+          decoration: InputDecoration(
+            labelText: localization.replayUrls,
             border: OutlineInputBorder(),
           ),
         )
@@ -38,7 +38,7 @@ abstract class _AbstractReplayEntriesComponentState extends AbstractState<Replay
       const SizedBox(width: 16),
       ElevatedButton(
         onPressed: () => widget.viewModel.loadReplays(),
-        child: const Text('Add'),
+        child: Text(localization.add),
       ),
     ],
   );
@@ -105,7 +105,7 @@ class _MobileReplayEntriesComponentState extends _AbstractReplayEntriesComponent
           padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16),
           child: ConstrainedBox(constraints: BoxConstraints(
             maxHeight: 200, // give max height to prevent from overflowing
-          ), child: addReplayRow(),))
+          ), child: addReplayRow(localization),))
     ],);
   }
 }
@@ -140,9 +140,9 @@ class _DesktopReplayEntriesComponentState extends _AbstractReplayEntriesComponen
                 },
                 headRow: [
                   Center(child: Text('', style: theme.textTheme.titleMedium, textAlign: TextAlign.center),),
-                  Center(child: Text('Replay URL', style: theme.textTheme.titleMedium, textAlign: TextAlign.center,),),
-                  Center(child: Text('Opposing Team', style: theme.textTheme.titleMedium, textAlign: TextAlign.center),),
-                  Center(child: Text('Notes', style: theme.textTheme.titleMedium, textAlign: TextAlign.center),),
+                  Center(child: Text(localization.replayUrl, style: theme.textTheme.titleMedium, textAlign: TextAlign.center,),),
+                  Center(child: Text(localization.opposingTeam, style: theme.textTheme.titleMedium, textAlign: TextAlign.center),),
+                  Center(child: Text(localization.notes, style: theme.textTheme.titleMedium, textAlign: TextAlign.center),),
                   Center(child: Text('', style: theme.textTheme.titleMedium, textAlign: TextAlign.center),),
                 ],
                 rowBuilder: (context, index) {
@@ -167,7 +167,7 @@ class _DesktopReplayEntriesComponentState extends _AbstractReplayEntriesComponen
             padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 32, top: 16),
             child: ConstrainedBox(constraints: BoxConstraints(
               maxHeight: 400, // give max height to prevent from overflowing
-            ), child: addReplayRow(),))
+            ), child: addReplayRow(localization),))
       ],
     );
   }
