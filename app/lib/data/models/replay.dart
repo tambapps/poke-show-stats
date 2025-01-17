@@ -6,7 +6,7 @@ part 'replay.g.dart';
 class Replay {
   final Uri uri;
   final SdReplayData data;
-  final String? notes;
+  String? notes;
   final GameOutput gameOutput;
   final PlayerData opposingPlayer;
 

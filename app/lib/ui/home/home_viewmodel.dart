@@ -34,7 +34,7 @@ class HomeViewModel extends ChangeNotifier {
       _loadPokepasteMoves(value);
     }
     notifyListeners();
-    _save();
+    storeSave();
   }
 
   Map<String, Move> _pokemonMoves = {};
@@ -55,7 +55,7 @@ class HomeViewModel extends ChangeNotifier {
     Replay replay = Replay(uri: uri, data: replayData, opposingPlayer: opposingPlayer, gameOutput: output);
     _teamlytic.replays = [...replays, replay];
     notifyListeners();
-    _save();
+    storeSave();
   }
 
   GameOutput _computeGameOutput(SdReplayData replayData) {
@@ -80,7 +80,7 @@ class HomeViewModel extends ChangeNotifier {
   void removeReplay(Replay replay) {
     _teamlytic.replays = [...replays]..remove(replay);
     notifyListeners();
-    _save();
+    storeSave();
   }
 
   // async to avoid freezing the UI
@@ -89,7 +89,7 @@ class HomeViewModel extends ChangeNotifier {
       _teamlytic.sdNames = [...sdNames, sdName];
       _recomputeReplayOutputs();
       notifyListeners();
-      _save();
+      storeSave();
     }
   }
 
@@ -98,7 +98,7 @@ class HomeViewModel extends ChangeNotifier {
     _teamlytic.sdNames = [...sdNames]..remove(sdName);
     _recomputeReplayOutputs();
     notifyListeners();
-    _save();
+    storeSave();
   }
 
   void _recomputeReplayOutputs() {
@@ -108,7 +108,7 @@ class HomeViewModel extends ChangeNotifier {
     _teamlytic.replays = updatedReplays;
   }
 
-  void _save() async => await saveService.storeSave(_teamlytic);
+  void storeSave() async => await saveService.storeSave(_teamlytic);
 
   void loadSave() async {
     _teamlytic = await saveService.loadSave(saveName);

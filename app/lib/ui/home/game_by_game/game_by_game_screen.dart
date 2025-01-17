@@ -47,17 +47,69 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
   Widget _gbgWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay) {
     return Column(children: [
       _gbgHeader(context, localization, dimens, theme, replay),
-      SizedBox(height: 16.0,),
+      const SizedBox(height: 16.0,),
       playWidgetContainer([
         Expanded(child: _playerWidget(context, localization, dimens, theme, replay, replay.otherPlayer),),
         Expanded(child: _playerWidget(context, localization, dimens, theme, replay, replay.opposingPlayer),),
       ]),
+      const SizedBox(height: 8.0,),
+      _gbgNotesWidget(context, localization, dimens, theme, replay),
+      const SizedBox(height: 8.0,),
     ],);
   }
 
+  Widget _gbgNotesWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay) {
+    return ListenableBuilder(
+        listenable: widget.viewModel,
+        builder: (context, _) {
+          final noteEditingContext = widget.viewModel.replayNoteEditingContextMap[replay];
+          if (noteEditingContext == null) {
+            if (replay.notes?.trim().isEmpty ?? true) {
+              return OutlinedButton(onPressed: () => widget.viewModel.editNote(replay), child: Text("Add notes"));
+            } else {
+              return Row(children: [
+                Expanded(
+                    child: Text(replay.notes!, textAlign: TextAlign.center,)),
+                const SizedBox(width: 16),
+                OutlinedButton(
+                  onPressed: () => widget.viewModel.editNote(replay),
+                  child: const Text('Edit notes'),
+                ),
+                const SizedBox(width: 16),
+              ],);
+            }
+          } else {
+            return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(children: [
+                Expanded(
+                    child: ConstrainedBox(constraints: BoxConstraints(
+                      maxHeight: 200, // give max height to prevent from overflowing
+                    ), child: TextField(
+                      maxLines: null,
+                      controller: noteEditingContext.controller,
+                      decoration: const InputDecoration(
+                        labelText: 'Notes',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),)
+                ),
+                const SizedBox(width: 16),
+                OutlinedButton(
+                  onPressed: () => widget.viewModel.saveNotes(replay, noteEditingContext.controller.text),
+                  child: const Text('Save'),
+                ),
+                const SizedBox(width: 16),
+              ],),
+            );
+          }
+        }
+    );
+
+  }
   Widget _gbgHeader(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay) {
     return Row(children: [
-      Text("vs ${replay.opposingPlayer.name}", style: theme.textTheme.titleLarge,),
+      Padding(padding: EdgeInsets.only(left: 32.0), child: Text("vs ${replay.opposingPlayer.name}", style: theme.textTheme.titleLarge,),),
       SizedBox(width: 8,),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,

@@ -13,5 +13,27 @@ class GameByGameViewModel extends ChangeNotifier {
   final HomeViewModel homeViewModel;
   final PokemonImageService pokemonImageService;
   List<Replay> get replays => homeViewModel.replays;
+  Map<Replay, NoteEditingContext> replayNoteEditingContextMap = {};
 
+  void editNote(Replay replay) {
+    replayNoteEditingContextMap[replay] = NoteEditingContext(replay.notes ?? "");
+    notifyListeners();
+  }
+
+  void saveNotes(Replay replay, String notes) {
+    replay.notes = notes;
+    replayNoteEditingContextMap.remove(replay);
+    homeViewModel.storeSave();
+    notifyListeners();
+  }
+}
+
+class NoteEditingContext {
+  final controller = TextEditingController();
+  NoteEditingContext(String initialValue) {
+    controller.text = initialValue;
+  }
+}
+enum NoteConsultMode {
+  EDIT, VIEW
 }
