@@ -127,7 +127,9 @@ class _DesktopReplayEntriesComponentState extends _AbstractReplayEntriesComponen
             minHeight: 2.0, // Height of the progress bar
           ),),
 
-        Expanded(
+        Flexible(
+          flex: 9,
+            fit: FlexFit.loose, // this is because we want this component to shrink when we open the keyboard
             child: GridListView(
                 columnWeights: {
                   0: 1,
@@ -163,7 +165,9 @@ class _DesktopReplayEntriesComponentState extends _AbstractReplayEntriesComponen
         ),
         Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 32, top: 16),
-            child: addReplayRow())
+            child: ConstrainedBox(constraints: BoxConstraints(
+              maxHeight: 400, // give max height to prevent from overflowing
+            ), child: addReplayRow(),))
       ],
     );
   }
