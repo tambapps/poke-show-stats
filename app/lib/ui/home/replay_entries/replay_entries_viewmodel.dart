@@ -22,7 +22,7 @@ class ReplayEntriesViewModel extends ChangeNotifier {
 
   final SdReplayParser replayParser;
   final HomeViewModel homeViewModel;
-  final TextEditingController addReplayURIController = TextEditingController();
+  TextEditingController get addReplayURIController => homeViewModel.addReplayURIController;
 
   bool _loading = false;
   bool get loading => _loading;

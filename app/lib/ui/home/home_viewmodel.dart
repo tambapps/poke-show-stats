@@ -13,6 +13,10 @@ class HomeViewModel extends ChangeNotifier {
 
   HomeViewModel({required this.pokemonImageService, required this.saveService, required this.pokeApi});
 
+  // storing it here even if it used only in the replayEntriesComponent because we don't want
+  // to erase/refresh the controller each time the replayEntriesScreen state updates
+  final TextEditingController addReplayURIController = TextEditingController();
+
   final PokemonImageService pokemonImageService;
   final SaveService saveService;
   final PokeApi pokeApi;
