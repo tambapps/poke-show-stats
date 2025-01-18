@@ -24,17 +24,18 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    // TODO add filters and display winrate
     return ListView.separated(
         itemBuilder: (context, index) {
           if (index == 0) {
+            return headerWidget(context, localization, dimens, theme);
+          } else if (index == 1) {
             return filtersWidget(context, localization, dimens, theme);
           }
           final replay = widget.viewModel.replays[index - 1];
           return _gbgWidget(context, localization, dimens, theme, replay);
         },
         separatorBuilder: (context, index) {
-          if (index == 0) return Container();
+          if (index <= 1) return Container();
           return Padding(padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 64.0), child: Divider(
             color: Colors.grey,
             thickness: 2,
@@ -42,6 +43,24 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
           ),);
         },
         itemCount: widget.viewModel.replays.length + 1 // + 1 because of filter component
+    );
+  }
+
+  Widget headerWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
+    final winRateRatio = widget.viewModel.replays.where((replay) => replay.gameOutput == GameOutput.WIN).length.toDouble() / widget.viewModel.replays.length.toDouble();
+    final winRate = (winRateRatio * 100).toStringAsFixed(1);
+    final textStyle = theme.textTheme.titleLarge;
+    return Padding(
+        padding: const EdgeInsets.only(left: 32.0, top: 16.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("${widget.viewModel.replays.length} Battles", style: textStyle,),
+          const SizedBox(height: 16.0,),
+          Text("Win rate $winRate%", style: textStyle),
+        ],
+      ),
     );
   }
 
