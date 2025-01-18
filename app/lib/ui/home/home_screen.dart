@@ -26,13 +26,23 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => isMobile ? _MobileHomeScreenState() : _DesktopHomeScreenState();
 }
 
-abstract class _AbstractHomeScreenState extends AbstractState<HomeScreen> {
+abstract class _AbstractHomeScreenState extends AbstractState<HomeScreen> with TickerProviderStateMixin {
+  late TabController _tabController;
 
   @override
   void initState() {
-    widget.viewModel.loadSave();
     super.initState();
+    widget.viewModel.loadSave();
+    // The `vsync: this` ensures the TabController is synchronized with the screen's refresh rate
+    _tabController = TabController(length: 3, vsync: this);
   }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     return Padding(
@@ -55,6 +65,7 @@ abstract class _AbstractHomeScreenState extends AbstractState<HomeScreen> {
 
   Widget tabBarView(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     return TabBarView(
+      controller: _tabController,
       children: [
         ListenableBuilder(
             listenable: widget.viewModel,
@@ -71,6 +82,7 @@ abstract class _AbstractHomeScreenState extends AbstractState<HomeScreen> {
 
   TabBar tabBar(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, bool isScrollable) {
     return TabBar(
+      controller: _tabController,
       isScrollable: isScrollable,
       onTap: (index) => widget.viewModel.onTabSelected(index),
       tabs: [

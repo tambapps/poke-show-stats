@@ -14,6 +14,8 @@ class GameByGameViewModel extends ChangeNotifier {
   final PokemonImageService pokemonImageService;
   List<Replay> get replays => homeViewModel.replays;
   Map<Replay, NoteEditingContext> replayNoteEditingContextMap = {};
+  int _pokemonFilterTabIndex = 0;
+  int get pokemonFilterTabIndex => _pokemonFilterTabIndex;
 
   void editNote(Replay replay) {
     replayNoteEditingContextMap[replay] = NoteEditingContext(replay.notes ?? "");
@@ -26,6 +28,8 @@ class GameByGameViewModel extends ChangeNotifier {
     homeViewModel.storeSave();
     notifyListeners();
   }
+
+  void onPokemonFilterTabSelected(int index) => _pokemonFilterTabIndex = index;
 }
 
 class NoteEditingContext {

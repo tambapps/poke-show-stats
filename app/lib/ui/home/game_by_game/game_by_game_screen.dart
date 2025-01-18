@@ -25,22 +25,29 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     // TODO add filters and display winrate
-    return ListView.separated(
-        itemBuilder: (context, index) {
-          final replay = widget.viewModel.replays[index];
-          return _gbgWidget(context, localization, dimens, theme, replay);
-        },
-        separatorBuilder: (context, index) {
-          return Padding(padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 64.0), child: Divider(
-            color: Colors.grey,
-            thickness: 2,
-            height: 1,
-          ),);
-        },
-        itemCount: widget.viewModel.replays.length
-    );
+    return Column(children: [
+      filtersWidget(context, localization, dimens, theme),
+      Expanded(
+          child: ListView.separated(
+              itemBuilder: (context, index) {
+                final replay = widget.viewModel.replays[index];
+                return _gbgWidget(context, localization, dimens, theme, replay);
+              },
+              separatorBuilder: (context, index) {
+                return Padding(padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 64.0), child: Divider(
+                  color: Colors.grey,
+                  thickness: 2,
+                  height: 1,
+                ),);
+              },
+              itemCount: widget.viewModel.replays.length
+          )
+      )
+    ],);
 
   }
+
+  Widget filtersWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
 
   Widget playWidgetContainer(List<Widget> children);
 
@@ -171,6 +178,12 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
 class _MobileGameByGameComponentState extends _AbstractGameByGameComponentState {
 
   @override
+  Widget filtersWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
+    // TODO: implement filtersWidget
+    return Container();
+  }
+
+  @override
   Widget playWidgetContainer(List<Widget> children) =>
       Row(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: children,);
 
@@ -199,7 +212,109 @@ class _MobileGameByGameComponentState extends _AbstractGameByGameComponentState 
   }
 }
 
-class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState {
+class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState with TickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    // The `vsync: this` ensures the TabController is synchronized with the screen's refresh rate
+    _tabController = TabController(length: 6, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget filtersWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
+    // TODO: implement filtersWidget
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+      child: Column(children: [
+        TabBar(
+          controller: _tabController,
+          onTap: (index) => widget.viewModel.onPokemonFilterTabSelected(index),
+          tabs: Iterable.generate(6, (index) => index).map((index) => Text("Pokemon ${index + 1}", style: theme.textTheme.labelLarge,)).toList(),
+        ),
+        ConstrainedBox(constraints: BoxConstraints(maxHeight: 150),
+          child: Padding(padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            child: TabBarView(controller: _tabController, children: Iterable.generate(6, (index) => index).map((index) => _pokemonFilterWidget(context, localization, dimens, theme, index)).toList()),),)
+      ],),
+    );
+  }
+
+  Widget _pokemonFilterWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, int index) {
+    return GridView(
+      shrinkWrap: true,  // Shrinks to the size of its children
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 4,  // Number of columns in the grid
+        mainAxisSpacing: 4, // Spacing between rows
+        crossAxisSpacing: 20, // Spacing between columns
+        childAspectRatio: 6, // Aspect ratio of each grid item
+      ),
+      children: [
+        TextField(
+          controller: null,
+          decoration: InputDecoration(
+            labelText: "Pokemon ${index + 1}",
+            border: OutlineInputBorder(),
+          ),
+        ),
+        TextField(
+          controller: null,
+          decoration: InputDecoration(
+            labelText: "Item",
+            border: OutlineInputBorder(),
+          ),
+        ),
+        TextField(
+          controller: null,
+          decoration: InputDecoration(
+            labelText: "Ability",
+            border: OutlineInputBorder(),
+          ),
+        ),
+        TextField(
+          controller: null,
+          decoration: InputDecoration(
+            labelText: "Tera Type",
+            border: OutlineInputBorder(),
+          ),
+        ),
+        TextField(
+          controller: null,
+          decoration: InputDecoration(
+            labelText: "Move 1",
+            border: OutlineInputBorder(),
+          ),
+        ),
+        TextField(
+          controller: null,
+          decoration: InputDecoration(
+            labelText: "Move 2",
+            border: OutlineInputBorder(),
+          ),
+        ),
+        TextField(
+          controller: null,
+          decoration: InputDecoration(
+            labelText: "Move 3",
+            border: OutlineInputBorder(),
+          ),
+        ),
+        TextField(
+          controller: null,
+          decoration: InputDecoration(
+            labelText: "Move 4",
+            border: OutlineInputBorder(),
+          ),
+        )
+      ],  // Explicitly specify a list of widgets
+    );
+  }
 
   @override
   Widget playWidgetContainer(List<Widget> children) => Row(children: children,);
