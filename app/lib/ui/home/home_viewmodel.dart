@@ -42,6 +42,7 @@ class HomeViewModel extends ChangeNotifier {
 
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;
+  bool _disposed = false;
 
   void onTabSelected(int index) {
     // don't need to notifyListeners() because the DefaultTabController handles its own state
@@ -84,7 +85,7 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   // async to avoid freezing the UI
-  void addSdName(String sdName) async {
+  void addSdName(String sdName) {
     if (!sdNames.contains(sdName)) {
       _teamlytic.sdNames = [...sdNames, sdName];
       _recomputeReplayOutputs();
@@ -97,7 +98,7 @@ class HomeViewModel extends ChangeNotifier {
   void removeSdName(String sdName) async {
     _teamlytic.sdNames = [...sdNames]..remove(sdName);
     _recomputeReplayOutputs();
-    notifyListeners();
+    _notifyListenersSafely();
     storeSave();
   }
 
@@ -116,7 +117,7 @@ class HomeViewModel extends ChangeNotifier {
     if (pokepaste != null) {
       _loadPokepasteMoves(pokepaste);
     }
-    notifyListeners();
+    _notifyListenersSafely();
   }
 
   void _loadPokepasteMoves(Pokepaste pokepaste) async {
@@ -131,13 +132,23 @@ class HomeViewModel extends ChangeNotifier {
         Move? move = await pokeApi.getMove(moveName);
         if (move != null) {
           pokemonMoves[moveName] = move;
-          notifyListeners();
         }
       } catch(_) {
         // do nothing
       }
     }
     _pokemonMoves = pokemonMoves;
-    notifyListeners();
+    _notifyListenersSafely();
+  }
+
+  void _notifyListenersSafely() {
+    if (!_disposed) notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    addReplayURIController.dispose();
+    super.dispose();
+    _disposed = true;
   }
 }

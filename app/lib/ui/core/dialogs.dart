@@ -12,11 +12,11 @@ Future<void> showTextInputDialog(
       required String title,
       required String hint,
       required AppLocalization localization,
+      required TextEditingController textFieldController,
       required void Function(String) onSuccess,
       bool Function(String)? validator,
       String? confirmButtonText,
     }) {
-  final textFieldController = TextEditingController();
   return showDialog(
       context: context,
       builder: (context) {

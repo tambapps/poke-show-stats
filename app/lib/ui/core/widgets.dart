@@ -4,6 +4,8 @@ import 'themes/dimens.dart';
 
 abstract class AbstractState<T extends StatefulWidget> extends State<T> {
 
+  ChangeNotifier get viewModel;
+
   @override
   Widget build(BuildContext context) {
     return doBuild(context, AppLocalization.of(context), Dimens.of(context), Theme.of(context));
@@ -11,4 +13,10 @@ abstract class AbstractState<T extends StatefulWidget> extends State<T> {
 
   @protected
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
+
+  @override
+  void dispose() {
+    viewModel.dispose();
+    super.dispose();
+  }
 }

@@ -22,12 +22,15 @@ class ReplayEntriesComponent extends StatefulWidget {
 
 abstract class _AbstractReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent> {
 
+  @override
+  ReplayEntriesViewModel get viewModel => widget.viewModel;
+
   Widget addReplayRow(AppLocalization localization) => Row(
     children: [
       Expanded(
         child: TextField(
           maxLines: null,
-          controller: widget.viewModel.addReplayURIController,
+          controller: viewModel.addReplayURIController,
           decoration: InputDecoration(
             labelText: localization.replayUrls,
             border: OutlineInputBorder(),
@@ -37,19 +40,19 @@ abstract class _AbstractReplayEntriesComponentState extends AbstractState<Replay
       ),
       const SizedBox(width: 16),
       ElevatedButton(
-        onPressed: () => widget.viewModel.loadReplays(),
+        onPressed: () => viewModel.loadReplays(),
         child: Text(localization.add),
       ),
     ],
   );
 
-  Widget cancelButton(Replay replay) => IconButton(icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => widget.viewModel.removeReplay(replay));
+  Widget cancelButton(Replay replay) => IconButton(icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => viewModel.removeReplay(replay));
 
   Widget opponentTeamWidget(Replay replay) => Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: replay.opposingPlayer.team
         .map((pokemon) =>
-    Expanded(child: widget.viewModel.pokemonImageService.getPokemonSprite(pokemon)))
+    Expanded(child: viewModel.pokemonImageService.getPokemonSprite(pokemon)))
         .toList(),
   );
 
@@ -79,7 +82,7 @@ class _MobileReplayEntriesComponentState extends _AbstractReplayEntriesComponent
       Flexible(flex: 9,
           fit: FlexFit.loose, // this is because we want this component to shrink when we open the keyboard
           child: ListView.separated(itemBuilder: (context, index) {
-            final Replay replay = widget.viewModel.replays[index];
+            final Replay replay = viewModel.replays[index];
             final replayLink = replay.uri.toString().replaceFirst('.json', '');
             Color? color = getGameOutputColor(replay);
             return Container(
@@ -99,7 +102,7 @@ class _MobileReplayEntriesComponentState extends _AbstractReplayEntriesComponent
               thickness: 2,
               height: 1,
             ),);
-          }, itemCount: widget.viewModel.replays.length)
+          }, itemCount: viewModel.replays.length)
       ),
       Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16),
@@ -119,8 +122,8 @@ class _DesktopReplayEntriesComponentState extends _AbstractReplayEntriesComponen
       children: [
         Padding(padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0)),
         ListenableBuilder(
-          listenable: widget.viewModel,
-          builder: (context, child) => widget.viewModel.loading ? child! : Padding(padding: EdgeInsets.zero),
+          listenable: viewModel,
+          builder: (context, child) => viewModel.loading ? child! : Padding(padding: EdgeInsets.zero),
           child: LinearProgressIndicator(
             backgroundColor: Colors.grey[300], // Background color
             valueColor: AlwaysStoppedAnimation(Colors.blue), // Progress color
@@ -146,7 +149,7 @@ class _DesktopReplayEntriesComponentState extends _AbstractReplayEntriesComponen
                   Center(child: Text('', style: theme.textTheme.titleMedium, textAlign: TextAlign.center),),
                 ],
                 rowBuilder: (context, index) {
-                  final Replay replay = widget.viewModel.replays[index];
+                  final Replay replay = viewModel.replays[index];
                   final replayLink = replay.uri.toString().replaceFirst('.json', '');
                   Color? color = getGameOutputColor(replay);
                   return GridListViewRow(decoration: BoxDecoration(color: color),
@@ -160,7 +163,7 @@ class _DesktopReplayEntriesComponentState extends _AbstractReplayEntriesComponen
                       ]
                   );
                 },
-                itemCount: widget.viewModel.replays.length
+                itemCount: viewModel.replays.length
             )
         ),
         Padding(

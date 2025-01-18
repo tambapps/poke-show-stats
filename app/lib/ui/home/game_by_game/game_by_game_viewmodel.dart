@@ -60,6 +60,12 @@ class GameByGameViewModel extends ChangeNotifier {
   void clearFilters() {
     _filters.clear();
   }
+
+  @override
+  void dispose() {
+    _filters.dispose();
+    super.dispose();
+  }
 }
 
 class NoteEditingContext {
@@ -105,6 +111,14 @@ class _Filters {
       pokemonFilters.clear();
     }
   }
+
+  void dispose() {
+    minEloController.dispose();
+    maxEloController.dispose();
+    for (PokemonFilters pokemonFilters in pokemons) {
+      pokemonFilters.dispose();
+    }
+  }
 }
 
 class PokemonFilters {
@@ -113,6 +127,17 @@ class PokemonFilters {
   final abilityController = TextEditingController();
   final teraTypeController = TextEditingController();
   final moveControllers = List.generate(4, (_) => TextEditingController());
+
+  ReplayPredicate? getPredicate() {
+    List<ReplayPredicate> predicates = [];
+    if (pokemonNameController.text.trim().isNotEmpty) {
+      final pokemon = pokemonNameController.text.trim().replaceAll(' ', '-');
+      // TODO enhance pokemon names matches (e.g. with accents, form names...)
+      predicates.add((replay) => replay.opposingPlayer.team.any((pokemonName) => pokemon.toLowerCase() == pokemonName.toLowerCase()));
+    }
+    // TODO cannot do other filters yet as I don't store team sheet from replay
+    return predicates.isNotEmpty ? (replay) => predicates.every((predicate) => predicate(replay)) : null;
+  }
 
   void clear() {
     pokemonNameController.clear();
@@ -123,14 +148,14 @@ class PokemonFilters {
       moveController.clear();
     }
   }
-  ReplayPredicate? getPredicate() {
-    List<ReplayPredicate> predicates = [];
-    if (pokemonNameController.text.trim().isNotEmpty) {
-      final pokemon = pokemonNameController.text.trim().replaceAll(' ', '-');
-      // TODO enhance pokemon names matches (e.g. with accents, form names...)
-      predicates.add((replay) => replay.opposingPlayer.team.any((pokemonName) => pokemon.toLowerCase() == pokemonName.toLowerCase()));
+
+  void dispose() {
+    pokemonNameController.dispose();
+    itemController.dispose();
+    abilityController.dispose();
+    teraTypeController.dispose();
+    for (TextEditingController moveController in moveControllers) {
+      moveController.dispose();
     }
-    // TODO cannot do other filters yet as I don't store team sheet from replay
-    return predicates.isNotEmpty ? (replay) => predicates.every((predicate) => predicate(replay)) : null;
   }
 }

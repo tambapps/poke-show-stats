@@ -27,12 +27,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 abstract class _AbstractHomeScreenState extends AbstractState<HomeScreen> with TickerProviderStateMixin {
+
+  @override
+  HomeViewModel get viewModel => widget.viewModel;
   late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-    widget.viewModel.loadSave();
+    viewModel.loadSave();
     // The `vsync: this` ensures the TabController is synchronized with the screen's refresh rate
     _tabController = TabController(length: 3, vsync: this);
   }
@@ -52,7 +55,7 @@ abstract class _AbstractHomeScreenState extends AbstractState<HomeScreen> with T
         child: Scaffold(
             appBar: appBar(context, localization, dimens, theme),
             body: ListenableBuilder(
-                listenable: widget.viewModel.pokemonImageService,
+                listenable: viewModel.pokemonImageService,
                 builder: (context, _) => body(context, localization, dimens, theme)
             )
         ),
@@ -68,14 +71,14 @@ abstract class _AbstractHomeScreenState extends AbstractState<HomeScreen> with T
       controller: _tabController,
       children: [
         ListenableBuilder(
-            listenable: widget.viewModel,
-            builder: (context, _) => HomeConfigComponent(viewModel: HomeConfigViewModel(homeViewModel: widget.viewModel, pokepasteParser: context.read()), isMobile: dimens.isMobile,)),
+            listenable: viewModel,
+            builder: (context, _) => HomeConfigComponent(viewModel: HomeConfigViewModel(homeViewModel: viewModel, pokepasteParser: context.read()), isMobile: dimens.isMobile,)),
         ListenableBuilder(
-            listenable: widget.viewModel,
-            builder: (context, _) => ReplayEntriesComponent(viewModel: ReplayEntriesViewModel(replayParser: context.read(), homeViewModel: widget.viewModel), isMobile: dimens.isMobile,)),
+            listenable: viewModel,
+            builder: (context, _) => ReplayEntriesComponent(viewModel: ReplayEntriesViewModel(replayParser: context.read(), homeViewModel: viewModel), isMobile: dimens.isMobile,)),
         ListenableBuilder(
-            listenable: widget.viewModel,
-            builder: (context, _) => GameByGameComponent(viewModel: GameByGameViewModel(homeViewModel: widget.viewModel, pokemonImageService: context.read()), isMobile: dimens.isMobile)),
+            listenable: viewModel,
+            builder: (context, _) => GameByGameComponent(viewModel: GameByGameViewModel(homeViewModel: viewModel, pokemonImageService: context.read()), isMobile: dimens.isMobile)),
       ],
     );
   }
@@ -84,7 +87,7 @@ abstract class _AbstractHomeScreenState extends AbstractState<HomeScreen> with T
     return TabBar(
       controller: _tabController,
       isScrollable: isScrollable,
-      onTap: (index) => widget.viewModel.onTabSelected(index),
+      onTap: (index) => viewModel.onTabSelected(index),
       tabs: [
         Tab(text: localization.home),
         Tab(text: localization.replayEntries),

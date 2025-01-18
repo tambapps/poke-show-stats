@@ -22,6 +22,9 @@ class HomeConfigComponent extends StatefulWidget {
 abstract class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
 
   @override
+  HomeConfigViewModel get viewModel => widget.viewModel;
+
+  @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     final padding = EdgeInsets.symmetric(horizontal: dimens.defaultScreenMargin);
     return ListView(
@@ -33,7 +36,7 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
             Text(localization.showdownNames, style: theme.textTheme.titleLarge,),
             Padding(padding: EdgeInsets.symmetric(horizontal: 8)),
             OutlinedButton(
-              onPressed: () => widget.viewModel.addSdNameDialog(context, localization),
+              onPressed: () => viewModel.addSdNameDialog(context, localization),
               child: Text(localization.add,),
             )
           ],
@@ -42,7 +45,7 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
           padding: padding,
           child: GridView.builder(
               shrinkWrap: true, // Makes the GridView wrap its content
-              itemCount: widget.viewModel.sdNames.length,
+              itemCount: viewModel.sdNames.length,
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: dimens.sdNamesMaxCrossAxisExtent, // Maximum width of each grid item
                 mainAxisSpacing: 10, // Spacing between rows
@@ -50,10 +53,10 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
                 childAspectRatio: 4, // Aspect ratio of each grid item
               ),
               itemBuilder: (context, index) {
-                final sdName = widget.viewModel.sdNames[index];
+                final sdName = viewModel.sdNames[index];
                 return Row(children: [
                   Container(constraints: BoxConstraints(maxWidth: dimens.sdNameMaxWidth), child: Tooltip(message: sdName, child: Text(sdName, overflow: TextOverflow.ellipsis,),),),
-                  IconButton(padding: EdgeInsets.zero, icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => widget.viewModel.removeSdName(sdName))
+                  IconButton(padding: EdgeInsets.zero, icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => viewModel.removeSdName(sdName))
                 ],);
               }
           ),),
@@ -67,7 +70,7 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
   List<Widget> pokepasteWidget(AppLocalization localization, Dimens dimens, ThemeData theme, EdgeInsets padding, Widget title, Pokepaste pokepaste);
 
   List<Widget> pokepaste(AppLocalization localization, Dimens dimens, ThemeData theme, EdgeInsets padding) {
-    final pokepaste = widget.viewModel.pokepaste;
+    final pokepaste = viewModel.pokepaste;
     final title = Text(localization.pokepaste, style: theme.textTheme.titleLarge,);
     if (pokepaste == null) {
       return pokepasteForm(localization, theme, padding, title);
@@ -84,11 +87,7 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
         padding: padding,
         child: TextField(
           maxLines: null,
-          controller: widget.viewModel.pokepasteController,
-          onSubmitted: (value) {
-            widget.viewModel.addSdName(value);
-            widget.viewModel.sdNameController.clear();
-          },
+          controller: viewModel.pokepasteController,
           decoration: InputDecoration(
             labelText: localization.pasteSomething,
             border: OutlineInputBorder(),
@@ -101,7 +100,7 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
         child: Align(
           alignment: Alignment.topRight,
           child: OutlinedButton(
-            onPressed: () => widget.viewModel.loadPokepaste(),
+            onPressed: () => viewModel.loadPokepaste(),
             child: Text(localization.load,),
           ),
         ),
@@ -126,17 +125,17 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
               children: [
                 Transform.scale(
                   scale: 0.65,
-                  child: widget.viewModel.pokemonImageService.getPokemonArtwork(pokemon.name),
+                  child: viewModel.pokemonImageService.getPokemonArtwork(pokemon.name),
                 ),
                 Positioned(
                   top: dimens.pokepastePokemonIconsOffset,
                   left: 0,
-                  child: widget.viewModel.pokemonImageService.getTeraTypeSprite(pokemon.teraType, width: Dimens.teraSpriteSize, height: Dimens.teraSpriteSize),
+                  child: viewModel.pokemonImageService.getTeraTypeSprite(pokemon.teraType, width: Dimens.teraSpriteSize, height: Dimens.teraSpriteSize),
                 ),
                 if (pokemon.item != null) Positioned(
                   bottom: dimens.pokepastePokemonIconsOffset,
                   right: 0,
-                  child: widget.viewModel.pokemonImageService.getItemSprite(pokemon.item!, width: Dimens.itemSpriteSize, height: Dimens.itemSpriteSize),
+                  child: viewModel.pokemonImageService.getItemSprite(pokemon.item!, width: Dimens.itemSpriteSize, height: Dimens.itemSpriteSize),
                 )
               ],
             ),
@@ -197,7 +196,7 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
   }
 
   Widget _moveWidget(String moveName) {
-    final move = widget.viewModel.pokemonMoves[moveName];
+    final move = viewModel.pokemonMoves[moveName];
     Widget moveWidget = Text(moveName, overflow: TextOverflow.ellipsis, textAlign: TextAlign.start,);
     if (move == null) {
       return moveWidget;
@@ -205,9 +204,9 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        widget.viewModel.pokemonImageService.getTypeSprite(move.type, width: 25.0, height: 25.0),
+        viewModel.pokemonImageService.getTypeSprite(move.type, width: 25.0, height: 25.0),
         SizedBox(width: 8,),
-        widget.viewModel.pokemonImageService.getCategorySprite(move.category, width: 32.0, height: 32.0),
+        viewModel.pokemonImageService.getCategorySprite(move.category, width: 32.0, height: 32.0),
         SizedBox(width: 8,),
         Flexible(child: Tooltip(message: moveName,child: moveWidget,))
       ],
@@ -225,7 +224,7 @@ class _MobileHomeConfigComponentState extends _HomeConfigComponentState {
           title,
           SizedBox(width: 16,),
           OutlinedButton(
-            onPressed: () => widget.viewModel.removePokepaste(),
+            onPressed: () => viewModel.removePokepaste(),
             child: Text(localization.change,),
           )
         ],
@@ -263,7 +262,7 @@ class _DesktopHomeConfigComponentState extends _HomeConfigComponentState {
             title,
             SizedBox(width: 16,),
             OutlinedButton(
-              onPressed: () => widget.viewModel.removePokepaste(),
+              onPressed: () => viewModel.removePokepaste(),
               child: Text(localization.change,),
             )
           ],

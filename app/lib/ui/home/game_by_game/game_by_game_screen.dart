@@ -24,9 +24,12 @@ class GameByGameComponent extends StatefulWidget {
 abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGameComponent> {
 
   @override
+  GameByGameViewModel get viewModel => widget.viewModel;
+
+  @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     return ListenableBuilder(
-        listenable: widget.viewModel,
+        listenable: viewModel,
         builder: (context, _) {
           return ListView.separated(
               itemBuilder: (context, index) {
@@ -35,7 +38,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
                 } else if (index == 1) {
                   return filtersWidget(context, localization, dimens, theme);
                 }
-                final replay = widget.viewModel.filteredReplays[index - 2];
+                final replay = viewModel.filteredReplays[index - 2];
                 return _gbgWidget(context, localization, dimens, theme, replay);
               },
               separatorBuilder: (context, index) {
@@ -46,15 +49,15 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
                   height: 1,
                 ),);
               },
-              itemCount: widget.viewModel.filteredReplays.length + 2 // + 2 because of filter + header component
+              itemCount: viewModel.filteredReplays.length + 2 // + 2 because of filter + header component
           );
         }
     );
   }
 
   Widget headerWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    final double? winRateRatio = widget.viewModel.filteredReplays.isEmpty ? null
-             : widget.viewModel.filteredReplays.where((replay) => replay.gameOutput == GameOutput.WIN).length.toDouble() / widget.viewModel.filteredReplays.length.toDouble();
+    final double? winRateRatio = viewModel.filteredReplays.isEmpty ? null
+             : viewModel.filteredReplays.where((replay) => replay.gameOutput == GameOutput.WIN).length.toDouble() / viewModel.filteredReplays.length.toDouble();
     final textStyle = theme.textTheme.titleLarge;
     return Padding(
         padding: const EdgeInsets.only(left: 32.0, top: 16.0),
@@ -62,7 +65,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("${widget.viewModel.filteredReplays.length} Battles", style: textStyle,),
+          Text("${viewModel.filteredReplays.length} Battles", style: textStyle,),
           const SizedBox(height: 16.0,),
           if (winRateRatio != null)
             Text("Win rate ${(winRateRatio * 100).toStringAsFixed(1)}%", style: textStyle),
@@ -102,17 +105,17 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
   }
 
   Widget _gbgNotesWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay) {
-    final noteEditingContext = widget.viewModel.replayNoteEditingContextMap[replay];
+    final noteEditingContext = viewModel.replayNoteEditingContextMap[replay];
     if (noteEditingContext == null) {
       if (replay.notes?.trim().isEmpty ?? true) {
-        return OutlinedButton(onPressed: () => widget.viewModel.editNote(replay), child: Text(localization.addNotes));
+        return OutlinedButton(onPressed: () => viewModel.editNote(replay), child: Text(localization.addNotes));
       } else {
         return Row(children: [
           Expanded(
               child: Text(replay.notes!, textAlign: TextAlign.center,)),
           const SizedBox(width: 16),
           OutlinedButton(
-            onPressed: () => widget.viewModel.editNote(replay),
+            onPressed: () => viewModel.editNote(replay),
             child: Text(localization.editNotes),
           ),
           const SizedBox(width: 16),
@@ -136,7 +139,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
           ),
           const SizedBox(width: 16),
           OutlinedButton(
-            onPressed: () => widget.viewModel.saveNotes(replay, noteEditingContext.controller.text),
+            onPressed: () => viewModel.saveNotes(replay, noteEditingContext.controller.text),
             child: Text(localization.save),
           ),
           const SizedBox(width: 16),
@@ -190,13 +193,13 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
           children: [
             Transform.scale(
               scale: 0.65,
-              child: widget.viewModel.pokemonImageService.getPokemonArtwork(pokemon),
+              child: viewModel.pokemonImageService.getPokemonArtwork(pokemon),
             ),
             if (teraType != null)
               Positioned(
                 top: dimens.pokepastePokemonIconsOffset,
                 right: 0,
-                child: widget.viewModel.pokemonImageService.getTeraTypeSprite(teraType, width: 50, height: 50),
+                child: viewModel.pokemonImageService.getTeraTypeSprite(teraType, width: 50, height: 50),
               ),
           ],
         ),
@@ -234,7 +237,7 @@ class _MobileGameByGameComponentState extends _AbstractGameByGameComponentState 
         children: replay.opposingPlayer.team
             .map((pokemon) =>
         // TODO open dialog on click to show open teamsheet of particular pokemon if match was ots?
-        Expanded(child: widget.viewModel.pokemonImageService.getPokemonSprite(pokemon)))
+        Expanded(child: viewModel.pokemonImageService.getPokemonSprite(pokemon)))
             .toList(),
       ),
       const SizedBox(height: 4,),
@@ -282,13 +285,13 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
                 childAspectRatio: 4, // Aspect ratio of each grid item
               ),
               children: [
-                filterTextInput(labelText: "Opponent Min Elo", controller: widget.viewModel.minEloController, numberInput: true),
-                filterTextInput(labelText: "Opponent Max Elo", controller: widget.viewModel.maxEloController, numberInput: true),
+                filterTextInput(labelText: "Opponent Min Elo", controller: viewModel.minEloController, numberInput: true),
+                filterTextInput(labelText: "Opponent Max Elo", controller: viewModel.maxEloController, numberInput: true),
               ],  // Explicitly specify a list of widgets
             ),),
           TabBar(
             controller: _tabController,
-            onTap: (index) => widget.viewModel.onPokemonFilterTabSelected(index),
+            onTap: (index) => viewModel.onPokemonFilterTabSelected(index),
             tabs: Iterable.generate(6, (index) => index).map((index) => Text("Pokemon ${index + 1}", style: theme.textTheme.labelLarge,)).toList(),
           ),
           ConstrainedBox(constraints: BoxConstraints(maxHeight: 140),
@@ -300,7 +303,7 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
             child: Padding(padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                children: [OutlinedButton(onPressed: () => widget.viewModel.clearFilters(), child: Text("Clear")), SizedBox(width: 16.0,), OutlinedButton(onPressed: () => widget.viewModel.applyFilters(), child: Text("Apply"))],
+                children: [OutlinedButton(onPressed: () => viewModel.clearFilters(), child: Text("Clear")), SizedBox(width: 16.0,), OutlinedButton(onPressed: () => viewModel.applyFilters(), child: Text("Apply"))],
               ),),)
         ],),
       ),
@@ -308,7 +311,7 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
   }
 
   Widget _pokemonFilterWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, int index) {
-    final pokemonFilters = widget.viewModel.getPokemonFilters(index);
+    final pokemonFilters = viewModel.getPokemonFilters(index);
 
     return GridView(
       shrinkWrap: true,  // Shrinks to the size of its children
@@ -345,7 +348,7 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
         children: replay.opposingPlayer.team
             .map((pokemon) =>
         // TODO open dialog on click to show open teamsheet of particular pokemon if match was ots?
-        widget.viewModel.pokemonImageService.getPokemonSprite(pokemon))
+        viewModel.pokemonImageService.getPokemonSprite(pokemon))
             .toList(),
       ),
       SizedBox(width: 16,),

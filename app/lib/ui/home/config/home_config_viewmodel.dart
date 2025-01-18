@@ -66,6 +66,7 @@ class HomeConfigViewModel extends ChangeNotifier {
         hint: localization.enterSdName,
         confirmButtonText: localization.add,
         localization: localization,
+        textFieldController: sdNameController,
         validator: (text) => text.trim().isNotEmpty && text.length <= 18,
         onSuccess: (sdName) => homeViewModel.addSdName(sdName)
     );
@@ -77,4 +78,11 @@ class HomeConfigViewModel extends ChangeNotifier {
   void removeSdName(String sdName) => homeViewModel.removeSdName(sdName);
 
   void addSdName(String sdName) => homeViewModel.addSdName(sdName);
+
+  @override
+  void dispose() {
+    pokepasteController.dispose();
+    sdNameController.dispose();
+    super.dispose();
+  }
 }
