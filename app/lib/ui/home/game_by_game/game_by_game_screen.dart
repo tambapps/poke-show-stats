@@ -24,7 +24,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    // TODO add filters
+    // TODO add filters and display winrate
     return ListView.separated(
         itemBuilder: (context, index) {
           final replay = widget.viewModel.replays[index];
@@ -46,7 +46,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
 
   Widget _gbgWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay) {
     return Column(children: [
-      _gbgHeader(context, localization, dimens, theme, replay),
+      gbgHeader(context, localization, dimens, theme, replay),
       const SizedBox(height: 16.0,),
       playWidgetContainer([
         Expanded(child: _playerWidget(context, localization, dimens, theme, replay, replay.otherPlayer),),
@@ -105,42 +105,36 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
           }
         }
     );
+  }
 
-  }
-  Widget _gbgHeader(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay) {
-    return Row(children: [
-      Padding(padding: EdgeInsets.only(left: 32.0), child: Text("vs ${replay.opposingPlayer.name}", style: theme.textTheme.titleLarge,),),
-      SizedBox(width: 8,),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: replay.opposingPlayer.team
-            .map((pokemon) =>
-        // TODO open dialog on click to show open teamsheet of particular pokemon if match was ots?
-        Padding(padding: EdgeInsets.symmetric(horizontal: 4), child:
-        widget.viewModel.pokemonImageService.getPokemonSprite(pokemon),))
-            .toList(),
-      ),
-      SizedBox(width: 16,),
-      if (replay.gameOutput != GameOutput.UNKNOWN)
-        ...[
-          Container(
-            decoration: BoxDecoration(
-              color: replay.gameOutput == GameOutput.WIN ? Colors.green : Colors.red,
-              borderRadius: BorderRadius.circular(10), // Rounded corners
-            ),
-            child:  SizedBox(width: 45, height: 45,
-              child: Center(child: Text(replay.gameOutput == GameOutput.WIN ? 'W' : 'L', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),),),),),
-          SizedBox(width: 16,),
-        ],
-      TextButton(
-        onPressed: () => openLink(replay.uri.toString().replaceFirst('.json', '')),
-        child: Text(localization.replay, overflow: TextOverflow.ellipsis, style: TextStyle(
-          color: Colors.blue,
-          decoration: TextDecoration.underline,
-        ),),
-      )
-    ],);
-  }
+  Widget vsText(ThemeData theme, Replay replay) => Text("vs ${replay.opposingPlayer.name}", style: theme.textTheme.titleLarge,);
+
+  Widget viewReplayButton(AppLocalization localization, Replay replay) => TextButton(
+    onPressed: () => openLink(replay.uri.toString().replaceFirst('.json', '')),
+    child: Text(localization.replay, overflow: TextOverflow.ellipsis, style: TextStyle(
+      color: Colors.blue,
+      decoration: TextDecoration.underline,
+    ),),
+  );
+
+  Widget winLooseWidget(ThemeData theme, Replay replay) => Container(
+    decoration: BoxDecoration(
+      color: replay.gameOutput == GameOutput.WIN ? Colors.green : Colors.red,
+      borderRadius: BorderRadius.circular(10), // Rounded corners
+    ),
+    child:  SizedBox(width: 45, height: 45,
+      child: Center(child: Text(replay.gameOutput == GameOutput.WIN ? 'W' : 'L', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),),),),);
+
+  Widget gbgHeader(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay);
+
+  Widget opposingTeamWidget(Replay replay) => Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: replay.opposingPlayer.team
+        .map((pokemon) =>
+    // TODO open dialog on click to show open teamsheet of particular pokemon if match was ots?
+    Expanded(child: widget.viewModel.pokemonImageService.getPokemonSprite(pokemon)))
+        .toList(),
+  );
 
   Widget _playerWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay, PlayerData player) {
     bool isOpponent = replay.opposingPlayer.name == player.name;
@@ -152,6 +146,8 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
       _playerPickWidget(context, localization, dimens, theme, replay, player)
     ],);
   }
+
+  Widget playerPickContainer(List<Widget> children);
 
   Widget _playerPickWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay, PlayerData player) {
     List<Widget> children = player.selection.map((pokemon) {
@@ -177,19 +173,55 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
         ),
       );
     }).toList();
-    return Row(mainAxisSize: MainAxisSize.min, children: children,);
+    return playerPickContainer(children);
   }
 }
 
 class _MobileGameByGameComponentState extends _AbstractGameByGameComponentState {
 
   @override
-  Widget playWidgetContainer(List<Widget> children) => Column(children: children,);
+  Widget playWidgetContainer(List<Widget> children) =>
+      Row(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: children,);
 
+  @override
+  Widget playerPickContainer(List<Widget> children) => Column(mainAxisSize: MainAxisSize.min, children: children,);
+
+  @override
+  Widget gbgHeader(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay) {
+    return Column(children: [
+      Row(children: [
+        Padding(padding: EdgeInsets.symmetric(horizontal: 32.0), child: vsText(theme, replay),),
+        if (replay.gameOutput != GameOutput.UNKNOWN)
+          winLooseWidget(theme, replay)
+      ],),
+      opposingTeamWidget(replay),
+      const SizedBox(height: 4,),
+      viewReplayButton(localization, replay)
+    ],);
+  }
 }
 
 class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState {
 
   @override
   Widget playWidgetContainer(List<Widget> children) => Row(children: children,);
+
+  @override
+  Widget playerPickContainer(List<Widget> children) => Row(mainAxisSize: MainAxisSize.min, children: children,);
+
+  @override
+  Widget gbgHeader(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay) {
+    return Row(children: [
+      Padding(padding: EdgeInsets.only(left: 32.0), child: vsText(theme, replay),),
+      SizedBox(width: 8,),
+      opposingTeamWidget(replay),
+      SizedBox(width: 16,),
+      if (replay.gameOutput != GameOutput.UNKNOWN)
+        ...[
+          winLooseWidget(theme, replay),
+          SizedBox(width: 16,),
+        ],
+      viewReplayButton(localization, replay)
+    ],);
+  }
 }
