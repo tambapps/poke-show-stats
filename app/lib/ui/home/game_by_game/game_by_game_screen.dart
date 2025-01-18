@@ -127,15 +127,6 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
 
   Widget gbgHeader(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay);
 
-  Widget opposingTeamWidget(Replay replay) => Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: replay.opposingPlayer.team
-        .map((pokemon) =>
-    // TODO open dialog on click to show open teamsheet of particular pokemon if match was ots?
-    Expanded(child: widget.viewModel.pokemonImageService.getPokemonSprite(pokemon)))
-        .toList(),
-  );
-
   Widget _playerWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay, PlayerData player) {
     bool isOpponent = replay.opposingPlayer.name == player.name;
 
@@ -194,7 +185,14 @@ class _MobileGameByGameComponentState extends _AbstractGameByGameComponentState 
         if (replay.gameOutput != GameOutput.UNKNOWN)
           winLooseWidget(theme, replay)
       ],),
-      opposingTeamWidget(replay),
+      // opponent team
+      Row(
+        children: replay.opposingPlayer.team
+            .map((pokemon) =>
+        // TODO open dialog on click to show open teamsheet of particular pokemon if match was ots?
+        Expanded(child: widget.viewModel.pokemonImageService.getPokemonSprite(pokemon)))
+            .toList(),
+      ),
       const SizedBox(height: 4,),
       viewReplayButton(localization, replay)
     ],);
@@ -214,7 +212,15 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
     return Row(children: [
       Padding(padding: EdgeInsets.only(left: 32.0), child: vsText(theme, replay),),
       SizedBox(width: 8,),
-      opposingTeamWidget(replay),
+      // opponent team
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: replay.opposingPlayer.team
+            .map((pokemon) =>
+        // TODO open dialog on click to show open teamsheet of particular pokemon if match was ots?
+        widget.viewModel.pokemonImageService.getPokemonSprite(pokemon))
+            .toList(),
+      ),
       SizedBox(width: 16,),
       if (replay.gameOutput != GameOutput.UNKNOWN)
         ...[

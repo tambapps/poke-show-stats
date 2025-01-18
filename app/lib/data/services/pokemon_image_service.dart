@@ -1,4 +1,4 @@
-
+import 'dart:developer' as developer;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,10 @@ class PokemonImageService {
 
   Widget getPokemonSprite(String pokemon, {double width = Dimens.pokemonLogoSize, double height = Dimens.pokemonLogoSize}) {
     Uri? uri = _getPokemonSpriteUri(pokemon);
-    if (uri == null) return _getDefaultSprite(tooltip: pokemon);
+    if (uri == null) {
+      developer.log("Sprite URL for $pokemon was not found on mapping file");
+      return _getDefaultSprite(tooltip: pokemon);
+    }
     return Tooltip(
       message: pokemon,
       child: _getImageWidget(uri, width: width, height: height, tooltip: pokemon),
@@ -24,7 +27,10 @@ class PokemonImageService {
 
   Widget getItemSprite(String itemName, {double? width, double? height}) {
     Uri? uri = _getKey(itemName, 'spriteUrl', _item_mappings);
-    if (uri == null) return _getDefaultSprite(tooltip: itemName);
+    if (uri == null) {
+      developer.log("Sprite URL for item $itemName was not found on mapping file");
+      return _getDefaultSprite(tooltip: itemName);
+    }
     return Tooltip(
       message: itemName,
       child: _getImageWidget(uri, width: width, height: height, tooltip: itemName),
@@ -73,7 +79,10 @@ class PokemonImageService {
       height: height,
       fit: BoxFit.contain,
       placeholder: (context, url) => CircularProgressIndicator(),
-      errorWidget: (context, url, error) => _getDefaultSprite(tooltip: tooltip),
+      errorWidget: (context, url, error) {
+        developer.log('Image load failed: $url, Error: $error', error: error);
+        return _getDefaultSprite(tooltip: tooltip);
+      },
     );
   }
 
