@@ -49,6 +49,14 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
 
   Widget filtersWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
 
+  Widget filterTextInput({required String labelText, TextEditingController? controller}) => TextField(
+    controller: controller,
+    decoration: InputDecoration(
+      labelText: labelText,
+      border: OutlineInputBorder(),
+    ),
+  );
+
   Widget playWidgetContainer(List<Widget> children);
 
   Widget _gbgWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay) {
@@ -233,16 +241,47 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
     // TODO: implement filtersWidget
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
-      child: Column(children: [
-        TabBar(
-          controller: _tabController,
-          onTap: (index) => widget.viewModel.onPokemonFilterTabSelected(index),
-          tabs: Iterable.generate(6, (index) => index).map((index) => Text("Pokemon ${index + 1}", style: theme.textTheme.labelLarge,)).toList(),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.grey,
+            width: 2.0
+          ),
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
         ),
-        ConstrainedBox(constraints: BoxConstraints(maxHeight: 150),
-          child: Padding(padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-            child: TabBarView(controller: _tabController, children: Iterable.generate(6, (index) => index).map((index) => _pokemonFilterWidget(context, localization, dimens, theme, index)).toList()),),)
-      ],),
+        child: Column(children: [
+          Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+            child: GridView(
+              shrinkWrap: true,  // Shrinks to the size of its children
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 6,  // Number of columns in the grid
+                mainAxisSpacing: 4, // Spacing between rows
+                crossAxisSpacing: 20, // Spacing between columns
+                childAspectRatio: 4, // Aspect ratio of each grid item
+              ),
+              children: [
+                filterTextInput(labelText: "Opponent Min Elo"),
+                filterTextInput(labelText: "Opponent Max Elo"),
+              ],  // Explicitly specify a list of widgets
+            ),),
+          TabBar(
+            controller: _tabController,
+            onTap: (index) => widget.viewModel.onPokemonFilterTabSelected(index),
+            tabs: Iterable.generate(6, (index) => index).map((index) => Text("Pokemon ${index + 1}", style: theme.textTheme.labelLarge,)).toList(),
+          ),
+          ConstrainedBox(constraints: BoxConstraints(maxHeight: 140),
+            child: Padding(padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              child: TabBarView(controller: _tabController, children: Iterable.generate(6, (index) => index).map((index) => _pokemonFilterWidget(context, localization, dimens, theme, index)).toList()),),),
+
+
+          Align(alignment: Alignment.bottomRight,
+            child: Padding(padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [OutlinedButton(onPressed: () {}, child: Text("Clear")), SizedBox(width: 16.0,), OutlinedButton(onPressed: () {}, child: Text("Apply"))],
+              ),),)
+        ],),
+      ),
     );
   }
 
@@ -256,62 +295,14 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
         childAspectRatio: 6, // Aspect ratio of each grid item
       ),
       children: [
-        TextField(
-          controller: null,
-          decoration: InputDecoration(
-            labelText: "Pokemon ${index + 1}",
-            border: OutlineInputBorder(),
-          ),
-        ),
-        TextField(
-          controller: null,
-          decoration: InputDecoration(
-            labelText: "Item",
-            border: OutlineInputBorder(),
-          ),
-        ),
-        TextField(
-          controller: null,
-          decoration: InputDecoration(
-            labelText: "Ability",
-            border: OutlineInputBorder(),
-          ),
-        ),
-        TextField(
-          controller: null,
-          decoration: InputDecoration(
-            labelText: "Tera Type",
-            border: OutlineInputBorder(),
-          ),
-        ),
-        TextField(
-          controller: null,
-          decoration: InputDecoration(
-            labelText: "Move 1",
-            border: OutlineInputBorder(),
-          ),
-        ),
-        TextField(
-          controller: null,
-          decoration: InputDecoration(
-            labelText: "Move 2",
-            border: OutlineInputBorder(),
-          ),
-        ),
-        TextField(
-          controller: null,
-          decoration: InputDecoration(
-            labelText: "Move 3",
-            border: OutlineInputBorder(),
-          ),
-        ),
-        TextField(
-          controller: null,
-          decoration: InputDecoration(
-            labelText: "Move 4",
-            border: OutlineInputBorder(),
-          ),
-        )
+        filterTextInput(labelText: "Pokemon ${index + 1}"),
+        filterTextInput(labelText: "Item"),
+        filterTextInput(labelText: "Ability"),
+        filterTextInput(labelText: "Tera Type"),
+        filterTextInput(labelText: "Move 1"),
+        filterTextInput(labelText: "Move 2"),
+        filterTextInput(labelText: "Move 3"),
+        filterTextInput(labelText: "Move 4")
       ],  // Explicitly specify a list of widgets
     );
   }
