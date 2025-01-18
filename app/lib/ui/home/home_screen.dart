@@ -41,7 +41,10 @@ abstract class _AbstractHomeScreenState extends AbstractState<HomeScreen> {
         length: 3,
         child: Scaffold(
             appBar: appBar(context, localization, dimens, theme),
-            body: body(context, localization, dimens, theme)
+            body: ListenableBuilder(
+                listenable: widget.viewModel.pokemonImageService,
+                builder: (context, _) => body(context, localization, dimens, theme)
+            )
         ),
       ),
     );

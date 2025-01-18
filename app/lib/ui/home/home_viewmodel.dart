@@ -17,7 +17,7 @@ class HomeViewModel extends ChangeNotifier {
   // to erase/refresh the controller each time the replayEntriesScreen state updates
   final TextEditingController addReplayURIController = TextEditingController();
 
-  final PokemonImageService pokemonImageService;
+  PokemonImageService pokemonImageService;
   final SaveService saveService;
   final PokeApi pokeApi;
 

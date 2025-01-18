@@ -3,20 +3,23 @@ import 'dart:developer' as developer;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image_platform_interface/cached_network_image_platform_interface.dart';
+import 'package:flutter/services.dart';
+import 'package:yaml/yaml.dart';
 import '../../ui/core/themes/dimens.dart';
 
-class PokemonImageService {
+class PokemonImageService extends ChangeNotifier {
 
-  PokemonImageService({Map<dynamic, dynamic> pokemon_mappings = const {}, Map<dynamic, dynamic> item_mappings = const {}})
-      : _pokemon_mappings = pokemon_mappings, _item_mappings = item_mappings;
+  PokemonImageService() {
+    _loadAsync();
+  }
 
-  final Map<dynamic, dynamic> _pokemon_mappings;
-  final Map<dynamic, dynamic> _item_mappings;
+  Map<dynamic, dynamic> _pokemonMappings = {};
+  Map<dynamic, dynamic> _itemMappings = {};
 
   Widget getPokemonSprite(String pokemon, {double width = Dimens.pokemonLogoSize, double height = Dimens.pokemonLogoSize}) {
     Uri? uri = _getPokemonSpriteUri(pokemon);
     if (uri == null) {
-      developer.log("Sprite URL for $pokemon was not found on mapping file");
+      if (_pokemonMappings.isNotEmpty) developer.log("Sprite URL for $pokemon was not found on mapping file");
       return _getDefaultSprite(tooltip: pokemon);
     }
     return Tooltip(
@@ -26,9 +29,9 @@ class PokemonImageService {
   }
 
   Widget getItemSprite(String itemName, {double? width, double? height}) {
-    Uri? uri = _getKey(itemName, 'spriteUrl', _item_mappings);
+    Uri? uri = _getKey(itemName, 'spriteUrl', _itemMappings);
     if (uri == null) {
-      developer.log("Sprite URL for item $itemName was not found on mapping file");
+      if (_itemMappings.isNotEmpty) developer.log("Sprite URL for item $itemName was not found on mapping file");
       return _getDefaultSprite(tooltip: itemName);
     }
     return Tooltip(
@@ -91,14 +94,22 @@ class PokemonImageService {
     return tooltip != null ? Tooltip(message: tooltip, child: widget,) : widget;
   }
 
-  Uri? _getPokemonSpriteUri(String pokemon) => _getKey(pokemon, 'sprite', _pokemon_mappings);
-  Uri? _getPokemonArtworkUri(String pokemon) => _getKey(pokemon, 'artwork', _pokemon_mappings);
+  Uri? _getPokemonSpriteUri(String pokemon) => _getKey(pokemon, 'sprite', _pokemonMappings);
+  Uri? _getPokemonArtworkUri(String pokemon) => _getKey(pokemon, 'artwork', _pokemonMappings);
 
   Uri? _getKey(String key, String uriKey, Map<dynamic, dynamic> mappings)  {
     Map<dynamic, dynamic>? pokemonUrls = mappings[key.replaceAll(' ', '-')];
     if (pokemonUrls == null) return null;
     String uri = pokemonUrls[uriKey];
     return Uri.parse(uri);
+  }
+
+  void _loadAsync() async {
+    Map<dynamic, dynamic> pokemonMappings = loadYaml(await rootBundle.loadString('assets/pokemon-sprite-urls.yaml'));
+    Map<dynamic, dynamic> itemMappings = loadYaml(await rootBundle.loadString('assets/items-mapping.yaml'));
+    _pokemonMappings = pokemonMappings;
+    _itemMappings = itemMappings;
+    notifyListeners();
   }
 }
 
