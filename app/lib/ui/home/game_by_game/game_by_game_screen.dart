@@ -1,6 +1,7 @@
 
 import 'package:app2/data/models/replay.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
 
 import '../../core/localization/applocalization.dart';
@@ -24,31 +25,36 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    return ListView.separated(
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            return headerWidget(context, localization, dimens, theme);
-          } else if (index == 1) {
-            return filtersWidget(context, localization, dimens, theme);
-          }
-          final replay = widget.viewModel.replays[index - 1];
-          return _gbgWidget(context, localization, dimens, theme, replay);
-        },
-        separatorBuilder: (context, index) {
-          if (index <= 1) return Container();
-          return Padding(padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 64.0), child: Divider(
-            color: Colors.grey,
-            thickness: 2,
-            height: 1,
-          ),);
-        },
-        itemCount: widget.viewModel.replays.length + 1 // + 1 because of filter component
+    return ListenableBuilder(
+        listenable: widget.viewModel,
+        builder: (context, _) {
+          return ListView.separated(
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return headerWidget(context, localization, dimens, theme);
+                } else if (index == 1) {
+                  return filtersWidget(context, localization, dimens, theme);
+                }
+                final replay = widget.viewModel.filteredReplays[index - 2];
+                return _gbgWidget(context, localization, dimens, theme, replay);
+              },
+              separatorBuilder: (context, index) {
+                if (index <= 1) return Container();
+                return Padding(padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 64.0), child: Divider(
+                  color: Colors.grey,
+                  thickness: 2,
+                  height: 1,
+                ),);
+              },
+              itemCount: widget.viewModel.filteredReplays.length + 2 // + 2 because of filter + header component
+          );
+        }
     );
   }
 
   Widget headerWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    final winRateRatio = widget.viewModel.replays.where((replay) => replay.gameOutput == GameOutput.WIN).length.toDouble() / widget.viewModel.replays.length.toDouble();
-    final winRate = (winRateRatio * 100).toStringAsFixed(1);
+    final double? winRateRatio = widget.viewModel.filteredReplays.isEmpty ? null
+             : widget.viewModel.filteredReplays.where((replay) => replay.gameOutput == GameOutput.WIN).length.toDouble() / widget.viewModel.filteredReplays.length.toDouble();
     final textStyle = theme.textTheme.titleLarge;
     return Padding(
         padding: const EdgeInsets.only(left: 32.0, top: 16.0),
@@ -56,9 +62,10 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("${widget.viewModel.replays.length} Battles", style: textStyle,),
+          Text("${widget.viewModel.filteredReplays.length} Battles", style: textStyle,),
           const SizedBox(height: 16.0,),
-          Text("Win rate $winRate%", style: textStyle),
+          if (winRateRatio != null)
+            Text("Win rate ${(winRateRatio * 100).toStringAsFixed(1)}%", style: textStyle),
         ],
       ),
     );
@@ -66,8 +73,12 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
 
   Widget filtersWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
 
-  Widget filterTextInput({required String labelText, TextEditingController? controller}) => TextField(
+  Widget filterTextInput({required String labelText, TextEditingController? controller, bool numberInput = false}) => TextField(
     controller: controller,
+    keyboardType: numberInput ? TextInputType.number : null,
+    inputFormatters: numberInput ? [
+      FilteringTextInputFormatter.digitsOnly, // Allows only digits
+    ] : null,
     decoration: InputDecoration(
       labelText: labelText,
       border: OutlineInputBorder(),
@@ -91,52 +102,47 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
   }
 
   Widget _gbgNotesWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay) {
-    return ListenableBuilder(
-        listenable: widget.viewModel,
-        builder: (context, _) {
-          final noteEditingContext = widget.viewModel.replayNoteEditingContextMap[replay];
-          if (noteEditingContext == null) {
-            if (replay.notes?.trim().isEmpty ?? true) {
-              return OutlinedButton(onPressed: () => widget.viewModel.editNote(replay), child: Text(localization.addNotes));
-            } else {
-              return Row(children: [
-                Expanded(
-                    child: Text(replay.notes!, textAlign: TextAlign.center,)),
-                const SizedBox(width: 16),
-                OutlinedButton(
-                  onPressed: () => widget.viewModel.editNote(replay),
-                  child: Text(localization.editNotes),
+    final noteEditingContext = widget.viewModel.replayNoteEditingContextMap[replay];
+    if (noteEditingContext == null) {
+      if (replay.notes?.trim().isEmpty ?? true) {
+        return OutlinedButton(onPressed: () => widget.viewModel.editNote(replay), child: Text(localization.addNotes));
+      } else {
+        return Row(children: [
+          Expanded(
+              child: Text(replay.notes!, textAlign: TextAlign.center,)),
+          const SizedBox(width: 16),
+          OutlinedButton(
+            onPressed: () => widget.viewModel.editNote(replay),
+            child: Text(localization.editNotes),
+          ),
+          const SizedBox(width: 16),
+        ],);
+      }
+    } else {
+      return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        child: Row(children: [
+          Expanded(
+              child: ConstrainedBox(constraints: BoxConstraints(
+                maxHeight: 200, // give max height to prevent from overflowing
+              ), child: TextField(
+                maxLines: null,
+                controller: noteEditingContext.controller,
+                decoration: InputDecoration(
+                  labelText: localization.notes,
+                  border: OutlineInputBorder(),
                 ),
-                const SizedBox(width: 16),
-              ],);
-            }
-          } else {
-            return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(children: [
-                Expanded(
-                    child: ConstrainedBox(constraints: BoxConstraints(
-                      maxHeight: 200, // give max height to prevent from overflowing
-                    ), child: TextField(
-                      maxLines: null,
-                      controller: noteEditingContext.controller,
-                      decoration: InputDecoration(
-                        labelText: localization.notes,
-                        border: OutlineInputBorder(),
-                      ),
-                    ),)
-                ),
-                const SizedBox(width: 16),
-                OutlinedButton(
-                  onPressed: () => widget.viewModel.saveNotes(replay, noteEditingContext.controller.text),
-                  child: Text(localization.save),
-                ),
-                const SizedBox(width: 16),
-              ],),
-            );
-          }
-        }
-    );
+              ),)
+          ),
+          const SizedBox(width: 16),
+          OutlinedButton(
+            onPressed: () => widget.viewModel.saveNotes(replay, noteEditingContext.controller.text),
+            child: Text(localization.save),
+          ),
+          const SizedBox(width: 16),
+        ],),
+      );
+    }
   }
 
   Widget vsText(ThemeData theme, Replay replay) => Text("vs ${replay.opposingPlayer.name}", style: theme.textTheme.titleLarge,);
@@ -255,7 +261,6 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
 
   @override
   Widget filtersWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    // TODO: implement filtersWidget
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
       child: Container(
@@ -277,8 +282,8 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
                 childAspectRatio: 4, // Aspect ratio of each grid item
               ),
               children: [
-                filterTextInput(labelText: "Opponent Min Elo"),
-                filterTextInput(labelText: "Opponent Max Elo"),
+                filterTextInput(labelText: "Opponent Min Elo", controller: widget.viewModel.minEloController, numberInput: true),
+                filterTextInput(labelText: "Opponent Max Elo", controller: widget.viewModel.maxEloController, numberInput: true),
               ],  // Explicitly specify a list of widgets
             ),),
           TabBar(
@@ -295,7 +300,7 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
             child: Padding(padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                children: [OutlinedButton(onPressed: () {}, child: Text("Clear")), SizedBox(width: 16.0,), OutlinedButton(onPressed: () {}, child: Text("Apply"))],
+                children: [OutlinedButton(onPressed: () => widget.viewModel.clearFilters(), child: Text("Clear")), SizedBox(width: 16.0,), OutlinedButton(onPressed: () => widget.viewModel.applyFilters(), child: Text("Apply"))],
               ),),)
         ],),
       ),
@@ -303,6 +308,8 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
   }
 
   Widget _pokemonFilterWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, int index) {
+    final pokemonFilters = widget.viewModel.getPokemonFilters(index);
+
     return GridView(
       shrinkWrap: true,  // Shrinks to the size of its children
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -312,14 +319,11 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
         childAspectRatio: 6, // Aspect ratio of each grid item
       ),
       children: [
-        filterTextInput(labelText: "Pokemon ${index + 1}"),
-        filterTextInput(labelText: "Item"),
-        filterTextInput(labelText: "Ability"),
-        filterTextInput(labelText: "Tera Type"),
-        filterTextInput(labelText: "Move 1"),
-        filterTextInput(labelText: "Move 2"),
-        filterTextInput(labelText: "Move 3"),
-        filterTextInput(labelText: "Move 4")
+        filterTextInput(labelText: "Pokemon ${index + 1}", controller: pokemonFilters.pokemonNameController),
+        filterTextInput(labelText: "Item", controller:  pokemonFilters.itemController),
+        filterTextInput(labelText: "Ability", controller:  pokemonFilters.abilityController),
+        filterTextInput(labelText: "Tera Type", controller:  pokemonFilters.teraTypeController),
+        ...List.generate(4, (index) => filterTextInput(labelText: "Move ${index + 1}", controller: pokemonFilters.moveControllers[index]))
       ],  // Explicitly specify a list of widgets
     );
   }
