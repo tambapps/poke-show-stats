@@ -77,8 +77,6 @@ class SdReplayParser {
   String _pokemonName(String rawName) {
     if (rawName.endsWith("-*")) {
       return rawName.substring(0, rawName.length - 2);
-    } else if (rawName.contains("Urshifu")) {
-      return "Urshifu";
     }
     return rawName;
   }
