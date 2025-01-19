@@ -20,3 +20,18 @@ abstract class AbstractState<T extends StatefulWidget> extends State<T> {
     super.dispose();
   }
 }
+
+abstract class AbstractStatelessWidget extends StatelessWidget {
+
+  const AbstractStatelessWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return doBuild(context, AppLocalization.of(context), Dimens.of(context), Theme.of(context));
+  }
+
+  @protected
+  Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
+
+
+}

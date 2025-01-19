@@ -1,5 +1,6 @@
 
 import 'package:app2/data/models/replay.dart';
+import 'package:app2/ui/core/widgets/replay_filters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
@@ -28,6 +29,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
+    final filtersViewModel = ReplayFiltersViewModel();
     return ListenableBuilder(
         listenable: viewModel,
         builder: (context, _) {
@@ -36,7 +38,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
                 if (index == 0) {
                   return headerWidget(context, localization, dimens, theme);
                 } else if (index == 1) {
-                  return filtersWidget(context, localization, dimens, theme);
+                  return ReplayFiltersWidget(viewModel: filtersViewModel, applyFilters: (replayPredicate) => viewModel.applyFilters(replayPredicate));
                 }
                 final replay = viewModel.filteredReplays[index - 2];
                 return _gbgWidget(context, localization, dimens, theme, replay);
@@ -73,23 +75,6 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
       ),
     );
   }
-
-  Widget filtersWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
-
-  Widget filterTextInput({required String labelText, TextEditingController? controller, bool numberInput = false}) => Padding(
-      padding: EdgeInsets.only(top: 8.0),
-    child: TextField(
-      controller: controller,
-      keyboardType: numberInput ? TextInputType.number : null,
-      inputFormatters: numberInput ? [
-        FilteringTextInputFormatter.digitsOnly, // Allows only digits
-      ] : null,
-      decoration: InputDecoration(
-        labelText: labelText,
-        border: OutlineInputBorder(),
-      ),
-    ),
-  );
 
   Widget playWidgetContainer(List<Widget> children);
 
@@ -215,12 +200,6 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
 class _MobileGameByGameComponentState extends _AbstractGameByGameComponentState {
 
   @override
-  Widget filtersWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    // TODO: implement filtersWidget
-    return Container();
-  }
-
-  @override
   Widget playWidgetContainer(List<Widget> children) =>
       Row(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: children,);
 
@@ -250,91 +229,6 @@ class _MobileGameByGameComponentState extends _AbstractGameByGameComponentState 
 }
 
 class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState with TickerProviderStateMixin {
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    // The `vsync: this` ensures the TabController is synchronized with the screen's refresh rate
-    _tabController = TabController(length: 6, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget filtersWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.grey,
-            width: 2.0
-          ),
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
-        ),
-        child: Column(children: [
-          Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0), child: Text("Filters", style: theme.textTheme.titleMedium,),),
-          Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: GridView(
-              shrinkWrap: true,  // Shrinks to the size of its children
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 6,  // Number of columns in the grid
-                mainAxisSpacing: 4, // Spacing between rows
-                crossAxisSpacing: 20, // Spacing between columns
-                childAspectRatio: 4, // Aspect ratio of each grid item
-              ),
-              children: [
-                filterTextInput(labelText: "Opponent Min Elo", controller: viewModel.minEloController, numberInput: true),
-                filterTextInput(labelText: "Opponent Max Elo", controller: viewModel.maxEloController, numberInput: true),
-              ],  // Explicitly specify a list of widgets
-            ),),
-          TabBar(
-            controller: _tabController,
-            onTap: (index) => viewModel.onPokemonFilterTabSelected(index),
-            tabs: Iterable.generate(6, (index) => index).map((index) => Text("Pokemon ${index + 1}", style: theme.textTheme.labelLarge,)).toList(),
-          ),
-          ConstrainedBox(constraints: BoxConstraints(maxHeight: 140),
-            child: Padding(padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              child: TabBarView(controller: _tabController, children: Iterable.generate(6, (index) => index).map((index) => _pokemonFilterWidget(context, localization, dimens, theme, index)).toList()),),),
-
-
-          Align(alignment: Alignment.bottomRight,
-            child: Padding(padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [OutlinedButton(onPressed: () => viewModel.clearFilters(), child: Text("Clear")), const SizedBox(width: 16.0,), OutlinedButton(onPressed: () => viewModel.applyFilters(), child: Text("Apply"))],
-              ),),),
-          const SizedBox(height: 8.0,),
-        ],),
-      ),
-    );
-  }
-
-  Widget _pokemonFilterWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, int index) {
-    final pokemonFilters = viewModel.getPokemonFilters(index);
-
-    return GridView(
-      shrinkWrap: true,  // Shrinks to the size of its children
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4,  // Number of columns in the grid
-        mainAxisSpacing: 8, // Spacing between rows
-        crossAxisSpacing: 20, // Spacing between columns
-        childAspectRatio: 6, // Aspect ratio of each grid item
-      ),
-      children: [
-        filterTextInput(labelText: "Pokemon ${index + 1}", controller: pokemonFilters.pokemonNameController),
-        filterTextInput(labelText: "Item", controller:  pokemonFilters.itemController),
-        filterTextInput(labelText: "Ability", controller:  pokemonFilters.abilityController),
-        filterTextInput(labelText: "Tera Type", controller:  pokemonFilters.teraTypeController),
-        ...List.generate(4, (index) => filterTextInput(labelText: "Move ${index + 1}", controller: pokemonFilters.moveControllers[index]))
-      ],  // Explicitly specify a list of widgets
-    );
-  }
 
   @override
   Widget playWidgetContainer(List<Widget> children) => Row(children: children,);
