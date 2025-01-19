@@ -76,15 +76,18 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
 
   Widget filtersWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
 
-  Widget filterTextInput({required String labelText, TextEditingController? controller, bool numberInput = false}) => TextField(
-    controller: controller,
-    keyboardType: numberInput ? TextInputType.number : null,
-    inputFormatters: numberInput ? [
-      FilteringTextInputFormatter.digitsOnly, // Allows only digits
-    ] : null,
-    decoration: InputDecoration(
-      labelText: labelText,
-      border: OutlineInputBorder(),
+  Widget filterTextInput({required String labelText, TextEditingController? controller, bool numberInput = false}) => Padding(
+      padding: EdgeInsets.only(top: 8.0),
+    child: TextField(
+      controller: controller,
+      keyboardType: numberInput ? TextInputType.number : null,
+      inputFormatters: numberInput ? [
+        FilteringTextInputFormatter.digitsOnly, // Allows only digits
+      ] : null,
+      decoration: InputDecoration(
+        labelText: labelText,
+        border: OutlineInputBorder(),
+      ),
     ),
   );
 
@@ -275,7 +278,8 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
           borderRadius: const BorderRadius.all(Radius.circular(8)),
         ),
         child: Column(children: [
-          Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+          Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0), child: Text("Filters", style: theme.textTheme.titleMedium,),),
+          Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: GridView(
               shrinkWrap: true,  // Shrinks to the size of its children
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -303,8 +307,9 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
             child: Padding(padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                children: [OutlinedButton(onPressed: () => viewModel.clearFilters(), child: Text("Clear")), SizedBox(width: 16.0,), OutlinedButton(onPressed: () => viewModel.applyFilters(), child: Text("Apply"))],
-              ),),)
+                children: [OutlinedButton(onPressed: () => viewModel.clearFilters(), child: Text("Clear")), const SizedBox(width: 16.0,), OutlinedButton(onPressed: () => viewModel.applyFilters(), child: Text("Apply"))],
+              ),),),
+          const SizedBox(height: 8.0,),
         ],),
       ),
     );
@@ -317,7 +322,7 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
       shrinkWrap: true,  // Shrinks to the size of its children
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 4,  // Number of columns in the grid
-        mainAxisSpacing: 4, // Spacing between rows
+        mainAxisSpacing: 8, // Spacing between rows
         crossAxisSpacing: 20, // Spacing between columns
         childAspectRatio: 6, // Aspect ratio of each grid item
       ),
@@ -340,7 +345,7 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
   @override
   Widget gbgHeader(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay) {
     return Row(children: [
-      Padding(padding: EdgeInsets.only(left: 32.0), child: vsText(theme, replay),),
+      Padding(padding: const EdgeInsets.only(left: 32.0), child: vsText(theme, replay),),
       SizedBox(width: 8,),
       // opponent team
       Row(
