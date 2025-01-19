@@ -3,6 +3,8 @@ import 'package:app2/ui/home/config/home_config_screen.dart';
 import 'package:app2/ui/home/config/home_config_viewmodel.dart';
 import 'package:app2/ui/home/game_by_game/game_by_game_screen.dart';
 import 'package:app2/ui/home/game_by_game/game_by_game_viewmodel.dart';
+import 'package:app2/ui/home/move_usage/move_usage_screen.dart';
+import 'package:app2/ui/home/move_usage/move_usage_viewmodel.dart';
 import 'package:app2/ui/home/replay_entries/replay_entries_screen.dart';
 import 'package:app2/ui/home/replay_entries/replay_entries_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +39,7 @@ abstract class _AbstractHomeScreenState extends AbstractState<HomeScreen> with T
     super.initState();
     viewModel.loadSave();
     // The `vsync: this` ensures the TabController is synchronized with the screen's refresh rate
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -79,6 +81,9 @@ abstract class _AbstractHomeScreenState extends AbstractState<HomeScreen> with T
         ListenableBuilder(
             listenable: viewModel,
             builder: (context, _) => GameByGameComponent(viewModel: GameByGameViewModel(homeViewModel: viewModel, pokemonImageService: context.read()), isMobile: dimens.isMobile)),
+        ListenableBuilder(
+            listenable: viewModel,
+            builder: (context, _) => MoveUsageComponent(viewModel: MoveUsageViewModel(homeViewModel: viewModel), isMobile: dimens.isMobile)),
       ],
     );
   }
@@ -92,6 +97,7 @@ abstract class _AbstractHomeScreenState extends AbstractState<HomeScreen> with T
         Tab(text: localization.home),
         Tab(text: localization.replayEntries),
         Tab(text: localization.gameByGame),
+        Tab(text: localization.moveUsages),
       ],
     );
   }
