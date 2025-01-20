@@ -25,6 +25,11 @@ abstract class _MoveUsageComponentState extends AbstractState<MoveUsageComponent
   @override
   MoveUsageViewModel get viewModel => widget.viewModel;
 
+  @override
+  void initState() {
+    super.initState();
+    viewModel.loadStats();
+  }
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
@@ -32,30 +37,43 @@ abstract class _MoveUsageComponentState extends AbstractState<MoveUsageComponent
     if (pokepaste == null) {
       return _cantDisplay("Please enter a pokepaste in the Home tab to consult move usages");
     }
-    final replays = viewModel.filteredReplays;
-    if (replays.isEmpty) {
+    if (viewModel.isLoading) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+    final moveUsages = viewModel.pokemonMoveUsages;
+    if (moveUsages.isEmpty) {
       return _cantDisplay("Please enter a replays in the Replay Entries tab to consult move usages");
     }
     final filtersViewModel = ReplayFiltersViewModel();
-    return Column(children: [
-      ReplayFiltersWidget(viewModel: filtersViewModel, applyFilters: (replayPredicate) => viewModel.applyFilters(replayPredicate)),
-      moveUsagesWidget(pokepaste, replays)
-    ],);
+    return SingleChildScrollView(
+      child: Column(children: [
+        ReplayFiltersWidget(viewModel: filtersViewModel, applyFilters: (replayPredicate) => viewModel.loadStats(replayPredicate: replayPredicate)),
+        moveUsagesWidget(pokepaste, moveUsages)
+      ],),
+    );
 
   }
 
-  Widget moveUsagesWidget(Pokepaste pokepaste, List<Replay> replays);
+  Widget moveUsagesWidget(Pokepaste pokepaste, Map<String, Map<String, int>> moveUsages);
 
   Widget _cantDisplay(String text) => Center(
     child: Text(text),
   );
-  Widget pokemonMoveUsagesWidget(List<Replay> replays, Pokemon pokemon) => Text(pokemon.name);
+  Widget pokemonMoveUsagesWidget(Map<String, Map<String, int>> moveUsages, Pokemon pokemon) {
+    return Row(children: [
+      Expanded(flex: 1, child: Container(child: viewModel.pokemonImageService.getPokemonArtwork(pokemon.name),)),
+      // TODO display pie chart
+      Expanded(flex: 2, child: Text("usage")),
+    ],);
+  }
 }
 
 class _MobileMoveUsageComponentState extends _MoveUsageComponentState {
 
   @override
-  Widget moveUsagesWidget(Pokepaste pokepaste, List<Replay> replays) {
+  Widget moveUsagesWidget(Pokepaste pokepaste, Map<String, Map<String, int>> moveUsages) {
     // TODO: implement moveUsagesWidget
     throw UnimplementedError();
   }
@@ -65,7 +83,7 @@ class _MobileMoveUsageComponentState extends _MoveUsageComponentState {
 class _DesktopMoveUsageComponentState extends _MoveUsageComponentState {
 
   @override
-  Widget moveUsagesWidget(Pokepaste pokepaste, List<Replay> replays) {
+  Widget moveUsagesWidget(Pokepaste pokepaste, Map<String, Map<String, int>> moveUsages) {
     final pokemons = pokepaste.pokemons;
     List<Row> pokemonRows = [];
     int nbRows = (pokemons.length % 3 == 0 ? pokemons.length / 2 : pokemons.length / 2 + 1).toInt();
@@ -73,7 +91,7 @@ class _DesktopMoveUsageComponentState extends _MoveUsageComponentState {
       List<Widget> rowChildren = [];
       for (int i = row * 3; i < row * 3 + 3 && i < pokemons.length; i++) {
         final pokemon = pokemons[i];
-        rowChildren.add(Expanded(flex: 1, child: Padding(padding: EdgeInsets.symmetric(horizontal: 32), child: pokemonMoveUsagesWidget(replays, pokemon),),));
+        rowChildren.add(Expanded(flex: 1, child: Padding(padding: EdgeInsets.symmetric(horizontal: 32), child: pokemonMoveUsagesWidget(moveUsages, pokemon),),));
       }
       pokemonRows.add(Row(children: rowChildren,));
     }
