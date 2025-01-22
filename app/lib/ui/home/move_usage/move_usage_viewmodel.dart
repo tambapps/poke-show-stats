@@ -32,10 +32,8 @@ class MoveUsageViewModel extends ChangeNotifier {
         .toList()
         : homeViewModel.replays;
     for (Replay replay in replays) {
-      developer.log("usages ${replay.otherPlayer.moveUsages}");
       _merge(map, replay.otherPlayer.moveUsages);
     }
-    developer.log("computed usages $map");
     _pokemonMoveUsages = map;
     _isLoading = false;
     notifyListeners();
