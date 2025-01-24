@@ -35,9 +35,9 @@ abstract class _AbstractGameByGameComponentState extends AbstractViewModelState<
           return ListView.separated(
               itemBuilder: (context, index) {
                 if (index == 0) {
-                  return headerWidget(context, localization, dimens, theme);
-                } else if (index == 1) {
                   return ReplayFiltersWidget(viewModel: viewModel.filtersViewModel, applyFilters: (replayPredicate) => viewModel.applyFilters(replayPredicate));
+                } else if (index == 1) {
+                  return headerWidget(context, localization, dimens, theme);
                 }
                 final replay = viewModel.filteredReplays[index - 2];
                 return _gbgWidget(context, localization, dimens, theme, replay);
@@ -61,12 +61,12 @@ abstract class _AbstractGameByGameComponentState extends AbstractViewModelState<
              : viewModel.filteredReplays.where((replay) => replay.gameOutput == GameOutput.WIN).length.toDouble() / viewModel.filteredReplays.length.toDouble();
     final textStyle = theme.textTheme.titleLarge;
     return Padding(
-        padding: const EdgeInsets.only(left: 32.0, top: 16.0),
+        padding: const EdgeInsets.only(left: 32.0, top: 8.0, bottom: 64.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("${viewModel.filteredReplays.length} Battles", style: textStyle,),
+          Text("${viewModel.filteredReplays.length} Replays", style: textStyle,),
           const SizedBox(height: 16.0,),
           if (winRateRatio != null)
             Text("Win rate ${(winRateRatio * 100).toStringAsFixed(1)}%", style: textStyle),

@@ -63,6 +63,10 @@ abstract class _MoveUsageComponentState extends AbstractViewModelState<MoveUsage
           return SingleChildScrollView(
             child: Column(children: [
               filtersWidget,
+
+                Align(alignment: Alignment.topLeft, child: Padding(padding: const EdgeInsets.only(left: 32.0, top: 8.0),
+                  child: Text("Over ${viewModel.replaysCount} Replays", style: theme.textTheme.titleLarge,),
+                ),),
               moveUsagesWidget(pokepaste, moveUsages),
               SizedBox(height: 32.0,)
             ],),
