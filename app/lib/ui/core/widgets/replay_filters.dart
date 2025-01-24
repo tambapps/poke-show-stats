@@ -149,6 +149,7 @@ class ReplayFiltersViewModel extends ChangeNotifier {
 
   @override
   void dispose() {
+    _filters.dispose();
     super.dispose();
   }
 }
