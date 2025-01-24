@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../data/models/replay.dart';
+import 'controlled_autocomplete.dart';
 
 typedef ReplayPredicate = bool Function(Replay);
 
@@ -97,16 +98,37 @@ class ReplayFiltersWidgetState extends AbstractState<ReplayFiltersWidget> with T
         childAspectRatio: 6, // Aspect ratio of each grid item
       ),
       children: [
-        textInput(labelText: "Pokemon ${index + 1}", controller: pokemonFilters.pokemonNameController),
-        textInput(labelText: "Item", controller:  pokemonFilters.itemController),
-        textInput(labelText: "Ability", controller:  pokemonFilters.abilityController),
-        textInput(labelText: "Tera Type", controller:  pokemonFilters.teraTypeController),
-        ...List.generate(4, (index) => textInput(labelText: "Move ${index + 1}", controller: pokemonFilters.moveControllers[index]))
+        autoCompleteTextInput(labelText: "Pokemon ${index + 1}", suggestions: ['Calyrex-Ice', 'Foo'], controller: pokemonFilters.pokemonNameController),
+        autoCompleteTextInput(labelText: "Item", suggestions: ['Todo', 'Foo'], controller: pokemonFilters.itemController),
+        autoCompleteTextInput(labelText: "Ability", suggestions: ['Todo', 'Foo'], controller:  pokemonFilters.abilityController),
+        autoCompleteTextInput(labelText: "Tera Type", suggestions: ['Todo', 'Foo'], controller:  pokemonFilters.teraTypeController),
+        ...List.generate(4, (index) => autoCompleteTextInput(labelText: "Move ${index + 1}", suggestions: ['Todo', 'Foo'], controller: pokemonFilters.moveControllers[index]))
       ],  // Explicitly specify a list of widgets
     );
   }
 
-  Widget textInput({required String labelText, TextEditingController? controller, bool numberInput = false}) => Padding(
+  Widget autoCompleteTextInput({required String labelText, required List<String> suggestions, required TextEditingController controller}) {
+    return Padding(
+      padding: EdgeInsets.only(top: 8.0),
+      child: ControlledAutoComplete<String>(
+        controller: controller,
+        suggestions: suggestions,
+        fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
+          return TextField(
+            controller: controller,
+            focusNode: focusNode,
+            onSubmitted: (value) => onFieldSubmitted(),
+            decoration: InputDecoration(
+              labelText: labelText,
+              border: OutlineInputBorder(),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget textInput({required String labelText, required TextEditingController controller, bool numberInput = false}) => Padding(
     padding: EdgeInsets.only(top: 8.0),
     child: TextField(
       controller: controller,
