@@ -11,13 +11,13 @@ class GameByGameViewModel extends ChangeNotifier {
 
   GameByGameViewModel({
     required this.homeViewModel,
-    required this.pokemonImageService
-  }) {
+    required this.pokemonResourceService
+  }): filtersViewModel = ReplayFiltersViewModel(pokemonResourceService: pokemonResourceService) {
     filteredReplays = homeViewModel.replays;
   }
   final HomeViewModel homeViewModel;
-  final filtersViewModel = ReplayFiltersViewModel();
-  final PokemonImageService pokemonImageService;
+  final ReplayFiltersViewModel filtersViewModel;
+  final PokemonResourceService pokemonResourceService;
   late List<Replay> filteredReplays;
   Map<Replay, NoteEditingContext> replayNoteEditingContextMap = {};
 

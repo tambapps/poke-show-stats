@@ -12,7 +12,7 @@ import '../data/services/pokeapi.dart';
 List<SingleChildWidget> get providers {
   return [
     ListenableProvider(
-      create: (context) => PokemonImageService(),
+      create: (context) => PokemonResourceService(),
     ),
     Provider(
       create: (context) => SdReplayParser(),

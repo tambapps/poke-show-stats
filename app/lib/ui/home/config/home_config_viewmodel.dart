@@ -15,7 +15,7 @@ class HomeConfigViewModel extends ChangeNotifier {
   List<String> get sdNames => homeViewModel.sdNames;
   Pokepaste? get pokepaste => homeViewModel.pokepaste;
   Map<String, Move> get pokemonMoves => homeViewModel.pokemonMoves;
-  PokemonImageService get pokemonImageService => homeViewModel.pokemonImageService;
+  PokemonResourceService get pokemonImageService => homeViewModel.pokemonImageService;
 
   final HomeViewModel homeViewModel;
   final PokepasteParser pokepasteParser;

@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:developer' as developer;
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -7,14 +8,40 @@ import 'package:flutter/services.dart';
 import 'package:yaml/yaml.dart';
 import '../../ui/core/themes/dimens.dart';
 
-class PokemonImageService extends ChangeNotifier {
+// TODO rename file name and !
+class PokemonResourceService extends ChangeNotifier {
 
-  PokemonImageService() {
+  PokemonResourceService() {
     _loadAsync();
   }
 
   Map<dynamic, dynamic> _pokemonMappings = {};
   Map<dynamic, dynamic> _itemMappings = {};
+  List<String> _itemNames = [];
+  List<String> get itemNames => _itemNames;
+  List<String> _pokemonNames = [];
+  List<String> get pokemonNames => _pokemonNames;
+  List<String> teraTypes = UnmodifiableListView([
+    'Bug',
+    'Dark',
+    'Dragon',
+    'Electric',
+    'Fairy',
+    'Fighting',
+    'Fire',
+    'Flying',
+    'Ghost',
+    'Grass',
+    'Ground',
+    'Ice',
+    'Normal',
+    'Poison',
+    'Rock',
+    'Steel',
+    'Stellar',
+    'Water'
+  ]);
+
 
   Widget getPokemonSprite(String pokemon, {double width = Dimens.pokemonLogoSize, double height = Dimens.pokemonLogoSize}) {
     Uri? uri = _getPokemonSpriteUri(pokemon);
@@ -109,7 +136,15 @@ class PokemonImageService extends ChangeNotifier {
     Map<dynamic, dynamic> itemMappings = loadYaml(await rootBundle.loadString('assets/items-mapping.yaml'));
     _pokemonMappings = pokemonMappings;
     _itemMappings = itemMappings;
+    _pokemonNames = _extractKeys(pokemonMappings);
+    _itemNames = _extractKeys(itemMappings);
     notifyListeners();
+  }
+
+  List<String> _extractKeys(Map<dynamic, dynamic> map) {
+    List<String> list = map.keys.map((k) => k.toString()).toList();
+    list.sort();
+    return UnmodifiableListView(list);
   }
 }
 

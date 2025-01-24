@@ -180,13 +180,13 @@ abstract class _AbstractGameByGameComponentState extends AbstractViewModelState<
           children: [
             Transform.scale(
               scale: 0.65,
-              child: viewModel.pokemonImageService.getPokemonArtwork(pokemon),
+              child: viewModel.pokemonResourceService.getPokemonArtwork(pokemon),
             ),
             if (teraType != null)
               Positioned(
                 top: dimens.pokepastePokemonIconsOffset,
                 right: 0,
-                child: viewModel.pokemonImageService.getTeraTypeSprite(teraType, width: 50, height: 50),
+                child: viewModel.pokemonResourceService.getTeraTypeSprite(teraType, width: 50, height: 50),
               ),
           ],
         ),
@@ -218,7 +218,7 @@ class _MobileGameByGameComponentState extends _AbstractGameByGameComponentState 
         children: replay.opposingPlayer.team
             .map((pokemon) =>
         // TODO open dialog on click to show open teamsheet of particular pokemon if match was ots?
-        Expanded(child: viewModel.pokemonImageService.getPokemonSprite(pokemon)))
+        Expanded(child: viewModel.pokemonResourceService.getPokemonSprite(pokemon)))
             .toList(),
       ),
       const SizedBox(height: 4,),
@@ -246,7 +246,7 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
         children: replay.opposingPlayer.team
             .map((pokemon) =>
         // TODO open dialog on click to show open teamsheet of particular pokemon if match was ots?
-        viewModel.pokemonImageService.getPokemonSprite(pokemon))
+        viewModel.pokemonResourceService.getPokemonSprite(pokemon))
             .toList(),
       ),
       SizedBox(width: 16,),

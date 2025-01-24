@@ -80,10 +80,10 @@ abstract class _AbstractHomeScreenState extends AbstractViewModelState<HomeScree
             builder: (context, _) => ReplayEntriesComponent(viewModel: ReplayEntriesViewModel(replayParser: context.read(), homeViewModel: viewModel), isMobile: dimens.isMobile,)),
         ListenableBuilder(
             listenable: viewModel,
-            builder: (context, _) => GameByGameComponent(viewModel: GameByGameViewModel(homeViewModel: viewModel, pokemonImageService: context.read()), isMobile: dimens.isMobile)),
+            builder: (context, _) => GameByGameComponent(viewModel: GameByGameViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), isMobile: dimens.isMobile)),
         ListenableBuilder(
             listenable: viewModel,
-            builder: (context, _) => MoveUsageComponent(viewModel: MoveUsageViewModel(homeViewModel: viewModel, pokemonImageService: context.read()), isMobile: dimens.isMobile)),
+            builder: (context, _) => MoveUsageComponent(viewModel: MoveUsageViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), isMobile: dimens.isMobile)),
       ],
     );
   }

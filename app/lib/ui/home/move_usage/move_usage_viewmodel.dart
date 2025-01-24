@@ -12,12 +12,12 @@ class MoveUsageViewModel extends ChangeNotifier {
 
   MoveUsageViewModel({
     required this.homeViewModel,
-    required this.pokemonImageService,
-  });
+    required this.pokemonResourceService,
+  }): filtersViewModel = ReplayFiltersViewModel(pokemonResourceService: pokemonResourceService);
 
   final HomeViewModel homeViewModel;
-  final PokemonImageService pokemonImageService;
-  final filtersViewModel = ReplayFiltersViewModel();
+  final PokemonResourceService pokemonResourceService;
+  final ReplayFiltersViewModel filtersViewModel;
   Pokepaste? get pokepaste => homeViewModel.pokepaste;
   Map<String, Map<String, int>> _pokemonMoveUsages = {};
   Map<String, Map<String, int>> get pokemonMoveUsages => _pokemonMoveUsages;

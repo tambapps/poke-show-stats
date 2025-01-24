@@ -16,7 +16,7 @@ class ReplayEntriesViewModel extends ChangeNotifier {
     required this.replayParser,
     required this.homeViewModel});
 
-  PokemonImageService get pokemonImageService => homeViewModel.pokemonImageService;
+  PokemonResourceService get pokemonImageService => homeViewModel.pokemonImageService;
   List<Replay> get replays => homeViewModel.replays;
   List<String> get sdNames => homeViewModel.sdNames;
 

@@ -76,7 +76,7 @@ class _PokemonMovesPieChartState extends AbstractViewModelState<PokemonMovesPieC
 class PokemonMovesPieChartViewModel extends ChangeNotifier {
 
   static final _sectionColors = [Colors.blue, Colors.green, Colors.orange, Colors.purple];
-  final PokemonImageService pokemonImageService;
+  final PokemonResourceService pokemonImageService;
   final String pokemonName;
   final List<MapEntry<String, int>> pokemonMoveUsages;
 

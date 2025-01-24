@@ -1,3 +1,4 @@
+import 'package:app2/data/services/pokemon_image_service.dart';
 import 'package:app2/ui/core/localization/applocalization.dart';
 import 'package:app2/ui/core/themes/dimens.dart';
 import 'package:app2/ui/core/widgets.dart';
@@ -98,11 +99,13 @@ class ReplayFiltersWidgetState extends AbstractState<ReplayFiltersWidget> with T
         childAspectRatio: 6, // Aspect ratio of each grid item
       ),
       children: [
-        autoCompleteTextInput(labelText: "Pokemon ${index + 1}", suggestions: ['Calyrex-Ice', 'Foo'], controller: pokemonFilters.pokemonNameController),
-        autoCompleteTextInput(labelText: "Item", suggestions: ['Todo', 'Foo'], controller: pokemonFilters.itemController),
-        autoCompleteTextInput(labelText: "Ability", suggestions: ['Todo', 'Foo'], controller:  pokemonFilters.abilityController),
-        autoCompleteTextInput(labelText: "Tera Type", suggestions: ['Todo', 'Foo'], controller:  pokemonFilters.teraTypeController),
-        ...List.generate(4, (index) => autoCompleteTextInput(labelText: "Move ${index + 1}", suggestions: ['Todo', 'Foo'], controller: pokemonFilters.moveControllers[index]))
+        autoCompleteTextInput(labelText: "Pokemon ${index + 1}", suggestions: _viewModel.pokemonResourceService.pokemonNames, controller: pokemonFilters.pokemonNameController),
+        autoCompleteTextInput(labelText: "Item", suggestions: _viewModel.pokemonResourceService.itemNames, controller: pokemonFilters.itemController),
+        // TODO supply suggestions
+        autoCompleteTextInput(labelText: "Ability", suggestions: [], controller:  pokemonFilters.abilityController),
+        autoCompleteTextInput(labelText: "Tera Type", suggestions: _viewModel.pokemonResourceService.teraTypes, controller:  pokemonFilters.teraTypeController),
+        // TODO supply suggestions
+        ...List.generate(4, (index) => autoCompleteTextInput(labelText: "Move ${index + 1}", suggestions: [], controller: pokemonFilters.moveControllers[index]))
       ],  // Explicitly specify a list of widgets
     );
   }
@@ -113,6 +116,7 @@ class ReplayFiltersWidgetState extends AbstractState<ReplayFiltersWidget> with T
       child: ControlledAutoComplete<String>(
         controller: controller,
         suggestions: suggestions,
+        displayStringForOption: (s) => s.replaceAll('-', ' '),
         fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
           return TextField(
             controller: controller,
@@ -152,12 +156,16 @@ class ReplayFiltersWidgetState extends AbstractState<ReplayFiltersWidget> with T
 
 class ReplayFiltersViewModel extends ChangeNotifier {
 
+  ReplayFiltersViewModel({required this.pokemonResourceService});
+
+  final PokemonResourceService pokemonResourceService;
   final _Filters _filters = _Filters();
 
   TextEditingController get minEloController => _filters.minEloController;
   TextEditingController get maxEloController => _filters.maxEloController;
 
   int _pokemonFilterTabIndex = 0;
+
   int get pokemonFilterTabIndex => _pokemonFilterTabIndex;
   void onPokemonFilterTabSelected(int index) => _pokemonFilterTabIndex = index;
 
