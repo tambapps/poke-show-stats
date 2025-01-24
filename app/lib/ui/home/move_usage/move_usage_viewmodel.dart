@@ -31,12 +31,12 @@ class MoveUsageViewModel extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     developer.log("Applying filters...");
-    Map<String, Map<String, int>> map = {};
     List<Replay> replays = replayPredicate != null ? homeViewModel.replays
         .where((replay) => replayPredicate(replay))
         .toList()
         : homeViewModel.replays;
     _replaysCount = replays.length;
+    Map<String, Map<String, int>> map = {};
     for (Replay replay in replays) {
       _merge(map, replay.otherPlayer.moveUsages);
     }
@@ -52,7 +52,7 @@ class MoveUsageViewModel extends ChangeNotifier {
             resultPokemonMoves.update(moveName, (resultMoveCount) => resultMoveCount + count,
                 ifAbsent: () => count));
         return resultPokemonMoves;
-      }, ifAbsent: () => pokemonMoves);
+      }, ifAbsent: () => {...pokemonMoves});
     });
   }
 
