@@ -16,6 +16,7 @@ class GameByGameViewModel extends ChangeNotifier {
     filteredReplays = homeViewModel.replays;
   }
   final HomeViewModel homeViewModel;
+  final filtersViewModel = ReplayFiltersViewModel();
   final PokemonImageService pokemonImageService;
   late List<Replay> filteredReplays;
   Map<Replay, NoteEditingContext> replayNoteEditingContextMap = {};
@@ -41,6 +42,12 @@ class GameByGameViewModel extends ChangeNotifier {
       developer.log("Got ${filteredReplays.length} replay matches out of ${homeViewModel.replays.length} replays");
     }
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    filtersViewModel.dispose();
+    super.dispose();
   }
 }
 

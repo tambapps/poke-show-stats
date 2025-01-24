@@ -19,12 +19,11 @@ class ReplayFiltersWidget extends StatefulWidget {
   State createState() => ReplayFiltersWidgetState();
 }
 
+// doesn't extend AbstractViewModelState because the parent component should be responsible of disposing this component's viewModel
 class ReplayFiltersWidgetState extends AbstractState<ReplayFiltersWidget> with TickerProviderStateMixin {
 
   late TabController _tabController;
-
-  @override
-  ReplayFiltersViewModel get viewModel => widget.viewModel;
+  ReplayFiltersViewModel get _viewModel => widget.viewModel;
   void Function(ReplayPredicate?) get applyFilters => widget.applyFilters;
 
   @override
@@ -58,13 +57,13 @@ class ReplayFiltersWidgetState extends AbstractState<ReplayFiltersWidget> with T
                 childAspectRatio: 4, // Aspect ratio of each grid item
               ),
               children: [
-                textInput(labelText: "Opponent Min Elo", controller: viewModel.minEloController, numberInput: true),
-                textInput(labelText: "Opponent Max Elo", controller: viewModel.maxEloController, numberInput: true),
+                textInput(labelText: "Opponent Min Elo", controller: _viewModel.minEloController, numberInput: true),
+                textInput(labelText: "Opponent Max Elo", controller: _viewModel.maxEloController, numberInput: true),
               ],  // Explicitly specify a list of widgets
             ),),
           TabBar(
             controller: _tabController,
-            onTap: (index) => viewModel.onPokemonFilterTabSelected(index),
+            onTap: (index) => _viewModel.onPokemonFilterTabSelected(index),
             tabs: Iterable.generate(6, (index) => index).map((index) => Text("Pokemon ${index + 1}", style: theme.textTheme.labelLarge,)).toList(),
           ),
           ConstrainedBox(constraints: BoxConstraints(maxHeight: 140),
@@ -77,8 +76,8 @@ class ReplayFiltersWidgetState extends AbstractState<ReplayFiltersWidget> with T
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  OutlinedButton(onPressed: () => viewModel.clearFilters(), child: Text("Clear")), const SizedBox(width: 16.0,),
-                  OutlinedButton(onPressed: () => applyFilters(viewModel.getFiltersPredicate()), child: Text("Apply"))],
+                  OutlinedButton(onPressed: () => _viewModel.clearFilters(), child: Text("Clear")), const SizedBox(width: 16.0,),
+                  OutlinedButton(onPressed: () => applyFilters(_viewModel.getFiltersPredicate()), child: Text("Apply"))],
               ),),),
           const SizedBox(height: 8.0,),
         ],),
@@ -87,7 +86,7 @@ class ReplayFiltersWidgetState extends AbstractState<ReplayFiltersWidget> with T
   }
 
   Widget _pokemonFilterWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, int index) {
-    final pokemonFilters = viewModel.getPokemonFilters(index);
+    final pokemonFilters = _viewModel.getPokemonFilters(index);
 
     return GridView(
       shrinkWrap: true,  // Shrinks to the size of its children
@@ -132,7 +131,6 @@ class ReplayFiltersWidgetState extends AbstractState<ReplayFiltersWidget> with T
 class ReplayFiltersViewModel extends ChangeNotifier {
 
   final _Filters _filters = _Filters();
-
 
   TextEditingController get minEloController => _filters.minEloController;
   TextEditingController get maxEloController => _filters.maxEloController;

@@ -17,20 +17,26 @@ class MoveUsageViewModel extends ChangeNotifier {
 
   final HomeViewModel homeViewModel;
   final PokemonImageService pokemonImageService;
+  final filtersViewModel = ReplayFiltersViewModel();
   Pokepaste? get pokepaste => homeViewModel.pokepaste;
-  Map<String, Map<String, int>> _pokemonMoveUsages= {};
+  Map<String, Map<String, int>> _pokemonMoveUsages = {};
   Map<String, Map<String, int>> get pokemonMoveUsages => _pokemonMoveUsages;
+  int _replaysCount = 0;
+  int get replaysCount => _replaysCount;
+  bool get hasReplays => homeViewModel.replays.isNotEmpty;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
   void loadStats({ReplayPredicate? replayPredicate}) async {
     _isLoading = true;
     notifyListeners();
+    developer.log("Applying filters...");
     Map<String, Map<String, int>> map = {};
     List<Replay> replays = replayPredicate != null ? homeViewModel.replays
         .where((replay) => replayPredicate(replay))
         .toList()
         : homeViewModel.replays;
+    _replaysCount = replays.length;
     for (Replay replay in replays) {
       _merge(map, replay.otherPlayer.moveUsages);
     }
@@ -48,6 +54,12 @@ class MoveUsageViewModel extends ChangeNotifier {
         return resultPokemonMoves;
       }, ifAbsent: () => pokemonMoves);
     });
+  }
+
+  @override
+  void dispose() {
+    filtersViewModel.dispose();
+    super.dispose();
   }
 }
 

@@ -19,7 +19,7 @@ class HomeConfigComponent extends StatefulWidget {
   _HomeConfigComponentState createState() => isMobile ? _MobileHomeConfigComponentState() : _DesktopHomeConfigComponentState();
 }
 
-abstract class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
+abstract class _HomeConfigComponentState extends AbstractViewModelState<HomeConfigComponent> {
 
   @override
   HomeConfigViewModel get viewModel => widget.viewModel;

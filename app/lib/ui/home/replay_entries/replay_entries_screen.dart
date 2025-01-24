@@ -20,7 +20,7 @@ class ReplayEntriesComponent extends StatefulWidget {
   State createState() => isMobile ? _MobileReplayEntriesComponentState() : _DesktopReplayEntriesComponentState();
 }
 
-abstract class _AbstractReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent> {
+abstract class _AbstractReplayEntriesComponentState extends AbstractViewModelState<ReplayEntriesComponent> {
 
   @override
   ReplayEntriesViewModel get viewModel => widget.viewModel;

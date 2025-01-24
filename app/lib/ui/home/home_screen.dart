@@ -28,7 +28,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => isMobile ? _MobileHomeScreenState() : _DesktopHomeScreenState();
 }
 
-abstract class _AbstractHomeScreenState extends AbstractState<HomeScreen> with TickerProviderStateMixin {
+abstract class _AbstractHomeScreenState extends AbstractViewModelState<HomeScreen> with TickerProviderStateMixin {
 
   @override
   HomeViewModel get viewModel => widget.viewModel;

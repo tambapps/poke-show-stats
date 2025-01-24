@@ -17,7 +17,7 @@ class PokemonMovesPieChart extends StatefulWidget {
   State createState() => _PokemonMovesPieChartState();
 }
 
-class _PokemonMovesPieChartState extends AbstractState<PokemonMovesPieChart> {
+class _PokemonMovesPieChartState extends AbstractViewModelState<PokemonMovesPieChart> {
 
   @override
   PokemonMovesPieChartViewModel get viewModel => widget.viewModel;

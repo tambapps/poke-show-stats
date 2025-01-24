@@ -22,14 +22,13 @@ class GameByGameComponent extends StatefulWidget {
   State createState() => isMobile ? _MobileGameByGameComponentState() : _DesktopGameByGameComponentState();
 }
 
-abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGameComponent> {
+abstract class _AbstractGameByGameComponentState extends AbstractViewModelState<GameByGameComponent> {
 
   @override
   GameByGameViewModel get viewModel => widget.viewModel;
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    final filtersViewModel = ReplayFiltersViewModel();
     return ListenableBuilder(
         listenable: viewModel,
         builder: (context, _) {
@@ -38,7 +37,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
                 if (index == 0) {
                   return headerWidget(context, localization, dimens, theme);
                 } else if (index == 1) {
-                  return ReplayFiltersWidget(viewModel: filtersViewModel, applyFilters: (replayPredicate) => viewModel.applyFilters(replayPredicate));
+                  return ReplayFiltersWidget(viewModel: viewModel.filtersViewModel, applyFilters: (replayPredicate) => viewModel.applyFilters(replayPredicate));
                 }
                 final replay = viewModel.filteredReplays[index - 2];
                 return _gbgWidget(context, localization, dimens, theme, replay);

@@ -23,7 +23,7 @@ class MoveUsageComponent extends StatefulWidget {
 }
 
 
-abstract class _MoveUsageComponentState extends AbstractState<MoveUsageComponent> {
+abstract class _MoveUsageComponentState extends AbstractViewModelState<MoveUsageComponent> {
   @override
   MoveUsageViewModel get viewModel => widget.viewModel;
 
@@ -39,23 +39,35 @@ abstract class _MoveUsageComponentState extends AbstractState<MoveUsageComponent
     if (pokepaste == null) {
       return _cantDisplay("Please enter a pokepaste in the Home tab to consult move usages");
     }
-    if (viewModel.isLoading) {
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    }
-    final moveUsages = viewModel.pokemonMoveUsages;
-    if (moveUsages.isEmpty) {
-      return _cantDisplay("Please enter a replays in the Replay Entries tab to consult move usages");
-    }
-    final filtersViewModel = ReplayFiltersViewModel();
-    return SingleChildScrollView(
-      child: Column(children: [
-        ReplayFiltersWidget(viewModel: filtersViewModel, applyFilters: (replayPredicate) => viewModel.loadStats(replayPredicate: replayPredicate)),
-        moveUsagesWidget(pokepaste, moveUsages)
-      ],),
-    );
+    return ListenableBuilder(
+        listenable: viewModel,
+        builder: (context, _) {
+          if (viewModel.isLoading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (!viewModel.hasReplays) {
+            return _cantDisplay("Please enter a replays in the Replay Entries tab to consult move usages");
+          }
+          final moveUsages = viewModel.pokemonMoveUsages;
 
+          final filtersWidget = ReplayFiltersWidget(viewModel: viewModel.filtersViewModel, applyFilters: (replayPredicate) => viewModel.loadStats(replayPredicate: replayPredicate));
+          if (viewModel.replaysCount == 0) {
+            return Column(children: [
+              filtersWidget,
+              moveUsages.isNotEmpty ? moveUsagesWidget(pokepaste, moveUsages)
+                  : Expanded(child: _cantDisplay("Applied filters matched 0 replays"))
+            ],);
+          }
+          return SingleChildScrollView(
+            child: Column(children: [
+              filtersWidget,
+              moveUsagesWidget(pokepaste, moveUsages),
+              SizedBox(height: 32.0,)
+            ],),
+          );
+        });
   }
 
   Widget moveUsagesWidget(Pokepaste pokepaste, Map<String, Map<String, int>> moveUsages);
