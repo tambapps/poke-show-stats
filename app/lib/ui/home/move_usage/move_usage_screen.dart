@@ -2,9 +2,11 @@
 import 'package:app2/data/models/replay.dart';
 import 'package:app2/ui/core/localization/applocalization.dart';
 import 'package:app2/ui/core/themes/dimens.dart';
+import 'package:app2/ui/core/widgets/pokemon_moves_pie_chart.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
+import 'package:provider/provider.dart';
 
 import '../../core/widgets.dart';
 import '../../core/widgets/replay_filters.dart';
@@ -63,32 +65,8 @@ abstract class _MoveUsageComponentState extends AbstractState<MoveUsageComponent
   );
   Widget pokemonMoveUsagesWidget(Map<String, Map<String, int>> moveUsages, Pokemon pokemon) {
     Map<String, int> pokemonMoveUsages = moveUsages[pokemon.name] ?? {};
-    final List<PieChartSectionData> sections = [];
-    final totalCount = pokemonMoveUsages.isNotEmpty
-    ? pokemonMoveUsages.values.reduce((a, b) => a + b).toDouble()
-    : 0.0;
-    pokemonMoveUsages.forEach((moveName, count) {
-      sections.add(PieChartSectionData(
-        value: count.toDouble(),
-          title: moveName
-      ));
-    });
-
-    final Widget chartComponent = sections.isNotEmpty ?
-    AspectRatio(aspectRatio: 1,
-      child: PieChart(
-        PieChartData(
-          sections: sections,
-          sectionsSpace: 100,
-          centerSpaceRadius: 40,
-        ),
-      ),)
-        : Center(child: Text("No data"),);
-    return Row(children: [
-      Expanded(flex: 1, child: Container(child: viewModel.pokemonImageService.getPokemonArtwork(pokemon.name),)),
-      // TODO display pie chart
-      Expanded(flex: 2, child: chartComponent),
-    ],);
+    final viewModel = PokemonMovesPieChartViewModel(pokemonImageService: context.read(), pokemonName: pokemon.name, pokemonMoveUsages: pokemonMoveUsages);
+    return PokemonMovesPieChart(viewModel: viewModel);
   }
 }
 

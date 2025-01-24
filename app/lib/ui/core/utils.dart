@@ -16,3 +16,13 @@ void openLink(String link) async {
     developer.log("Couldn't open link $link");
   }
 }
+
+extension Collate<T> on Iterable<T> {
+  List<List<T>> collateBy(int size) {
+    List<List<T>> result = [];
+    for (int i = 0; i < this.length; i += size) {
+      result.add(this.skip(i).take(size).toList());
+    }
+    return result;
+  }
+}
