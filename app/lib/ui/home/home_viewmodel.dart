@@ -6,12 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
 import '../../data/models/replay.dart';
-import '../../data/services/pokeapi.dart';
 import '../../data/services/pokemon_resource_service.dart';
 
 class HomeViewModel extends ChangeNotifier {
 
-  HomeViewModel({required this.pokemonResourceService, required this.saveService, required this.pokeApi});
+  HomeViewModel({required this.pokemonResourceService, required this.saveService});
 
   // storing it here even if it used only in the replayEntriesComponent because we don't want
   // to erase/refresh the controller each time the replayEntriesScreen state updates
@@ -19,7 +18,6 @@ class HomeViewModel extends ChangeNotifier {
 
   PokemonResourceService pokemonResourceService;
   final SaveService saveService;
-  final PokeApi pokeApi;
 
   Teamlytic _teamlytic = Teamlytic(saveName: '', sdNames: [], replays: [], pokepaste: null);
   // TODO hack for now as we cannot select multiple saves
@@ -30,15 +28,9 @@ class HomeViewModel extends ChangeNotifier {
   Pokepaste? get pokepaste => _teamlytic.pokepaste;
   set pokepaste(Pokepaste? value) {
     _teamlytic.pokepaste = value;
-    if (value != null) {
-      _loadPokepasteMoves(value);
-    }
     notifyListeners();
     storeSave();
   }
-
-  Map<String, Move> _pokemonMoves = {};
-  Map<String, Move> get pokemonMoves => _pokemonMoves;
 
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;
@@ -113,31 +105,6 @@ class HomeViewModel extends ChangeNotifier {
 
   void loadSave() async {
     _teamlytic = await saveService.loadSave(saveName);
-    Pokepaste? pokepaste = _teamlytic.pokepaste;
-    if (pokepaste != null) {
-      _loadPokepasteMoves(pokepaste);
-    }
-    _notifyListenersSafely();
-  }
-
-  void _loadPokepasteMoves(Pokepaste pokepaste) async {
-    // collect all moves to load
-    Set<String> moves = HashSet();
-    for (Pokemon pokemon in pokepaste.pokemons) {
-      moves.addAll(pokemon.moves);
-    }
-    Map<String, Move> pokemonMoves = {};
-    for (String moveName in moves) {
-      try {
-        Move? move = await pokeApi.getMove(moveName);
-        if (move != null) {
-          pokemonMoves[moveName] = move;
-        }
-      } catch(_) {
-        // do nothing
-      }
-    }
-    _pokemonMoves = pokemonMoves;
     _notifyListenersSafely();
   }
 

@@ -7,8 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
 
-import '../data/services/pokeapi.dart';
-
 List<SingleChildWidget> get providers {
   return [
     ListenableProvider(
@@ -19,9 +17,6 @@ List<SingleChildWidget> get providers {
     ),
     Provider(
       create: (context) => PokepasteParser(),
-    ),
-    Provider(
-      create: (context) => PokeApi(),
     ),
     Provider<SaveStorage>(
       create: (context) => kIsWeb ? WebSaveStorage() : MobileSaveStorage(),

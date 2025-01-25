@@ -20,6 +20,9 @@ class PokemonResourceService extends ChangeNotifier {
   List<String> get itemNames => _itemNames;
   List<String> _pokemonNames = [];
   List<String> get pokemonNames => _pokemonNames;
+  Map<String, PokemonMove> _pokemonMoves = {};
+  Map<String, PokemonMove> get pokemonMoves => _pokemonMoves;
+
   final List<String> teraTypes = UnmodifiableListView([
     'Bug',
     'Dark',
@@ -134,16 +137,24 @@ class PokemonResourceService extends ChangeNotifier {
 
   void _loadAsync() async {
     Map<dynamic, dynamic> pokemonMappings = loadYaml(await rootBundle.loadString('assets/mappings/pokemon-sprite-urls.yaml'));
+    _pokemonMappings = pokemonMappings;
+    _pokemonNames = _extractKeys(pokemonMappings);
+
     Map<dynamic, dynamic> itemMappings = loadYaml(await rootBundle.loadString('assets/mappings/items-mapping.yaml'));
+    _itemMappings = itemMappings;
+    _itemNames = _extractKeys(itemMappings);
+
     List<dynamic> abilities = loadYaml(await rootBundle.loadString('assets/mappings/abilities.yaml'));
     _abilities = abilities.map((o) => o.toString()).toList();
     _abilities.sort();
     _abilities = UnmodifiableListView(_abilities);
 
-    _pokemonMappings = pokemonMappings;
-    _itemMappings = itemMappings;
-    _pokemonNames = _extractKeys(pokemonMappings);
-    _itemNames = _extractKeys(itemMappings);
+    Map<dynamic, dynamic> moves = loadYaml(await rootBundle.loadString('assets/mappings/moves.yaml'));
+    for (String moveName in moves.keys) {
+      dynamic obj = moves[moveName];
+      _pokemonMoves[moveName] = PokemonMove(name: obj['name'], type: obj['type'], category: obj['category']);
+    }
+    _pokemonMoves = Map.unmodifiable(_pokemonMoves);
     notifyListeners();
   }
 
@@ -152,5 +163,13 @@ class PokemonResourceService extends ChangeNotifier {
     list.sort();
     return UnmodifiableListView(list);
   }
+}
+
+class PokemonMove {
+  final String name;
+  final String type;
+  final String category;
+
+  PokemonMove({required this.name, required this.type, required this.category});
 }
 

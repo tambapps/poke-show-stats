@@ -1,5 +1,6 @@
 import 'package:app2/ui/core/pokeutils.dart';
 import 'package:app2/ui/core/widgets.dart';
+import 'package:app2/ui/core/widgets/pokepaste_widget.dart';
 import 'package:app2/ui/home/config/home_config_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
@@ -69,7 +70,7 @@ abstract class _HomeConfigComponentState extends AbstractViewModelState<HomeConf
     );
   }
 
-  List<Widget> pokepasteWidget(AppLocalization localization, Dimens dimens, ThemeData theme, EdgeInsets padding, Widget title, Pokepaste pokepaste);
+  List<Widget> pokepasteSection(AppLocalization localization, Dimens dimens, ThemeData theme, EdgeInsets padding, Widget title, Pokepaste pokepaste);
 
   List<Widget> pokepaste(AppLocalization localization, Dimens dimens, ThemeData theme, EdgeInsets padding) {
     final pokepaste = viewModel.pokepaste;
@@ -77,7 +78,7 @@ abstract class _HomeConfigComponentState extends AbstractViewModelState<HomeConf
     if (pokepaste == null) {
       return pokepasteForm(localization, theme, padding, title);
     } else {
-      return pokepasteWidget(localization, dimens, theme, padding, title, pokepaste);
+      return pokepasteSection(localization, dimens, theme, padding, title, pokepaste);
     }
   }
 
@@ -110,112 +111,6 @@ abstract class _HomeConfigComponentState extends AbstractViewModelState<HomeConf
     ];
   }
 
-  Widget pokemonWidget(Dimens dimens, Pokemon pokemon) {
-    Widget moveWidget = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: pokemon.moves.map((move) => _moveWidget(move)).toList(),
-    );
-    return SizedBox(
-      height: dimens.pokepastePokemonHeight,
-      child: Row(
-        children: [
-          Expanded(
-            flex: dimens.pokemonArtworkFlex,
-            child: Stack(
-              fit: StackFit.expand,
-              alignment: Alignment.center,
-              children: [
-                Transform.scale(
-                  scale: 0.65,
-                  child: viewModel.pokemonResourceService.getPokemonArtwork(pokemon.name),
-                ),
-                Positioned(
-                  top: dimens.pokepastePokemonIconsOffset,
-                  left: 0,
-                  child: viewModel.pokemonResourceService.getTeraTypeSprite(pokemon.teraType, width: Dimens.teraSpriteSize, height: Dimens.teraSpriteSize),
-                ),
-                if (pokemon.item != null) Positioned(
-                  bottom: dimens.pokepastePokemonIconsOffset,
-                  right: 0,
-                  child: viewModel.pokemonResourceService.getItemSprite(pokemon.item!, width: Dimens.itemSpriteSize, height: Dimens.itemSpriteSize),
-                )
-              ],
-            ),
-          ),
-          Expanded(
-              flex: dimens.pokemonSheetFlex,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (pokemon.ivs != null || pokemon.evs != null) _statsWidget(pokemon.ivs, pokemon.evs, pokemon.nature),
-                  SizedBox(height: 8,),
-                  moveWidget
-                ],
-              )
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _statsWidget(Stats? ivs, Stats? evs, String? nature) {
-    return Row(
-      children: [
-        _statWidget('HP', ivs?.hp, evs?.hp, Natures.neutral),
-        _statWidget('Atk', ivs?.attack, evs?.attack, nature != null ? Natures.attackBonus(nature) : Natures.neutral),
-        _statWidget('Def', ivs?.defense, evs?.defense, nature != null ? Natures.defenseBonus(nature) : Natures.neutral),
-        _statWidget('SpA', ivs?.specialAttack, evs?.specialAttack, nature != null ? Natures.specialAttackBonus(nature) : Natures.neutral),
-        _statWidget('SpD', ivs?.specialDefense, evs?.specialDefense, nature != null ? Natures.specialDefenseBonus(nature) : Natures.neutral),
-        _statWidget('Spe', ivs?.speed, evs?.speed, nature != null ? Natures.speedBonus(nature) : Natures.neutral),
-      ],
-    );
-  }
-
-  Widget _statWidget(String statName, int? iv, int? ev, int bonus) {
-    Color? color;
-    switch (bonus) {
-      case Natures.bonus:
-        color = Colors.deepOrange;
-        break;
-      case Natures.malus:
-        color = Colors.cyan;
-        break;
-    }
-    Widget body = Column(
-      children: [
-        Text(statName, style: TextStyle(color: color),),
-        Text((ev ?? 0).toString(), style: TextStyle(color: color, fontWeight: FontWeight.bold)),
-        Text((iv ?? 31).toString(), style: TextStyle(color: color)),
-      ],
-    );
-    if (bonus != Natures.neutral) {
-      body = Tooltip(
-        message: bonus == Natures.bonus ? "Bonus" : "Malus",
-        child: body,
-      );
-    }
-    return Expanded(child: body,);
-  }
-
-  Widget _moveWidget(String moveName) {
-    final move = viewModel.pokemonMoves[moveName];
-    Widget moveWidget = Text(moveName, overflow: TextOverflow.ellipsis, textAlign: TextAlign.start,);
-    if (move == null) {
-      return moveWidget;
-    }
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        viewModel.pokemonResourceService.getTypeSprite(move.type, width: 25.0, height: 25.0),
-        SizedBox(width: 8,),
-        viewModel.pokemonResourceService.getCategorySprite(move.category, width: 32.0, height: 32.0),
-        SizedBox(width: 8,),
-        Flexible(child: Tooltip(message: moveName,child: moveWidget,))
-      ],
-    );
-  }
-
-
   @override
   void initState() {
     _pokepasteController = TextEditingController();
@@ -232,7 +127,7 @@ abstract class _HomeConfigComponentState extends AbstractViewModelState<HomeConf
 class _MobileHomeConfigComponentState extends _HomeConfigComponentState {
 
   @override
-  List<Widget> pokepasteWidget(AppLocalization localization, Dimens dimens, ThemeData theme, EdgeInsets padding, Widget title, Pokepaste pokepaste) {
+  List<Widget> pokepasteSection(AppLocalization localization, Dimens dimens, ThemeData theme, EdgeInsets padding, Widget title, Pokepaste pokepaste) {
     return [
       Row(
         children: [
@@ -246,9 +141,7 @@ class _MobileHomeConfigComponentState extends _HomeConfigComponentState {
       ),
       Padding(
         padding: padding,
-        child: Column(
-          children: pokepaste.pokemons.map((pokemon) => pokemonWidget(dimens, pokemon)).toList(),
-        ),
+        child: PokepasteWidget(pokepaste: pokepaste, pokemonResourceService: viewModel.pokemonResourceService),
       ),
     ];
 
@@ -258,17 +151,7 @@ class _MobileHomeConfigComponentState extends _HomeConfigComponentState {
 class _DesktopHomeConfigComponentState extends _HomeConfigComponentState {
 
   @override
-  List<Widget> pokepasteWidget(AppLocalization localization, Dimens dimens, ThemeData theme, EdgeInsets padding, Widget title, Pokepaste pokepaste) {
-    final pokemons = pokepaste.pokemons;
-    List<Row> pokemonRows = [];
-    int nbRows = (pokemons.length % 3 == 0 ? pokemons.length / 2 : pokemons.length / 2 + 1).toInt();
-    for (int row = 0; row < nbRows; row++) {
-      List<Widget> rowChildren = [];
-      for (int i = row * 3; i < row * 3 + 3 && i < pokemons.length; i++) {
-        rowChildren.add(Expanded(flex: 1, child: Padding(padding: EdgeInsets.symmetric(horizontal: 32), child: pokemonWidget(dimens, pokemons[i]),),));
-      }
-      pokemonRows.add(Row(children: rowChildren,));
-    }
+  List<Widget> pokepasteSection(AppLocalization localization, Dimens dimens, ThemeData theme, EdgeInsets padding, Widget title, Pokepaste pokepaste) {
     return [
       Padding(
         padding: padding,
@@ -284,7 +167,7 @@ class _DesktopHomeConfigComponentState extends _HomeConfigComponentState {
         ),
       ),
       SizedBox(height: 16,),
-      ...pokemonRows
+      PokepasteWidget(pokepaste: pokepaste, pokemonResourceService: viewModel.pokemonResourceService)
     ];
   }
 

@@ -1,0 +1,3676 @@
+Meteor Mash:
+  name: "Meteor Mash"
+  category: "physical"
+  type: "steel"
+Ice Shard:
+  name: "Ice Shard"
+  category: "physical"
+  type: "ice"
+Teeter Dance:
+  name: "Teeter Dance"
+  category: "status"
+  type: "normal"
+Shore Up:
+  name: "Shore Up"
+  category: "status"
+  type: "ground"
+Life Dew:
+  name: "Life Dew"
+  category: "status"
+  type: "water"
+Magnet Bomb:
+  name: "Magnet Bomb"
+  category: "physical"
+  type: "steel"
+Swords Dance:
+  name: "Swords Dance"
+  category: "status"
+  type: "normal"
+Draco Meteor:
+  name: "Draco Meteor"
+  category: "special"
+  type: "dragon"
+Wildbolt Storm:
+  name: "Wildbolt Storm"
+  category: "special"
+  type: "electric"
+Powder:
+  name: "Powder"
+  category: "status"
+  type: "bug"
+Surf:
+  name: "Surf"
+  category: "special"
+  type: "water"
+Nature’s Madness:
+  name: "Nature’s Madness"
+  category: "special"
+  type: "fairy"
+Encore:
+  name: "Encore"
+  category: "status"
+  type: "normal"
+Wonder Room:
+  name: "Wonder Room"
+  category: "status"
+  type: "psychic"
+Work Up:
+  name: "Work Up"
+  category: "status"
+  type: "normal"
+Sticky Web:
+  name: "Sticky Web"
+  category: "status"
+  type: "bug"
+Thrash:
+  name: "Thrash"
+  category: "physical"
+  type: "normal"
+Jaw Lock:
+  name: "Jaw Lock"
+  category: "physical"
+  type: "dark"
+Hold Back:
+  name: "Hold Back"
+  category: "physical"
+  type: "normal"
+First Impression:
+  name: "First Impression"
+  category: "physical"
+  type: "bug"
+Drain Punch:
+  name: "Drain Punch"
+  category: "physical"
+  type: "fighting"
+Cosmic Power:
+  name: "Cosmic Power"
+  category: "status"
+  type: "psychic"
+Magnet Rise:
+  name: "Magnet Rise"
+  category: "status"
+  type: "electric"
+Shift Gear:
+  name: "Shift Gear"
+  category: "status"
+  type: "steel"
+Dragon Claw:
+  name: "Dragon Claw"
+  category: "physical"
+  type: "dragon"
+Floaty Fall:
+  name: "Floaty Fall"
+  category: "physical"
+  type: "flying"
+Max Starfall:
+  name: "Max Starfall"
+  category: "physical"
+  type: "fairy"
+Sacred Sword:
+  name: "Sacred Sword"
+  category: "physical"
+  type: "fighting"
+Tail Glow:
+  name: "Tail Glow"
+  category: "status"
+  type: "bug"
+Feather Dance:
+  name: "Feather Dance"
+  category: "status"
+  type: "flying"
+Fire Blast:
+  name: "Fire Blast"
+  category: "special"
+  type: "fire"
+Freezy Frost:
+  name: "Freezy Frost"
+  category: "special"
+  type: "ice"
+Shadow End:
+  name: "Shadow End"
+  category: "physical"
+  type: "shadow"
+Bind:
+  name: "Bind"
+  category: "physical"
+  type: "normal"
+Facade:
+  name: "Facade"
+  category: "physical"
+  type: "normal"
+Spacial Rend:
+  name: "Spacial Rend"
+  category: "special"
+  type: "dragon"
+Esper Wing:
+  name: "Esper Wing"
+  category: "special"
+  type: "psychic"
+Zippy Zap:
+  name: "Zippy Zap"
+  category: "physical"
+  type: "electric"
+Oceanic Operetta:
+  name: "Oceanic Operetta"
+  category: "special"
+  type: "water"
+Syrup Bomb:
+  name: "Syrup Bomb"
+  category: "special"
+  type: "grass"
+Skull Bash:
+  name: "Skull Bash"
+  category: "physical"
+  type: "normal"
+Sandstorm:
+  name: "Sandstorm"
+  category: "status"
+  type: "rock"
+Amnesia:
+  name: "Amnesia"
+  category: "status"
+  type: "psychic"
+Flame Charge:
+  name: "Flame Charge"
+  category: "physical"
+  type: "fire"
+Sandsear Storm:
+  name: "Sandsear Storm"
+  category: "special"
+  type: "ground"
+Psybeam:
+  name: "Psybeam"
+  category: "special"
+  type: "psychic"
+Glitzy Glow:
+  name: "Glitzy Glow"
+  category: "special"
+  type: "psychic"
+Odor Sleuth:
+  name: "Odor Sleuth"
+  category: "status"
+  type: "normal"
+Minimize:
+  name: "Minimize"
+  category: "status"
+  type: "normal"
+Will-O-Wisp:
+  name: "Will-O-Wisp"
+  category: "status"
+  type: "fire"
+Parting Shot:
+  name: "Parting Shot"
+  category: "status"
+  type: "dark"
+Apple Acid:
+  name: "Apple Acid"
+  category: "special"
+  type: "grass"
+Low Kick:
+  name: "Low Kick"
+  category: "physical"
+  type: "fighting"
+Clear Smog:
+  name: "Clear Smog"
+  category: "special"
+  type: "poison"
+Covet:
+  name: "Covet"
+  category: "physical"
+  type: "normal"
+Supercell Slam:
+  name: "Supercell Slam"
+  category: "physical"
+  type: "electric"
+Laser Focus:
+  name: "Laser Focus"
+  category: "status"
+  type: "normal"
+Headlong Rush:
+  name: "Headlong Rush"
+  category: "physical"
+  type: "ground"
+Splintered Stormshards:
+  name: "Splintered Stormshards"
+  category: "physical"
+  type: "rock"
+Hyper Drill:
+  name: "Hyper Drill"
+  category: "physical"
+  type: "normal"
+Play Rough:
+  name: "Play Rough"
+  category: "physical"
+  type: "fairy"
+Dazzling Gleam:
+  name: "Dazzling Gleam"
+  category: "special"
+  type: "fairy"
+Secret Power:
+  name: "Secret Power"
+  category: "physical"
+  type: "normal"
+Eerie Impulse:
+  name: "Eerie Impulse"
+  category: "status"
+  type: "electric"
+Bestow:
+  name: "Bestow"
+  category: "status"
+  type: "normal"
+Fairy Lock:
+  name: "Fairy Lock"
+  category: "status"
+  type: "fairy"
+Roar of Time:
+  name: "Roar of Time"
+  category: "special"
+  type: "dragon"
+Camouflage:
+  name: "Camouflage"
+  category: "status"
+  type: "normal"
+Healing Wish:
+  name: "Healing Wish"
+  category: "status"
+  type: "psychic"
+Fleur Cannon:
+  name: "Fleur Cannon"
+  category: "special"
+  type: "fairy"
+Pluck:
+  name: "Pluck"
+  category: "physical"
+  type: "flying"
+Grudge:
+  name: "Grudge"
+  category: "status"
+  type: "ghost"
+Solar Blade:
+  name: "Solar Blade"
+  category: "physical"
+  type: "grass"
+Lash Out:
+  name: "Lash Out"
+  category: "physical"
+  type: "dark"
+Razor Shell:
+  name: "Razor Shell"
+  category: "physical"
+  type: "water"
+Magic Powder:
+  name: "Magic Powder"
+  category: "status"
+  type: "psychic"
+Searing Shot:
+  name: "Searing Shot"
+  category: "special"
+  type: "fire"
+Magic Coat:
+  name: "Magic Coat"
+  category: "status"
+  type: "psychic"
+Fissure:
+  name: "Fissure"
+  category: "physical"
+  type: "ground"
+Electric Terrain:
+  name: "Electric Terrain"
+  category: "status"
+  type: "electric"
+Smack Down:
+  name: "Smack Down"
+  category: "physical"
+  type: "rock"
+Air Cutter:
+  name: "Air Cutter"
+  category: "special"
+  type: "flying"
+Heal Bell:
+  name: "Heal Bell"
+  category: "status"
+  type: "normal"
+Mud Bomb:
+  name: "Mud Bomb"
+  category: "special"
+  type: "ground"
+Max Strike:
+  name: "Max Strike"
+  category: "physical"
+  type: "normal"
+Tidy Up:
+  name: "Tidy Up"
+  category: "status"
+  type: "normal"
+Worry Seed:
+  name: "Worry Seed"
+  category: "status"
+  type: "grass"
+Dragon Hammer:
+  name: "Dragon Hammer"
+  category: "physical"
+  type: "dragon"
+Power Gem:
+  name: "Power Gem"
+  category: "special"
+  type: "rock"
+Arm Thrust:
+  name: "Arm Thrust"
+  category: "physical"
+  type: "fighting"
+Shadow Blast:
+  name: "Shadow Blast"
+  category: "physical"
+  type: "shadow"
+Drum Beating:
+  name: "Drum Beating"
+  category: "physical"
+  type: "grass"
+Power Trick:
+  name: "Power Trick"
+  category: "status"
+  type: "psychic"
+Force Palm:
+  name: "Force Palm"
+  category: "physical"
+  type: "fighting"
+Powder Snow:
+  name: "Powder Snow"
+  category: "special"
+  type: "ice"
+Salt Cure:
+  name: "Salt Cure"
+  category: "physical"
+  type: "rock"
+Doom Desire:
+  name: "Doom Desire"
+  category: "special"
+  type: "steel"
+Wing Attack:
+  name: "Wing Attack"
+  category: "physical"
+  type: "flying"
+Present:
+  name: "Present"
+  category: "physical"
+  type: "normal"
+Hyper Voice:
+  name: "Hyper Voice"
+  category: "special"
+  type: "normal"
+Shadow Punch:
+  name: "Shadow Punch"
+  category: "physical"
+  type: "ghost"
+Body Press:
+  name: "Body Press"
+  category: "physical"
+  type: "fighting"
+Return:
+  name: "Return"
+  category: "physical"
+  type: "normal"
+Nuzzle:
+  name: "Nuzzle"
+  category: "physical"
+  type: "electric"
+Constrict:
+  name: "Constrict"
+  category: "physical"
+  type: "normal"
+Max Geyser:
+  name: "Max Geyser"
+  category: "physical"
+  type: "water"
+X-Scissor:
+  name: "X-Scissor"
+  category: "physical"
+  type: "bug"
+Overdrive:
+  name: "Overdrive"
+  category: "special"
+  type: "electric"
+Fire Lash:
+  name: "Fire Lash"
+  category: "physical"
+  type: "fire"
+Focus Blast:
+  name: "Focus Blast"
+  category: "special"
+  type: "fighting"
+Psychic:
+  name: "Psychic"
+  category: "special"
+  type: "psychic"
+Sleep Talk:
+  name: "Sleep Talk"
+  category: "status"
+  type: "normal"
+Electrify:
+  name: "Electrify"
+  category: "status"
+  type: "electric"
+Ice Burn:
+  name: "Ice Burn"
+  category: "special"
+  type: "ice"
+All-Out Pummeling:
+  name: "All-Out Pummeling"
+  category: "special"
+  type: "fighting"
+Shadow Down:
+  name: "Shadow Down"
+  category: "status"
+  type: "shadow"
+Crafty Shield:
+  name: "Crafty Shield"
+  category: "status"
+  type: "fairy"
+Bite:
+  name: "Bite"
+  category: "physical"
+  type: "dark"
+Clangorous Soul:
+  name: "Clangorous Soul"
+  category: "status"
+  type: "dragon"
+Throat Chop:
+  name: "Throat Chop"
+  category: "physical"
+  type: "dark"
+Rising Voltage:
+  name: "Rising Voltage"
+  category: "special"
+  type: "electric"
+Synthesis:
+  name: "Synthesis"
+  category: "status"
+  type: "grass"
+Bleakwind Storm:
+  name: "Bleakwind Storm"
+  category: "special"
+  type: "flying"
+Shadow Hold:
+  name: "Shadow Hold"
+  category: "status"
+  type: "shadow"
+Aromatherapy:
+  name: "Aromatherapy"
+  category: "status"
+  type: "grass"
+Sappy Seed:
+  name: "Sappy Seed"
+  category: "physical"
+  type: "grass"
+Shelter:
+  name: "Shelter"
+  category: "status"
+  type: "steel"
+Imprison:
+  name: "Imprison"
+  category: "status"
+  type: "psychic"
+Attack Order:
+  name: "Attack Order"
+  category: "physical"
+  type: "bug"
+Crunch:
+  name: "Crunch"
+  category: "physical"
+  type: "dark"
+Future Sight:
+  name: "Future Sight"
+  category: "special"
+  type: "psychic"
+Bolt Strike:
+  name: "Bolt Strike"
+  category: "physical"
+  type: "electric"
+Sacred Fire:
+  name: "Sacred Fire"
+  category: "physical"
+  type: "fire"
+Fling:
+  name: "Fling"
+  category: "physical"
+  type: "dark"
+Tera Blast:
+  name: "Tera Blast"
+  category: "special"
+  type: "normal"
+Water Pulse:
+  name: "Water Pulse"
+  category: "special"
+  type: "water"
+Silk Trap:
+  name: "Silk Trap"
+  category: "status"
+  type: "bug"
+Mist:
+  name: "Mist"
+  category: "status"
+  type: "ice"
+Swift:
+  name: "Swift"
+  category: "special"
+  type: "normal"
+Blaze Kick:
+  name: "Blaze Kick"
+  category: "physical"
+  type: "fire"
+Infestation:
+  name: "Infestation"
+  category: "special"
+  type: "bug"
+Thunder Punch:
+  name: "Thunder Punch"
+  category: "physical"
+  type: "electric"
+Hold Hands:
+  name: "Hold Hands"
+  category: "status"
+  type: "normal"
+Noxious Torque:
+  name: "Noxious Torque"
+  category: "physical"
+  type: "poison"
+Dark Pulse:
+  name: "Dark Pulse"
+  category: "special"
+  type: "dark"
+Toxic Thread:
+  name: "Toxic Thread"
+  category: "status"
+  type: "poison"
+Bulk Up:
+  name: "Bulk Up"
+  category: "status"
+  type: "fighting"
+Spiky Shield:
+  name: "Spiky Shield"
+  category: "status"
+  type: "grass"
+Sleep Powder:
+  name: "Sleep Powder"
+  category: "status"
+  type: "grass"
+Refresh:
+  name: "Refresh"
+  category: "status"
+  type: "normal"
+Hyperspace Hole:
+  name: "Hyperspace Hole"
+  category: "special"
+  type: "psychic"
+Shadow Mist:
+  name: "Shadow Mist"
+  category: "status"
+  type: "shadow"
+Dragon Rage:
+  name: "Dragon Rage"
+  category: "special"
+  type: "dragon"
+Happy Hour:
+  name: "Happy Hour"
+  category: "status"
+  type: "normal"
+Autotomize:
+  name: "Autotomize"
+  category: "status"
+  type: "steel"
+Charge Beam:
+  name: "Charge Beam"
+  category: "special"
+  type: "electric"
+Aura Wheel:
+  name: "Aura Wheel"
+  category: "physical"
+  type: "electric"
+Bouncy Bubble:
+  name: "Bouncy Bubble"
+  category: "special"
+  type: "water"
+Skill Swap:
+  name: "Skill Swap"
+  category: "status"
+  type: "psychic"
+Judgment:
+  name: "Judgment"
+  category: "special"
+  type: "normal"
+Belch:
+  name: "Belch"
+  category: "special"
+  type: "poison"
+Helping Hand:
+  name: "Helping Hand"
+  category: "status"
+  type: "normal"
+Guard Swap:
+  name: "Guard Swap"
+  category: "status"
+  type: "psychic"
+Flower Shield:
+  name: "Flower Shield"
+  category: "status"
+  type: "fairy"
+Miracle Eye:
+  name: "Miracle Eye"
+  category: "status"
+  type: "psychic"
+Plasma Fists:
+  name: "Plasma Fists"
+  category: "physical"
+  type: "electric"
+Horn Drill:
+  name: "Horn Drill"
+  category: "physical"
+  type: "normal"
+Meditate:
+  name: "Meditate"
+  category: "status"
+  type: "psychic"
+Pursuit:
+  name: "Pursuit"
+  category: "physical"
+  type: "dark"
+Malignant Chain:
+  name: "Malignant Chain"
+  category: "special"
+  type: "poison"
+Twister:
+  name: "Twister"
+  category: "special"
+  type: "dragon"
+Follow Me:
+  name: "Follow Me"
+  category: "status"
+  type: "normal"
+Feint Attack:
+  name: "Feint Attack"
+  category: "physical"
+  type: "dark"
+Dragon Cheer:
+  name: "Dragon Cheer"
+  category: "status"
+  type: "dragon"
+Reversal:
+  name: "Reversal"
+  category: "physical"
+  type: "fighting"
+Aqua Ring:
+  name: "Aqua Ring"
+  category: "status"
+  type: "water"
+Smelling Salts:
+  name: "Smelling Salts"
+  category: "physical"
+  type: "normal"
+Triple Kick:
+  name: "Triple Kick"
+  category: "physical"
+  type: "fighting"
+Flip Turn:
+  name: "Flip Turn"
+  category: "physical"
+  type: "water"
+Rock Smash:
+  name: "Rock Smash"
+  category: "physical"
+  type: "fighting"
+Order Up:
+  name: "Order Up"
+  category: "physical"
+  type: "dragon"
+Bug Bite:
+  name: "Bug Bite"
+  category: "physical"
+  type: "bug"
+Shadow Force:
+  name: "Shadow Force"
+  category: "physical"
+  type: "ghost"
+Sweet Kiss:
+  name: "Sweet Kiss"
+  category: "status"
+  type: "fairy"
+Teleport:
+  name: "Teleport"
+  category: "status"
+  type: "psychic"
+Icy Wind:
+  name: "Icy Wind"
+  category: "special"
+  type: "ice"
+Close Combat:
+  name: "Close Combat"
+  category: "physical"
+  type: "fighting"
+Veevee Volley:
+  name: "Veevee Volley"
+  category: "physical"
+  type: "normal"
+Trump Card:
+  name: "Trump Card"
+  category: "special"
+  type: "normal"
+Counter:
+  name: "Counter"
+  category: "physical"
+  type: "fighting"
+Wide Guard:
+  name: "Wide Guard"
+  category: "status"
+  type: "rock"
+Leaf Storm:
+  name: "Leaf Storm"
+  category: "special"
+  type: "grass"
+Frost Breath:
+  name: "Frost Breath"
+  category: "special"
+  type: "ice"
+Mud Shot:
+  name: "Mud Shot"
+  category: "special"
+  type: "ground"
+Power Swap:
+  name: "Power Swap"
+  category: "status"
+  type: "psychic"
+Thunder Wave:
+  name: "Thunder Wave"
+  category: "status"
+  type: "electric"
+Conversion 2:
+  name: "Conversion 2"
+  category: "status"
+  type: "normal"
+Shadow Panic:
+  name: "Shadow Panic"
+  category: "status"
+  type: "shadow"
+Instruct:
+  name: "Instruct"
+  category: "status"
+  type: "psychic"
+Explosion:
+  name: "Explosion"
+  category: "physical"
+  type: "normal"
+Astral Barrage:
+  name: "Astral Barrage"
+  category: "special"
+  type: "ghost"
+Super Fang:
+  name: "Super Fang"
+  category: "physical"
+  type: "normal"
+Fury Swipes:
+  name: "Fury Swipes"
+  category: "physical"
+  type: "normal"
+Hydro Vortex:
+  name: "Hydro Vortex"
+  category: "physical"
+  type: "water"
+Conversion:
+  name: "Conversion"
+  category: "status"
+  type: "normal"
+Lucky Chant:
+  name: "Lucky Chant"
+  category: "status"
+  type: "normal"
+Barb Barrage:
+  name: "Barb Barrage"
+  category: "physical"
+  type: "poison"
+Brutal Swing:
+  name: "Brutal Swing"
+  category: "physical"
+  type: "dark"
+Night Slash:
+  name: "Night Slash"
+  category: "physical"
+  type: "dark"
+Recycle:
+  name: "Recycle"
+  category: "status"
+  type: "normal"
+Dynamax Cannon:
+  name: "Dynamax Cannon"
+  category: "special"
+  type: "dragon"
+Psywave:
+  name: "Psywave"
+  category: "special"
+  type: "psychic"
+Bloom Doom:
+  name: "Bloom Doom"
+  category: "special"
+  type: "grass"
+Twin Beam:
+  name: "Twin Beam"
+  category: "special"
+  type: "psychic"
+Wave Crash:
+  name: "Wave Crash"
+  category: "physical"
+  type: "water"
+Absorb:
+  name: "Absorb"
+  category: "special"
+  type: "grass"
+Stone Axe:
+  name: "Stone Axe"
+  category: "physical"
+  type: "rock"
+Flower Trick:
+  name: "Flower Trick"
+  category: "physical"
+  type: "grass"
+Shell Side Arm:
+  name: "Shell Side Arm"
+  category: "special"
+  type: "poison"
+Matcha Gotcha:
+  name: "Matcha Gotcha"
+  category: "special"
+  type: "grass"
+Rock Slide:
+  name: "Rock Slide"
+  category: "physical"
+  type: "rock"
+Multi-Attack:
+  name: "Multi-Attack"
+  category: "physical"
+  type: "normal"
+Take Heart:
+  name: "Take Heart"
+  category: "status"
+  type: "psychic"
+Shell Smash:
+  name: "Shell Smash"
+  category: "status"
+  type: "normal"
+Light of Ruin:
+  name: "Light of Ruin"
+  category: "special"
+  type: "fairy"
+Bullet Seed:
+  name: "Bullet Seed"
+  category: "physical"
+  type: "grass"
+Blazing Torque:
+  name: "Blazing Torque"
+  category: "physical"
+  type: "fire"
+Wicked Torque:
+  name: "Wicked Torque"
+  category: "physical"
+  type: "dark"
+Gravity:
+  name: "Gravity"
+  category: "status"
+  type: "psychic"
+Endeavor:
+  name: "Endeavor"
+  category: "physical"
+  type: "normal"
+Last Resort:
+  name: "Last Resort"
+  category: "physical"
+  type: "normal"
+Mystical Power:
+  name: "Mystical Power"
+  category: "special"
+  type: "psychic"
+Sucker Punch:
+  name: "Sucker Punch"
+  category: "physical"
+  type: "dark"
+Smog:
+  name: "Smog"
+  category: "special"
+  type: "poison"
+Lunar Dance:
+  name: "Lunar Dance"
+  category: "status"
+  type: "psychic"
+Baby-Doll Eyes:
+  name: "Baby-Doll Eyes"
+  category: "status"
+  type: "fairy"
+Poltergeist:
+  name: "Poltergeist"
+  category: "physical"
+  type: "ghost"
+Psycho Cut:
+  name: "Psycho Cut"
+  category: "physical"
+  type: "psychic"
+Axe Kick:
+  name: "Axe Kick"
+  category: "physical"
+  type: "fighting"
+Pulverizing Pancake:
+  name: "Pulverizing Pancake"
+  category: "physical"
+  type: "normal"
+Metronome:
+  name: "Metronome"
+  category: "status"
+  type: "normal"
+Searing Sunraze Smash:
+  name: "Searing Sunraze Smash"
+  category: "physical"
+  type: "steel"
+Dream Eater:
+  name: "Dream Eater"
+  category: "special"
+  type: "psychic"
+Screech:
+  name: "Screech"
+  category: "status"
+  type: "normal"
+Tailwind:
+  name: "Tailwind"
+  category: "status"
+  type: "flying"
+Ice Fang:
+  name: "Ice Fang"
+  category: "physical"
+  type: "ice"
+Shadow Shed:
+  name: "Shadow Shed"
+  category: "status"
+  type: "shadow"
+Glacial Lance:
+  name: "Glacial Lance"
+  category: "physical"
+  type: "ice"
+Substitute:
+  name: "Substitute"
+  category: "status"
+  type: "normal"
+Howl:
+  name: "Howl"
+  category: "status"
+  type: "normal"
+Max Steelspike:
+  name: "Max Steelspike"
+  category: "physical"
+  type: "steel"
+Double-Edge:
+  name: "Double-Edge"
+  category: "physical"
+  type: "normal"
+Mud Sport:
+  name: "Mud Sport"
+  category: "status"
+  type: "ground"
+False Swipe:
+  name: "False Swipe"
+  category: "physical"
+  type: "normal"
+Cut:
+  name: "Cut"
+  category: "physical"
+  type: "normal"
+Hidden Power:
+  name: "Hidden Power"
+  category: "special"
+  type: "normal"
+Raging Bull:
+  name: "Raging Bull"
+  category: "physical"
+  type: "normal"
+Mat Block:
+  name: "Mat Block"
+  category: "status"
+  type: "fighting"
+Glaive Rush:
+  name: "Glaive Rush"
+  category: "physical"
+  type: "dragon"
+Outrage:
+  name: "Outrage"
+  category: "physical"
+  type: "dragon"
+Petal Dance:
+  name: "Petal Dance"
+  category: "special"
+  type: "grass"
+Dive:
+  name: "Dive"
+  category: "physical"
+  type: "water"
+Steel Wing:
+  name: "Steel Wing"
+  category: "physical"
+  type: "steel"
+Razor Leaf:
+  name: "Razor Leaf"
+  category: "physical"
+  type: "grass"
+Grav Apple:
+  name: "Grav Apple"
+  category: "physical"
+  type: "grass"
+Twineedle:
+  name: "Twineedle"
+  category: "physical"
+  type: "bug"
+Thousand Arrows:
+  name: "Thousand Arrows"
+  category: "physical"
+  type: "ground"
+Double Team:
+  name: "Double Team"
+  category: "status"
+  type: "normal"
+Hone Claws:
+  name: "Hone Claws"
+  category: "status"
+  type: "dark"
+Extrasensory:
+  name: "Extrasensory"
+  category: "special"
+  type: "psychic"
+Shock Wave:
+  name: "Shock Wave"
+  category: "special"
+  type: "electric"
+Punishment:
+  name: "Punishment"
+  category: "physical"
+  type: "dark"
+Snore:
+  name: "Snore"
+  category: "special"
+  type: "normal"
+Acid Spray:
+  name: "Acid Spray"
+  category: "special"
+  type: "poison"
+Waterfall:
+  name: "Waterfall"
+  category: "physical"
+  type: "water"
+Sky Attack:
+  name: "Sky Attack"
+  category: "physical"
+  type: "flying"
+Growth:
+  name: "Growth"
+  category: "status"
+  type: "normal"
+Jump Kick:
+  name: "Jump Kick"
+  category: "physical"
+  type: "fighting"
+Double Kick:
+  name: "Double Kick"
+  category: "physical"
+  type: "fighting"
+Stone Edge:
+  name: "Stone Edge"
+  category: "physical"
+  type: "rock"
+Grass Knot:
+  name: "Grass Knot"
+  category: "special"
+  type: "grass"
+Seismic Toss:
+  name: "Seismic Toss"
+  category: "physical"
+  type: "fighting"
+Retaliate:
+  name: "Retaliate"
+  category: "physical"
+  type: "normal"
+Prismatic Laser:
+  name: "Prismatic Laser"
+  category: "special"
+  type: "psychic"
+Vise Grip:
+  name: "Vise Grip"
+  category: "physical"
+  type: "normal"
+Glaciate:
+  name: "Glaciate"
+  category: "special"
+  type: "ice"
+Dragon Tail:
+  name: "Dragon Tail"
+  category: "physical"
+  type: "dragon"
+Ice Hammer:
+  name: "Ice Hammer"
+  category: "physical"
+  type: "ice"
+Bitter Malice:
+  name: "Bitter Malice"
+  category: "special"
+  type: "ghost"
+Defense Curl:
+  name: "Defense Curl"
+  category: "status"
+  type: "normal"
+Needle Arm:
+  name: "Needle Arm"
+  category: "physical"
+  type: "grass"
+Rolling Kick:
+  name: "Rolling Kick"
+  category: "physical"
+  type: "fighting"
+Max Hailstorm:
+  name: "Max Hailstorm"
+  category: "physical"
+  type: "ice"
+Venoshock:
+  name: "Venoshock"
+  category: "special"
+  type: "poison"
+Rain Dance:
+  name: "Rain Dance"
+  category: "status"
+  type: "water"
+Aurora Veil:
+  name: "Aurora Veil"
+  category: "status"
+  type: "ice"
+Rock Polish:
+  name: "Rock Polish"
+  category: "status"
+  type: "rock"
+Sludge:
+  name: "Sludge"
+  category: "special"
+  type: "poison"
+Phantom Force:
+  name: "Phantom Force"
+  category: "physical"
+  type: "ghost"
+Scorching Sands:
+  name: "Scorching Sands"
+  category: "special"
+  type: "ground"
+Savage Spin-Out:
+  name: "Savage Spin-Out"
+  category: "physical"
+  type: "bug"
+Dark Void:
+  name: "Dark Void"
+  category: "status"
+  type: "dark"
+Stealth Rock:
+  name: "Stealth Rock"
+  category: "status"
+  type: "rock"
+Spin Out:
+  name: "Spin Out"
+  category: "physical"
+  type: "steel"
+Ivy Cudgel:
+  name: "Ivy Cudgel"
+  category: "physical"
+  type: "grass"
+Fishious Rend:
+  name: "Fishious Rend"
+  category: "physical"
+  type: "water"
+Gastro Acid:
+  name: "Gastro Acid"
+  category: "status"
+  type: "poison"
+Frustration:
+  name: "Frustration"
+  category: "physical"
+  type: "normal"
+Perish Song:
+  name: "Perish Song"
+  category: "status"
+  type: "normal"
+Cross Poison:
+  name: "Cross Poison"
+  category: "physical"
+  type: "poison"
+Combat Torque:
+  name: "Combat Torque"
+  category: "physical"
+  type: "fighting"
+Rock Throw:
+  name: "Rock Throw"
+  category: "physical"
+  type: "rock"
+Psych Up:
+  name: "Psych Up"
+  category: "status"
+  type: "normal"
+Mirror Coat:
+  name: "Mirror Coat"
+  category: "special"
+  type: "psychic"
+Growl:
+  name: "Growl"
+  category: "status"
+  type: "normal"
+Sing:
+  name: "Sing"
+  category: "status"
+  type: "normal"
+Rock Blast:
+  name: "Rock Blast"
+  category: "physical"
+  type: "rock"
+Coil:
+  name: "Coil"
+  category: "status"
+  type: "poison"
+Torch Song:
+  name: "Torch Song"
+  category: "special"
+  type: "fire"
+Flail:
+  name: "Flail"
+  category: "physical"
+  type: "normal"
+Sand Tomb:
+  name: "Sand Tomb"
+  category: "physical"
+  type: "ground"
+Grassy Glide:
+  name: "Grassy Glide"
+  category: "physical"
+  type: "grass"
+Barrage:
+  name: "Barrage"
+  category: "physical"
+  type: "normal"
+Harden:
+  name: "Harden"
+  category: "status"
+  type: "normal"
+Crabhammer:
+  name: "Crabhammer"
+  category: "physical"
+  type: "water"
+Tri Attack:
+  name: "Tri Attack"
+  category: "special"
+  type: "normal"
+Fake Tears:
+  name: "Fake Tears"
+  category: "status"
+  type: "dark"
+Brine:
+  name: "Brine"
+  category: "special"
+  type: "water"
+Floral Healing:
+  name: "Floral Healing"
+  category: "status"
+  type: "fairy"
+Darkest Lariat:
+  name: "Darkest Lariat"
+  category: "physical"
+  type: "dark"
+Drill Peck:
+  name: "Drill Peck"
+  category: "physical"
+  type: "flying"
+Fusion Bolt:
+  name: "Fusion Bolt"
+  category: "physical"
+  type: "electric"
+Mega Drain:
+  name: "Mega Drain"
+  category: "special"
+  type: "grass"
+Fickle Beam:
+  name: "Fickle Beam"
+  category: "special"
+  type: "dragon"
+Sheer Cold:
+  name: "Sheer Cold"
+  category: "special"
+  type: "ice"
+Max Lightning:
+  name: "Max Lightning"
+  category: "physical"
+  type: "electric"
+Feint:
+  name: "Feint"
+  category: "physical"
+  type: "normal"
+Tickle:
+  name: "Tickle"
+  category: "status"
+  type: "normal"
+Ice Punch:
+  name: "Ice Punch"
+  category: "physical"
+  type: "ice"
+Trick Room:
+  name: "Trick Room"
+  category: "status"
+  type: "psychic"
+Max Quake:
+  name: "Max Quake"
+  category: "physical"
+  type: "ground"
+Population Bomb:
+  name: "Population Bomb"
+  category: "physical"
+  type: "normal"
+Aurora Beam:
+  name: "Aurora Beam"
+  category: "special"
+  type: "ice"
+Sunsteel Strike:
+  name: "Sunsteel Strike"
+  category: "physical"
+  type: "steel"
+Astonish:
+  name: "Astonish"
+  category: "physical"
+  type: "ghost"
+Decorate:
+  name: "Decorate"
+  category: "status"
+  type: "fairy"
+Hard Press:
+  name: "Hard Press"
+  category: "physical"
+  type: "steel"
+Fell Stinger:
+  name: "Fell Stinger"
+  category: "physical"
+  type: "bug"
+Razor Wind:
+  name: "Razor Wind"
+  category: "special"
+  type: "normal"
+Techno Blast:
+  name: "Techno Blast"
+  category: "special"
+  type: "normal"
+Earthquake:
+  name: "Earthquake"
+  category: "physical"
+  type: "ground"
+Psystrike:
+  name: "Psystrike"
+  category: "special"
+  type: "psychic"
+Fiery Wrath:
+  name: "Fiery Wrath"
+  category: "special"
+  type: "dark"
+Forest’s Curse:
+  name: "Forest’s Curse"
+  category: "status"
+  type: "grass"
+Acrobatics:
+  name: "Acrobatics"
+  category: "physical"
+  type: "flying"
+Double Shock:
+  name: "Double Shock"
+  category: "physical"
+  type: "electric"
+Lick:
+  name: "Lick"
+  category: "physical"
+  type: "ghost"
+Tail Whip:
+  name: "Tail Whip"
+  category: "status"
+  type: "normal"
+Mind Reader:
+  name: "Mind Reader"
+  category: "status"
+  type: "normal"
+Gigaton Hammer:
+  name: "Gigaton Hammer"
+  category: "physical"
+  type: "steel"
+Chatter:
+  name: "Chatter"
+  category: "special"
+  type: "flying"
+Icicle Crash:
+  name: "Icicle Crash"
+  category: "physical"
+  type: "ice"
+Foul Play:
+  name: "Foul Play"
+  category: "physical"
+  type: "dark"
+Shadow Storm:
+  name: "Shadow Storm"
+  category: "special"
+  type: "shadow"
+Alluring Voice:
+  name: "Alluring Voice"
+  category: "special"
+  type: "fairy"
+Leafage:
+  name: "Leafage"
+  category: "physical"
+  type: "grass"
+Hex:
+  name: "Hex"
+  category: "special"
+  type: "ghost"
+Max Flutterby:
+  name: "Max Flutterby"
+  category: "physical"
+  type: "bug"
+Eternabeam:
+  name: "Eternabeam"
+  category: "special"
+  type: "dragon"
+Photon Geyser:
+  name: "Photon Geyser"
+  category: "special"
+  type: "psychic"
+Obstruct:
+  name: "Obstruct"
+  category: "status"
+  type: "dark"
+Strength:
+  name: "Strength"
+  category: "physical"
+  type: "normal"
+Psyblade:
+  name: "Psyblade"
+  category: "physical"
+  type: "psychic"
+Rage Powder:
+  name: "Rage Powder"
+  category: "status"
+  type: "bug"
+Ominous Wind:
+  name: "Ominous Wind"
+  category: "special"
+  type: "ghost"
+Poison Powder:
+  name: "Poison Powder"
+  category: "status"
+  type: "poison"
+Victory Dance:
+  name: "Victory Dance"
+  category: "status"
+  type: "fighting"
+Uproar:
+  name: "Uproar"
+  category: "special"
+  type: "normal"
+Precipice Blades:
+  name: "Precipice Blades"
+  category: "physical"
+  type: "ground"
+Silver Wind:
+  name: "Silver Wind"
+  category: "special"
+  type: "bug"
+Eruption:
+  name: "Eruption"
+  category: "special"
+  type: "fire"
+Whirlwind:
+  name: "Whirlwind"
+  category: "status"
+  type: "normal"
+Fake Out:
+  name: "Fake Out"
+  category: "physical"
+  type: "normal"
+Detect:
+  name: "Detect"
+  category: "status"
+  type: "fighting"
+Shadow Sneak:
+  name: "Shadow Sneak"
+  category: "physical"
+  type: "ghost"
+Shadow Blitz:
+  name: "Shadow Blitz"
+  category: "physical"
+  type: "shadow"
+Leech Seed:
+  name: "Leech Seed"
+  category: "status"
+  type: "grass"
+Magnetic Flux:
+  name: "Magnetic Flux"
+  category: "status"
+  type: "electric"
+Hydro Pump:
+  name: "Hydro Pump"
+  category: "special"
+  type: "water"
+Sparkling Aria:
+  name: "Sparkling Aria"
+  category: "special"
+  type: "water"
+Bulldoze:
+  name: "Bulldoze"
+  category: "physical"
+  type: "ground"
+Dragon Dance:
+  name: "Dragon Dance"
+  category: "status"
+  type: "dragon"
+Guard Split:
+  name: "Guard Split"
+  category: "status"
+  type: "psychic"
+Burning Bulwark:
+  name: "Burning Bulwark"
+  category: "status"
+  type: "fire"
+Power Split:
+  name: "Power Split"
+  category: "status"
+  type: "psychic"
+Mega Punch:
+  name: "Mega Punch"
+  category: "physical"
+  type: "normal"
+Make It Rain:
+  name: "Make It Rain"
+  category: "special"
+  type: "steel"
+Stoked Sparksurfer:
+  name: "Stoked Sparksurfer"
+  category: "special"
+  type: "electric"
+Poison Gas:
+  name: "Poison Gas"
+  category: "status"
+  type: "poison"
+Beak Blast:
+  name: "Beak Blast"
+  category: "physical"
+  type: "flying"
+Moonblast:
+  name: "Moonblast"
+  category: "special"
+  type: "fairy"
+Heart Swap:
+  name: "Heart Swap"
+  category: "status"
+  type: "psychic"
+Power-Up Punch:
+  name: "Power-Up Punch"
+  category: "physical"
+  type: "fighting"
+Rock Tomb:
+  name: "Rock Tomb"
+  category: "physical"
+  type: "rock"
+Shadow Bolt:
+  name: "Shadow Bolt"
+  category: "special"
+  type: "shadow"
+Glare:
+  name: "Glare"
+  category: "status"
+  type: "normal"
+Power Trip:
+  name: "Power Trip"
+  category: "physical"
+  type: "dark"
+Whirlpool:
+  name: "Whirlpool"
+  category: "special"
+  type: "water"
+Poison Fang:
+  name: "Poison Fang"
+  category: "physical"
+  type: "poison"
+Comeuppance:
+  name: "Comeuppance"
+  category: "physical"
+  type: "dark"
+Boomburst:
+  name: "Boomburst"
+  category: "special"
+  type: "normal"
+Skitter Smack:
+  name: "Skitter Smack"
+  category: "physical"
+  type: "bug"
+Focus Energy:
+  name: "Focus Energy"
+  category: "status"
+  type: "normal"
+Infernal Parade:
+  name: "Infernal Parade"
+  category: "special"
+  type: "ghost"
+Magic Room:
+  name: "Magic Room"
+  category: "status"
+  type: "psychic"
+Spike Cannon:
+  name: "Spike Cannon"
+  category: "physical"
+  type: "normal"
+Double Iron Bash:
+  name: "Double Iron Bash"
+  category: "physical"
+  type: "steel"
+Flame Wheel:
+  name: "Flame Wheel"
+  category: "physical"
+  type: "fire"
+Heal Order:
+  name: "Heal Order"
+  category: "status"
+  type: "bug"
+Shadow Wave:
+  name: "Shadow Wave"
+  category: "special"
+  type: "shadow"
+Clangorous Soulblaze:
+  name: "Clangorous Soulblaze"
+  category: "special"
+  type: "dragon"
+Aqua Tail:
+  name: "Aqua Tail"
+  category: "physical"
+  type: "water"
+Expanding Force:
+  name: "Expanding Force"
+  category: "special"
+  type: "psychic"
+Geomancy:
+  name: "Geomancy"
+  category: "status"
+  type: "fairy"
+Surging Strikes:
+  name: "Surging Strikes"
+  category: "physical"
+  type: "water"
+Triple Arrows:
+  name: "Triple Arrows"
+  category: "physical"
+  type: "fighting"
+Safeguard:
+  name: "Safeguard"
+  category: "status"
+  type: "normal"
+Soft-Boiled:
+  name: "Soft-Boiled"
+  category: "status"
+  type: "normal"
+Shadow Bone:
+  name: "Shadow Bone"
+  category: "physical"
+  type: "ghost"
+Roar:
+  name: "Roar"
+  category: "status"
+  type: "normal"
+Fury Cutter:
+  name: "Fury Cutter"
+  category: "physical"
+  type: "bug"
+Discharge:
+  name: "Discharge"
+  category: "special"
+  type: "electric"
+Ceaseless Edge:
+  name: "Ceaseless Edge"
+  category: "physical"
+  type: "dark"
+Buzzy Buzz:
+  name: "Buzzy Buzz"
+  category: "special"
+  type: "electric"
+Clamp:
+  name: "Clamp"
+  category: "physical"
+  type: "water"
+Smart Strike:
+  name: "Smart Strike"
+  category: "physical"
+  type: "steel"
+Pyro Ball:
+  name: "Pyro Ball"
+  category: "physical"
+  type: "fire"
+Electro Ball:
+  name: "Electro Ball"
+  category: "special"
+  type: "electric"
+Max Airstream:
+  name: "Max Airstream"
+  category: "physical"
+  type: "flying"
+After You:
+  name: "After You"
+  category: "status"
+  type: "normal"
+Spore:
+  name: "Spore"
+  category: "status"
+  type: "grass"
+Meteor Assault:
+  name: "Meteor Assault"
+  category: "physical"
+  type: "fighting"
+Leech Life:
+  name: "Leech Life"
+  category: "physical"
+  type: "bug"
+Jungle Healing:
+  name: "Jungle Healing"
+  category: "status"
+  type: "grass"
+Jet Punch:
+  name: "Jet Punch"
+  category: "physical"
+  type: "water"
+Psyshield Bash:
+  name: "Psyshield Bash"
+  category: "physical"
+  type: "psychic"
+Curse:
+  name: "Curse"
+  category: "status"
+  type: "ghost"
+Nasty Plot:
+  name: "Nasty Plot"
+  category: "status"
+  type: "dark"
+Entrainment:
+  name: "Entrainment"
+  category: "status"
+  type: "normal"
+Mach Punch:
+  name: "Mach Punch"
+  category: "physical"
+  type: "fighting"
+Frenzy Plant:
+  name: "Frenzy Plant"
+  category: "special"
+  type: "grass"
+Karate Chop:
+  name: "Karate Chop"
+  category: "physical"
+  type: "fighting"
+Lovely Kiss:
+  name: "Lovely Kiss"
+  category: "status"
+  type: "normal"
+Mighty Cleave:
+  name: "Mighty Cleave"
+  category: "physical"
+  type: "rock"
+Struggle:
+  name: "Struggle"
+  category: "physical"
+  type: "normal"
+Power Whip:
+  name: "Power Whip"
+  category: "physical"
+  type: "grass"
+Trailblaze:
+  name: "Trailblaze"
+  category: "physical"
+  type: "grass"
+Collision Course:
+  name: "Collision Course"
+  category: "physical"
+  type: "fighting"
+Coaching:
+  name: "Coaching"
+  category: "status"
+  type: "fighting"
+Confusion:
+  name: "Confusion"
+  category: "special"
+  type: "psychic"
+Aromatic Mist:
+  name: "Aromatic Mist"
+  category: "status"
+  type: "fairy"
+Devastating Drake:
+  name: "Devastating Drake"
+  category: "special"
+  type: "dragon"
+Secret Sword:
+  name: "Secret Sword"
+  category: "special"
+  type: "fighting"
+Gust:
+  name: "Gust"
+  category: "special"
+  type: "flying"
+Hyperspace Fury:
+  name: "Hyperspace Fury"
+  category: "physical"
+  type: "dark"
+Memento:
+  name: "Memento"
+  category: "status"
+  type: "dark"
+Rapid Spin:
+  name: "Rapid Spin"
+  category: "physical"
+  type: "normal"
+Bug Buzz:
+  name: "Bug Buzz"
+  category: "special"
+  type: "bug"
+Genesis Supernova:
+  name: "Genesis Supernova"
+  category: "special"
+  type: "psychic"
+Shadow Break:
+  name: "Shadow Break"
+  category: "physical"
+  type: "shadow"
+Petal Blizzard:
+  name: "Petal Blizzard"
+  category: "physical"
+  type: "grass"
+Liquidation:
+  name: "Liquidation"
+  category: "physical"
+  type: "water"
+Pain Split:
+  name: "Pain Split"
+  category: "status"
+  type: "normal"
+Flash:
+  name: "Flash"
+  category: "status"
+  type: "normal"
+Superpower:
+  name: "Superpower"
+  category: "physical"
+  type: "fighting"
+Hail:
+  name: "Hail"
+  category: "status"
+  type: "ice"
+Double Hit:
+  name: "Double Hit"
+  category: "physical"
+  type: "normal"
+Grass Pledge:
+  name: "Grass Pledge"
+  category: "special"
+  type: "grass"
+Trick:
+  name: "Trick"
+  category: "status"
+  type: "psychic"
+Lava Plume:
+  name: "Lava Plume"
+  category: "special"
+  type: "fire"
+Hyper Fang:
+  name: "Hyper Fang"
+  category: "physical"
+  type: "normal"
+Topsy-Turvy:
+  name: "Topsy-Turvy"
+  category: "status"
+  type: "dark"
+Max Darkness:
+  name: "Max Darkness"
+  category: "physical"
+  type: "dark"
+Burn Up:
+  name: "Burn Up"
+  category: "special"
+  type: "fire"
+Fairy Wind:
+  name: "Fairy Wind"
+  category: "special"
+  type: "fairy"
+Shadow Claw:
+  name: "Shadow Claw"
+  category: "physical"
+  type: "ghost"
+Wood Hammer:
+  name: "Wood Hammer"
+  category: "physical"
+  type: "grass"
+Assist:
+  name: "Assist"
+  category: "status"
+  type: "normal"
+Trick-or-Treat:
+  name: "Trick-or-Treat"
+  category: "status"
+  type: "ghost"
+Natural Gift:
+  name: "Natural Gift"
+  category: "physical"
+  type: "normal"
+Triple Axel:
+  name: "Triple Axel"
+  category: "physical"
+  type: "ice"
+Shadow Chill:
+  name: "Shadow Chill"
+  category: "special"
+  type: "shadow"
+Stuff Cheeks:
+  name: "Stuff Cheeks"
+  category: "status"
+  type: "normal"
+Horn Leech:
+  name: "Horn Leech"
+  category: "physical"
+  type: "grass"
+Agility:
+  name: "Agility"
+  category: "status"
+  type: "psychic"
+Disable:
+  name: "Disable"
+  category: "status"
+  type: "normal"
+Fury Attack:
+  name: "Fury Attack"
+  category: "physical"
+  type: "normal"
+Eerie Spell:
+  name: "Eerie Spell"
+  category: "special"
+  type: "psychic"
+Leer:
+  name: "Leer"
+  category: "status"
+  type: "normal"
+Self-Destruct:
+  name: "Self-Destruct"
+  category: "physical"
+  type: "normal"
+Let’s Snuggle Forever:
+  name: "Let’s Snuggle Forever"
+  category: "physical"
+  type: "fairy"
+Drill Run:
+  name: "Drill Run"
+  category: "physical"
+  type: "ground"
+Ancient Power:
+  name: "Ancient Power"
+  category: "special"
+  type: "rock"
+Hammer Arm:
+  name: "Hammer Arm"
+  category: "physical"
+  type: "fighting"
+Copycat:
+  name: "Copycat"
+  category: "status"
+  type: "normal"
+Horn Attack:
+  name: "Horn Attack"
+  category: "physical"
+  type: "normal"
+Muddy Water:
+  name: "Muddy Water"
+  category: "special"
+  type: "water"
+Spite:
+  name: "Spite"
+  category: "status"
+  type: "ghost"
+Freeze Shock:
+  name: "Freeze Shock"
+  category: "physical"
+  type: "ice"
+Double Slap:
+  name: "Double Slap"
+  category: "physical"
+  type: "normal"
+Destiny Bond:
+  name: "Destiny Bond"
+  category: "status"
+  type: "ghost"
+Telekinesis:
+  name: "Telekinesis"
+  category: "status"
+  type: "psychic"
+Slam:
+  name: "Slam"
+  category: "physical"
+  type: "normal"
+Wrap:
+  name: "Wrap"
+  category: "physical"
+  type: "normal"
+Air Slash:
+  name: "Air Slash"
+  category: "special"
+  type: "flying"
+Never-Ending Nightmare:
+  name: "Never-Ending Nightmare"
+  category: "special"
+  type: "ghost"
+Sizzly Slide:
+  name: "Sizzly Slide"
+  category: "physical"
+  type: "fire"
+Bonemerang:
+  name: "Bonemerang"
+  category: "physical"
+  type: "ground"
+Fly:
+  name: "Fly"
+  category: "physical"
+  type: "flying"
+Black Hole Eclipse:
+  name: "Black Hole Eclipse"
+  category: "special"
+  type: "dark"
+Sky Drop:
+  name: "Sky Drop"
+  category: "physical"
+  type: "flying"
+Blast Burn:
+  name: "Blast Burn"
+  category: "special"
+  type: "fire"
+Charm:
+  name: "Charm"
+  category: "status"
+  type: "fairy"
+Sharpen:
+  name: "Sharpen"
+  category: "status"
+  type: "normal"
+Bounce:
+  name: "Bounce"
+  category: "physical"
+  type: "flying"
+Snowscape:
+  name: "Snowscape"
+  category: "status"
+  type: "ice"
+Giga Impact:
+  name: "Giga Impact"
+  category: "physical"
+  type: "normal"
+Raging Fury:
+  name: "Raging Fury"
+  category: "physical"
+  type: "fire"
+Dig:
+  name: "Dig"
+  category: "physical"
+  type: "ground"
+Submission:
+  name: "Submission"
+  category: "physical"
+  type: "fighting"
+Baton Pass:
+  name: "Baton Pass"
+  category: "status"
+  type: "normal"
+Oblivion Wing:
+  name: "Oblivion Wing"
+  category: "special"
+  type: "flying"
+Noble Roar:
+  name: "Noble Roar"
+  category: "status"
+  type: "normal"
+Ion Deluge:
+  name: "Ion Deluge"
+  category: "status"
+  type: "electric"
+Mist Ball:
+  name: "Mist Ball"
+  category: "special"
+  type: "psychic"
+String Shot:
+  name: "String Shot"
+  category: "status"
+  type: "bug"
+Shadow Rush:
+  name: "Shadow Rush"
+  category: "physical"
+  type: "shadow"
+Gigavolt Havoc:
+  name: "Gigavolt Havoc"
+  category: "special"
+  type: "electric"
+Acid Downpour:
+  name: "Acid Downpour"
+  category: "physical"
+  type: "poison"
+Sketch:
+  name: "Sketch"
+  category: "status"
+  type: "normal"
+Swallow:
+  name: "Swallow"
+  category: "status"
+  type: "normal"
+Torment:
+  name: "Torment"
+  category: "status"
+  type: "dark"
+Spectral Thief:
+  name: "Spectral Thief"
+  category: "physical"
+  type: "ghost"
+Dragon Energy:
+  name: "Dragon Energy"
+  category: "special"
+  type: "dragon"
+Storm Throw:
+  name: "Storm Throw"
+  category: "physical"
+  type: "fighting"
+Mirror Move:
+  name: "Mirror Move"
+  category: "status"
+  type: "flying"
+Electro Shot:
+  name: "Electro Shot"
+  category: "special"
+  type: "electric"
+Fire Pledge:
+  name: "Fire Pledge"
+  category: "special"
+  type: "fire"
+Max Wyrmwind:
+  name: "Max Wyrmwind"
+  category: "physical"
+  type: "dragon"
+Bubble Beam:
+  name: "Bubble Beam"
+  category: "special"
+  type: "water"
+Diamond Storm:
+  name: "Diamond Storm"
+  category: "physical"
+  type: "rock"
+Smokescreen:
+  name: "Smokescreen"
+  category: "status"
+  type: "normal"
+Metal Claw:
+  name: "Metal Claw"
+  category: "physical"
+  type: "steel"
+Poison Tail:
+  name: "Poison Tail"
+  category: "physical"
+  type: "poison"
+Core Enforcer:
+  name: "Core Enforcer"
+  category: "special"
+  type: "dragon"
+Hydro Steam:
+  name: "Hydro Steam"
+  category: "special"
+  type: "water"
+Water Sport:
+  name: "Water Sport"
+  category: "status"
+  type: "water"
+Behemoth Bash:
+  name: "Behemoth Bash"
+  category: "physical"
+  type: "steel"
+Dizzy Punch:
+  name: "Dizzy Punch"
+  category: "physical"
+  type: "normal"
+Menacing Moonraze Maelstrom:
+  name: "Menacing Moonraze Maelstrom"
+  category: "special"
+  type: "ghost"
+Freezing Glare:
+  name: "Freezing Glare"
+  category: "special"
+  type: "psychic"
+Baddy Bad:
+  name: "Baddy Bad"
+  category: "special"
+  type: "dark"
+Terrain Pulse:
+  name: "Terrain Pulse"
+  category: "special"
+  type: "normal"
+Light That Burns the Sky:
+  name: "Light That Burns the Sky"
+  category: "special"
+  type: "psychic"
+Acid:
+  name: "Acid"
+  category: "special"
+  type: "poison"
+Sand Attack:
+  name: "Sand Attack"
+  category: "status"
+  type: "ground"
+Head Charge:
+  name: "Head Charge"
+  category: "physical"
+  type: "normal"
+Cross Chop:
+  name: "Cross Chop"
+  category: "physical"
+  type: "fighting"
+Struggle Bug:
+  name: "Struggle Bug"
+  category: "special"
+  type: "bug"
+Play Nice:
+  name: "Play Nice"
+  category: "status"
+  type: "normal"
+Barrier:
+  name: "Barrier"
+  category: "status"
+  type: "psychic"
+Ice Ball:
+  name: "Ice Ball"
+  category: "physical"
+  type: "ice"
+Temper Flare:
+  name: "Temper Flare"
+  category: "physical"
+  type: "fire"
+Thunder Fang:
+  name: "Thunder Fang"
+  category: "physical"
+  type: "electric"
+Fusion Flare:
+  name: "Fusion Flare"
+  category: "special"
+  type: "fire"
+Scratch:
+  name: "Scratch"
+  category: "physical"
+  type: "normal"
+Max Rockfall:
+  name: "Max Rockfall"
+  category: "physical"
+  type: "rock"
+Magma Storm:
+  name: "Magma Storm"
+  category: "special"
+  type: "fire"
+Acid Armor:
+  name: "Acid Armor"
+  category: "status"
+  type: "poison"
+Night Daze:
+  name: "Night Daze"
+  category: "special"
+  type: "dark"
+Corrosive Gas:
+  name: "Corrosive Gas"
+  category: "status"
+  type: "poison"
+Electro Drift:
+  name: "Electro Drift"
+  category: "special"
+  type: "electric"
+Rollout:
+  name: "Rollout"
+  category: "physical"
+  type: "rock"
+Water Gun:
+  name: "Water Gun"
+  category: "special"
+  type: "water"
+Defend Order:
+  name: "Defend Order"
+  category: "status"
+  type: "bug"
+Last Respects:
+  name: "Last Respects"
+  category: "physical"
+  type: "ghost"
+Revival Blessing:
+  name: "Revival Blessing"
+  category: "status"
+  type: "normal"
+Withdraw:
+  name: "Withdraw"
+  category: "status"
+  type: "water"
+Mind Blown:
+  name: "Mind Blown"
+  category: "special"
+  type: "fire"
+Hydro Cannon:
+  name: "Hydro Cannon"
+  category: "special"
+  type: "water"
+Wish:
+  name: "Wish"
+  category: "status"
+  type: "normal"
+Tectonic Rage:
+  name: "Tectonic Rage"
+  category: "special"
+  type: "ground"
+Snap Trap:
+  name: "Snap Trap"
+  category: "physical"
+  type: "grass"
+Stomp:
+  name: "Stomp"
+  category: "physical"
+  type: "normal"
+Pika Papow:
+  name: "Pika Papow"
+  category: "special"
+  type: "electric"
+Hypnosis:
+  name: "Hypnosis"
+  category: "status"
+  type: "psychic"
+Dragon Darts:
+  name: "Dragon Darts"
+  category: "physical"
+  type: "dragon"
+Foresight:
+  name: "Foresight"
+  category: "status"
+  type: "normal"
+Rock Wrecker:
+  name: "Rock Wrecker"
+  category: "physical"
+  type: "rock"
+Water Spout:
+  name: "Water Spout"
+  category: "special"
+  type: "water"
+Thunderous Kick:
+  name: "Thunderous Kick"
+  category: "physical"
+  type: "fighting"
+Grass Whistle:
+  name: "Grass Whistle"
+  category: "status"
+  type: "grass"
+Iron Head:
+  name: "Iron Head"
+  category: "physical"
+  type: "steel"
+Incinerate:
+  name: "Incinerate"
+  category: "special"
+  type: "fire"
+Peck:
+  name: "Peck"
+  category: "physical"
+  type: "flying"
+Heat Wave:
+  name: "Heat Wave"
+  category: "special"
+  type: "fire"
+Quash:
+  name: "Quash"
+  category: "status"
+  type: "dark"
+Payback:
+  name: "Payback"
+  category: "physical"
+  type: "dark"
+Shattered Psyche:
+  name: "Shattered Psyche"
+  category: "special"
+  type: "psychic"
+Flatter:
+  name: "Flatter"
+  category: "status"
+  type: "dark"
+Psychic Terrain:
+  name: "Psychic Terrain"
+  category: "status"
+  type: "psychic"
+Endure:
+  name: "Endure"
+  category: "status"
+  type: "normal"
+Fire Spin:
+  name: "Fire Spin"
+  category: "special"
+  type: "fire"
+Leaf Tornado:
+  name: "Leaf Tornado"
+  category: "special"
+  type: "grass"
+Ember:
+  name: "Ember"
+  category: "special"
+  type: "fire"
+Zen Headbutt:
+  name: "Zen Headbutt"
+  category: "physical"
+  type: "psychic"
+Lunar Blessing:
+  name: "Lunar Blessing"
+  category: "status"
+  type: "psychic"
+Dragon Ascent:
+  name: "Dragon Ascent"
+  category: "physical"
+  type: "flying"
+Inferno:
+  name: "Inferno"
+  category: "special"
+  type: "fire"
+U-turn:
+  name: "U-turn"
+  category: "physical"
+  type: "bug"
+Stomping Tantrum:
+  name: "Stomping Tantrum"
+  category: "physical"
+  type: "ground"
+Headbutt:
+  name: "Headbutt"
+  category: "physical"
+  type: "normal"
+Mega Kick:
+  name: "Mega Kick"
+  category: "physical"
+  type: "normal"
+Dynamic Punch:
+  name: "Dynamic Punch"
+  category: "physical"
+  type: "fighting"
+Mirror Shot:
+  name: "Mirror Shot"
+  category: "special"
+  type: "steel"
+Night Shade:
+  name: "Night Shade"
+  category: "special"
+  type: "ghost"
+Ingrain:
+  name: "Ingrain"
+  category: "status"
+  type: "grass"
+Psycho Shift:
+  name: "Psycho Shift"
+  category: "status"
+  type: "psychic"
+Subzero Slammer:
+  name: "Subzero Slammer"
+  category: "physical"
+  type: "ice"
+Spirit Break:
+  name: "Spirit Break"
+  category: "physical"
+  type: "fairy"
+Tail Slap:
+  name: "Tail Slap"
+  category: "physical"
+  type: "normal"
+Trop Kick:
+  name: "Trop Kick"
+  category: "physical"
+  type: "grass"
+Upper Hand:
+  name: "Upper Hand"
+  category: "physical"
+  type: "fighting"
+Reflect:
+  name: "Reflect"
+  category: "status"
+  type: "psychic"
+Splash:
+  name: "Splash"
+  category: "status"
+  type: "normal"
+Meteor Beam:
+  name: "Meteor Beam"
+  category: "special"
+  type: "rock"
+Transform:
+  name: "Transform"
+  category: "status"
+  type: "normal"
+Spirit Shackle:
+  name: "Spirit Shackle"
+  category: "physical"
+  type: "ghost"
+Fire Fang:
+  name: "Fire Fang"
+  category: "physical"
+  type: "fire"
+Pounce:
+  name: "Pounce"
+  category: "physical"
+  type: "bug"
+Breaking Swipe:
+  name: "Breaking Swipe"
+  category: "physical"
+  type: "dragon"
+Sparkly Swirl:
+  name: "Sparkly Swirl"
+  category: "special"
+  type: "fairy"
+Shell Trap:
+  name: "Shell Trap"
+  category: "special"
+  type: "fire"
+Quiver Dance:
+  name: "Quiver Dance"
+  category: "status"
+  type: "bug"
+Court Change:
+  name: "Court Change"
+  category: "status"
+  type: "normal"
+Slash:
+  name: "Slash"
+  category: "physical"
+  type: "normal"
+False Surrender:
+  name: "False Surrender"
+  category: "physical"
+  type: "dark"
+Shadow Half:
+  name: "Shadow Half"
+  category: "special"
+  type: "shadow"
+Quick Attack:
+  name: "Quick Attack"
+  category: "physical"
+  type: "normal"
+Take Down:
+  name: "Take Down"
+  category: "physical"
+  type: "normal"
+Mortal Spin:
+  name: "Mortal Spin"
+  category: "physical"
+  type: "poison"
+Sunny Day:
+  name: "Sunny Day"
+  category: "status"
+  type: "fire"
+Dragon Rush:
+  name: "Dragon Rush"
+  category: "physical"
+  type: "dragon"
+Spotlight:
+  name: "Spotlight"
+  category: "status"
+  type: "normal"
+Gear Grind:
+  name: "Gear Grind"
+  category: "physical"
+  type: "steel"
+Scale Shot:
+  name: "Scale Shot"
+  category: "physical"
+  type: "dragon"
+Mystical Fire:
+  name: "Mystical Fire"
+  category: "special"
+  type: "fire"
+Continental Crush:
+  name: "Continental Crush"
+  category: "special"
+  type: "rock"
+Magical Torque:
+  name: "Magical Torque"
+  category: "physical"
+  type: "fairy"
+Behemoth Blade:
+  name: "Behemoth Blade"
+  category: "physical"
+  type: "steel"
+Power Shift:
+  name: "Power Shift"
+  category: "status"
+  type: "normal"
+Draining Kiss:
+  name: "Draining Kiss"
+  category: "special"
+  type: "fairy"
+Guardian of Alola:
+  name: "Guardian of Alola"
+  category: "special"
+  type: "fairy"
+Icicle Spear:
+  name: "Icicle Spear"
+  category: "physical"
+  type: "ice"
+Triple Dive:
+  name: "Triple Dive"
+  category: "physical"
+  type: "water"
+Rock Climb:
+  name: "Rock Climb"
+  category: "physical"
+  type: "normal"
+Ice Spinner:
+  name: "Ice Spinner"
+  category: "physical"
+  type: "ice"
+Aerial Ace:
+  name: "Aerial Ace"
+  category: "physical"
+  type: "flying"
+Max Knuckle:
+  name: "Max Knuckle"
+  category: "physical"
+  type: "fighting"
+Confuse Ray:
+  name: "Confuse Ray"
+  category: "status"
+  type: "ghost"
+Embargo:
+  name: "Embargo"
+  category: "status"
+  type: "dark"
+Kinesis:
+  name: "Kinesis"
+  category: "status"
+  type: "psychic"
+Round:
+  name: "Round"
+  category: "special"
+  type: "normal"
+Misty Terrain:
+  name: "Misty Terrain"
+  category: "status"
+  type: "fairy"
+Signal Beam:
+  name: "Signal Beam"
+  category: "special"
+  type: "bug"
+Ally Switch:
+  name: "Ally Switch"
+  category: "status"
+  type: "psychic"
+Kowtow Cleave:
+  name: "Kowtow Cleave"
+  category: "physical"
+  type: "dark"
+Aqua Step:
+  name: "Aqua Step"
+  category: "physical"
+  type: "water"
+Sonic Boom:
+  name: "Sonic Boom"
+  category: "special"
+  type: "normal"
+Bone Club:
+  name: "Bone Club"
+  category: "physical"
+  type: "ground"
+Vine Whip:
+  name: "Vine Whip"
+  category: "physical"
+  type: "grass"
+Sweet Scent:
+  name: "Sweet Scent"
+  category: "status"
+  type: "normal"
+Tera Starstorm:
+  name: "Tera Starstorm"
+  category: "special"
+  type: "normal"
+Scald:
+  name: "Scald"
+  category: "special"
+  type: "water"
+Aqua Jet:
+  name: "Aqua Jet"
+  category: "physical"
+  type: "water"
+Tearful Look:
+  name: "Tearful Look"
+  category: "status"
+  type: "normal"
+Luster Purge:
+  name: "Luster Purge"
+  category: "special"
+  type: "psychic"
+Zap Cannon:
+  name: "Zap Cannon"
+  category: "special"
+  type: "electric"
+Baneful Bunker:
+  name: "Baneful Bunker"
+  category: "status"
+  type: "poison"
+Assurance:
+  name: "Assurance"
+  category: "physical"
+  type: "dark"
+King’s Shield:
+  name: "King’s Shield"
+  category: "status"
+  type: "steel"
+Beat Up:
+  name: "Beat Up"
+  category: "physical"
+  type: "dark"
+Morning Sun:
+  name: "Morning Sun"
+  category: "status"
+  type: "normal"
+Max Overgrowth:
+  name: "Max Overgrowth"
+  category: "physical"
+  type: "grass"
+Magical Leaf:
+  name: "Magical Leaf"
+  category: "special"
+  type: "grass"
+Acupressure:
+  name: "Acupressure"
+  category: "status"
+  type: "normal"
+Simple Beam:
+  name: "Simple Beam"
+  category: "status"
+  type: "normal"
+Chilling Water:
+  name: "Chilling Water"
+  category: "special"
+  type: "water"
+Sludge Wave:
+  name: "Sludge Wave"
+  category: "special"
+  type: "poison"
+Aura Sphere:
+  name: "Aura Sphere"
+  category: "special"
+  type: "fighting"
+Octazooka:
+  name: "Octazooka"
+  category: "special"
+  type: "water"
+Poison Jab:
+  name: "Poison Jab"
+  category: "physical"
+  type: "poison"
+Heart Stamp:
+  name: "Heart Stamp"
+  category: "physical"
+  type: "psychic"
+Electroweb:
+  name: "Electroweb"
+  category: "special"
+  type: "electric"
+Me First:
+  name: "Me First"
+  category: "status"
+  type: "normal"
+Attract:
+  name: "Attract"
+  category: "status"
+  type: "normal"
+Ice Beam:
+  name: "Ice Beam"
+  category: "special"
+  type: "ice"
+Circle Throw:
+  name: "Circle Throw"
+  category: "physical"
+  type: "fighting"
+Max Ooze:
+  name: "Max Ooze"
+  category: "physical"
+  type: "poison"
+Spider Web:
+  name: "Spider Web"
+  category: "status"
+  type: "bug"
+Haze:
+  name: "Haze"
+  category: "status"
+  type: "ice"
+Psychic Fangs:
+  name: "Psychic Fangs"
+  category: "physical"
+  type: "psychic"
+Steel Roller:
+  name: "Steel Roller"
+  category: "physical"
+  type: "steel"
+Metal Burst:
+  name: "Metal Burst"
+  category: "physical"
+  type: "steel"
+Cotton Guard:
+  name: "Cotton Guard"
+  category: "status"
+  type: "grass"
+Avalanche:
+  name: "Avalanche"
+  category: "physical"
+  type: "ice"
+Flame Burst:
+  name: "Flame Burst"
+  category: "special"
+  type: "fire"
+Calm Mind:
+  name: "Calm Mind"
+  category: "status"
+  type: "psychic"
+Supersonic:
+  name: "Supersonic"
+  category: "status"
+  type: "normal"
+Cotton Spore:
+  name: "Cotton Spore"
+  category: "status"
+  type: "grass"
+Shed Tail:
+  name: "Shed Tail"
+  category: "status"
+  type: "normal"
+Zing Zap:
+  name: "Zing Zap"
+  category: "physical"
+  type: "electric"
+Steam Eruption:
+  name: "Steam Eruption"
+  category: "special"
+  type: "water"
+Stockpile:
+  name: "Stockpile"
+  category: "status"
+  type: "normal"
+Misty Explosion:
+  name: "Misty Explosion"
+  category: "special"
+  type: "fairy"
+Heavy Slam:
+  name: "Heavy Slam"
+  category: "physical"
+  type: "steel"
+Rage Fist:
+  name: "Rage Fist"
+  category: "physical"
+  type: "ghost"
+Dire Claw:
+  name: "Dire Claw"
+  category: "physical"
+  type: "poison"
+Wicked Blow:
+  name: "Wicked Blow"
+  category: "physical"
+  type: "dark"
+Anchor Shot:
+  name: "Anchor Shot"
+  category: "physical"
+  type: "steel"
+Swagger:
+  name: "Swagger"
+  category: "status"
+  type: "normal"
+Shadow Ball:
+  name: "Shadow Ball"
+  category: "special"
+  type: "ghost"
+Nightmare:
+  name: "Nightmare"
+  category: "status"
+  type: "ghost"
+Hurricane:
+  name: "Hurricane"
+  category: "special"
+  type: "flying"
+Grassy Terrain:
+  name: "Grassy Terrain"
+  category: "status"
+  type: "grass"
+Pollen Puff:
+  name: "Pollen Puff"
+  category: "special"
+  type: "bug"
+Bitter Blade:
+  name: "Bitter Blade"
+  category: "physical"
+  type: "fire"
+Brick Break:
+  name: "Brick Break"
+  category: "physical"
+  type: "fighting"
+Guillotine:
+  name: "Guillotine"
+  category: "physical"
+  type: "normal"
+Disarming Voice:
+  name: "Disarming Voice"
+  category: "special"
+  type: "fairy"
+Dragon Pulse:
+  name: "Dragon Pulse"
+  category: "special"
+  type: "dragon"
+Seed Flare:
+  name: "Seed Flare"
+  category: "special"
+  type: "grass"
+Protect:
+  name: "Protect"
+  category: "status"
+  type: "normal"
+Soul-Stealing 7-Star Strike:
+  name: "Soul-Stealing 7-Star Strike"
+  category: "physical"
+  type: "ghost"
+Splishy Splash:
+  name: "Splishy Splash"
+  category: "special"
+  type: "water"
+Wild Charge:
+  name: "Wild Charge"
+  category: "physical"
+  type: "electric"
+Captivate:
+  name: "Captivate"
+  category: "status"
+  type: "normal"
+Knock Off:
+  name: "Knock Off"
+  category: "physical"
+  type: "dark"
+Sky Uppercut:
+  name: "Sky Uppercut"
+  category: "physical"
+  type: "fighting"
+Wake-Up Slap:
+  name: "Wake-Up Slap"
+  category: "physical"
+  type: "fighting"
+Moonlight:
+  name: "Moonlight"
+  category: "status"
+  type: "fairy"
+Catastropika:
+  name: "Catastropika"
+  category: "physical"
+  type: "electric"
+Freeze-Dry:
+  name: "Freeze-Dry"
+  category: "special"
+  type: "ice"
+Spark:
+  name: "Spark"
+  category: "physical"
+  type: "electric"
+Blizzard:
+  name: "Blizzard"
+  category: "special"
+  type: "ice"
+Psychic Noise:
+  name: "Psychic Noise"
+  category: "special"
+  type: "psychic"
+Comet Punch:
+  name: "Comet Punch"
+  category: "physical"
+  type: "normal"
+Crush Claw:
+  name: "Crush Claw"
+  category: "physical"
+  type: "normal"
+Switcheroo:
+  name: "Switcheroo"
+  category: "status"
+  type: "dark"
+Steamroller:
+  name: "Steamroller"
+  category: "physical"
+  type: "bug"
+Volt Switch:
+  name: "Volt Switch"
+  category: "special"
+  type: "electric"
+No Retreat:
+  name: "No Retreat"
+  category: "status"
+  type: "fighting"
+Revenge:
+  name: "Revenge"
+  category: "physical"
+  type: "fighting"
+Brave Bird:
+  name: "Brave Bird"
+  category: "physical"
+  type: "flying"
+Water Shuriken:
+  name: "Water Shuriken"
+  category: "special"
+  type: "water"
+Strength Sap:
+  name: "Strength Sap"
+  category: "status"
+  type: "grass"
+Steel Beam:
+  name: "Steel Beam"
+  category: "special"
+  type: "steel"
+Chip Away:
+  name: "Chip Away"
+  category: "physical"
+  type: "normal"
+Extreme Speed:
+  name: "Extreme Speed"
+  category: "physical"
+  type: "normal"
+Body Slam:
+  name: "Body Slam"
+  category: "physical"
+  type: "normal"
+Gunk Shot:
+  name: "Gunk Shot"
+  category: "physical"
+  type: "poison"
+Lock-On:
+  name: "Lock-On"
+  category: "status"
+  type: "normal"
+Inferno Overdrive:
+  name: "Inferno Overdrive"
+  category: "special"
+  type: "fire"
+Ruination:
+  name: "Ruination"
+  category: "special"
+  type: "dark"
+Vacuum Wave:
+  name: "Vacuum Wave"
+  category: "special"
+  type: "fighting"
+Max Flare:
+  name: "Max Flare"
+  category: "physical"
+  type: "fire"
+Chloroblast:
+  name: "Chloroblast"
+  category: "special"
+  type: "grass"
+Flash Cannon:
+  name: "Flash Cannon"
+  category: "special"
+  type: "steel"
+Spikes:
+  name: "Spikes"
+  category: "status"
+  type: "ground"
+Strange Steam:
+  name: "Strange Steam"
+  category: "special"
+  type: "fairy"
+Spit Up:
+  name: "Spit Up"
+  category: "special"
+  type: "normal"
+Shadow Rave:
+  name: "Shadow Rave"
+  category: "special"
+  type: "shadow"
+Poison Sting:
+  name: "Poison Sting"
+  category: "physical"
+  type: "poison"
+Thunderclap:
+  name: "Thunderclap"
+  category: "special"
+  type: "electric"
+Toxic Spikes:
+  name: "Toxic Spikes"
+  category: "status"
+  type: "poison"
+Fire Punch:
+  name: "Fire Punch"
+  category: "physical"
+  type: "fire"
+Mud-Slap:
+  name: "Mud-Slap"
+  category: "special"
+  type: "ground"
+Revelation Dance:
+  name: "Revelation Dance"
+  category: "special"
+  type: "normal"
+Focus Punch:
+  name: "Focus Punch"
+  category: "physical"
+  type: "fighting"
+Bone Rush:
+  name: "Bone Rush"
+  category: "physical"
+  type: "ground"
+Snarl:
+  name: "Snarl"
+  category: "special"
+  type: "dark"
+Snipe Shot:
+  name: "Snipe Shot"
+  category: "special"
+  type: "water"
+Sinister Arrow Raid:
+  name: "Sinister Arrow Raid"
+  category: "physical"
+  type: "ghost"
+Parabolic Charge:
+  name: "Parabolic Charge"
+  category: "special"
+  type: "electric"
+Solar Beam:
+  name: "Solar Beam"
+  category: "special"
+  type: "grass"
+Magnitude:
+  name: "Magnitude"
+  category: "physical"
+  type: "ground"
+Origin Pulse:
+  name: "Origin Pulse"
+  category: "special"
+  type: "water"
+Head Smash:
+  name: "Head Smash"
+  category: "physical"
+  type: "rock"
+Scary Face:
+  name: "Scary Face"
+  category: "status"
+  type: "normal"
+Thunder Cage:
+  name: "Thunder Cage"
+  category: "special"
+  type: "electric"
+Iron Defense:
+  name: "Iron Defense"
+  category: "status"
+  type: "steel"
+Octolock:
+  name: "Octolock"
+  category: "status"
+  type: "fighting"
+Clanging Scales:
+  name: "Clanging Scales"
+  category: "special"
+  type: "dragon"
+Charge:
+  name: "Charge"
+  category: "status"
+  type: "electric"
+Gyro Ball:
+  name: "Gyro Ball"
+  category: "physical"
+  type: "steel"
+Armor Cannon:
+  name: "Armor Cannon"
+  category: "special"
+  type: "fire"
+Pound:
+  name: "Pound"
+  category: "physical"
+  type: "normal"
+Speed Swap:
+  name: "Speed Swap"
+  category: "status"
+  type: "psychic"
+Recover:
+  name: "Recover"
+  category: "status"
+  type: "normal"
+Thunderbolt:
+  name: "Thunderbolt"
+  category: "special"
+  type: "electric"
+Reflect Type:
+  name: "Reflect Type"
+  category: "status"
+  type: "normal"
+Flying Press:
+  name: "Flying Press"
+  category: "physical"
+  type: "fighting"
+Light Screen:
+  name: "Light Screen"
+  category: "status"
+  type: "psychic"
+Chilly Reception:
+  name: "Chilly Reception"
+  category: "status"
+  type: "ice"
+Snatch:
+  name: "Snatch"
+  category: "status"
+  type: "dark"
+Confide:
+  name: "Confide"
+  category: "status"
+  type: "normal"
+Spicy Extract:
+  name: "Spicy Extract"
+  category: "status"
+  type: "grass"
+Venom Drench:
+  name: "Venom Drench"
+  category: "status"
+  type: "poison"
+Tachyon Cutter:
+  name: "Tachyon Cutter"
+  category: "special"
+  type: "steel"
+Breakneck Blitz:
+  name: "Breakneck Blitz"
+  category: "special"
+  type: "normal"
+Fiery Dance:
+  name: "Fiery Dance"
+  category: "special"
+  type: "fire"
+Bullet Punch:
+  name: "Bullet Punch"
+  category: "physical"
+  type: "steel"
+Water Pledge:
+  name: "Water Pledge"
+  category: "special"
+  type: "water"
+Roost:
+  name: "Roost"
+  category: "status"
+  type: "flying"
+Max Guard:
+  name: "Max Guard"
+  category: "status"
+  type: "normal"
+Malicious Moonsault:
+  name: "Malicious Moonsault"
+  category: "physical"
+  type: "dark"
+Relic Song:
+  name: "Relic Song"
+  category: "special"
+  type: "normal"
+Tackle:
+  name: "Tackle"
+  category: "physical"
+  type: "normal"
+Heal Pulse:
+  name: "Heal Pulse"
+  category: "status"
+  type: "psychic"
+Synchronoise:
+  name: "Synchronoise"
+  category: "special"
+  type: "psychic"
+Bide:
+  name: "Bide"
+  category: "physical"
+  type: "normal"
+Pin Missile:
+  name: "Pin Missile"
+  category: "physical"
+  type: "bug"
+Rototiller:
+  name: "Rototiller"
+  category: "status"
+  type: "ground"
+Tar Shot:
+  name: "Tar Shot"
+  category: "status"
+  type: "rock"
+Vital Throw:
+  name: "Vital Throw"
+  category: "physical"
+  type: "fighting"
+Rage:
+  name: "Rage"
+  category: "physical"
+  type: "normal"
+Aqua Cutter:
+  name: "Aqua Cutter"
+  category: "physical"
+  type: "water"
+Mean Look:
+  name: "Mean Look"
+  category: "status"
+  type: "normal"
+Doodle:
+  name: "Doodle"
+  category: "status"
+  type: "normal"
+Thunder:
+  name: "Thunder"
+  category: "special"
+  type: "electric"
+High Horsepower:
+  name: "High Horsepower"
+  category: "physical"
+  type: "ground"
+Thousand Waves:
+  name: "Thousand Waves"
+  category: "physical"
+  type: "ground"
+Bolt Beak:
+  name: "Bolt Beak"
+  category: "physical"
+  type: "electric"
+Dragon Breath:
+  name: "Dragon Breath"
+  category: "special"
+  type: "dragon"
+Mimic:
+  name: "Mimic"
+  category: "status"
+  type: "normal"
+Thief:
+  name: "Thief"
+  category: "physical"
+  type: "dark"
+Psyshock:
+  name: "Psyshock"
+  category: "special"
+  type: "psychic"
+Springtide Storm:
+  name: "Springtide Storm"
+  category: "special"
+  type: "fairy"
+Mountain Gale:
+  name: "Mountain Gale"
+  category: "physical"
+  type: "ice"
+Max Phantasm:
+  name: "Max Phantasm"
+  category: "physical"
+  type: "ghost"
+Extreme Evoboost:
+  name: "Extreme Evoboost"
+  category: "status"
+  type: "normal"
+Role Play:
+  name: "Role Play"
+  category: "status"
+  type: "psychic"
+Celebrate:
+  name: "Celebrate"
+  category: "status"
+  type: "normal"
+Gear Up:
+  name: "Gear Up"
+  category: "status"
+  type: "steel"
+Stun Spore:
+  name: "Stun Spore"
+  category: "status"
+  type: "grass"
+High Jump Kick:
+  name: "High Jump Kick"
+  category: "physical"
+  type: "fighting"
+Blood Moon:
+  name: "Blood Moon"
+  category: "special"
+  type: "normal"
+Quick Guard:
+  name: "Quick Guard"
+  category: "status"
+  type: "fighting"
+Soak:
+  name: "Soak"
+  category: "status"
+  type: "water"
+Flamethrower:
+  name: "Flamethrower"
+  category: "special"
+  type: "fire"
+Taunt:
+  name: "Taunt"
+  category: "status"
+  type: "dark"
+Overheat:
+  name: "Overheat"
+  category: "special"
+  type: "fire"
+Defog:
+  name: "Defog"
+  category: "status"
+  type: "flying"
+Bubble:
+  name: "Bubble"
+  category: "special"
+  type: "water"
+Seed Bomb:
+  name: "Seed Bomb"
+  category: "physical"
+  type: "grass"
+Accelerock:
+  name: "Accelerock"
+  category: "physical"
+  type: "rock"
+Branch Poke:
+  name: "Branch Poke"
+  category: "physical"
+  type: "grass"
+Thunder Shock:
+  name: "Thunder Shock"
+  category: "special"
+  type: "electric"
+Iron Tail:
+  name: "Iron Tail"
+  category: "physical"
+  type: "steel"
+Belly Drum:
+  name: "Belly Drum"
+  category: "status"
+  type: "normal"
+Leaf Blade:
+  name: "Leaf Blade"
+  category: "physical"
+  type: "grass"
+Moongeist Beam:
+  name: "Moongeist Beam"
+  category: "special"
+  type: "ghost"
+Shadow Fire:
+  name: "Shadow Fire"
+  category: "special"
+  type: "shadow"
+Milk Drink:
+  name: "Milk Drink"
+  category: "status"
+  type: "normal"
+Aeroblast:
+  name: "Aeroblast"
+  category: "special"
+  type: "flying"
+Twinkle Tackle:
+  name: "Twinkle Tackle"
+  category: "special"
+  type: "fairy"
+Dual Chop:
+  name: "Dual Chop"
+  category: "physical"
+  type: "dragon"
+Crush Grip:
+  name: "Crush Grip"
+  category: "physical"
+  type: "normal"
+Echoed Voice:
+  name: "Echoed Voice"
+  category: "special"
+  type: "normal"
+Burning Jealousy:
+  name: "Burning Jealousy"
+  category: "special"
+  type: "fire"
+Block:
+  name: "Block"
+  category: "status"
+  type: "normal"
+Psycho Boost:
+  name: "Psycho Boost"
+  category: "special"
+  type: "psychic"
+Heat Crash:
+  name: "Heat Crash"
+  category: "physical"
+  type: "fire"
+Blue Flare:
+  name: "Blue Flare"
+  category: "special"
+  type: "fire"
+Low Sweep:
+  name: "Low Sweep"
+  category: "physical"
+  type: "fighting"
+Giga Drain:
+  name: "Giga Drain"
+  category: "special"
+  type: "grass"
+Weather Ball:
+  name: "Weather Ball"
+  category: "special"
+  type: "normal"
+Toxic:
+  name: "Toxic"
+  category: "status"
+  type: "poison"
+Shadow Sky:
+  name: "Shadow Sky"
+  category: "status"
+  type: "shadow"
+Purify:
+  name: "Purify"
+  category: "status"
+  type: "poison"
+Sludge Bomb:
+  name: "Sludge Bomb"
+  category: "special"
+  type: "poison"
+Lumina Crash:
+  name: "Lumina Crash"
+  category: "special"
+  type: "psychic"
+Megahorn:
+  name: "Megahorn"
+  category: "physical"
+  type: "bug"
+Stored Power:
+  name: "Stored Power"
+  category: "special"
+  type: "psychic"
+Teatime:
+  name: "Teatime"
+  category: "status"
+  type: "normal"
+V-create:
+  name: "V-create"
+  category: "physical"
+  type: "fire"
+Land’s Wrath:
+  name: "Land’s Wrath"
+  category: "physical"
+  type: "ground"
+Slack Off:
+  name: "Slack Off"
+  category: "status"
+  type: "normal"
+Final Gambit:
+  name: "Final Gambit"
+  category: "special"
+  type: "fighting"
+Rest:
+  name: "Rest"
+  category: "status"
+  type: "psychic"
+Pay Day:
+  name: "Pay Day"
+  category: "physical"
+  type: "normal"
+Yawn:
+  name: "Yawn"
+  category: "status"
+  type: "normal"
+Earth Power:
+  name: "Earth Power"
+  category: "special"
+  type: "ground"
+Dual Wingbeat:
+  name: "Dual Wingbeat"
+  category: "physical"
+  type: "flying"
+Supersonic Skystrike:
+  name: "Supersonic Skystrike"
+  category: "special"
+  type: "flying"
+Heal Block:
+  name: "Heal Block"
+  category: "status"
+  type: "psychic"
+Energy Ball:
+  name: "Energy Ball"
+  category: "special"
+  type: "grass"
+Nature Power:
+  name: "Nature Power"
+  category: "status"
+  type: "normal"
+Egg Bomb:
+  name: "Egg Bomb"
+  category: "physical"
+  type: "normal"
+Lunge:
+  name: "Lunge"
+  category: "physical"
+  type: "bug"
+Hyper Beam:
+  name: "Hyper Beam"
+  category: "special"
+  type: "normal"
+"10,000,000 Volt Thunderbolt":
+  name: "10,000,000 Volt Thunderbolt"
+  category: "special"
+  type: "electric"
+Flare Blitz:
+  name: "Flare Blitz"
+  category: "physical"
+  type: "fire"
+Metal Sound:
+  name: "Metal Sound"
+  category: "status"
+  type: "steel"
+Wring Out:
+  name: "Wring Out"
+  category: "special"
+  type: "normal"
+Max Mindstorm:
+  name: "Max Mindstorm"
+  category: "physical"
+  type: "psychic"
+Fillet Away:
+  name: "Fillet Away"
+  category: "status"
+  type: "normal"
+Volt Tackle:
+  name: "Volt Tackle"
+  category: "physical"
+  type: "electric"
+Corkscrew Crash:
+  name: "Corkscrew Crash"
+  category: "special"
+  type: "steel"
