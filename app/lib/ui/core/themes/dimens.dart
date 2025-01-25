@@ -29,6 +29,11 @@ abstract final class Dimens {
   int get pokemonArtworkFlex;
   int get pokemonSheetFlex;
 
+  /** replay filters dimensions **/
+  int get pokemonFiltersColumnsCount;
+  double get pokemonFiltersHorizontalSpacing;
+  double get pokemonFiltersTabViewHeight;
+
   static const Dimens desktop = _DimensDesktop();
   static const Dimens mobile = _DimensMobile();
 
@@ -50,7 +55,13 @@ final class _DimensMobile extends Dimens {
   @override
   final double pokepastePokemonIconsOffset = 25.0;
   @override
-  final double homeConfigScreenTopPadding = 0;
+  final double homeConfigScreenTopPadding = 0.0;
+  @override
+  final int pokemonFiltersColumnsCount = 2;
+  @override
+  final double pokemonFiltersTabViewHeight = 400.0;
+  @override
+  final double pokemonFiltersHorizontalSpacing = 8.0;
 
   @override
   final double screenBoundsTopMargin = 32.0;
@@ -80,6 +91,12 @@ final class _DimensDesktop extends Dimens {
   final double pokepastePokemonIconsOffset = 25.0;
   @override
   final double homeConfigScreenTopPadding = 36;
+  @override
+  final int pokemonFiltersColumnsCount = 4;
+  @override
+  final double pokemonFiltersTabViewHeight = 200.0;
+  @override
+  final double pokemonFiltersHorizontalSpacing = 20.0;
 
   @override
   final double screenBoundsTopMargin = 0.0;

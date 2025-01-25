@@ -2,6 +2,7 @@ import 'package:app2/data/services/pokemon_resource_service.dart';
 import 'package:app2/ui/core/localization/applocalization.dart';
 import 'package:app2/ui/core/themes/dimens.dart';
 import 'package:app2/ui/core/widgets.dart';
+import 'package:app2/ui/core/widgets/auto_gridview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,19 +11,19 @@ import 'controlled_autocomplete.dart';
 
 typedef ReplayPredicate = bool Function(Replay);
 
-// TODO handle mobile
 class ReplayFiltersWidget extends StatefulWidget {
   final ReplayFiltersViewModel viewModel;
   final void Function(ReplayPredicate?) applyFilters;
+  final bool isMobile;
 
-  const ReplayFiltersWidget({super.key, required this.viewModel, required this.applyFilters});
+  const ReplayFiltersWidget({super.key, required this.viewModel, required this.applyFilters, required this.isMobile});
 
   @override
-  State createState() => ReplayFiltersWidgetState();
+  State createState() => isMobile ? _MobileReplayFiltersWidgetState() : _DesktopReplayFiltersWidgetState();
 }
 
 // doesn't extend AbstractViewModelState because the parent component should be responsible of disposing this component's viewModel
-class ReplayFiltersWidgetState extends AbstractState<ReplayFiltersWidget> with TickerProviderStateMixin {
+abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFiltersWidget> with TickerProviderStateMixin {
 
   late TabController _tabController;
   ReplayFiltersViewModel get _viewModel => widget.viewModel;
@@ -48,29 +49,20 @@ class ReplayFiltersWidgetState extends AbstractState<ReplayFiltersWidget> with T
           borderRadius: const BorderRadius.all(Radius.circular(8)),
         ),
         child: Column(children: [
-          Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0), child: Text("Filters", style: theme.textTheme.titleMedium,),),
+          Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+            child: Text("Filters", style: theme.textTheme.titleMedium,),),
           Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: GridView(
-              shrinkWrap: true,  // Shrinks to the size of its children
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 6,  // Number of columns in the grid
-                mainAxisSpacing: 4, // Spacing between rows
-                crossAxisSpacing: 20, // Spacing between columns
-                childAspectRatio: 4, // Aspect ratio of each grid item
-              ),
-              children: [
-                textInput(labelText: "Opponent Min Elo", controller: _viewModel.minEloController, numberInput: true),
-                textInput(labelText: "Opponent Max Elo", controller: _viewModel.maxEloController, numberInput: true),
-              ],  // Explicitly specify a list of widgets
-            ),),
+            child: eloFiltersWidget(context, localization, dimens, theme),),
+          SizedBox(height: 16.0,),
           TabBar(
             controller: _tabController,
+            isScrollable: widget.isMobile,
             onTap: (index) => _viewModel.onPokemonFilterTabSelected(index),
-            tabs: Iterable.generate(6, (index) => index).map((index) => Text("Pokemon ${index + 1}", style: theme.textTheme.labelLarge,)).toList(),
+            tabs: Iterable.generate(6, (index) => index).map((index) => Text("Pokemon ${index + 1}", style: theme.textTheme.titleMedium,)).toList(),
           ),
-          ConstrainedBox(constraints: BoxConstraints(maxHeight: 140),
+          ConstrainedBox(constraints: BoxConstraints(maxHeight: dimens.pokemonFiltersTabViewHeight),
             child: Padding(padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              child: TabBarView(controller: _tabController, children: Iterable.generate(6, (index) => index).map((index) => _pokemonFilterWidget(context, localization, dimens, theme, index)).toList()),),),
+              child: TabBarView(controller: _tabController, children: List.generate(6, (index) => _pokemonFilterWidget(context, localization, dimens, theme, index))),),),
 
 
           Align(alignment: Alignment.bottomRight,
@@ -87,19 +79,16 @@ class ReplayFiltersWidgetState extends AbstractState<ReplayFiltersWidget> with T
     );
   }
 
+  Widget eloFiltersWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
   Widget _pokemonFilterWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, int index) {
     final pokemonFilters = _viewModel.getPokemonFilters(index);
 
-    return GridView(
-      shrinkWrap: true,  // Shrinks to the size of its children
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4,  // Number of columns in the grid
-        mainAxisSpacing: 8, // Spacing between rows
-        crossAxisSpacing: 20, // Spacing between columns
-        childAspectRatio: 6, // Aspect ratio of each grid item
-      ),
+    return AutoGridView(
+      columnsCount: dimens.pokemonFiltersColumnsCount,
+      verticalCellSpacing: 8.0,
+      horizontalCellSpacing: dimens.pokemonFiltersHorizontalSpacing,
       children: [
-        autoCompleteTextInput(labelText: "Pokemon ${index + 1}", suggestions: _viewModel.pokemonResourceService.pokemonNames, controller: pokemonFilters.pokemonNameController),
+        autoCompleteTextInput(labelText: "Pokemon", suggestions: _viewModel.pokemonResourceService.pokemonNames, controller: pokemonFilters.pokemonNameController),
         autoCompleteTextInput(labelText: "Item", suggestions: _viewModel.pokemonResourceService.itemNames, controller: pokemonFilters.itemController),
         autoCompleteTextInput(labelText: "Ability", suggestions: _viewModel.pokemonResourceService.abilities, controller:  pokemonFilters.abilityController),
         autoCompleteTextInput(labelText: "Tera Type", suggestions: _viewModel.pokemonResourceService.teraTypes, controller:  pokemonFilters.teraTypeController),
@@ -177,6 +166,33 @@ class ReplayFiltersViewModel extends ChangeNotifier {
   void dispose() {
     _filters.dispose();
     super.dispose();
+  }
+}
+class _DesktopReplayFiltersWidgetState extends _AbstractReplayFiltersWidgetState {
+  @override
+  Widget eloFiltersWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
+    return Row(
+      children: [
+        SizedBox(width: 200.0, child: textInput(labelText: "Opponent Min Elo", controller: _viewModel.minEloController, numberInput: true),),
+        SizedBox(width: 32.0,),
+        SizedBox(width: 200.0, child: textInput(labelText: "Opponent Max Elo", controller: _viewModel.maxEloController, numberInput: true),),
+      ],  // Explicitly specify a list of widgets
+    );
+  }
+
+
+}
+class _MobileReplayFiltersWidgetState extends _AbstractReplayFiltersWidgetState {
+
+  @override
+  Widget eloFiltersWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
+    return Row(
+        children: [
+          Expanded(child: textInput(labelText: "Min Elo", controller: _viewModel.minEloController, numberInput: true)),
+          SizedBox(width: 8.0,),
+          Expanded(child: textInput(labelText: "Max Elo", controller: _viewModel.maxEloController, numberInput: true)),
+        ]// Explicitly specify a list of widgets
+    );
   }
 }
 

@@ -52,7 +52,7 @@ abstract class _MoveUsageComponentState extends AbstractViewModelState<MoveUsage
           }
           final moveUsages = viewModel.pokemonMoveUsages;
 
-          final filtersWidget = ReplayFiltersWidget(viewModel: viewModel.filtersViewModel, applyFilters: (replayPredicate) => viewModel.loadStats(replayPredicate: replayPredicate));
+          final filtersWidget = ReplayFiltersWidget(viewModel: viewModel.filtersViewModel, applyFilters: (replayPredicate) => viewModel.loadStats(replayPredicate: replayPredicate), isMobile: dimens.isMobile,);
           if (viewModel.replaysCount == 0) {
             return Column(children: [
               filtersWidget,

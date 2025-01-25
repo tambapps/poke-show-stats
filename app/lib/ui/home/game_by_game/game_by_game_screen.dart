@@ -35,7 +35,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractViewModelState<
           return ListView.separated(
               itemBuilder: (context, index) {
                 if (index == 0) {
-                  return ReplayFiltersWidget(viewModel: viewModel.filtersViewModel, applyFilters: (replayPredicate) => viewModel.applyFilters(replayPredicate));
+                  return ReplayFiltersWidget(viewModel: viewModel.filtersViewModel, applyFilters: (replayPredicate) => viewModel.applyFilters(replayPredicate), isMobile: dimens.isMobile,);
                 } else if (index == 1) {
                   return headerWidget(context, localization, dimens, theme);
                 }
