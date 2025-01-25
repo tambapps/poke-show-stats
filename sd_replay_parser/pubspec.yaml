@@ -9,6 +9,8 @@ environment:
 # Add regular dependencies here.
 dependencies:
   json_annotation: ^4.9.0
+  pokepaste_parser:
+    path: ../pokepaste_parser
 
 dev_dependencies:
   lints: ^5.0.0

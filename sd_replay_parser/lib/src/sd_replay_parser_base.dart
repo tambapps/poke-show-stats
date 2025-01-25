@@ -1,3 +1,5 @@
+import 'package:pokepaste_parser/pokepaste_parser.dart';
+
 import 'model.dart';
 
 
@@ -61,6 +63,11 @@ class SdReplayParser {
         case "win":
           winner = tokens[2];
           break;
+        case "showteam":
+          String teamLog = log.substring(13);
+          List<String> pokemonLog = teamLog.split("]");
+          playerData.pokepaste = Pokepaste(pokemonLog.map(_parsePokemonOts).toList());
+          break;
       }
     }
 
@@ -79,6 +86,20 @@ class SdReplayParser {
       return rawName.substring(0, rawName.length - 2);
     }
     return rawName;
+  }
+
+  // Calyrex-Shadow||SpellTag|AsOneSpectrier|AstralBarrage,Psychic,NastyPlot,Protect||||||50|,,,,,Normal]Incineroar||RockyHelmet|Intimidate|WillOWisp,KnockOff,PartingShot,FakeOut|||F|||50|,,,,,Ghost]Rillaboom||AssaultVest|GrassySurge|GrassyGlide,FakeOut,WoodHammer,Uturn|||F|||50|,,,,,Fire]Urshifu-Rapid-Strike||FocusSash|UnseenFist|SurgingStrikes,CloseCombat,AquaJet,Protect|||F|||50|,,,,,Stellar]Raging Bolt||BoosterEnergy|Protosynthesis|Thunderbolt,Thunderclap,DracoMeteor,Protect||||||50|,,,,,Electric]Ogerpon-Hearthflame||HearthflameMask|MoldBreaker|IvyCudgel,FollowMe,GrassyGlide,SpikyShield|||F|||50|,,,,,Fire
+
+  Pokemon _parsePokemonOts(String pokemonLog) {
+    Pokemon pokemon = Pokemon();
+    List<String> fields = pokemonLog.split("|");
+    pokemon.name = fields[0];
+    pokemon.item = fields[2];
+    pokemon.ability = fields[3];
+    pokemon.moves = fields[4].split(",");
+    pokemon.level = int.tryParse(fields[10]);
+    pokemon.teraType = fields[11].split(",").last;
+    return pokemon;
   }
 }
 

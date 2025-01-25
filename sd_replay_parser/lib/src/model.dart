@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:pokepaste_parser/pokepaste_parser.dart';
 part 'model.g.dart';
 
 @JsonSerializable()
@@ -34,13 +35,14 @@ class PlayerData {
   int? afterElo;
   List<String> get leads => selection.sublist(0, 2);
   Terastallization? terastallization;
+  Pokepaste? pokepaste;
   // pokemonName -> moveName -> count
   final Map<String, Map<String, int>> moveUsages;
 
   PlayerData.name(String name): this(name: name, team: [], selection: [], moveUsages: {},);
 
   PlayerData({required this.name, required this.team, required this.selection, this.beforeElo,
-    this.afterElo, this.terastallization, required this.moveUsages});
+    this.afterElo, this.terastallization, this.pokepaste, required this.moveUsages});
 
 
   void incrUsage(String pokemonName, String moveName) {
@@ -62,6 +64,7 @@ class SdReplayData {
   final int? rating;
   final String parserVersion;
   final String winner;
+  bool get isOts => player1.pokepaste != null && player2.pokepaste != null;
 
   PlayerData get winnerPlayer => player1.name == winner ? player1 : player2;
 

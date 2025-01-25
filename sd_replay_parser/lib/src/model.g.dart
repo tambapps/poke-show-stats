@@ -29,6 +29,9 @@ PlayerData _$PlayerDataFromJson(Map<String, dynamic> json) => PlayerData(
           ? null
           : Terastallization.fromJson(
               json['terastallization'] as Map<String, dynamic>),
+      pokepaste: json['pokepaste'] == null
+          ? null
+          : Pokepaste.fromJson(json['pokepaste'] as Map<String, dynamic>),
       moveUsages: (json['moveUsages'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(k, Map<String, int>.from(e as Map)),
       ),
@@ -42,6 +45,7 @@ Map<String, dynamic> _$PlayerDataToJson(PlayerData instance) =>
       'beforeElo': instance.beforeElo,
       'afterElo': instance.afterElo,
       'terastallization': instance.terastallization,
+      'pokepaste': instance.pokepaste,
       'moveUsages': instance.moveUsages,
     };
 
