@@ -1,7 +1,7 @@
 import 'package:app2/data/services/save_service.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:app2/data/services/pokemon_image_service.dart';
+import 'package:app2/data/services/pokemon_resource_service.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';

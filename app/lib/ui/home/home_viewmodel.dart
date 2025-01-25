@@ -7,17 +7,17 @@ import 'package:pokepaste_parser/pokepaste_parser.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
 import '../../data/models/replay.dart';
 import '../../data/services/pokeapi.dart';
-import '../../data/services/pokemon_image_service.dart';
+import '../../data/services/pokemon_resource_service.dart';
 
 class HomeViewModel extends ChangeNotifier {
 
-  HomeViewModel({required this.pokemonImageService, required this.saveService, required this.pokeApi});
+  HomeViewModel({required this.pokemonResourceService, required this.saveService, required this.pokeApi});
 
   // storing it here even if it used only in the replayEntriesComponent because we don't want
   // to erase/refresh the controller each time the replayEntriesScreen state updates
   final TextEditingController addReplayURIController = TextEditingController();
 
-  PokemonResourceService pokemonImageService;
+  PokemonResourceService pokemonResourceService;
   final SaveService saveService;
   final PokeApi pokeApi;
 

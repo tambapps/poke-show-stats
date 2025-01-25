@@ -1,4 +1,4 @@
-import 'package:app2/data/services/pokemon_image_service.dart';
+import 'package:app2/data/services/pokemon_resource_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../data/models/replay.dart';

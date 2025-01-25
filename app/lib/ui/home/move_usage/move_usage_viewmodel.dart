@@ -5,7 +5,7 @@ import 'package:app2/ui/core/widgets/replay_filters.dart';
 import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 
-import '../../../data/services/pokemon_image_service.dart';
+import '../../../data/services/pokemon_resource_service.dart';
 import '../home_viewmodel.dart';
 
 class MoveUsageViewModel extends ChangeNotifier {

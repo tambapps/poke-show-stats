@@ -8,7 +8,7 @@ import 'package:sd_replay_parser/sd_replay_parser.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../data/models/replay.dart';
-import '../../../data/services/pokemon_image_service.dart';
+import '../../../data/services/pokemon_resource_service.dart';
 
 class ReplayEntriesViewModel extends ChangeNotifier {
 
@@ -16,7 +16,7 @@ class ReplayEntriesViewModel extends ChangeNotifier {
     required this.replayParser,
     required this.homeViewModel});
 
-  PokemonResourceService get pokemonImageService => homeViewModel.pokemonImageService;
+  PokemonResourceService get pokemonResourceService => homeViewModel.pokemonResourceService;
   List<Replay> get replays => homeViewModel.replays;
   List<String> get sdNames => homeViewModel.sdNames;
 

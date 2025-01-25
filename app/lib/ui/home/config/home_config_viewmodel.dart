@@ -1,5 +1,5 @@
 import 'package:app2/data/services/pokeapi.dart';
-import 'package:app2/data/services/pokemon_image_service.dart';
+import 'package:app2/data/services/pokemon_resource_service.dart';
 import 'package:app2/ui/core/localization/applocalization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -15,7 +15,7 @@ class HomeConfigViewModel extends ChangeNotifier {
   List<String> get sdNames => homeViewModel.sdNames;
   Pokepaste? get pokepaste => homeViewModel.pokepaste;
   Map<String, Move> get pokemonMoves => homeViewModel.pokemonMoves;
-  PokemonResourceService get pokemonImageService => homeViewModel.pokemonImageService;
+  PokemonResourceService get pokemonResourceService => homeViewModel.pokemonResourceService;
 
   final HomeViewModel homeViewModel;
   final PokepasteParser pokepasteParser;

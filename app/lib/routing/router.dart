@@ -15,7 +15,7 @@ GoRouter router() => GoRouter(
       path: Routes.home,
       builder: (context, state) => HomeScreen(
           isMobile: Dimens.of(context).isMobile,
-        viewModel: HomeViewModel(pokemonImageService: context.read(), saveService: context.read(), pokeApi: context.read()),
+        viewModel: HomeViewModel(pokemonResourceService: context.read(), saveService: context.read(), pokeApi: context.read()),
       ),
     ),
   ],

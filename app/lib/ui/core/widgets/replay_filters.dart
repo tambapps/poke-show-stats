@@ -1,4 +1,4 @@
-import 'package:app2/data/services/pokemon_image_service.dart';
+import 'package:app2/data/services/pokemon_resource_service.dart';
 import 'package:app2/ui/core/localization/applocalization.dart';
 import 'package:app2/ui/core/themes/dimens.dart';
 import 'package:app2/ui/core/widgets.dart';
@@ -101,10 +101,8 @@ class ReplayFiltersWidgetState extends AbstractState<ReplayFiltersWidget> with T
       children: [
         autoCompleteTextInput(labelText: "Pokemon ${index + 1}", suggestions: _viewModel.pokemonResourceService.pokemonNames, controller: pokemonFilters.pokemonNameController),
         autoCompleteTextInput(labelText: "Item", suggestions: _viewModel.pokemonResourceService.itemNames, controller: pokemonFilters.itemController),
-        // TODO supply suggestions
-        autoCompleteTextInput(labelText: "Ability", suggestions: [], controller:  pokemonFilters.abilityController),
+        autoCompleteTextInput(labelText: "Ability", suggestions: _viewModel.pokemonResourceService.abilities, controller:  pokemonFilters.abilityController),
         autoCompleteTextInput(labelText: "Tera Type", suggestions: _viewModel.pokemonResourceService.teraTypes, controller:  pokemonFilters.teraTypeController),
-        // TODO supply suggestions
         ...List.generate(4, (index) => autoCompleteTextInput(labelText: "Move ${index + 1}", suggestions: [], controller: pokemonFilters.moveControllers[index]))
       ],  // Explicitly specify a list of widgets
     );

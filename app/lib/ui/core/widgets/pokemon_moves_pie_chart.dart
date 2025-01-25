@@ -1,5 +1,5 @@
 
-import 'package:app2/data/services/pokemon_image_service.dart';
+import 'package:app2/data/services/pokemon_resource_service.dart';
 import 'package:app2/ui/core/localization/applocalization.dart';
 import 'package:app2/ui/core/themes/dimens.dart';
 import 'package:app2/ui/core/utils.dart';
@@ -76,18 +76,18 @@ class _PokemonMovesPieChartState extends AbstractViewModelState<PokemonMovesPieC
 class PokemonMovesPieChartViewModel extends ChangeNotifier {
 
   static final _sectionColors = [Colors.blue, Colors.green, Colors.orange, Colors.purple];
-  final PokemonResourceService pokemonImageService;
+  final PokemonResourceService pokemonResourceService;
   final String pokemonName;
   final List<MapEntry<String, int>> pokemonMoveUsages;
 
   PokemonMovesPieChartViewModel({
-    required this.pokemonImageService,
+    required this.pokemonResourceService,
     required this.pokemonName,
     required Map<String, int> pokemonMoveUsages}): pokemonMoveUsages = pokemonMoveUsages.entries.toList() {
     this.pokemonMoveUsages.sort((e1, e2) =>  e2.value - e1.value);
   }
 
-  Widget getPokemonSprite(double size) => pokemonImageService.getPokemonSprite(pokemonName, width: size, height: size);
+  Widget getPokemonSprite(double size) => pokemonResourceService.getPokemonSprite(pokemonName, width: size, height: size);
 
   List<PieChartSectionData> getSections(ThemeData theme) {
     if (pokemonMoveUsages.isEmpty) {

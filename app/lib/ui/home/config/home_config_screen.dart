@@ -125,17 +125,17 @@ abstract class _HomeConfigComponentState extends AbstractViewModelState<HomeConf
               children: [
                 Transform.scale(
                   scale: 0.65,
-                  child: viewModel.pokemonImageService.getPokemonArtwork(pokemon.name),
+                  child: viewModel.pokemonResourceService.getPokemonArtwork(pokemon.name),
                 ),
                 Positioned(
                   top: dimens.pokepastePokemonIconsOffset,
                   left: 0,
-                  child: viewModel.pokemonImageService.getTeraTypeSprite(pokemon.teraType, width: Dimens.teraSpriteSize, height: Dimens.teraSpriteSize),
+                  child: viewModel.pokemonResourceService.getTeraTypeSprite(pokemon.teraType, width: Dimens.teraSpriteSize, height: Dimens.teraSpriteSize),
                 ),
                 if (pokemon.item != null) Positioned(
                   bottom: dimens.pokepastePokemonIconsOffset,
                   right: 0,
-                  child: viewModel.pokemonImageService.getItemSprite(pokemon.item!, width: Dimens.itemSpriteSize, height: Dimens.itemSpriteSize),
+                  child: viewModel.pokemonResourceService.getItemSprite(pokemon.item!, width: Dimens.itemSpriteSize, height: Dimens.itemSpriteSize),
                 )
               ],
             ),
@@ -204,9 +204,9 @@ abstract class _HomeConfigComponentState extends AbstractViewModelState<HomeConf
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        viewModel.pokemonImageService.getTypeSprite(move.type, width: 25.0, height: 25.0),
+        viewModel.pokemonResourceService.getTypeSprite(move.type, width: 25.0, height: 25.0),
         SizedBox(width: 8,),
-        viewModel.pokemonImageService.getCategorySprite(move.category, width: 32.0, height: 32.0),
+        viewModel.pokemonResourceService.getCategorySprite(move.category, width: 32.0, height: 32.0),
         SizedBox(width: 8,),
         Flexible(child: Tooltip(message: moveName,child: moveWidget,))
       ],

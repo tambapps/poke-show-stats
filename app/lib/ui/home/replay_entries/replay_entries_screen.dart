@@ -52,7 +52,7 @@ abstract class _AbstractReplayEntriesComponentState extends AbstractViewModelSta
     mainAxisAlignment: MainAxisAlignment.center,
     children: replay.opposingPlayer.team
         .map((pokemon) =>
-    Expanded(child: viewModel.pokemonImageService.getPokemonSprite(pokemon)))
+    Expanded(child: viewModel.pokemonResourceService.getPokemonSprite(pokemon)))
         .toList(),
   );
 
