@@ -21,6 +21,8 @@ class HomeConfigComponent extends StatefulWidget {
 
 abstract class _HomeConfigComponentState extends AbstractViewModelState<HomeConfigComponent> {
 
+  late TextEditingController _pokepasteController;
+
   @override
   HomeConfigViewModel get viewModel => widget.viewModel;
 
@@ -87,7 +89,7 @@ abstract class _HomeConfigComponentState extends AbstractViewModelState<HomeConf
         padding: padding,
         child: TextField(
           maxLines: null,
-          controller: viewModel.pokepasteController,
+          controller: _pokepasteController,
           decoration: InputDecoration(
             labelText: localization.pasteSomething,
             border: OutlineInputBorder(),
@@ -100,7 +102,7 @@ abstract class _HomeConfigComponentState extends AbstractViewModelState<HomeConf
         child: Align(
           alignment: Alignment.topRight,
           child: OutlinedButton(
-            onPressed: () => viewModel.loadPokepaste(),
+            onPressed: () => viewModel.loadPokepaste(_pokepasteController),
             child: Text(localization.load,),
           ),
         ),
@@ -211,6 +213,19 @@ abstract class _HomeConfigComponentState extends AbstractViewModelState<HomeConf
         Flexible(child: Tooltip(message: moveName,child: moveWidget,))
       ],
     );
+  }
+
+
+  @override
+  void initState() {
+    _pokepasteController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pokepasteController.dispose();
+    super.dispose();
   }
 }
 

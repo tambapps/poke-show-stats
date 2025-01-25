@@ -19,14 +19,13 @@ class HomeConfigViewModel extends ChangeNotifier {
 
   final HomeViewModel homeViewModel;
   final PokepasteParser pokepasteParser;
-  final TextEditingController sdNameController = TextEditingController();
-  final TextEditingController pokepasteController = TextEditingController();
+  final TextEditingController sdNameDialogController = TextEditingController();
 
   // TODO use me
   bool _loading = false;
   bool get loading => _loading;
 
-  void loadPokepaste() async {
+  void loadPokepaste(TextEditingController pokepasteController) async {
     String input = pokepasteController.text.trim();
     _setLoading(true);
     Pokepaste pokepaste;
@@ -66,7 +65,7 @@ class HomeConfigViewModel extends ChangeNotifier {
         hint: localization.enterSdName,
         confirmButtonText: localization.add,
         localization: localization,
-        textFieldController: sdNameController,
+        textFieldController: sdNameDialogController,
         validator: (text) => text.trim().isNotEmpty && text.length <= 18,
         onSuccess: (sdName) => homeViewModel.addSdName(sdName)
     );
@@ -81,8 +80,7 @@ class HomeConfigViewModel extends ChangeNotifier {
 
   @override
   void dispose() {
-    pokepasteController.dispose();
-    sdNameController.dispose();
+    sdNameDialogController.dispose();
     super.dispose();
   }
 }

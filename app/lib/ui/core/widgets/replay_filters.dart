@@ -28,12 +28,14 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
   late TabController _tabController;
   ReplayFiltersViewModel get _viewModel => widget.viewModel;
   void Function(ReplayPredicate?) get applyFilters => widget.applyFilters;
+  late _Filters _filters;
 
   @override
   void initState() {
     super.initState();
     // The `vsync: this` ensures the TabController is synchronized with the screen's refresh rate
     _tabController = TabController(length: 6, vsync: this);
+    _filters = _Filters();
   }
 
   @override
@@ -70,8 +72,8 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  OutlinedButton(onPressed: () => _viewModel.clearFilters(), child: Text("Clear")), const SizedBox(width: 16.0,),
-                  OutlinedButton(onPressed: () => applyFilters(_viewModel.getFiltersPredicate()), child: Text("Apply"))],
+                  OutlinedButton(onPressed: () => _filters.clear(), child: Text("Clear")), const SizedBox(width: 16.0,),
+                  OutlinedButton(onPressed: () => applyFilters(_filters.getPredicate()), child: Text("Apply"))],
               ),),),
           const SizedBox(height: 8.0,),
         ],),
@@ -81,7 +83,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
 
   Widget eloFiltersWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
   Widget _pokemonFilterWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, int index) {
-    final pokemonFilters = _viewModel.getPokemonFilters(index);
+    final pokemonFilters = _filters.pokemons[index];;
 
     return AutoGridView(
       columnsCount: dimens.pokemonFiltersColumnsCount,
@@ -137,6 +139,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
   @override
   void dispose() {
     _tabController.dispose();
+    _filters.dispose();
     super.dispose();
   }
 }
@@ -146,36 +149,21 @@ class ReplayFiltersViewModel extends ChangeNotifier {
   ReplayFiltersViewModel({required this.pokemonResourceService});
 
   final PokemonResourceService pokemonResourceService;
-  final _Filters _filters = _Filters();
-
-  TextEditingController get minEloController => _filters.minEloController;
-  TextEditingController get maxEloController => _filters.maxEloController;
 
   int _pokemonFilterTabIndex = 0;
 
   int get pokemonFilterTabIndex => _pokemonFilterTabIndex;
   void onPokemonFilterTabSelected(int index) => _pokemonFilterTabIndex = index;
-
-  ReplayPredicate? getFiltersPredicate() => _filters.getPredicate();
-
-  void clearFilters() => _filters.clear();
-
-  PokemonFilters getPokemonFilters(int index) => _filters.pokemons[index];
-
-  @override
-  void dispose() {
-    _filters.dispose();
-    super.dispose();
-  }
 }
+
 class _DesktopReplayFiltersWidgetState extends _AbstractReplayFiltersWidgetState {
   @override
   Widget eloFiltersWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     return Row(
       children: [
-        SizedBox(width: 200.0, child: textInput(labelText: "Opponent Min Elo", controller: _viewModel.minEloController, numberInput: true),),
+        SizedBox(width: 200.0, child: textInput(labelText: "Opponent Min Elo", controller: _filters.minEloController, numberInput: true),),
         SizedBox(width: 32.0,),
-        SizedBox(width: 200.0, child: textInput(labelText: "Opponent Max Elo", controller: _viewModel.maxEloController, numberInput: true),),
+        SizedBox(width: 200.0, child: textInput(labelText: "Opponent Max Elo", controller: _filters.maxEloController, numberInput: true),),
       ],  // Explicitly specify a list of widgets
     );
   }
@@ -188,9 +176,9 @@ class _MobileReplayFiltersWidgetState extends _AbstractReplayFiltersWidgetState 
   Widget eloFiltersWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     return Row(
         children: [
-          Expanded(child: textInput(labelText: "Min Elo", controller: _viewModel.minEloController, numberInput: true)),
+          Expanded(child: textInput(labelText: "Min Elo", controller: _filters.minEloController, numberInput: true)),
           SizedBox(width: 8.0,),
-          Expanded(child: textInput(labelText: "Max Elo", controller: _viewModel.maxEloController, numberInput: true)),
+          Expanded(child: textInput(labelText: "Max Elo", controller: _filters.maxEloController, numberInput: true)),
         ]// Explicitly specify a list of widgets
     );
   }

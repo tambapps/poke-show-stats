@@ -24,6 +24,7 @@ class GameByGameComponent extends StatefulWidget {
 
 abstract class _AbstractGameByGameComponentState extends AbstractViewModelState<GameByGameComponent> {
 
+  final Map<Replay, NoteEditingContext> _replayNoteEditingContextMap = {};
   @override
   GameByGameViewModel get viewModel => widget.viewModel;
 
@@ -92,17 +93,17 @@ abstract class _AbstractGameByGameComponentState extends AbstractViewModelState<
   }
 
   Widget _gbgNotesWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay) {
-    final noteEditingContext = viewModel.replayNoteEditingContextMap[replay];
+    final noteEditingContext = _replayNoteEditingContextMap[replay];
     if (noteEditingContext == null) {
       if (replay.notes?.trim().isEmpty ?? true) {
-        return OutlinedButton(onPressed: () => viewModel.editNote(replay), child: Text(localization.addNotes));
+        return OutlinedButton(onPressed: () => viewModel.editNote(_replayNoteEditingContextMap, replay), child: Text(localization.addNotes));
       } else {
         return Row(children: [
           Expanded(
               child: Text(replay.notes!, textAlign: TextAlign.center,)),
           const SizedBox(width: 16),
           OutlinedButton(
-            onPressed: () => viewModel.editNote(replay),
+            onPressed: () => viewModel.editNote(_replayNoteEditingContextMap, replay),
             child: Text(localization.editNotes),
           ),
           const SizedBox(width: 16),
@@ -126,7 +127,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractViewModelState<
           ),
           const SizedBox(width: 16),
           OutlinedButton(
-            onPressed: () => viewModel.saveNotes(replay, noteEditingContext.controller.text),
+            onPressed: () => viewModel.saveNotes(_replayNoteEditingContextMap, replay, noteEditingContext.controller.text),
             child: Text(localization.save),
           ),
           const SizedBox(width: 16),
@@ -193,6 +194,15 @@ abstract class _AbstractGameByGameComponentState extends AbstractViewModelState<
       );
     }).toList();
     return playerPickContainer(children);
+  }
+
+  @override
+  void dispose() {
+    for (var context in _replayNoteEditingContextMap.values) {
+      context.controller.dispose();
+    }
+    _replayNoteEditingContextMap.clear();
+    super.dispose();
   }
 }
 

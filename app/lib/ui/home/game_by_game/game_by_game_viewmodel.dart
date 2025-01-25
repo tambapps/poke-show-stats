@@ -19,16 +19,16 @@ class GameByGameViewModel extends ChangeNotifier {
   final ReplayFiltersViewModel filtersViewModel;
   final PokemonResourceService pokemonResourceService;
   late List<Replay> filteredReplays;
-  Map<Replay, NoteEditingContext> replayNoteEditingContextMap = {};
 
-  void editNote(Replay replay) {
+  void editNote(Map<Replay, NoteEditingContext> replayNoteEditingContextMap, Replay replay) {
     replayNoteEditingContextMap[replay] = NoteEditingContext(replay.notes ?? "");
     notifyListeners();
   }
 
-  void saveNotes(Replay replay, String notes) {
+  void saveNotes(Map<Replay, NoteEditingContext> replayNoteEditingContextMap, Replay replay, String notes) {
     replay.notes = notes;
-    replayNoteEditingContextMap.remove(replay);
+    NoteEditingContext? context = replayNoteEditingContextMap.remove(replay);
+    context?.dispose();
     homeViewModel.storeSave();
     notifyListeners();
   }
@@ -56,4 +56,6 @@ class NoteEditingContext {
   NoteEditingContext(String initialValue) {
     controller.text = initialValue;
   }
+
+  void dispose() => controller.dispose();
 }
