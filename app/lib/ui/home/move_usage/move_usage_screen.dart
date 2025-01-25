@@ -90,8 +90,10 @@ class _MobileMoveUsageComponentState extends _MoveUsageComponentState {
 
   @override
   Widget moveUsagesWidget(Pokepaste pokepaste, Map<String, Map<String, int>> moveUsages) {
-    // TODO: implement moveUsagesWidget
-    throw UnimplementedError();
+    return Column(
+      children: pokepaste.pokemons.map((pokemon) => Padding(padding: EdgeInsets.symmetric(horizontal: 32),
+        child: pokemonMoveUsagesWidget(moveUsages, pokemon),)).toList()
+      ,);
   }
   
 }

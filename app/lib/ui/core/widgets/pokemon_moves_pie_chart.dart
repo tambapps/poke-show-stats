@@ -42,11 +42,12 @@ class _PokemonMovesPieChartState extends AbstractViewModelState<PokemonMovesPieC
     List<Widget> sectionLegends = [];
 
     for (int i = 0; i < sections.length; i++) {
+      String moveName = widget.viewModel.pokemonMoveUsages[i].key;
       sectionLegends.add(Padding(padding: EdgeInsets.symmetric(vertical: 4.0),
         child: Row(children: [
           Center(child: Container(width: 32.0, height: 32.0, color: sections[i].color,),),
           const SizedBox(width: 16.0,),
-          Text(widget.viewModel.pokemonMoveUsages[i].key)
+          Expanded(child: Tooltip(message: moveName, child: Text(moveName, overflow: TextOverflow.ellipsis,),))
         ]),
       ));
     }
@@ -56,7 +57,7 @@ class _PokemonMovesPieChartState extends AbstractViewModelState<PokemonMovesPieC
       children: [
         Stack(alignment: Alignment.center,
           children: [
-          AspectRatio(aspectRatio: 1.5,
+          AspectRatio(aspectRatio: dimens.pieChartAspectRatio,
             child: PieChart(
               PieChartData(
                 sections: sections,
