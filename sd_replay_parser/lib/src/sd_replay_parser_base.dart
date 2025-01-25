@@ -94,15 +94,42 @@ class SdReplayParser {
     Pokemon pokemon = Pokemon();
     List<String> fields = pokemonLog.split("|");
     pokemon.name = fields[0];
-    pokemon.item = fields[2];
-    pokemon.ability = fields[3];
-    pokemon.moves = fields[4].split(",");
+    pokemon.item = _formattedShowteamName(fields[2]);
+    pokemon.ability = _formattedShowteamName(fields[3]);
+    pokemon.moves = fields[4].split(",").map(_formattedShowteamName).toList();
     pokemon.level = int.tryParse(fields[10]);
     pokemon.teraType = fields[11].split(",").last;
     return pokemon;
   }
+
+  String _formattedShowteamName(String input) {
+    StringBuffer buffer = StringBuffer(input[0]);
+    for (int i = 1; i < input.length; i++) {
+      String c = input[i];
+      if (c.isUpperCase()) {
+        buffer.write("-");
+        buffer.write(c.toLowerCase());
+      } else {
+        buffer.write(c);
+      }
+    }
+    return buffer.toString();
+  }
+
 }
 
+extension Case on String {
+  // isuppercase
+  bool isUpperCase(){
+    int ascii = codeUnitAt(0);
+    return ascii >= 65 && ascii <= 90;
+  }
+  // islowercase
+  bool isLowerCase(){
+    int ascii = codeUnitAt(0);
+    return ascii >= 97 && ascii <= 122;
+  }
+}
 
 class SdReplayParsingException implements Exception {
   final String message;

@@ -1,5 +1,6 @@
 
 import 'package:app2/data/models/replay.dart';
+import 'package:app2/ui/core/widgets/pokepaste_widget.dart';
 import 'package:app2/ui/core/widgets/replay_filters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -262,7 +263,7 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
       ),
       const SizedBox(width: 16.0,),
       if (replay.data.isOts)
-      ...[OutlinedButton(onPressed: () => _openOts(replay.opposingPlayer.pokepaste!), child: Text("OTS")), const SizedBox(width: 16.0,)],
+      ...[OutlinedButton(onPressed: () => _openOts(replay.opposingPlayer.name, replay.opposingPlayer.pokepaste!), child: Text("OTS")), const SizedBox(width: 16.0,)],
 
       if (replay.gameOutput != GameOutput.UNKNOWN)
         ...[
@@ -273,7 +274,16 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
     ],);
   }
 
-  void _openOts(Pokepaste pokepaste) {
-    // TODO
+  void _openOts(String playerName, Pokepaste pokepaste) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("$playerName's team"),
+            content: PokepasteWidget(pokepaste: pokepaste, pokemonResourceService: viewModel.pokemonResourceService),
+            actions: [
+              TextButton(onPressed: () => Navigator.pop(context), child: Text("OK",))],
+          );
+        });
   }
 }

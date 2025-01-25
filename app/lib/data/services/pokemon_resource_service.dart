@@ -21,7 +21,6 @@ class PokemonResourceService extends ChangeNotifier {
   List<String> _pokemonNames = [];
   List<String> get pokemonNames => _pokemonNames;
   Map<String, PokemonMove> _pokemonMoves = {};
-  Map<String, PokemonMove> get pokemonMoves => _pokemonMoves;
 
   final List<String> teraTypes = UnmodifiableListView([
     'Bug',
@@ -135,6 +134,9 @@ class PokemonResourceService extends ChangeNotifier {
     return Uri.parse(uri);
   }
 
+  PokemonMove? getPokemonMove(String move) {
+    return _pokemonMoves[move] ?? _pokemonMoves[move.replaceAll(' ', '-')];
+  }
   void _loadAsync() async {
     Map<dynamic, dynamic> pokemonMappings = loadYaml(await rootBundle.loadString('assets/mappings/pokemon-sprite-urls.yaml'));
     _pokemonMappings = pokemonMappings;
