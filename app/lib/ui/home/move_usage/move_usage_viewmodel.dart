@@ -13,7 +13,9 @@ class MoveUsageViewModel extends ChangeNotifier {
   MoveUsageViewModel({
     required this.homeViewModel,
     required this.pokemonResourceService,
-  }): filtersViewModel = ReplayFiltersViewModel(pokemonResourceService: pokemonResourceService);
+  }): filtersViewModel = ReplayFiltersViewModel(pokemonResourceService: pokemonResourceService) {
+    loadStats();
+  }
 
   final HomeViewModel homeViewModel;
   final PokemonResourceService pokemonResourceService;

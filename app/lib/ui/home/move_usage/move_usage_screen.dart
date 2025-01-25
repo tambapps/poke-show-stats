@@ -28,12 +28,6 @@ abstract class _MoveUsageComponentState extends AbstractViewModelState<MoveUsage
   MoveUsageViewModel get viewModel => widget.viewModel;
 
   @override
-  void initState() {
-    super.initState();
-    viewModel.loadStats();
-  }
-
-  @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     final pokepaste = viewModel.pokepaste;
     if (pokepaste == null) {
