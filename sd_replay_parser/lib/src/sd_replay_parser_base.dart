@@ -8,7 +8,7 @@ RegExp _NEXT_BATTLE_REGEX = RegExp(r'href="([^"]+)"');
 
 /// Checks if you are awesome. Spoiler: you are.
 class SdReplayParser {
-  static const String perserVersion = "0.1";
+  static const String parserVersion = "0.1";
 
 
   SdReplayData parse(Map<String, dynamic> sdJson) {
@@ -89,7 +89,7 @@ class SdReplayParser {
         rating: sdJson['rating'],
         winner: winner,
         nextBattle: nextBattle,
-        parserVersion: SdReplayParser.perserVersion
+        parserVersion: SdReplayParser.parserVersion
     );
   }
   String _pokemonName(String rawName) {

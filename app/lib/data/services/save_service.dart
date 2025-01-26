@@ -151,7 +151,17 @@ class SaveServiceImpl implements SaveService {
       return _emptySave(saveName);
     }
     Map<dynamic, dynamic> map = jsonDecode(json);
-    return Teamlytic(saveName: saveName, sdNames: _loadSdNames(map['sdNames']), replays: await _loadReplays(map['replays']), pokepaste: _loadPokepaste(map['pokepaste']));
+    List<bool> reloadedReplayRef = [false];
+    final teamlytic = Teamlytic(
+        saveName: saveName,
+        sdNames: _loadSdNames(map['sdNames']),
+        replays: await _loadReplays(map['replays'], reloadedReplayRef),
+        pokepaste: _loadPokepaste(map['pokepaste'])
+    );
+    if (reloadedReplayRef[0]) {
+      storeSave(teamlytic);
+    }
+    return teamlytic;
   }
 
   @override
@@ -160,17 +170,19 @@ class SaveServiceImpl implements SaveService {
   List<String> _loadSdNames(List<dynamic> rawSdNames) => rawSdNames.map((sdName) => sdName.toString()).toList();
   Pokepaste? _loadPokepaste(Map<String, dynamic>? json) => json != null ? Pokepaste.fromJson(json) : null;
 
-  Future<List<Replay>> _loadReplays(List<dynamic> jsonReplays) async {
+  Future<List<Replay>> _loadReplays(List<dynamic> jsonReplays, List<bool> reloadedReplayRef) async {
     List<Replay> replays = [];
     for (Map<String, dynamic> replayJson in jsonReplays) {
       final String? version = replayJson['data']['parserVersion'];
-      if (version != SdReplayParser.perserVersion) {
+      if (version != SdReplayParser.parserVersion) {
+        reloadedReplayRef[0] = true;
         Uri uri = Uri.parse(replayJson['uri'] as String);
-        developer.log("Replay $uri has different version ($version) than the app's current replay version (${SdReplayParser.perserVersion}). Reloading it...");
+        developer.log("Replay $uri has different version ($version) than the app's current replay version (${SdReplayParser.parserVersion}). Reloading it...");
         final response = await http.get(uri);
         if (response.statusCode != 200) {
           developer.log("Error: Failed to reload replay $uri. Got status code ${response.statusCode}");
           // maybe I should handle this better. e.g. allow having a replay without data and add a reload button in the UI
+          replays.add(_errorReplay(uri));
           continue;
         }
         final data = jsonDecode(response.body);
@@ -187,7 +199,8 @@ class SaveServiceImpl implements SaveService {
         replays.add(Replay.fromJson(replayJson));
       }
     }
-    for (Replay replay in replays) {
+    // reversed because in case of 3 games, G2 must have its elo in order for G1 to find it
+    for (Replay replay in replays.reversed) {
       if (replay.data.player1.beforeElo == null && replay.data.player1.afterElo == null
           && replay.data.nextBattle != null) {
         // we're in an intermediate battle (G1 or G2 when it is not the last game) and we need to fetch elo from final battle
@@ -199,4 +212,12 @@ class SaveServiceImpl implements SaveService {
 
   Teamlytic _emptySave(String saveName) => Teamlytic(saveName: saveName, sdNames: [], replays: [], pokepaste: null);
 
+  Replay _errorReplay(Uri uri) {
+    final player = _errorPlayer();
+    final data = SdReplayData(player1: player, player2: player, uploadTime: DateTime.now().millisecondsSinceEpoch, formatId: 'error', rating: 0, parserVersion: SdReplayParser.parserVersion, winner: player.name, nextBattle: null);
+    return Replay(uri: uri, data: data, gameOutput: GameOutput.UNKNOWN, opposingPlayer: _errorPlayer());
+  }
+
+  PlayerData _errorPlayer() => PlayerData(name: "<ERROR>", team: [], selection: [], moveUsages: {});
 }
+
