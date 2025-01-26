@@ -18,13 +18,8 @@ class PokemonResourceService extends ChangeNotifier {
   Map<dynamic, dynamic> get pokemonMappings => _pokemonMappings;
   Map<dynamic, dynamic> _itemMappings = {};
   Map<dynamic, dynamic> get itemMappings => _itemMappings;
-  List<String> _itemNames = [];
-
-  // TODO remove *Names fiels
-  List<String> get itemNames => _itemNames;
-  List<String> _pokemonNames = [];
-  List<String> get pokemonNames => _pokemonNames;
   Map<dynamic, dynamic> _pokemonMoves = {};
+  Map<dynamic, dynamic> get pokemonMoves => _pokemonMoves;
   Map<dynamic, dynamic> _abilities = {};
   Map<dynamic, dynamic> get abilities => _abilities;
 
@@ -143,22 +138,10 @@ class PokemonResourceService extends ChangeNotifier {
 
   void _loadAsync() async {
     _pokemonMappings = loadYaml(await rootBundle.loadString('assets/mappings/pokemon-sprite-urls.yaml'));
-    _pokemonNames = _extractKeys(pokemonMappings);
-
-    Map<dynamic, dynamic> itemMappings = loadYaml(await rootBundle.loadString('assets/mappings/items-mapping.yaml'));
-    _itemMappings = itemMappings;
-    _itemNames = _extractKeys(itemMappings);
-
+    _itemMappings = loadYaml(await rootBundle.loadString('assets/mappings/items-mapping.yaml'));
     _abilities = loadYaml(await rootBundle.loadString('assets/mappings/abilities.yaml'));
-
     _pokemonMoves = loadYaml(await rootBundle.loadString('assets/mappings/moves.yaml'));
 
     notifyListeners();
-  }
-
-  List<String> _extractKeys(Map<dynamic, dynamic> map) {
-    // keys should already be sorted
-    List<String> list = map.keys.map((k) => k.toString()).toList();
-    return UnmodifiableListView(list);
   }
 }

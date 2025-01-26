@@ -85,29 +85,42 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
   Widget _pokemonFilterWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, int index) {
     final pokemonFilters = _filters.pokemons[index];;
 
+    // computing it here to avoid computing it 4 times
+    List<MapEntry<dynamic, dynamic>> moveSuggestionEntries = _viewModel.pokemonResourceService.pokemonMoves.entries.toList();
+
     return AutoGridView(
       columnsCount: dimens.pokemonFiltersColumnsCount,
       verticalCellSpacing: 8.0,
       horizontalCellSpacing: dimens.pokemonFiltersHorizontalSpacing,
       children: [
-        autoCompleteTextInput(labelText: "Pokemon", suggestions: _viewModel.pokemonResourceService.pokemonNames, controller: pokemonFilters.pokemonNameController),
-        autoCompleteTextInput(labelText: "Item", suggestions: _viewModel.pokemonResourceService.itemNames, controller: pokemonFilters.itemController),
-        // TODO autocomplete ability
-        autoCompleteTextInput(labelText: "Ability", suggestions: [], controller:  pokemonFilters.abilityController),
-        autoCompleteTextInput(labelText: "Tera Type", suggestions: _viewModel.pokemonResourceService.teraTypes, controller:  pokemonFilters.teraTypeController),
-        // TODO autocomplete moves
-        ...List.generate(4, (index) => autoCompleteTextInput(labelText: "Move ${index + 1}", suggestions: [], controller: pokemonFilters.moveControllers[index]))
+        autoCompleteMapTextInput(labelText: "Pokemon", suggestions: _viewModel.pokemonResourceService.pokemonMappings, controller: pokemonFilters.pokemonNameController),
+        autoCompleteMapTextInput(labelText: "Item", suggestions: _viewModel.pokemonResourceService.itemMappings, controller: pokemonFilters.itemController),
+        autoCompleteMapTextInput(labelText: "Ability", suggestions: _viewModel.pokemonResourceService.abilities, controller: pokemonFilters.abilityController),
+        autoCompleteStringTextInput(labelText: "Tera Type", suggestions: _viewModel.pokemonResourceService.teraTypes, controller: pokemonFilters.teraTypeController),
+        ...List.generate(4, (index) => autoCompleteListTextInput(labelText: "Move ${index + 1}", suggestions: moveSuggestionEntries, controller: pokemonFilters.moveControllers[index]))
       ],  // Explicitly specify a list of widgets
     );
   }
 
-  Widget autoCompleteTextInput({required String labelText, required List<String> suggestions, required TextEditingController controller}) {
+  Widget autoCompleteStringTextInput({required String labelText, required List<String> suggestions, required TextEditingController controller}) {
+    return autoCompleteTextInput(labelText: labelText, suggestions: suggestions, controller: controller, displayStringForOption: (s) => _displayedName(s.replaceAll('-', ' ')));
+  }
+
+  Widget autoCompleteMapTextInput({required String labelText, required Map<dynamic, dynamic> suggestions, required TextEditingController controller}) {
+    return autoCompleteListTextInput(labelText: labelText, suggestions: suggestions.entries.toList(), controller: controller);
+  }
+
+  Widget autoCompleteListTextInput({required String labelText, required List<MapEntry<dynamic, dynamic>> suggestions, required TextEditingController controller}) {
+    return autoCompleteTextInput(labelText: labelText, suggestions: suggestions, controller: controller, displayStringForOption: (entry) => _displayedName(entry.key.replaceAll('-', ' ')));
+  }
+
+  Widget autoCompleteTextInput<T extends Object>({required String labelText, required List<T> suggestions, required TextEditingController controller, required String Function(T) displayStringForOption}) {
     return Padding(
       padding: EdgeInsets.only(top: 8.0),
-      child: ControlledAutoComplete<String>(
+      child: ControlledAutoComplete<T>(
         controller: controller,
         suggestions: suggestions,
-        displayStringForOption: (s) => _displayedName(s.replaceAll('-', ' ')),
+        displayStringForOption: displayStringForOption,
         fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
           return TextField(
             controller: controller,
