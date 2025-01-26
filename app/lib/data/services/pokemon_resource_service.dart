@@ -15,12 +15,18 @@ class PokemonResourceService extends ChangeNotifier {
   }
 
   Map<dynamic, dynamic> _pokemonMappings = {};
+  Map<dynamic, dynamic> get pokemonMappings => _pokemonMappings;
   Map<dynamic, dynamic> _itemMappings = {};
+  Map<dynamic, dynamic> get itemMappings => _itemMappings;
   List<String> _itemNames = [];
+
+  // TODO remove *Names fiels
   List<String> get itemNames => _itemNames;
   List<String> _pokemonNames = [];
   List<String> get pokemonNames => _pokemonNames;
-  Map<String, PokemonMove> _pokemonMoves = {};
+  Map<dynamic, dynamic> _pokemonMoves = {};
+  Map<dynamic, dynamic> _abilities = {};
+  Map<dynamic, dynamic> get abilities => _abilities;
 
   final List<String> teraTypes = UnmodifiableListView([
     'Bug',
@@ -42,9 +48,6 @@ class PokemonResourceService extends ChangeNotifier {
     'Stellar',
     'Water'
   ]);
-  List<String> _abilities = [];
-  List<String> get abilities => _abilities;
-
 
   Widget getPokemonSprite(String pokemon, {double width = Dimens.pokemonLogoSize, double height = Dimens.pokemonLogoSize}) {
     Uri? uri = _getPokemonSpriteUri(pokemon);
@@ -128,50 +131,34 @@ class PokemonResourceService extends ChangeNotifier {
   Uri? _getPokemonArtworkUri(String pokemon) => _getKey(pokemon, 'artwork', _pokemonMappings);
 
   Uri? _getKey(String key, String uriKey, Map<dynamic, dynamic> mappings)  {
-    Map<dynamic, dynamic>? pokemonUrls = mappings[key.replaceAll(' ', '-')];
+    Map<dynamic, dynamic>? pokemonUrls = mappings[key.toLowerCase().replaceAll(' ', '-')];
     if (pokemonUrls == null) return null;
     String uri = pokemonUrls[uriKey];
     return Uri.parse(uri);
   }
 
-  PokemonMove? getPokemonMove(String move) {
-    return _pokemonMoves[move] ?? _pokemonMoves[move.replaceAll(' ', '-')];
+  dynamic? getPokemonMove(String move) {
+    return _pokemonMoves[move.toLowerCase().replaceAll(' ', '-')];
   }
+
   void _loadAsync() async {
-    Map<dynamic, dynamic> pokemonMappings = loadYaml(await rootBundle.loadString('assets/mappings/pokemon-sprite-urls.yaml'));
-    _pokemonMappings = pokemonMappings;
+    _pokemonMappings = loadYaml(await rootBundle.loadString('assets/mappings/pokemon-sprite-urls.yaml'));
     _pokemonNames = _extractKeys(pokemonMappings);
 
     Map<dynamic, dynamic> itemMappings = loadYaml(await rootBundle.loadString('assets/mappings/items-mapping.yaml'));
     _itemMappings = itemMappings;
     _itemNames = _extractKeys(itemMappings);
 
-    List<dynamic> abilities = loadYaml(await rootBundle.loadString('assets/mappings/abilities.yaml'));
-    _abilities = abilities.map((o) => o.toString()).toList();
-    _abilities.sort();
-    _abilities = UnmodifiableListView(_abilities);
+    _abilities = loadYaml(await rootBundle.loadString('assets/mappings/abilities.yaml'));
 
-    Map<dynamic, dynamic> moves = loadYaml(await rootBundle.loadString('assets/mappings/moves.yaml'));
-    for (String moveName in moves.keys) {
-      dynamic obj = moves[moveName];
-      _pokemonMoves[moveName] = PokemonMove(name: obj['name'], type: obj['type'], category: obj['category']);
-    }
-    _pokemonMoves = Map.unmodifiable(_pokemonMoves);
+    _pokemonMoves = loadYaml(await rootBundle.loadString('assets/mappings/moves.yaml'));
+
     notifyListeners();
   }
 
   List<String> _extractKeys(Map<dynamic, dynamic> map) {
+    // keys should already be sorted
     List<String> list = map.keys.map((k) => k.toString()).toList();
-    list.sort();
     return UnmodifiableListView(list);
   }
 }
-
-class PokemonMove {
-  final String name;
-  final String type;
-  final String category;
-
-  PokemonMove({required this.name, required this.type, required this.category});
-}
-

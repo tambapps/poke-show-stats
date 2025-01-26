@@ -94,11 +94,11 @@ class PokepasteWidget extends AbstractStatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        pokemonResourceService.getTypeSprite(move.type, width: 25.0, height: 25.0),
+        pokemonResourceService.getTypeSprite(move['type'], width: 25.0, height: 25.0),
         SizedBox(width: 8,),
-        pokemonResourceService.getCategorySprite(move.category, width: 32.0, height: 32.0),
+        pokemonResourceService.getCategorySprite(move['category'], width: 32.0, height: 32.0),
         SizedBox(width: 8,),
-        Flexible(child: Tooltip(message: moveName,child: moveWidget,))
+        Flexible(child: Tooltip(message: moveName, child: moveWidget,))
       ],
     );
   }

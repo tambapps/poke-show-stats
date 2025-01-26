@@ -92,8 +92,10 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
       children: [
         autoCompleteTextInput(labelText: "Pokemon", suggestions: _viewModel.pokemonResourceService.pokemonNames, controller: pokemonFilters.pokemonNameController),
         autoCompleteTextInput(labelText: "Item", suggestions: _viewModel.pokemonResourceService.itemNames, controller: pokemonFilters.itemController),
-        autoCompleteTextInput(labelText: "Ability", suggestions: _viewModel.pokemonResourceService.abilities, controller:  pokemonFilters.abilityController),
+        // TODO autocomplete ability
+        autoCompleteTextInput(labelText: "Ability", suggestions: [], controller:  pokemonFilters.abilityController),
         autoCompleteTextInput(labelText: "Tera Type", suggestions: _viewModel.pokemonResourceService.teraTypes, controller:  pokemonFilters.teraTypeController),
+        // TODO autocomplete moves
         ...List.generate(4, (index) => autoCompleteTextInput(labelText: "Move ${index + 1}", suggestions: [], controller: pokemonFilters.moveControllers[index]))
       ],  // Explicitly specify a list of widgets
     );
