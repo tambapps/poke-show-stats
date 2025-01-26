@@ -7,6 +7,8 @@ import 'package:app2/ui/home/move_usage/move_usage_screen.dart';
 import 'package:app2/ui/home/move_usage/move_usage_viewmodel.dart';
 import 'package:app2/ui/home/replay_entries/replay_entries_screen.dart';
 import 'package:app2/ui/home/replay_entries/replay_entries_viewmodel.dart';
+import 'package:app2/ui/home/usage_stats/usage_stats_screen.dart';
+import 'package:app2/ui/home/usage_stats/usage_stats_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -39,7 +41,7 @@ abstract class _AbstractHomeScreenState extends AbstractViewModelState<HomeScree
     super.initState();
     viewModel.loadSave();
     // The `vsync: this` ensures the TabController is synchronized with the screen's refresh rate
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
   }
 
   @override
@@ -84,6 +86,9 @@ abstract class _AbstractHomeScreenState extends AbstractViewModelState<HomeScree
         ListenableBuilder(
             listenable: viewModel,
             builder: (context, _) => MoveUsageComponent(viewModel: MoveUsageViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), isMobile: dimens.isMobile)),
+        ListenableBuilder(
+            listenable: viewModel,
+            builder: (context, _) => UsageStatsComponent(viewModel: UsageStatsViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), isMobile: dimens.isMobile))
       ],
     );
   }
@@ -98,6 +103,7 @@ abstract class _AbstractHomeScreenState extends AbstractViewModelState<HomeScree
         Tab(text: localization.replayEntries),
         Tab(text: localization.gameByGame),
         Tab(text: localization.moveUsages),
+        Tab(text: localization.usageStats),
       ],
     );
   }

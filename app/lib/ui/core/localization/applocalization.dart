@@ -37,6 +37,7 @@ class AppLocalization {
     'replayUrl': 'Replay URL',
     'replayUrls': 'Replay URL(s)',
     'opposingTeam': 'Opposing Team',
+    'usageStats': 'Usage Stats',
   };
 
   // If string for "label" does not exist, will show "[LABEL]"
@@ -47,6 +48,7 @@ class AppLocalization {
   String get replayEntries => _get('replayEntries');
   String get gameByGame => _get('gameByGame');
   String get moveUsages => _get('moveUsages');
+  String get usageStats => _get('usageStats');
   String get showdownNames => _get('sdNames');
   String get addSdName => _get('addSdName');
   String get enterSdName => _get('enterSdName');
