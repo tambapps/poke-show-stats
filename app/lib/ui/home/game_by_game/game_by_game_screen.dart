@@ -221,22 +221,38 @@ class _MobileGameByGameComponentState extends _AbstractGameByGameComponentState 
   Widget gbgHeader(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay) {
     return Column(children: [
       Row(children: [
-        Padding(padding: EdgeInsets.symmetric(horizontal: 32.0), child: vsText(theme, replay),),
+        const SizedBox(width: 32.0,),
         if (replay.gameOutput != GameOutput.UNKNOWN)
-          winLooseWidget(theme, replay)
+          ...[winLooseWidget(theme, replay), const SizedBox(width: 32.0,)],
+        vsText(theme, replay),
       ],),
       // opponent team
       Row(
         children: replay.opposingPlayer.team
             .map((pokemon) =>
-        // TODO open dialog on click to show open teamsheet of particular pokemon if match was ots?
         Expanded(child: viewModel.pokemonResourceService.getPokemonSprite(pokemon)))
             .toList(),
       ),
       const SizedBox(height: 4,),
+      if (replay.data.isOts)
+        ...[OutlinedButton(onPressed: () => _openOts(replay.opposingPlayer.name, replay.opposingPlayer.pokepaste!), child: Text("OTS")), const SizedBox(height: 4.0,)],
       viewReplayButton(localization, replay)
     ],);
   }
+
+  void _openOts(String playerName, Pokepaste pokepaste) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("$playerName's team"),
+            content: SingleChildScrollView(child: PokepasteWidget(pokepaste: pokepaste, pokemonResourceService: viewModel.pokemonResourceService),),
+            actions: [
+              TextButton(onPressed: () => Navigator.pop(context), child: Text("OK",))],
+          );
+        });
+  }
+
 }
 
 class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState with TickerProviderStateMixin {
@@ -250,26 +266,25 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
   @override
   Widget gbgHeader(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay) {
     return Row(children: [
-      Padding(padding: const EdgeInsets.only(left: 32.0), child: vsText(theme, replay),),
+      SizedBox(width: 32.0,),
+      if (replay.gameOutput != GameOutput.UNKNOWN)
+        ...[
+          winLooseWidget(theme, replay),
+          const SizedBox(width: 16.0,),
+        ],
+      vsText(theme, replay),
       SizedBox(width: 8,),
       // opponent team
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: replay.opposingPlayer.team
             .map((pokemon) =>
-        // TODO open dialog on click to show open teamsheet of particular pokemon if match was ots?
         viewModel.pokemonResourceService.getPokemonSprite(pokemon))
             .toList(),
       ),
       const SizedBox(width: 16.0,),
       if (replay.data.isOts)
       ...[OutlinedButton(onPressed: () => _openOts(replay.opposingPlayer.name, replay.opposingPlayer.pokepaste!), child: Text("OTS")), const SizedBox(width: 16.0,)],
-
-      if (replay.gameOutput != GameOutput.UNKNOWN)
-        ...[
-          winLooseWidget(theme, replay),
-          const SizedBox(width: 16.0,),
-        ],
       viewReplayButton(localization, replay)
     ],);
   }

@@ -3166,10 +3166,6 @@ shieldon:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/shieldon.png"
   name: "Shieldon"
   artwork: "https://www.pokepedia.fr/images/thumb/c/c0/Dinoclier-DP.png/581px-Dinoclier-DP.png"
-shifours:
-  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/shifours.png"
-  name: "Shifours"
-  artwork: "https://www.pokepedia.fr/images/thumb/2/25/Shifours-EB.png/797px-Shifours-EB.png"
 shiftry:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/shiftry.png"
   name: "Shiftry"

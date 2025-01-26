@@ -107,7 +107,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
       child: ControlledAutoComplete<String>(
         controller: controller,
         suggestions: suggestions,
-        displayStringForOption: (s) => s.replaceAll('-', ' '),
+        displayStringForOption: (s) => _displayedName(s.replaceAll('-', ' ')),
         fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
           return TextField(
             controller: controller,
@@ -121,6 +121,15 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
         },
       ),
     );
+  }
+
+  String _displayedName(String input) {
+    StringBuffer buffer = StringBuffer(input[0].toUpperCase());
+    for (int i = 1; i < input.length; i++) {
+      String last = input[i - 1];
+      buffer.write(last == ' ' ? input[i].toUpperCase() : input[i]);
+    }
+    return buffer.toString();
   }
 
   Widget textInput({required String labelText, required TextEditingController controller, bool numberInput = false}) => Padding(
