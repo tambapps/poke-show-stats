@@ -29,6 +29,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
   ReplayFiltersViewModel get _viewModel => widget.viewModel;
   void Function(ReplayPredicate?) get applyFilters => widget.applyFilters;
   late _Filters _filters;
+  bool _dirty = false;
 
   @override
   void initState() {
@@ -72,8 +73,19 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    OutlinedButton(onPressed: () => _filters.clear(), child: Text("Clear")), const SizedBox(width: 16.0,),
-                    OutlinedButton(onPressed: () => applyFilters(_filters.getPredicate()), child: Text("Apply"))],
+                    OutlinedButton(onPressed: () {
+                      setState(() => _dirty = true);
+                      _filters.clear();
+                    }, child: Text("Clear")), const SizedBox(width: 16.0,),
+                    OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          side: _dirty ? const BorderSide(color: Colors.orange) : null,
+                        ),
+                        onPressed: () {
+                          applyFilters(_filters.getPredicate());
+                          setState(() => _dirty = false);
+                        },
+                        child: Text("Apply"))],
                 ),),),
             const SizedBox(height: 8.0,),
           ],
@@ -121,12 +133,14 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
       child: ControlledAutoComplete<T>(
         controller: controller,
         suggestions: suggestions,
+        onSelected: (_) => setState(() => _dirty = true),
         displayStringForOption: displayStringForOption,
         fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
           return TextField(
             controller: controller,
             focusNode: focusNode,
             onSubmitted: (value) => onFieldSubmitted(),
+            onChanged: (_) => setState(() => _dirty = true),
             decoration: InputDecoration(
               labelText: labelText,
               border: OutlineInputBorder(),
