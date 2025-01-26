@@ -25,7 +25,7 @@ abstract class _AbstractReplayEntriesComponentState extends AbstractViewModelSta
   @override
   ReplayEntriesViewModel get viewModel => widget.viewModel;
 
-  Widget addReplayRow(AppLocalization localization) => Row(
+  Widget addReplayRow(AppLocalization localization) => ListenableBuilder(listenable: viewModel, builder: (context, _) => Row(
     children: [
       Expanded(
         child: TextField(
@@ -39,12 +39,13 @@ abstract class _AbstractReplayEntriesComponentState extends AbstractViewModelSta
         ,
       ),
       const SizedBox(width: 16),
-      ElevatedButton(
+      SizedBox(width: 100.0, child: viewModel.loading ? CircularProgressIndicator() : ElevatedButton(
         onPressed: () => viewModel.loadReplays(),
         child: Text(localization.add),
-      ),
+      )
+        ,)
     ],
-  );
+  ));
 
   Widget cancelButton(Replay replay) => IconButton(icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => viewModel.removeReplay(replay));
 
@@ -121,15 +122,6 @@ class _DesktopReplayEntriesComponentState extends _AbstractReplayEntriesComponen
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0)),
-        ListenableBuilder(
-          listenable: viewModel,
-          builder: (context, child) => viewModel.loading ? child! : Padding(padding: EdgeInsets.zero),
-          child: LinearProgressIndicator(
-            backgroundColor: Colors.grey[300], // Background color
-            valueColor: AlwaysStoppedAnimation(Colors.blue), // Progress color
-            minHeight: 2.0, // Height of the progress bar
-          ),),
-
         Flexible(
           flex: 9,
             fit: FlexFit.loose, // this is because we want this component to shrink when we open the keyboard
