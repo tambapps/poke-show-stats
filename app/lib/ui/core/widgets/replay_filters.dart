@@ -264,13 +264,31 @@ class PokemonFilters {
   ReplayPredicate? getPredicate() {
     List<ReplayPredicate> predicates = [];
     if (pokemonNameController.text.trim().isNotEmpty) {
-      final pokemon = pokemonNameController.text.trim().replaceAll(' ', '-');
-      // TODO enhance pokemon names matches (e.g. with accents, form names...)
-      predicates.add((replay) => replay.opposingPlayer.team.any((pokemonName) => pokemon.toLowerCase() == pokemonName.toLowerCase()));
+      final pokemon = _normalize(pokemonNameController.text.trim());
+      predicates.add((replay) => replay.opposingPlayer.team.any((pokemonName) => pokemon == _normalize(pokemonName)));
     }
-    // TODO cannot do other filters yet as I don't store team sheet from replay
+    if (itemController.text.trim().isNotEmpty) {
+      final item = _normalize(itemController.text.trim());
+      predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => item == _normalize(pokemon.item)));
+    }
+    if (abilityController.text.trim().isNotEmpty) {
+      final ability = _normalize(abilityController.text.trim());
+      predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => ability == _normalize(pokemon.ability)));
+    }
+    if (teraTypeController.text.trim().isNotEmpty) {
+      final teraType = _normalize(teraTypeController.text.trim());
+      predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => teraType == _normalize(pokemon.teraType)));
+    }
+    for (TextEditingController moveController in moveControllers) {
+      if (moveController.text.trim().isNotEmpty) {
+        final move = _normalize(moveController.text.trim());
+        predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => pokemon.moves.any((pokemonMove) => move == _normalize(pokemonMove))));
+      }
+    }
     return predicates.isNotEmpty ? (replay) => predicates.every((predicate) => predicate(replay)) : null;
   }
+
+  String? _normalize(String? name) => name?.replaceAll(' ', '-').toLowerCase();
 
   void clear() {
     pokemonNameController.clear();

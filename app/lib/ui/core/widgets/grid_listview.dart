@@ -21,10 +21,7 @@ class GridListView extends StatelessWidget {
                 final row = rowBuilder(context, index);
                 return _row(row.children, decoration: row.decoration);
               },
-              separatorBuilder: (context, index) {
-                // TODO
-                return SizedBox(height: 1,);
-              },
+              separatorBuilder: (context, index) => SizedBox(height: 1,),
               itemCount: itemCount
           )
 
