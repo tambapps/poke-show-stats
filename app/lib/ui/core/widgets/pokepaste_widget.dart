@@ -37,7 +37,6 @@ class PokepasteWidget extends AbstractStatelessWidget {
 
 
   Widget pokemonWidget(Dimens dimens, Pokemon pokemon) {
-    // TODO display ability
     Widget moveWidget = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: pokemon.moves.map((move) => _moveWidget(move)).toList(),
@@ -65,7 +64,8 @@ class PokepasteWidget extends AbstractStatelessWidget {
                   bottom: dimens.pokepastePokemonIconsOffset,
                   right: 0,
                   child: pokemonResourceService.getItemSprite(pokemon.item!, width: Dimens.itemSpriteSize, height: Dimens.itemSpriteSize),
-                )
+                ),
+                if (pokemon.ability.isNotEmpty) Positioned(bottom: dimens.pokepastePokemonIconsOffset * 0.5, child: Text(pokemon.ability),)
               ],
             ),
           ),
