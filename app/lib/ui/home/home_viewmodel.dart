@@ -46,6 +46,7 @@ class HomeViewModel extends ChangeNotifier {
     final PlayerData opposingPlayer = _computeOpposingPlayer(replayData);
     GameOutput output = _computeGameOutput(replayData);
     Replay replay = Replay(uri: uri, data: replayData, opposingPlayer: opposingPlayer, gameOutput: output);
+    replay.trySetElo(replays);
     _teamlytic.replays = [...replays, replay];
     notifyListeners();
     storeSave();

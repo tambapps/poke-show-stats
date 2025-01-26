@@ -164,7 +164,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractViewModelState<
     return Column(children: [
       Text(isOpponent ? localization.opponent : localization.you),
       if (player.beforeElo != null && player.afterElo != null)
-        Text("Elo: ${player.beforeElo} -> ${player.afterElo}"),
+        Text(player.beforeElo != player.afterElo ? "Elo: ${player.beforeElo} -> ${player.afterElo}" : "Elo: ${player.beforeElo}"),
       _playerPickWidget(context, localization, dimens, theme, replay, player)
     ],);
   }

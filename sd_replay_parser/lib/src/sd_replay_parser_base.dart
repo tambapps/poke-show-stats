@@ -4,6 +4,7 @@ import 'model.dart';
 
 
 RegExp _RATING_LOG_REGEX = RegExp(r"(.*?)'s rating: (\d+) .*?&rarr;.*?<strong>(\d+)</strong>");
+RegExp _NEXT_BATTLE_REGEX = RegExp(r'href="([^"]+)"');
 
 /// Checks if you are awesome. Spoiler: you are.
 class SdReplayParser {
@@ -20,6 +21,7 @@ class SdReplayParser {
     List<PlayerData> playerDataList = [PlayerData.name(playerNames[0].toString()), PlayerData.name(playerNames[1].toString())];
 
     String winner = '';
+    String? nextBattle;
     List<String> logs = sdJson['log'].toString().split('\n');
     for (String log in logs) {
       final List<String> tokens = log.split("|");
@@ -34,6 +36,14 @@ class SdReplayParser {
         case "poke":
           playerData.team.add(_pokemonName(tokens[3].split(',').first)); // e.g. Chien-Pao, L50
           break;
+        case "uhtml":
+          var match = _NEXT_BATTLE_REGEX.firstMatch(log.substring(5));
+          if (match != null) {
+            nextBattle = match.group(1);
+            if (nextBattle != null && nextBattle.contains("-gen")) {
+              nextBattle = nextBattle.substring(nextBattle.indexOf("-gen") + 1);
+            }
+          }
         case "raw":
           var match = _RATING_LOG_REGEX.firstMatch(log.substring(5));
           if (match != null) {
@@ -78,6 +88,7 @@ class SdReplayParser {
         formatId: sdJson['formatid'],
         rating: sdJson['rating'],
         winner: winner,
+        nextBattle: nextBattle,
         parserVersion: SdReplayParser.perserVersion
     );
   }
@@ -87,8 +98,6 @@ class SdReplayParser {
     }
     return rawName;
   }
-
-  // Calyrex-Shadow||SpellTag|AsOneSpectrier|AstralBarrage,Psychic,NastyPlot,Protect||||||50|,,,,,Normal]Incineroar||RockyHelmet|Intimidate|WillOWisp,KnockOff,PartingShot,FakeOut|||F|||50|,,,,,Ghost]Rillaboom||AssaultVest|GrassySurge|GrassyGlide,FakeOut,WoodHammer,Uturn|||F|||50|,,,,,Fire]Urshifu-Rapid-Strike||FocusSash|UnseenFist|SurgingStrikes,CloseCombat,AquaJet,Protect|||F|||50|,,,,,Stellar]Raging Bolt||BoosterEnergy|Protosynthesis|Thunderbolt,Thunderclap,DracoMeteor,Protect||||||50|,,,,,Electric]Ogerpon-Hearthflame||HearthflameMask|MoldBreaker|IvyCudgel,FollowMe,GrassyGlide,SpikyShield|||F|||50|,,,,,Fire
 
   Pokemon _parsePokemonOts(String pokemonLog) {
     Pokemon pokemon = Pokemon();
@@ -115,7 +124,6 @@ class SdReplayParser {
     }
     return buffer.toString();
   }
-
 }
 
 extension Case on String {

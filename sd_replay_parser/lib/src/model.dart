@@ -64,6 +64,7 @@ class SdReplayData {
   final int? rating;
   final String parserVersion;
   final String winner;
+  final String? nextBattle;
   bool get isOts => player1.pokepaste != null && player2.pokepaste != null;
 
   PlayerData get winnerPlayer => player1.name == winner ? player1 : player2;
@@ -71,7 +72,7 @@ class SdReplayData {
   SdReplayData({
     required this.player1, required this.player2, required this.uploadTime, required this.formatId,
     required this.rating, required this.parserVersion,
-    required this.winner
+    required this.winner, required this.nextBattle
   });
 
   PlayerData? getPlayer(String playerName) {

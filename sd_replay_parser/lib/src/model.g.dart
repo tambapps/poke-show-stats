@@ -57,6 +57,7 @@ SdReplayData _$SdReplayDataFromJson(Map<String, dynamic> json) => SdReplayData(
       rating: (json['rating'] as num?)?.toInt(),
       parserVersion: json['parserVersion'] as String,
       winner: json['winner'] as String,
+      nextBattle: json['nextBattle'] as String?,
     );
 
 Map<String, dynamic> _$SdReplayDataToJson(SdReplayData instance) =>
@@ -68,4 +69,5 @@ Map<String, dynamic> _$SdReplayDataToJson(SdReplayData instance) =>
       'rating': instance.rating,
       'parserVersion': instance.parserVersion,
       'winner': instance.winner,
+      'nextBattle': instance.nextBattle,
     };

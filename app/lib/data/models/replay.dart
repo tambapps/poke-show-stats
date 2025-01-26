@@ -19,6 +19,19 @@ class Replay {
 
   factory Replay.fromJson(Map<String, dynamic> json) => _$ReplayFromJson(json);
   Map<String, dynamic> toJson() => _$ReplayToJson(this);
+
+
+  void trySetElo(List<Replay> replays) {
+    for (Replay replay in replays) {
+      if (replay.uri.toString().contains(data.nextBattle!)) {
+        // always using before because the player did not win/loose yet
+        data.player1.beforeElo = replay.data.player1.beforeElo;
+        data.player1.afterElo = replay.data.player1.beforeElo;
+        data.player2.beforeElo = replay.data.player2.beforeElo;
+        data.player2.afterElo = replay.data.player2.beforeElo;
+      }
+    }
+  }
 }
 
 enum GameOutput {

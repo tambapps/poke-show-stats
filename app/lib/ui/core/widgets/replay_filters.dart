@@ -219,12 +219,10 @@ class _Filters {
 
     if (minEloController.text.trim().isNotEmpty) {
       final minElo = int.tryParse(minEloController.text.trim()) ?? 0;
-      // TODO don't take into account first games of BO3
       predicates.add((replay) => replay.opposingPlayer.beforeElo != null && replay.opposingPlayer.beforeElo! >= minElo);
     }
     if (maxEloController.text.trim().isNotEmpty) {
       final minElo = int.tryParse(maxEloController.text.trim()) ?? 0;
-      // TODO don't take into account first games of BO3
       predicates.add((replay) => replay.opposingPlayer.beforeElo != null && replay.opposingPlayer.beforeElo! <= minElo);
     }
     for (PokemonFilters pokemonFilters in pokemons) {

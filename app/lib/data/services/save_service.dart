@@ -187,6 +187,13 @@ class SaveServiceImpl implements SaveService {
         replays.add(Replay.fromJson(replayJson));
       }
     }
+    for (Replay replay in replays) {
+      if (replay.data.player1.beforeElo == null && replay.data.player1.afterElo == null
+          && replay.data.nextBattle != null) {
+        // we're in an intermediate battle (G1 or G2 when it is not the last game) and we need to fetch elo from final battle
+        replay.trySetElo(replays);
+      }
+    }
     return replays;
   }
 
