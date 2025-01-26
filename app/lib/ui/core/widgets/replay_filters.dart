@@ -41,7 +41,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+      padding: EdgeInsets.symmetric(horizontal: dimens.replayFiltersContainerPadding, vertical: 16.0),
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(
@@ -50,33 +50,34 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
           ),
           borderRadius: const BorderRadius.all(Radius.circular(8)),
         ),
-        child: Column(children: [
-          Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-            child: Text("Filters", style: theme.textTheme.titleMedium,),),
-          Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: eloFiltersWidget(context, localization, dimens, theme),),
-          SizedBox(height: 16.0,),
-          TabBar(
-            controller: _tabController,
-            isScrollable: widget.isMobile,
-            onTap: (index) => _viewModel.onPokemonFilterTabSelected(index),
-            tabs: Iterable.generate(6, (index) => index).map((index) => Text("Pokemon ${index + 1}", style: theme.textTheme.titleMedium,)).toList(),
-          ),
-          ConstrainedBox(constraints: BoxConstraints(maxHeight: dimens.pokemonFiltersTabViewHeight),
-            child: Padding(padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              child: TabBarView(controller: _tabController, children: List.generate(6, (index) => _pokemonFilterWidget(context, localization, dimens, theme, index))),),),
-
-
-          Align(alignment: Alignment.bottomRight,
-            child: Padding(padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  OutlinedButton(onPressed: () => _filters.clear(), child: Text("Clear")), const SizedBox(width: 16.0,),
-                  OutlinedButton(onPressed: () => applyFilters(_filters.getPredicate()), child: Text("Apply"))],
-              ),),),
-          const SizedBox(height: 8.0,),
-        ],),
+        child: ExpansionTile(
+          title: Text("Filters"),
+          children: [
+            Padding(padding: EdgeInsets.symmetric(horizontal: dimens.pokemonFiltersHorizontalSpacing),
+              child: eloFiltersWidget(context, localization, dimens, theme),),
+            const SizedBox(height: 16.0,),
+            Text("Opponent's team", style: theme.textTheme.titleMedium,),
+            const SizedBox(height: 16.0,),
+            TabBar(
+              controller: _tabController,
+              isScrollable: widget.isMobile,
+              onTap: (index) => _viewModel.onPokemonFilterTabSelected(index),
+              tabs: Iterable.generate(6, (index) => index).map((index) => Text("Pokemon ${index + 1}", style: theme.textTheme.titleMedium,)).toList(),
+            ),
+            ConstrainedBox(constraints: BoxConstraints(maxHeight: dimens.pokemonFiltersTabViewHeight),
+              child: Padding(padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                child: TabBarView(controller: _tabController, children: List.generate(6, (index) => _pokemonFilterWidget(context, localization, dimens, theme, index))),),),
+            Align(alignment: Alignment.bottomRight,
+              child: Padding(padding: EdgeInsets.symmetric(horizontal: dimens.pokemonFiltersHorizontalSpacing, vertical: 8.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    OutlinedButton(onPressed: () => _filters.clear(), child: Text("Clear")), const SizedBox(width: 16.0,),
+                    OutlinedButton(onPressed: () => applyFilters(_filters.getPredicate()), child: Text("Apply"))],
+                ),),),
+            const SizedBox(height: 8.0,),
+          ],
+        ),
       ),
     );
   }
@@ -191,9 +192,8 @@ class _DesktopReplayFiltersWidgetState extends _AbstractReplayFiltersWidgetState
       ],  // Explicitly specify a list of widgets
     );
   }
-
-
 }
+
 class _MobileReplayFiltersWidgetState extends _AbstractReplayFiltersWidgetState {
 
   @override

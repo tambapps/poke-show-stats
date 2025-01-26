@@ -20,7 +20,7 @@ abstract final class Dimens {
   double get screenBoundsTopMargin;
   double get defaultScreenMargin;
 
-  /** home config screen dimensions **/
+  /* home config screen dimensions */
   double get sdNamesMaxCrossAxisExtent;
   double get sdNameMaxWidth;
   double get pokepastePokemonHeight;
@@ -29,7 +29,8 @@ abstract final class Dimens {
   int get pokemonArtworkFlex;
   int get pokemonSheetFlex;
 
-  /** replay filters dimensions **/
+  /* replay filters dimensions */
+  double get replayFiltersContainerPadding;
   int get pokemonFiltersColumnsCount;
   double get pokemonFiltersHorizontalSpacing;
   double get pokemonFiltersTabViewHeight;
@@ -63,6 +64,8 @@ final class _DimensMobile extends Dimens {
   final double pokemonFiltersTabViewHeight = 400.0;
   @override
   final double pokemonFiltersHorizontalSpacing = 8.0;
+  @override
+  final double replayFiltersContainerPadding = 8.0;
 
   @override
   final double screenBoundsTopMargin = 32.0;
@@ -102,6 +105,8 @@ final class _DimensDesktop extends Dimens {
   final double pokemonFiltersHorizontalSpacing = 20.0;
   @override
   final double pieChartAspectRatio = 1.5;
+  @override
+  final double replayFiltersContainerPadding = 32.0;
 
   @override
   final double screenBoundsTopMargin = 0.0;
