@@ -84,29 +84,35 @@ abstract class _HomeConfigComponentState extends AbstractViewModelState<HomeConf
 
   List<Widget> pokepasteForm(AppLocalization localization, ThemeData theme, EdgeInsets padding, Widget title) {
     return [
-      Padding(padding: padding, child: title,),
-      Padding(padding: EdgeInsets.symmetric(vertical: 8)),
-      Padding(
-        padding: padding,
-        child: TextField(
-          maxLines: null,
-          controller: _pokepasteController,
-          decoration: InputDecoration(
-            labelText: localization.pasteSomething,
-            border: OutlineInputBorder(),
-          ),
-        ),
-      ),
-      SizedBox(height: 20,),
-      Padding(
-        padding: padding,
-        child: Align(
-          alignment: Alignment.topRight,
-          child: OutlinedButton(
-            onPressed: () => viewModel.loadPokepaste(_pokepasteController),
-            child: Text(localization.load,),
-          ),
-        ),
+      ListenableBuilder(listenable: viewModel,
+          builder: (context, _) =>       Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+            Padding(padding: padding, child: title,),
+            Padding(padding: EdgeInsets.symmetric(vertical: 8)),
+            Padding(
+              padding: padding,
+              child: TextField(
+                maxLines: null,
+                controller: _pokepasteController,
+                decoration: InputDecoration(
+                  labelText: localization.pasteSomething,
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            SizedBox(height: 20,),
+            Padding(
+              padding: padding,
+              child: Align(
+                alignment: Alignment.topRight,
+                child: viewModel.pokepasteLoading ? CircularProgressIndicator()  : OutlinedButton(
+                  onPressed: () => viewModel.loadPokepaste(_pokepasteController),
+                  child: Text(localization.load,),
+                ),
+              ),
+            )
+          ],)
       )
     ];
   }

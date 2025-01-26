@@ -19,29 +19,28 @@ class HomeConfigViewModel extends ChangeNotifier {
   final PokepasteParser pokepasteParser;
   final TextEditingController sdNameDialogController = TextEditingController();
 
-  // TODO use me
-  bool _loading = false;
-  bool get loading => _loading;
+  bool _pokepasteLoading = false;
+  bool get pokepasteLoading => _pokepasteLoading;
 
   void loadPokepaste(TextEditingController pokepasteController) async {
     String input = pokepasteController.text.trim();
-    _setLoading(true);
+    _setPokepasteLoading(true);
     Pokepaste pokepaste;
     try {
       pokepaste = pokepasteParser.parse(input);
     } on PokepasteParsingException catch(e) {
-      errorMessage('This is not a pokepaste URL');
+      errorMessage('This is not a valid pokepaste');
       return;
     }
     if (pokepaste.pokemons.isEmpty) {
       errorMessage('Pokepaste does not have any pokemon');
     }
     homeViewModel.pokepaste = pokepaste;
-    _setLoading(false);
+    _setPokepasteLoading(false);
   }
 
-  void _setLoading(bool loading) {
-    _loading = loading;
+  void _setPokepasteLoading(bool loading) {
+    _pokepasteLoading = loading;
     notifyListeners();
   }
 
