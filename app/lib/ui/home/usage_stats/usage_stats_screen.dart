@@ -61,6 +61,16 @@ abstract class _AbstractUsageStatsState extends AbstractViewModelState<UsageStat
     child: Text(text, textAlign: TextAlign.center,),
   );
 
+  Widget mostCommonLeadPairs(BuildContext context, AppLocalization localization, Dimens dimens,
+      ThemeData theme) {
+    return pairUsageCard(context, localization, dimens, theme, "Most Common Lead Pairs", (e1, e2) => e2.value.total.compareTo(e1.value.total));
+  }
+
+  Widget mostEffectiveLeadPairs(BuildContext context, AppLocalization localization, Dimens dimens,
+      ThemeData theme) {
+    return pairUsageCard(context, localization, dimens, theme, "Most Effective Lead Pairs", (e1, e2) => e2.value.winRate.compareTo(e1.value.winRate));
+  }
+
   Widget pairUsageCard(BuildContext context, AppLocalization localization, Dimens dimens,
       ThemeData theme, String title,
       int Function(MapEntry<Pair<String>, PairStats>, MapEntry<Pair<String>, PairStats>) comparator
@@ -84,12 +94,14 @@ abstract class _AbstractUsageStatsState extends AbstractViewModelState<UsageStat
         ),
         borderRadius: const BorderRadius.all(Radius.circular(8)),
       ),
-      child: Column(children: [
-        Text(title, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),),
-        ...entries.map((entry) => pairUsageCardRow(context, localization, dimens, theme, entry.key, entry.value))
-      ],),
+      child: pairUsageCardContent(
+          Text(title, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),),
+          entries.map((entry) => pairUsageCardRow(context, localization, dimens, theme, entry.key, entry.value))
+      ),
     );
   }
+
+  Widget pairUsageCardContent(Widget title, Iterable<Widget> entries);
 
   Widget pairUsageCardRow(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Pair<String> pair, PairStats stats) {
     final int winRate = (stats.winCount * 100 / stats.total).truncate();
@@ -110,15 +122,40 @@ abstract class _AbstractUsageStatsState extends AbstractViewModelState<UsageStat
 class _DesktopUsageStatsState extends _AbstractUsageStatsState {
   @override
   Widget usageStats(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    return pairUsageCard(context, localization, dimens, theme, "Most Common Lead Pairs", (e1, e2) => e2.value.total - e1.value.total);
+    return Column(children: [
+      SizedBox(height: 400, child: mostCommonLeadPairs(context, localization, dimens, theme),),
+      const SizedBox(height: 16.0,),
+      SizedBox(height: 400, child: mostEffectiveLeadPairs(context, localization, dimens, theme)),
+      const SizedBox(height: 16.0,),
+    ],);
   }
 
+  @override
+  Widget pairUsageCardContent(Widget title, Iterable<Widget> entries) {
+    return Column(children: [
+      title,
+      Expanded(child: SingleChildScrollView(child: Column(children: [...entries],),))
+    ],);
+  }
 }
 
 class _MobileUsageStatsState extends _AbstractUsageStatsState {
   @override
   Widget usageStats(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    // TODO: implement usageStats
-    throw UnimplementedError();
+    return Column(children: [
+      const SizedBox(height: 16.0,),
+      mostCommonLeadPairs(context, localization, dimens, theme),
+      const SizedBox(height: 16.0,),
+      mostEffectiveLeadPairs(context, localization, dimens, theme),
+      const SizedBox(height: 16.0,),
+    ],);
+  }
+
+  @override
+  Widget pairUsageCardContent(Widget title, Iterable<Widget> entries) {
+    return ExpansionTile(
+      title: title,
+      children: [...entries],
+    );
   }
 }

@@ -63,6 +63,8 @@ class PairStats {
   int winCount = 0;
   int total = 0;
 
+  double get winRate => winCount / total;
+
   @override
   String toString() {
     return 'PairStats{winCount: $winCount, total: $total}';
