@@ -115,9 +115,12 @@ class SdReplayParser {
     StringBuffer buffer = StringBuffer(input[0]);
     for (int i = 1; i < input.length; i++) {
       String c = input[i];
-      if (c.isUpperCase()) {
-        buffer.write("-");
-        buffer.write(c.toLowerCase());
+      String last = input[i - 1];
+      if (c.isUpperCase() && last != '-') {
+        buffer.write(" ");
+        buffer.write(c);
+      } else if (c == '-') {
+        buffer.write(' ');
       } else {
         buffer.write(c);
       }

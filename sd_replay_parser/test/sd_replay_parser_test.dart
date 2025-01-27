@@ -12,7 +12,7 @@ void main() {
     });
 
     test('Decode test', () async {
-      final url = Uri.parse('https://replay.pokemonshowdown.com/gen9vgc2025reggbo3-2275124329-bo28iiemskpx8pjidgu6sh23uysvkzypw.json');
+      final url = Uri.parse('https://replay.pokemonshowdown.com/gen9vgc2025reggbo3-2273645736-8ub0nqh6dg1kywuy7y37h77mr4pw8qhpw.json');
       final response = await http.get(url);
       final data = jsonDecode(response.body);
       final replay = parser.parse(data);
