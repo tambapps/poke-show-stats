@@ -2,7 +2,7 @@
 class PokemonNames {
   static bool pokemonNameMatch(String s1, String s2) {
     // TODO handle form matches. E.g. urshifu should match urshifu sinle strike and urshifu rapid strike
-    return s1 == PokemonNames.normalize(s2);
+    return PokemonNames.normalize(s1) == PokemonNames.normalize(s2);
   }
 
   static String? normalizeNullable(String? s) => s != null ? normalize(s) : null;

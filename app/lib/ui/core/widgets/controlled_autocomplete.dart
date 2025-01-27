@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
+typedef SuggestionsMatcher<T> = bool Function(TextEditingValue, T);
 /// AutoComplete that allows to provide a TextEditingController
 class ControlledAutoComplete<T extends Object> extends StatefulWidget {
 
@@ -13,12 +14,13 @@ class ControlledAutoComplete<T extends Object> extends StatefulWidget {
   final List<T> suggestions;
   final FocusNode _focusNode = FocusNode();
   final double optionsMaxHeight;
+  final SuggestionsMatcher<T>? suggestionsMatcher;
 
   ControlledAutoComplete({super.key,
     required this.controller, required this.suggestions,
     this.displayStringForOption = defaultStringForOption, this.initialValue,
     this.onSelected, this.fieldViewBuilder, this.optionsMaxHeight = 200.0,
-    this.optionsViewOpenDirection = OptionsViewOpenDirection.down
+    this.optionsViewOpenDirection = OptionsViewOpenDirection.down, this.suggestionsMatcher
   });
 
   static String defaultStringForOption(Object? option) {
@@ -37,7 +39,10 @@ class _ControlledAutoCompleteState<T extends Object> extends State<ControlledAut
       displayStringForOption: widget.displayStringForOption,
       fieldViewBuilder: widget.fieldViewBuilder,
       initialValue: widget.initialValue,
-      optionsBuilder: (TextEditingValue textEditingValue) {
+      optionsBuilder: widget.suggestionsMatcher != null ? (TextEditingValue textEditingValue) {
+        return widget.suggestions.where((T option) => widget.suggestionsMatcher!(textEditingValue, option)).toList();
+      }
+      : (TextEditingValue textEditingValue) {
         return widget.suggestions.where((T option) {
           return widget.displayStringForOption(option).toLowerCase().contains(textEditingValue.text.toLowerCase());
         }).toList();

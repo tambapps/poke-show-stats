@@ -1,3 +1,4 @@
+import 'package:app2/ui/core/pokeutils.dart';
 import 'package:app2/ui/core/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -67,10 +68,14 @@ abstract class _AbstractUsageStatsState extends AbstractViewModelState<UsageStat
     final pairStatsMap = viewModel.pairStatsMap;
     final pokepaste = viewModel.pokepaste!;
     final entries = pairStatsMap.entries
-      // TODO filter to get only pairs whose both pokemon are in the pokepaste .where((pair) => pokepaste.pokemons.contains(pair.))
+    /* is it needed?
+      .where((entry) =>
+        pokepaste.pokemons.any((pokemon) => PokemonNames.pokemonNameMatch(pokemon.name, entry.key.first)) &&
+            pokepaste.pokemons.any((pokemon) => PokemonNames.pokemonNameMatch(pokemon.name, entry.key.second)))
+
+     */
       .toList();
     entries.sort(comparator);
-    // TODO sort list with a sort parameter
     return Container(
       decoration: BoxDecoration(
         border: Border.all(

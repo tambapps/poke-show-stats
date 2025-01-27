@@ -125,10 +125,16 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
   }
 
   Widget autoCompleteListTextInput({required String labelText, required List<MapEntry<dynamic, dynamic>> suggestions, required TextEditingController controller}) {
-    return autoCompleteTextInput(labelText: labelText, suggestions: suggestions, controller: controller, displayStringForOption: (entry) => _displayedName(entry.key.replaceAll('-', ' ')));
+    return autoCompleteTextInput(labelText: labelText, suggestions: suggestions,
+        controller: controller,
+        displayStringForOption: (entry) => _displayedName(entry.key.replaceAll('-', ' ')),
+        suggestionsMatcher: (textEditingValue, option) => PokemonNames.normalize(option.key).contains(PokemonNames.normalize(textEditingValue.text)));
   }
 
-  Widget autoCompleteTextInput<T extends Object>({required String labelText, required List<T> suggestions, required TextEditingController controller, required String Function(T) displayStringForOption}) {
+  Widget autoCompleteTextInput<T extends Object>({required String labelText,
+    required List<T> suggestions, required TextEditingController controller,
+    required String Function(T) displayStringForOption,
+    SuggestionsMatcher<T>? suggestionsMatcher}) {
     return Padding(
       padding: EdgeInsets.only(top: 8.0),
       child: ControlledAutoComplete<T>(
@@ -136,6 +142,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
         suggestions: suggestions,
         onSelected: (_) => _viewModel.dirty = true,
         displayStringForOption: displayStringForOption,
+        suggestionsMatcher: suggestionsMatcher,
         fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
           return TextField(
             controller: controller,
