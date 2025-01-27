@@ -42,42 +42,37 @@ abstract class _AbstractUsageStatsState extends AbstractViewModelState<UsageStat
           }
 
           // TODO use a shared viewModel (or even component?) so that the filters are the same on every screen
-          final filtersWidget = ReplayFiltersWidget(viewModel: viewModel.filtersViewModel, applyFilters: (replayPredicate) => viewModel.loadUsages(replayPredicate: replayPredicate), isMobile: dimens.isMobile,);
-          return SingleChildScrollView(
-            child: Column(children: [
-              filtersWidget,
-              Align(alignment: Alignment.topLeft, child: Padding(padding: const EdgeInsets.only(left: 32.0, top: 8.0),
-                child: Text("${viewModel.replaysCount} Replays", style: theme.textTheme.titleLarge,),
-              ),),
-              usageStats(context, localization, dimens, theme)
-            ],),
-          );
+          final filtersWidget = Column(children: [
+            ReplayFiltersWidget(viewModel: viewModel.filtersViewModel, applyFilters: (replayPredicate) => viewModel.loadUsages(replayPredicate: replayPredicate), isMobile: dimens.isMobile,),
+            Align(alignment: Alignment.topLeft, child: Padding(padding: const EdgeInsets.only(left: 32.0, top: 8.0),
+              child: Text("${viewModel.replaysCount} Replays", style: theme.textTheme.titleLarge,),
+            ),)
+          ],);
+          return content(context, localization, dimens, theme, filtersWidget);
         });
   }
 
-  Widget usageStats(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
+  Widget content(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Widget filtersWidget);
 
   Widget _cantDisplay(String text) => Center(
     child: Text(text, textAlign: TextAlign.center,),
   );
 
-  Widget mostCommonLeadPairs(BuildContext context, AppLocalization localization, Dimens dimens,
+  Widget mostCommonLeadDuo(BuildContext context, AppLocalization localization, Dimens dimens,
       ThemeData theme) {
-    return pairUsageCard(context, localization, dimens, theme, "Most Common Lead Pairs", (e1, e2) => e2.value.total.compareTo(e1.value.total));
+    return _duoUsageCard(context, localization, dimens, theme, "Most Common Lead Duo", (e1, e2) => e2.value.total.compareTo(e1.value.total));
   }
 
-  Widget mostEffectiveLeadPairs(BuildContext context, AppLocalization localization, Dimens dimens,
+  Widget mostEffectiveLeadDuo(BuildContext context, AppLocalization localization, Dimens dimens,
       ThemeData theme) {
-    return pairUsageCard(context, localization, dimens, theme, "Most Effective Lead Pairs", (e1, e2) => e2.value.winRate.compareTo(e1.value.winRate));
+    return _duoUsageCard(context, localization, dimens, theme, "Most Effective Lead Duo", (e1, e2) => e2.value.winRate.compareTo(e1.value.winRate));
   }
 
-  Widget pairUsageCard(BuildContext context, AppLocalization localization, Dimens dimens,
+  Widget _duoUsageCard(BuildContext context, AppLocalization localization, Dimens dimens,
       ThemeData theme, String title,
-      int Function(MapEntry<Pair<String>, PairStats>, MapEntry<Pair<String>, PairStats>) comparator
+      int Function(MapEntry<Duo<String>, LeadAndWinStats>, MapEntry<Duo<String>, LeadAndWinStats>) comparator
       ) {
-    final pairStatsMap = viewModel.pairStatsMap;
-    final pokepaste = viewModel.pokepaste!;
-    final entries = pairStatsMap.entries
+    final entries = viewModel.duoStatsMap.entries
     /* is it needed?
       .where((entry) =>
         pokepaste.pokemons.any((pokemon) => PokemonNames.pokemonNameMatch(pokemon.name, entry.key.first)) &&
@@ -94,68 +89,106 @@ abstract class _AbstractUsageStatsState extends AbstractViewModelState<UsageStat
         ),
         borderRadius: const BorderRadius.all(Radius.circular(8)),
       ),
-      child: pairUsageCardContent(
+      child: duoUsageCardContent(
           Text(title, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),),
-          entries.map((entry) => pairUsageCardRow(context, localization, dimens, theme, entry.key, entry.value))
+          entries.map((entry) => _duoUsageCardRow(context, localization, dimens, theme, entry.key.toList(), entry.value))
       ),
     );
   }
 
-  Widget pairUsageCardContent(Widget title, Iterable<Widget> entries);
+  Widget leadAndWinUsage(BuildContext context, AppLocalization localization, Dimens dimens,
+      ThemeData theme) {
+    final entries = viewModel.pokemonStats.entries.toList();
+    entries.sort((e1, e2) => e2.value.winCount - e1.value.winCount);
 
-  Widget pairUsageCardRow(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Pair<String> pair, PairStats stats) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+            color: Colors.grey,
+            width: 2.0
+        ),
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
+      ),
+      child: duoUsageCardContent(
+          Text("Individual Lead and Win", style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),),
+          entries.map((entry) => _duoUsageCardRow(context, localization, dimens, theme, [entry.key], entry.value)),
+      ),
+    );
+  }
+
+  Widget duoUsageCardContent(Widget title, Iterable<Widget> entries);
+
+  Widget _duoUsageCardRow(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, List<String> pokemons, LeadAndWinStats stats) {
     final int winRate = (stats.winCount * 100 / stats.total).truncate();
     return Row(
         mainAxisSize: MainAxisSize.min,
       children: [
         const SizedBox(width: 8.0,),
-      viewModel.pokemonResourceService.getPokemonSprite(pair.first),
-      viewModel.pokemonResourceService.getPokemonSprite(pair.second),
+      ...pokemons.map((pokemon) => viewModel.pokemonResourceService.getPokemonSprite(pokemon)),
       SizedBox(width: 75.0, child: Center(child: Text("$winRate%", style: theme.textTheme.titleLarge,),),),
       Text("Won\n${stats.winCount} games out of ${stats.total}", textAlign: TextAlign.center,),
         const SizedBox(width: 8.0,),
       ],);
   }
-
 }
 
 class _DesktopUsageStatsState extends _AbstractUsageStatsState {
+
+
   @override
-  Widget usageStats(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
+  Widget content(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Widget filtersWidget) {
+    const edgePadding = SizedBox(width: 32.0,);
+    const padding = SizedBox(width: 64.0,);
     return Column(children: [
-      SizedBox(height: 400, child: mostCommonLeadPairs(context, localization, dimens, theme),),
+      filtersWidget,
       const SizedBox(height: 16.0,),
-      SizedBox(height: 400, child: mostEffectiveLeadPairs(context, localization, dimens, theme)),
+      Expanded(child:
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+        edgePadding,
+        mostCommonLeadDuo(context, localization, dimens, theme),
+        padding,
+        mostEffectiveLeadDuo(context, localization, dimens, theme),
+        padding,
+        leadAndWinUsage(context, localization, dimens, theme),
+        edgePadding,
+      ],)),
       const SizedBox(height: 16.0,),
     ],);
   }
 
   @override
-  Widget pairUsageCardContent(Widget title, Iterable<Widget> entries) {
+  Widget duoUsageCardContent(Widget title, Iterable<Widget> entries) {
     return Column(children: [
       title,
-      Expanded(child: SingleChildScrollView(child: Column(children: [...entries],),))
+      Expanded(child: SingleChildScrollView(child: Column(children: [...entries, const SizedBox(height: 8.0,)],),))
     ],);
   }
 }
 
 class _MobileUsageStatsState extends _AbstractUsageStatsState {
+
   @override
-  Widget usageStats(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    return Column(children: [
-      const SizedBox(height: 16.0,),
-      mostCommonLeadPairs(context, localization, dimens, theme),
-      const SizedBox(height: 16.0,),
-      mostEffectiveLeadPairs(context, localization, dimens, theme),
-      const SizedBox(height: 16.0,),
-    ],);
+  Widget content(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Widget filtersWidget) {
+    const padding = SizedBox(height: 32.0,);
+    return SingleChildScrollView(child: Column(children: [
+      filtersWidget,
+      padding,
+      mostCommonLeadDuo(context, localization, dimens, theme),
+      padding,
+      mostEffectiveLeadDuo(context, localization, dimens, theme),
+      padding,
+      leadAndWinUsage(context, localization, dimens, theme),
+      padding,
+    ],),);
   }
 
   @override
-  Widget pairUsageCardContent(Widget title, Iterable<Widget> entries) {
+  Widget duoUsageCardContent(Widget title, Iterable<Widget> entries) {
     return ExpansionTile(
       title: title,
-      children: [...entries],
+      children: [...entries, const SizedBox(height: 8.0,)],
     );
   }
 }

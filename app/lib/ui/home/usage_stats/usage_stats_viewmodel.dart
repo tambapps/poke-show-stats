@@ -3,6 +3,7 @@ import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
+import 'package:sd_replay_parser/sd_replay_parser.dart';
 
 import '../../../data/models/replay.dart';
 import '../../../data/services/pokemon_resource_service.dart';
@@ -20,8 +21,11 @@ class UsageStatsViewModel extends ChangeNotifier {
   final ReplayFiltersViewModel filtersViewModel;
   final PokemonResourceService pokemonResourceService;
 
-  Map<Pair<String>, PairStats> _pairStatsMap = {};
-  Map<Pair<String>, PairStats> get pairStatsMap => _pairStatsMap;
+  Map<Duo<String>, LeadAndWinStats> _duoStatsMap = {};
+  Map<Duo<String>, LeadAndWinStats> get duoStatsMap => _duoStatsMap;
+
+  Map<String, LeadAndWinStats> _pokemonStats = {};
+  Map<String, LeadAndWinStats> get pokemonStats => _pokemonStats;
 
   UsageStatsViewModel({required this.homeViewModel,
     required this.pokemonResourceService,
@@ -38,19 +42,35 @@ class UsageStatsViewModel extends ChangeNotifier {
         .toList()
         : homeViewModel.replays;
     _replaysCount = replays.length;
-    Map<Pair<String>, PairStats> map = {};
+    Map<Duo<String>, LeadAndWinStats> duoStatsMap = {};
+    Map<String, LeadAndWinStats> pokemonStatsMap = {};
     for (Replay replay in replays) {
-      _fill(map, replay);
+      _fill(duoStatsMap, replay);
+      _fillPokemonStats(pokemonStatsMap, replay);
     }
-    _pairStatsMap = map;
+    _duoStatsMap = duoStatsMap;
+    _pokemonStats = pokemonStatsMap;
     _isLoading = false;
     notifyListeners();
   }
 
-  void _fill(Map<Pair<String>, PairStats> map, Replay replay) {
+  void _fillPokemonStats(Map<String, LeadAndWinStats> map, Replay replay) {
     if (replay.gameOutput == GameOutput.UNKNOWN) return;
-    Pair<String> pair = Pair(replay.otherPlayer.selection[0], replay.otherPlayer.selection[1]);
-    PairStats stats = map.putIfAbsent(pair, () => PairStats());
+    PlayerData player = replay.otherPlayer;
+    for (int i= 0; i < 2 && i < player.selection.length; i++) {
+      String pokemon = player.selection[i];
+      LeadAndWinStats stats = map.putIfAbsent(pokemon, () => LeadAndWinStats());
+      if (replay.gameOutput == GameOutput.WIN) {
+        stats.winCount++;
+      }
+      stats.total++;
+    }
+  }
+
+  void _fill(Map<Duo<String>, LeadAndWinStats> map, Replay replay) {
+    if (replay.gameOutput == GameOutput.UNKNOWN) return;
+    Duo<String> duo = Duo(replay.otherPlayer.selection[0], replay.otherPlayer.selection[1]);
+    LeadAndWinStats stats = map.putIfAbsent(duo, () => LeadAndWinStats());
     if (replay.gameOutput == GameOutput.WIN) {
       stats.winCount++;
     }
@@ -59,7 +79,7 @@ class UsageStatsViewModel extends ChangeNotifier {
 }
 
 
-class PairStats {
+class LeadAndWinStats {
   int winCount = 0;
   int total = 0;
 
@@ -71,16 +91,16 @@ class PairStats {
   }
 }
 
-class Pair<T> {
+class Duo<T> {
   final T first;
   final T second;
 
-  Pair(this.first, this.second);
+  Duo(this.first, this.second);
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is Pair && runtimeType == other.runtimeType &&
+          other is Duo && runtimeType == other.runtimeType &&
               (first == other.first || first == other.second) &&
               (second == other.second || second == other.first);
 
@@ -91,4 +111,6 @@ class Pair<T> {
   String toString() {
     return '($first, $second)';
   }
+
+  List<T> toList() => [first, second];
 }

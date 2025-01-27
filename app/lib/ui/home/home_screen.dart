@@ -103,7 +103,7 @@ abstract class _AbstractHomeScreenState extends AbstractViewModelState<HomeScree
         Tab(text: localization.replayEntries),
         Tab(text: localization.gameByGame),
         Tab(text: localization.moveUsages),
-        Tab(text: localization.usageStats),
+        Tab(text: localization.leadUsageStats),
       ],
     );
   }
