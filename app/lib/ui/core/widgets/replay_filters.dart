@@ -29,7 +29,6 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
   ReplayFiltersViewModel get _viewModel => widget.viewModel;
   void Function(ReplayPredicate?) get applyFilters => widget.applyFilters;
   late _Filters _filters;
-  bool _dirty = false;
 
   @override
   void initState() {
@@ -62,7 +61,6 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
             TabBar(
               controller: _tabController,
               isScrollable: widget.isMobile,
-              onTap: (index) => _viewModel.onPokemonFilterTabSelected(index),
               tabs: Iterable.generate(6, (index) => index).map((index) => Text("Pokemon ${index + 1}", style: theme.textTheme.titleMedium,)).toList(),
             ),
             ConstrainedBox(constraints: BoxConstraints(maxHeight: dimens.pokemonFiltersTabViewHeight),
@@ -70,22 +68,24 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
                 child: TabBarView(controller: _tabController, children: List.generate(6, (index) => _pokemonFilterWidget(context, localization, dimens, theme, index))),),),
             Align(alignment: Alignment.bottomRight,
               child: Padding(padding: EdgeInsets.symmetric(horizontal: dimens.pokemonFiltersHorizontalSpacing, vertical: 8.0),
-                child: Row(
+                child: ListenableBuilder(
+                    listenable: _viewModel, builder: (context, _) => Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     OutlinedButton(onPressed: () {
-                      setState(() => _dirty = true);
+                      _viewModel.dirty = true;
                       _filters.clear();
                     }, child: Text("Clear")), const SizedBox(width: 16.0,),
                     OutlinedButton(
                         style: OutlinedButton.styleFrom(
-                          side: _dirty ? const BorderSide(color: Colors.orange) : null,
+                          side: _viewModel.dirty ? const BorderSide(color: Colors.orange) : null,
                         ),
                         onPressed: () {
                           applyFilters(_filters.getPredicate());
-                          setState(() => _dirty = false);
+                          _viewModel.dirty = false;
                         },
                         child: Text("Apply"))],
+                )
                 ),),),
             const SizedBox(height: 8.0,),
           ],
@@ -133,14 +133,14 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
       child: ControlledAutoComplete<T>(
         controller: controller,
         suggestions: suggestions,
-        onSelected: (_) => setState(() => _dirty = true),
+        onSelected: (_) => _viewModel.dirty = true,
         displayStringForOption: displayStringForOption,
         fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
           return TextField(
             controller: controller,
             focusNode: focusNode,
             onSubmitted: (value) => onFieldSubmitted(),
-            onChanged: (_) => setState(() => _dirty = true),
+            onChanged: (_) => _viewModel.dirty = true,
             decoration: InputDecoration(
               labelText: labelText,
               border: OutlineInputBorder(),
@@ -189,10 +189,12 @@ class ReplayFiltersViewModel extends ChangeNotifier {
 
   final PokemonResourceService pokemonResourceService;
 
-  int _pokemonFilterTabIndex = 0;
-
-  int get pokemonFilterTabIndex => _pokemonFilterTabIndex;
-  void onPokemonFilterTabSelected(int index) => _pokemonFilterTabIndex = index;
+  bool _dirty = false;
+  bool get dirty => _dirty;
+  set dirty(value) {
+    _dirty = value;
+    notifyListeners();
+  }
 }
 
 class _DesktopReplayFiltersWidgetState extends _AbstractReplayFiltersWidgetState {
