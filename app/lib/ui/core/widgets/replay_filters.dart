@@ -1,5 +1,6 @@
 import 'package:app2/data/services/pokemon_resource_service.dart';
 import 'package:app2/ui/core/localization/applocalization.dart';
+import 'package:app2/ui/core/pokeutils.dart';
 import 'package:app2/ui/core/themes/dimens.dart';
 import 'package:app2/ui/core/widgets.dart';
 import 'package:app2/ui/core/widgets/auto_gridview.dart';
@@ -96,7 +97,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
 
   Widget eloFiltersWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
   Widget _pokemonFilterWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, int index) {
-    final pokemonFilters = _filters.pokemons[index];;
+    final pokemonFilters = _filters.pokemons[index];
 
     // computing it here to avoid computing it 4 times
     List<MapEntry<dynamic, dynamic>> moveSuggestionEntries = _viewModel.pokemonResourceService.pokemonMoves.entries.toList();
@@ -278,31 +279,29 @@ class PokemonFilters {
   ReplayPredicate? getPredicate() {
     List<ReplayPredicate> predicates = [];
     if (pokemonNameController.text.trim().isNotEmpty) {
-      final pokemon = _normalize(pokemonNameController.text.trim());
-      predicates.add((replay) => replay.opposingPlayer.team.any((pokemonName) => pokemon == _normalize(pokemonName)));
+      final pokemon = PokemonNames.normalize(pokemonNameController.text.trim());
+      predicates.add((replay) => replay.opposingPlayer.team.any((pokemonName) => PokemonNames.pokemonNameMatch(pokemon, pokemonName)));
     }
     if (itemController.text.trim().isNotEmpty) {
-      final item = _normalize(itemController.text.trim());
-      predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => item == _normalize(pokemon.item)));
+      final item = PokemonNames.normalize(itemController.text.trim());
+      predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => item == PokemonNames.normalizeNullable(pokemon.item)));
     }
     if (abilityController.text.trim().isNotEmpty) {
-      final ability = _normalize(abilityController.text.trim());
-      predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => ability == _normalize(pokemon.ability)));
+      final ability = PokemonNames.normalize(abilityController.text.trim());
+      predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => ability == PokemonNames.normalize(pokemon.ability)));
     }
     if (teraTypeController.text.trim().isNotEmpty) {
-      final teraType = _normalize(teraTypeController.text.trim());
-      predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => teraType == _normalize(pokemon.teraType)));
+      final teraType = PokemonNames.normalize(teraTypeController.text.trim());
+      predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => teraType == PokemonNames.normalize(pokemon.teraType)));
     }
     for (TextEditingController moveController in moveControllers) {
       if (moveController.text.trim().isNotEmpty) {
-        final move = _normalize(moveController.text.trim());
-        predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => pokemon.moves.any((pokemonMove) => move == _normalize(pokemonMove))));
+        final move = PokemonNames.normalize(moveController.text.trim());
+        predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => pokemon.moves.any((pokemonMove) => move == PokemonNames.normalize(pokemonMove))));
       }
     }
     return predicates.isNotEmpty ? (replay) => predicates.every((predicate) => predicate(replay)) : null;
   }
-
-  String? _normalize(String? name) => name?.replaceAll(' ', '-').toLowerCase();
 
   void clear() {
     pokemonNameController.clear();

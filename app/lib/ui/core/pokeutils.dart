@@ -1,4 +1,15 @@
 
+class PokemonNames {
+  static bool pokemonNameMatch(String s1, String s2) {
+    // TODO handle form matches. E.g. urshifu should match urshifu sinle strike and urshifu rapid strike
+    return s1 == PokemonNames.normalize(s2);
+  }
+
+  static String? normalizeNullable(String? s) => s != null ? normalize(s) : null;
+
+  static String normalize(String s) => s.toLowerCase().replaceAll(' ', '-');
+}
+
 class Natures {
   static const hardy = "Hardy";
   static const lonely = "Lonely";
