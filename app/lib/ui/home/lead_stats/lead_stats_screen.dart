@@ -1,27 +1,26 @@
-import 'package:app2/ui/core/pokeutils.dart';
 import 'package:app2/ui/core/widgets.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/localization/applocalization.dart';
 import '../../core/themes/dimens.dart';
 import '../../core/widgets/replay_filters.dart';
-import 'usage_stats_viewmodel.dart';
+import 'lead_stats_viewmodel.dart';
 
-class UsageStatsComponent extends StatefulWidget {
-  final UsageStatsViewModel viewModel;
+class LeadStatsComponent extends StatefulWidget {
+  final LeadStatsViewModel viewModel;
   final bool isMobile;
 
-  const UsageStatsComponent({super.key, required this.viewModel, required this.isMobile});
+  const LeadStatsComponent({super.key, required this.viewModel, required this.isMobile});
 
   @override
-  State createState() => isMobile ? _MobileUsageStatsState() : _DesktopUsageStatsState();
+  State createState() => isMobile ? _MobileLeadStatsState() : _DesktopLeadStatsState();
 
 }
 
-abstract class _AbstractUsageStatsState extends AbstractViewModelState<UsageStatsComponent> {
+abstract class _AbstractLeadStatsState extends AbstractViewModelState<LeadStatsComponent> {
 
   @override
-  UsageStatsViewModel get viewModel => widget.viewModel;
+  LeadStatsViewModel get viewModel => widget.viewModel;
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
@@ -70,7 +69,7 @@ abstract class _AbstractUsageStatsState extends AbstractViewModelState<UsageStat
 
   Widget _duoUsageCard(BuildContext context, AppLocalization localization, Dimens dimens,
       ThemeData theme, String title,
-      int Function(MapEntry<Duo<String>, LeadAndWinStats>, MapEntry<Duo<String>, LeadAndWinStats>) comparator
+      int Function(MapEntry<Duo<String>, LeadStats>, MapEntry<Duo<String>, LeadStats>) comparator
       ) {
     final entries = viewModel.duoStatsMap.entries
     /* is it needed?
@@ -110,7 +109,7 @@ abstract class _AbstractUsageStatsState extends AbstractViewModelState<UsageStat
         borderRadius: const BorderRadius.all(Radius.circular(8)),
       ),
       child: duoUsageCardContent(
-          Text("Individual Lead and Win", style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),),
+          Text("Lead and Win", style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),),
           entries.map((entry) => _duoUsageCardRow(context, localization, dimens, theme, [entry.key], entry.value)),
       ),
     );
@@ -118,7 +117,7 @@ abstract class _AbstractUsageStatsState extends AbstractViewModelState<UsageStat
 
   Widget duoUsageCardContent(Widget title, Iterable<Widget> entries);
 
-  Widget _duoUsageCardRow(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, List<String> pokemons, LeadAndWinStats stats) {
+  Widget _duoUsageCardRow(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, List<String> pokemons, LeadStats stats) {
     final int winRate = (stats.winCount * 100 / stats.total).truncate();
     return Row(
         mainAxisSize: MainAxisSize.min,
@@ -132,7 +131,7 @@ abstract class _AbstractUsageStatsState extends AbstractViewModelState<UsageStat
   }
 }
 
-class _DesktopUsageStatsState extends _AbstractUsageStatsState {
+class _DesktopLeadStatsState extends _AbstractLeadStatsState {
 
 
   @override
@@ -167,7 +166,7 @@ class _DesktopUsageStatsState extends _AbstractUsageStatsState {
   }
 }
 
-class _MobileUsageStatsState extends _AbstractUsageStatsState {
+class _MobileLeadStatsState extends _AbstractLeadStatsState {
 
   @override
   Widget content(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Widget filtersWidget) {

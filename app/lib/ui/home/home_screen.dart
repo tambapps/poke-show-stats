@@ -7,8 +7,8 @@ import 'package:app2/ui/home/move_usage/move_usage_screen.dart';
 import 'package:app2/ui/home/move_usage/move_usage_viewmodel.dart';
 import 'package:app2/ui/home/replay_entries/replay_entries_screen.dart';
 import 'package:app2/ui/home/replay_entries/replay_entries_viewmodel.dart';
-import 'package:app2/ui/home/usage_stats/usage_stats_screen.dart';
-import 'package:app2/ui/home/usage_stats/usage_stats_viewmodel.dart';
+import 'package:app2/ui/home/lead_stats/lead_stats_screen.dart';
+import 'package:app2/ui/home/lead_stats/lead_stats_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -41,7 +41,7 @@ abstract class _AbstractHomeScreenState extends AbstractViewModelState<HomeScree
     super.initState();
     viewModel.loadSave();
     // The `vsync: this` ensures the TabController is synchronized with the screen's refresh rate
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 6, vsync: this);
   }
 
   @override
@@ -70,6 +70,22 @@ abstract class _AbstractHomeScreenState extends AbstractViewModelState<HomeScree
   PreferredSizeWidget? appBar(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
   Widget body(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
 
+  TabBar tabBar(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, bool isScrollable) {
+    return TabBar(
+      controller: _tabController,
+      isScrollable: isScrollable,
+      onTap: (index) => viewModel.onTabSelected(index),
+      tabs: [
+        Tab(text: localization.home),
+        Tab(text: localization.replayEntries),
+        Tab(text: localization.gameByGame),
+        Tab(text: localization.moveUsages),
+        Tab(text: localization.leadStats),
+        Tab(text: localization.usageStats),
+      ],
+    );
+  }
+
   Widget tabBarView(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     return TabBarView(
       controller: _tabController,
@@ -88,22 +104,10 @@ abstract class _AbstractHomeScreenState extends AbstractViewModelState<HomeScree
             builder: (context, _) => MoveUsageComponent(viewModel: MoveUsageViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), isMobile: dimens.isMobile)),
         ListenableBuilder(
             listenable: viewModel,
-            builder: (context, _) => UsageStatsComponent(viewModel: UsageStatsViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), isMobile: dimens.isMobile))
-      ],
-    );
-  }
-
-  TabBar tabBar(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, bool isScrollable) {
-    return TabBar(
-      controller: _tabController,
-      isScrollable: isScrollable,
-      onTap: (index) => viewModel.onTabSelected(index),
-      tabs: [
-        Tab(text: localization.home),
-        Tab(text: localization.replayEntries),
-        Tab(text: localization.gameByGame),
-        Tab(text: localization.moveUsages),
-        Tab(text: localization.leadUsageStats),
+            builder: (context, _) => LeadStatsComponent(viewModel: LeadStatsViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), isMobile: dimens.isMobile)),
+        ListenableBuilder(
+            listenable: viewModel,
+            builder: (context, _) => Center(child: Text('TODO'),))
       ],
     );
   }
