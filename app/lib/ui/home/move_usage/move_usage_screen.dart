@@ -1,15 +1,11 @@
-
-import 'package:app2/data/models/replay.dart';
 import 'package:app2/ui/core/localization/applocalization.dart';
 import 'package:app2/ui/core/themes/dimens.dart';
 import 'package:app2/ui/core/widgets/pokemon_moves_pie_chart.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/widgets.dart';
-import '../../core/widgets/replay_filters.dart';
 import 'move_usage_viewmodel.dart';
 
 class MoveUsageComponent extends StatefulWidget {
@@ -31,7 +27,9 @@ abstract class _MoveUsageComponentState extends AbstractViewModelState<MoveUsage
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     final pokepaste = viewModel.pokepaste;
     if (pokepaste == null) {
-      return _cantDisplay("Please enter a pokepaste in the Home tab to consult move usages");
+      return Center(
+        child: Text("Please enter a pokepaste in the Home tab to consult move usages", textAlign: TextAlign.center,),
+      );
     }
     return ListenableBuilder(
         listenable: viewModel,
@@ -41,38 +39,14 @@ abstract class _MoveUsageComponentState extends AbstractViewModelState<MoveUsage
               child: CircularProgressIndicator(),
             );
           }
-          if (!viewModel.hasReplays) {
-            return _cantDisplay("Please enter a replays in the Replay Entries tab to consult move usages");
-          }
           final moveUsages = viewModel.pokemonMoveUsages;
-
-          final filtersWidget = ReplayFiltersWidget(viewModel: viewModel.filtersViewModel, applyFilters: (replayPredicate) => viewModel.loadStats(replayPredicate: replayPredicate), isMobile: dimens.isMobile,);
-          if (viewModel.replaysCount == 0) {
-            return Column(children: [
-              filtersWidget,
-              moveUsages.isNotEmpty ? moveUsagesWidget(pokepaste, moveUsages)
-                  : Expanded(child: _cantDisplay("Applied filters matched 0 replays"))
-            ],);
-          }
           return SingleChildScrollView(
-            child: Column(children: [
-              filtersWidget,
-
-                Align(alignment: Alignment.topLeft, child: Padding(padding: const EdgeInsets.only(left: 32.0, top: 8.0),
-                  child: Text("${viewModel.replaysCount} Replays", style: theme.textTheme.titleLarge,),
-                ),),
-              moveUsagesWidget(pokepaste, moveUsages),
-              SizedBox(height: 32.0,)
-            ],),
+            child: Padding(padding: EdgeInsets.only(bottom: 32.0), child: moveUsagesWidget(pokepaste, moveUsages),),
           );
         });
   }
 
   Widget moveUsagesWidget(Pokepaste pokepaste, Map<String, Map<String, int>> moveUsages);
-
-  Widget _cantDisplay(String text) => Center(
-    child: Text(text, textAlign: TextAlign.center,),
-  );
 
   Widget pokemonMoveUsagesWidget(Map<String, Map<String, int>> moveUsages, Pokemon pokemon) {
     Map<String, int> pokemonMoveUsages = moveUsages[pokemon.name] ?? {};

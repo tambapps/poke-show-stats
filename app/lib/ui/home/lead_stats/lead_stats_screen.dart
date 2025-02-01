@@ -1,9 +1,7 @@
 import 'package:app2/ui/core/widgets.dart';
 import 'package:flutter/material.dart';
-
 import '../../core/localization/applocalization.dart';
 import '../../core/themes/dimens.dart';
-import '../../core/widgets/replay_filters.dart';
 import 'lead_stats_viewmodel.dart';
 
 class LeadStatsComponent extends StatefulWidget {
@@ -26,7 +24,9 @@ abstract class _AbstractLeadStatsState extends AbstractViewModelState<LeadStatsC
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     final pokepaste = viewModel.pokepaste;
     if (pokepaste == null) {
-      return _cantDisplay("Please enter a pokepaste in the Home tab to consult move usages");
+      return Center(
+        child: Text("Please enter a pokepaste in the Home tab to consult move usages", textAlign: TextAlign.center,),
+      );
     }
     return ListenableBuilder(
         listenable: viewModel,
@@ -36,26 +36,11 @@ abstract class _AbstractLeadStatsState extends AbstractViewModelState<LeadStatsC
               child: CircularProgressIndicator(),
             );
           }
-          if (!viewModel.hasReplays) {
-            return _cantDisplay("Please enter a replays in the Replay Entries tab to consult move usages");
-          }
-
-          // TODO use a shared viewModel (or even component?) so that the filters are the same on every screen
-          final filtersWidget = Column(children: [
-            ReplayFiltersWidget(viewModel: viewModel.filtersViewModel, applyFilters: (replayPredicate) => viewModel.loadUsages(replayPredicate: replayPredicate), isMobile: dimens.isMobile,),
-            Align(alignment: Alignment.topLeft, child: Padding(padding: const EdgeInsets.only(left: 32.0, top: 8.0),
-              child: Text("${viewModel.replaysCount} Replays", style: theme.textTheme.titleLarge,),
-            ),)
-          ],);
-          return content(context, localization, dimens, theme, filtersWidget);
+          return content(context, localization, dimens, theme);
         });
   }
 
-  Widget content(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Widget filtersWidget);
-
-  Widget _cantDisplay(String text) => Center(
-    child: Text(text, textAlign: TextAlign.center,),
-  );
+  Widget content(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
 
   Widget mostCommonLeadDuo(BuildContext context, AppLocalization localization, Dimens dimens,
       ThemeData theme) {
@@ -135,11 +120,10 @@ class _DesktopLeadStatsState extends _AbstractLeadStatsState {
 
 
   @override
-  Widget content(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Widget filtersWidget) {
+  Widget content(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     const edgePadding = SizedBox(width: 32.0,);
     const padding = SizedBox(width: 64.0,);
     return Column(children: [
-      filtersWidget,
       const SizedBox(height: 16.0,),
       Expanded(child:
       Row(
@@ -169,10 +153,9 @@ class _DesktopLeadStatsState extends _AbstractLeadStatsState {
 class _MobileLeadStatsState extends _AbstractLeadStatsState {
 
   @override
-  Widget content(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Widget filtersWidget) {
+  Widget content(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     const padding = SizedBox(height: 32.0,);
     return SingleChildScrollView(child: Column(children: [
-      filtersWidget,
       padding,
       mostCommonLeadDuo(context, localization, dimens, theme),
       padding,

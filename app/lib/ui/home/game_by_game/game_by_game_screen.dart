@@ -1,9 +1,6 @@
-
 import 'package:app2/data/models/replay.dart';
 import 'package:app2/ui/core/widgets/pokepaste_widget.dart';
-import 'package:app2/ui/core/widgets/replay_filters.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
 
@@ -38,11 +35,9 @@ abstract class _AbstractGameByGameComponentState extends AbstractViewModelState<
           return ListView.separated(
               itemBuilder: (context, index) {
                 if (index == 0) {
-                  return ReplayFiltersWidget(viewModel: viewModel.filtersViewModel, applyFilters: (replayPredicate) => viewModel.applyFilters(replayPredicate), isMobile: dimens.isMobile,);
-                } else if (index == 1) {
                   return headerWidget(context, localization, dimens, theme);
                 }
-                final replay = viewModel.filteredReplays[index - 2];
+                final replay = viewModel.filteredReplays[index - 1];
                 return _gbgWidget(context, localization, dimens, theme, replay);
               },
               separatorBuilder: (context, index) {
@@ -53,7 +48,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractViewModelState<
                   height: 1,
                 ),);
               },
-              itemCount: viewModel.filteredReplays.length + 2 // + 2 because of filter + header component
+              itemCount: viewModel.filteredReplays.length + 1 // + 1 because header component
           );
         }
     );
@@ -69,8 +64,6 @@ abstract class _AbstractGameByGameComponentState extends AbstractViewModelState<
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("${viewModel.filteredReplays.length} Replays", style: textStyle,),
-          const SizedBox(height: 16.0,),
           if (winRateRatio != null)
             Text("Win rate ${(winRateRatio * 100).toStringAsFixed(1)}%", style: textStyle),
         ],

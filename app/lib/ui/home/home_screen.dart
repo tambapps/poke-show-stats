@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 
 import '../core/localization/applocalization.dart';
 import '../core/themes/dimens.dart';
+import '../core/widgets/replay_filters.dart';
 import 'home_viewmodel.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -35,6 +36,8 @@ abstract class _AbstractHomeScreenState extends AbstractViewModelState<HomeScree
   @override
   HomeViewModel get viewModel => widget.viewModel;
   late TabController _tabController;
+  late ReplayFiltersViewModel _replayFiltersViewModel;
+  late ReplayFilters _filters;
 
   @override
   void initState() {
@@ -42,11 +45,15 @@ abstract class _AbstractHomeScreenState extends AbstractViewModelState<HomeScree
     viewModel.loadSave();
     // The `vsync: this` ensures the TabController is synchronized with the screen's refresh rate
     _tabController = TabController(length: 6, vsync: this);
+    _filters = ReplayFilters();
+    _replayFiltersViewModel = ReplayFiltersViewModel(pokemonResourceService: viewModel.pokemonResourceService, filters: _filters);
   }
 
   @override
   void dispose() {
     _tabController.dispose();
+    _replayFiltersViewModel.dispose();
+    _filters.dispose();
     super.dispose();
   }
 
@@ -96,20 +103,46 @@ abstract class _AbstractHomeScreenState extends AbstractViewModelState<HomeScree
         ListenableBuilder(
             listenable: viewModel,
             builder: (context, _) => ReplayEntriesComponent(viewModel: ReplayEntriesViewModel(replayParser: context.read(), homeViewModel: viewModel), isMobile: dimens.isMobile,)),
-        ListenableBuilder(
-            listenable: viewModel,
-            builder: (context, _) => GameByGameComponent(viewModel: GameByGameViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), isMobile: dimens.isMobile)),
-        ListenableBuilder(
-            listenable: viewModel,
-            builder: (context, _) => MoveUsageComponent(viewModel: MoveUsageViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), isMobile: dimens.isMobile)),
-        ListenableBuilder(
-            listenable: viewModel,
-            builder: (context, _) => LeadStatsComponent(viewModel: LeadStatsViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), isMobile: dimens.isMobile)),
+        _tab(dimens, () => GameByGameComponent(viewModel: GameByGameViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), isMobile: dimens.isMobile)),
+        _tab(dimens, () => MoveUsageComponent(viewModel: MoveUsageViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), isMobile: dimens.isMobile)),
+        _tab(dimens, () => LeadStatsComponent(viewModel: LeadStatsViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), isMobile: dimens.isMobile)),
         ListenableBuilder(
             listenable: viewModel,
             builder: (context, _) => Center(child: Text('TODO'),))
       ],
     );
+  }
+
+  Widget _tab(Dimens dimens, Widget Function() tabComponent) {
+    return ListenableBuilder(
+        listenable: viewModel,
+        builder: (context, _) {
+          final replayFiltersWidget = ReplayFiltersWidget(
+              viewModel: _replayFiltersViewModel,
+              applyFilters: (replayPredicate) => viewModel.replayPredicate = replayPredicate,
+              isMobile: dimens.isMobile,
+            totalReplaysCount: viewModel.replays.length,
+            matchedReplaysCount: viewModel.filteredReplays.length,
+          );
+          return Column(children: [
+            replayFiltersWidget,
+            Expanded(child: _tabContent(tabComponent))
+          ],);
+        });
+  }
+
+  Widget _tabContent(Widget Function() tabComponent) {
+    if (viewModel.replays.isEmpty) {
+      return Center(
+        child: Text("Please enter a replays in the Replay Entries tab to consult move usages", textAlign: TextAlign.center,),
+      );
+    } else if (viewModel.filteredReplays.isEmpty) {
+      return Center(
+        child: Text("Applied filters matched 0 replays", textAlign: TextAlign.center,),
+      );
+    } else {
+      return tabComponent();
+    }
   }
 }
 

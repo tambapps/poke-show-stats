@@ -1,24 +1,16 @@
-import 'dart:collection';
-import 'dart:developer' as developer;
-
 import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
 
 import '../../../data/models/replay.dart';
 import '../../../data/services/pokemon_resource_service.dart';
-import '../../core/widgets/replay_filters.dart';
 import '../home_viewmodel.dart';
 
 class LeadStatsViewModel extends ChangeNotifier {
   final HomeViewModel homeViewModel;
   Pokepaste? get pokepaste => homeViewModel.pokepaste;
-  int _replaysCount = 0;
-  int get replaysCount => _replaysCount;
-  bool get hasReplays => homeViewModel.replays.isNotEmpty;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-  final ReplayFiltersViewModel filtersViewModel;
   final PokemonResourceService pokemonResourceService;
 
   Map<Duo<String>, LeadStats> _duoStatsMap = {};
@@ -29,19 +21,14 @@ class LeadStatsViewModel extends ChangeNotifier {
 
   LeadStatsViewModel({required this.homeViewModel,
     required this.pokemonResourceService,
-  }): filtersViewModel = ReplayFiltersViewModel(pokemonResourceService: pokemonResourceService) {
+  }) {
     loadUsages();
   }
 
-  void loadUsages({ReplayPredicate? replayPredicate}) async {
+  void loadUsages() async {
     _isLoading = true;
     notifyListeners();
-    developer.log("Applying filters...");
-    List<Replay> replays = replayPredicate != null ? homeViewModel.replays
-        .where((replay) => replayPredicate(replay))
-        .toList()
-        : homeViewModel.replays;
-    _replaysCount = replays.length;
+    List<Replay> replays = homeViewModel.filteredReplays;
     Map<Duo<String>, LeadStats> duoStatsMap = {};
     Map<String, LeadStats> pokemonStatsMap = {};
     for (Replay replay in replays) {

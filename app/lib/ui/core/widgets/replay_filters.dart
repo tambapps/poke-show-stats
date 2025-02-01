@@ -16,8 +16,10 @@ class ReplayFiltersWidget extends StatefulWidget {
   final ReplayFiltersViewModel viewModel;
   final void Function(ReplayPredicate?) applyFilters;
   final bool isMobile;
+  final int totalReplaysCount;
+  final int matchedReplaysCount;
 
-  const ReplayFiltersWidget({super.key, required this.viewModel, required this.applyFilters, required this.isMobile});
+  const ReplayFiltersWidget({super.key, required this.viewModel, required this.applyFilters, required this.isMobile, required this.totalReplaysCount, required this.matchedReplaysCount});
 
   @override
   State createState() => isMobile ? _MobileReplayFiltersWidgetState() : _DesktopReplayFiltersWidgetState();
@@ -29,18 +31,14 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
   late TabController _tabController;
   ReplayFiltersViewModel get _viewModel => widget.viewModel;
   void Function(ReplayPredicate?) get applyFilters => widget.applyFilters;
-  late _Filters _filters;
-  late TextEditingController _minEloController;
-  late TextEditingController _maxEloController;
+
+  ReplayFilters get _filters => _viewModel.filters;
 
   @override
   void initState() {
     super.initState();
     // The `vsync: this` ensures the TabController is synchronized with the screen's refresh rate
     _tabController = TabController(length: 6, vsync: this);
-    _filters = _Filters();
-    _minEloController = TextEditingController();
-    _maxEloController = TextEditingController();
   }
 
   @override
@@ -56,12 +54,13 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
           borderRadius: const BorderRadius.all(Radius.circular(8)),
         ),
         child: ExpansionTile(
-          title: Text("Filters"),
+          title: Text("Replay filters"),
+            subtitle: widget.totalReplaysCount != widget.matchedReplaysCount ? Text("Matched ${widget.matchedReplaysCount} replays out of ${widget.totalReplaysCount}") : null,
           children: [
             Padding(padding: EdgeInsets.symmetric(horizontal: dimens.pokemonFiltersHorizontalSpacing),
               child: eloFiltersWidget(context, localization, dimens, theme),),
             const SizedBox(height: 16.0,),
-            Text("Opponent's team", style: theme.textTheme.titleMedium,),
+            Text("Opponent's team", style: theme.textTheme.titleMedium, ),
             const SizedBox(height: 16.0,),
             TabBar(
               controller: _tabController,
@@ -86,7 +85,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
                           side: _viewModel.dirty ? const BorderSide(color: Colors.orange) : null,
                         ),
                         onPressed: () {
-                          applyFilters(_filters.getPredicate(_minEloController, _maxEloController));
+                          applyFilters(_filters.getPredicate());
                           _viewModel.dirty = false;
                         },
                         child: Text("Apply"))],
@@ -190,18 +189,16 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
   @override
   void dispose() {
     _tabController.dispose();
-    _filters.dispose();
-    _minEloController.dispose();
-    _maxEloController.dispose();
     super.dispose();
   }
 }
 
 class ReplayFiltersViewModel extends ChangeNotifier {
 
-  ReplayFiltersViewModel({required this.pokemonResourceService});
+  ReplayFiltersViewModel({required this.pokemonResourceService, required this.filters});
 
   final PokemonResourceService pokemonResourceService;
+  final ReplayFilters filters;
 
   bool _dirty = false;
   bool get dirty => _dirty;
@@ -216,9 +213,9 @@ class _DesktopReplayFiltersWidgetState extends _AbstractReplayFiltersWidgetState
   Widget eloFiltersWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     return Row(
       children: [
-        SizedBox(width: 200.0, child: textInput(labelText: "Opponent Min Elo", controller: _minEloController, numberInput: true),),
+        SizedBox(width: 200.0, child: textInput(labelText: "Opponent Min Elo", controller: _filters.minEloController, numberInput: true),),
         SizedBox(width: 32.0,),
-        SizedBox(width: 200.0, child: textInput(labelText: "Opponent Max Elo", controller: _maxEloController, numberInput: true),),
+        SizedBox(width: 200.0, child: textInput(labelText: "Opponent Max Elo", controller: _filters.maxEloController, numberInput: true),),
       ],  // Explicitly specify a list of widgets
     );
   }
@@ -230,19 +227,22 @@ class _MobileReplayFiltersWidgetState extends _AbstractReplayFiltersWidgetState 
   Widget eloFiltersWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     return Row(
         children: [
-          Expanded(child: textInput(labelText: "Min Elo", controller: _minEloController, numberInput: true)),
+          Expanded(child: textInput(labelText: "Min Elo", controller: _filters.minEloController, numberInput: true)),
           SizedBox(width: 8.0,),
-          Expanded(child: textInput(labelText: "Max Elo", controller: _maxEloController, numberInput: true)),
+          Expanded(child: textInput(labelText: "Max Elo", controller: _filters.maxEloController, numberInput: true)),
         ]// Explicitly specify a list of widgets
     );
   }
 }
 
-class _Filters {
+class ReplayFilters {
+
+  final TextEditingController minEloController = TextEditingController();
+  final TextEditingController maxEloController = TextEditingController();
 
   final List<PokemonFilters> pokemons = List.generate(6, (_) => PokemonFilters());
 
-  ReplayPredicate? getPredicate(TextEditingController minEloController, TextEditingController maxEloController) {
+  ReplayPredicate? getPredicate() {
     List<ReplayPredicate> predicates = [];
 
     if (minEloController.text.trim().isNotEmpty) {
@@ -264,12 +264,16 @@ class _Filters {
   }
 
   void clear() {
+    minEloController.clear();
+    maxEloController.clear();
     for (PokemonFilters pokemonFilters in pokemons) {
       pokemonFilters.clear();
     }
   }
 
   void dispose() {
+    minEloController.dispose();
+    maxEloController.dispose();
     for (PokemonFilters pokemonFilters in pokemons) {
       pokemonFilters.dispose();
     }

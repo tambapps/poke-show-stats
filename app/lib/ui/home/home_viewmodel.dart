@@ -1,7 +1,8 @@
-import 'dart:collection';
+import 'dart:developer' as developer;
 
 import 'package:app2/data/models/teamlytic.dart';
 import 'package:app2/data/services/save_service.dart';
+import 'package:app2/ui/core/widgets/replay_filters.dart';
 import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
@@ -24,6 +25,8 @@ class HomeViewModel extends ChangeNotifier {
   final String saveName = "default";
 
   List<Replay> get replays => _teamlytic.replays;
+  List<Replay> _filteredReplays = [];
+  List<Replay> get filteredReplays => _filteredReplays;
   List<String> get sdNames => _teamlytic.sdNames;
   Pokepaste? get pokepaste => _teamlytic.pokepaste;
   set pokepaste(Pokepaste? value) {
@@ -35,6 +38,19 @@ class HomeViewModel extends ChangeNotifier {
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;
   bool _disposed = false;
+
+  ReplayPredicate? _replayPredicate;
+  ReplayPredicate? get replayPredicate => _replayPredicate;
+  set replayPredicate(value) {
+    _replayPredicate = value;
+    if (value != null) {
+      developer.log("Applying filters...");
+      _filteredReplays = replays.where(value).toList();
+    } else {
+      _filteredReplays = replays.toList();
+    }
+    notifyListeners();
+  }
 
   void onTabSelected(int index) {
     // don't need to notifyListeners() because the DefaultTabController handles its own state
@@ -48,6 +64,9 @@ class HomeViewModel extends ChangeNotifier {
     Replay replay = Replay(uri: uri, data: replayData, opposingPlayer: opposingPlayer, gameOutput: output);
     replay.trySetElo(replays);
     _teamlytic.replays = [...replays, replay];
+    if (_replayPredicate == null || _replayPredicate!(replay)) {
+      _filteredReplays = [..._filteredReplays, replay];
+    }
     notifyListeners();
     storeSave();
   }
@@ -73,6 +92,7 @@ class HomeViewModel extends ChangeNotifier {
 
   void removeReplay(Replay replay) {
     _teamlytic.replays = [...replays]..remove(replay);
+    _filteredReplays = [..._filteredReplays]..remove(replay);
     notifyListeners();
     storeSave();
   }
@@ -100,12 +120,16 @@ class HomeViewModel extends ChangeNotifier {
       return Replay(uri: replay.uri, data: replay.data, gameOutput: _computeGameOutput(replay.data), opposingPlayer: _computeOpposingPlayer(replay.data));
     }).toList();
     _teamlytic.replays = updatedReplays;
+    if (replayPredicate != null) {
+      _filteredReplays = replays.where(replayPredicate!).toList();
+    }
   }
 
   void storeSave() async => await saveService.storeSave(_teamlytic);
 
   void loadSave() async {
     _teamlytic = await saveService.loadSave(saveName);
+    _filteredReplays = _teamlytic.replays.toList();
     _notifyListenersSafely();
   }
 
