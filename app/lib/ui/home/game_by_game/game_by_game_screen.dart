@@ -1,5 +1,6 @@
 import 'package:app2/data/models/replay.dart';
 import 'package:app2/ui/core/widgets/pokepaste_widget.dart';
+import 'package:app2/ui/core/widgets/replay_filters.dart';
 import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
@@ -13,8 +14,9 @@ import 'game_by_game_viewmodel.dart';
 class GameByGameComponent extends StatefulWidget {
   final GameByGameViewModel viewModel;
   final bool isMobile;
+  final ReplayFiltersWidget filtersWidget;
 
-  const GameByGameComponent({super.key, required this.viewModel, required this.isMobile});
+  const GameByGameComponent({super.key, required this.viewModel, required this.isMobile, required this.filtersWidget});
 
 
   @override
@@ -35,9 +37,11 @@ abstract class _AbstractGameByGameComponentState extends AbstractViewModelState<
           return ListView.separated(
               itemBuilder: (context, index) {
                 if (index == 0) {
+                  return widget.filtersWidget;
+                } else if (index == 1) {
                   return headerWidget(context, localization, dimens, theme);
                 }
-                final replay = viewModel.filteredReplays[index - 1];
+                final replay = viewModel.filteredReplays[index - 2];
                 return _gbgWidget(context, localization, dimens, theme, replay);
               },
               separatorBuilder: (context, index) {
@@ -48,7 +52,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractViewModelState<
                   height: 1,
                 ),);
               },
-              itemCount: viewModel.filteredReplays.length + 1 // + 1 because header component
+              itemCount: viewModel.filteredReplays.length + 2 // + 2 because filters and header component
           );
         }
     );

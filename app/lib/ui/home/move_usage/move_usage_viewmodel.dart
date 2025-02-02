@@ -11,7 +11,7 @@ class MoveUsageViewModel extends ChangeNotifier {
     required this.homeViewModel,
     required this.pokemonResourceService,
   }) {
-    loadStats();
+    _loadStats();
   }
 
   final HomeViewModel homeViewModel;
@@ -22,7 +22,7 @@ class MoveUsageViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  void loadStats() async {
+  void _loadStats() async {
     _isLoading = true;
     notifyListeners();
     List<Replay> replays = homeViewModel.filteredReplays;

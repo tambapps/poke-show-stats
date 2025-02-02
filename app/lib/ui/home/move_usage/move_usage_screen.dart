@@ -6,13 +6,15 @@ import 'package:pokepaste_parser/pokepaste_parser.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/widgets.dart';
+import '../../core/widgets/replay_filters.dart';
 import 'move_usage_viewmodel.dart';
 
 class MoveUsageComponent extends StatefulWidget {
   final MoveUsageViewModel viewModel;
   final bool isMobile;
+  final ReplayFiltersWidget filtersWidget;
 
-  const MoveUsageComponent({super.key, required this.viewModel, required this.isMobile});
+  const MoveUsageComponent({super.key, required this.viewModel, required this.isMobile, required this.filtersWidget});
 
   @override
   _MoveUsageComponentState createState() => isMobile ? _MobileMoveUsageComponentState() : _DesktopMoveUsageComponentState();
@@ -41,7 +43,11 @@ abstract class _MoveUsageComponentState extends AbstractViewModelState<MoveUsage
           }
           final moveUsages = viewModel.pokemonMoveUsages;
           return SingleChildScrollView(
-            child: Padding(padding: EdgeInsets.only(bottom: 32.0), child: moveUsagesWidget(pokepaste, moveUsages),),
+            child: Column(children: [
+              widget.filtersWidget,
+              moveUsagesWidget(pokepaste, moveUsages),
+              const SizedBox(height: 32.0,)
+            ],),
           );
         });
   }

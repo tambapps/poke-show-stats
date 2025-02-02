@@ -104,9 +104,9 @@ abstract class _AbstractHomeScreenState extends AbstractViewModelState<HomeScree
         ListenableBuilder(
             listenable: viewModel,
             builder: (context, _) => ReplayEntriesComponent(viewModel: ReplayEntriesViewModel(replayParser: context.read(), homeViewModel: viewModel), isMobile: dimens.isMobile,)),
-        _tab(dimens, () => GameByGameComponent(viewModel: GameByGameViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), isMobile: dimens.isMobile)),
-        _tab(dimens, () => MoveUsageComponent(viewModel: MoveUsageViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), isMobile: dimens.isMobile)),
-        _tab(dimens, () => LeadStatsComponent(viewModel: LeadStatsViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), isMobile: dimens.isMobile)),
+        _tab(dimens, (filtersWidget) => GameByGameComponent(viewModel: GameByGameViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), filtersWidget: filtersWidget, isMobile: dimens.isMobile)),
+        _tab(dimens, (filtersWidget) => MoveUsageComponent(viewModel: MoveUsageViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), filtersWidget: filtersWidget, isMobile: dimens.isMobile)),
+        _tab(dimens, (filtersWidget) => LeadStatsComponent(viewModel: LeadStatsViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), filtersWidget: filtersWidget, isMobile: dimens.isMobile)),
         ListenableBuilder(
             listenable: viewModel,
             builder: (context, _) => Center(child: Text('TODO'),))
@@ -114,7 +114,7 @@ abstract class _AbstractHomeScreenState extends AbstractViewModelState<HomeScree
     );
   }
 
-  Widget _tab(Dimens dimens, Widget Function() tabComponent) {
+  Widget _tab(Dimens dimens, Widget Function(ReplayFiltersWidget) tabContentSupplier) {
     return ListenableBuilder(
         listenable: viewModel,
         builder: (context, _) {
@@ -125,25 +125,18 @@ abstract class _AbstractHomeScreenState extends AbstractViewModelState<HomeScree
             totalReplaysCount: viewModel.replays.length,
             matchedReplaysCount: viewModel.filteredReplays.length,
           );
-          return Column(children: [
-            replayFiltersWidget,
-            Expanded(child: _tabContent(tabComponent))
-          ],);
+          if (viewModel.replays.isEmpty) {
+            return Center(
+              child: Text("Please enter a replays in the Replay Entries tab to consult move usages", textAlign: TextAlign.center,),
+            );
+          } else if (viewModel.filteredReplays.isEmpty) {
+            return Center(
+              child: Text("Applied filters matched 0 replays", textAlign: TextAlign.center,),
+            );
+          } else {
+            return tabContentSupplier(replayFiltersWidget);
+          }
         });
-  }
-
-  Widget _tabContent(Widget Function() tabComponent) {
-    if (viewModel.replays.isEmpty) {
-      return Center(
-        child: Text("Please enter a replays in the Replay Entries tab to consult move usages", textAlign: TextAlign.center,),
-      );
-    } else if (viewModel.filteredReplays.isEmpty) {
-      return Center(
-        child: Text("Applied filters matched 0 replays", textAlign: TextAlign.center,),
-      );
-    } else {
-      return tabComponent();
-    }
   }
 }
 

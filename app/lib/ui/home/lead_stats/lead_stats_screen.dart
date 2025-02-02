@@ -3,13 +3,15 @@ import 'package:app2/ui/core/widgets/tile_card.dart';
 import 'package:flutter/material.dart';
 import '../../core/localization/applocalization.dart';
 import '../../core/themes/dimens.dart';
+import '../../core/widgets/replay_filters.dart';
 import 'lead_stats_viewmodel.dart';
 
 class LeadStatsComponent extends StatefulWidget {
   final LeadStatsViewModel viewModel;
   final bool isMobile;
+  final ReplayFiltersWidget filtersWidget;
 
-  const LeadStatsComponent({super.key, required this.viewModel, required this.isMobile});
+  const LeadStatsComponent({super.key, required this.viewModel, required this.isMobile, required this.filtersWidget});
 
   @override
   State createState() => isMobile ? _MobileLeadStatsState() : _DesktopLeadStatsState();
@@ -108,6 +110,7 @@ class _DesktopLeadStatsState extends _AbstractLeadStatsState {
     const edgePadding = SizedBox(width: 32.0,);
     const padding = SizedBox(width: 64.0,);
     return Column(children: [
+      widget.filtersWidget,
       const SizedBox(height: 16.0,),
       Expanded(child:
       Row(
@@ -132,6 +135,7 @@ class _MobileLeadStatsState extends _AbstractLeadStatsState {
   Widget content(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     const padding = SizedBox(height: 32.0,);
     return SingleChildScrollView(child: Column(children: [
+      widget.filtersWidget,
       padding,
       mostCommonLeadDuo(context, localization, dimens, theme),
       padding,

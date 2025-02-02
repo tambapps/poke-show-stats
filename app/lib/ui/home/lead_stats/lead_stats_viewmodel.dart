@@ -22,10 +22,10 @@ class LeadStatsViewModel extends ChangeNotifier {
   LeadStatsViewModel({required this.homeViewModel,
     required this.pokemonResourceService,
   }) {
-    loadUsages();
+    _loadUsages();
   }
 
-  void loadUsages() async {
+  void _loadUsages() async {
     _isLoading = true;
     notifyListeners();
     List<Replay> replays = homeViewModel.filteredReplays;
