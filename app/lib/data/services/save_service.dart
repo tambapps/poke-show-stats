@@ -143,7 +143,7 @@ class SaveServiceImpl implements SaveService {
 
   @override
   Future<List<TeamlyticPreview>> listSaves() async {
-    var saveNames = await _storage.listSaveNames() + List.generate(10, (i) => "default");
+    var saveNames = await _storage.listSaveNames();
     List<TeamlyticPreview> saves = [];
     for (String saveName in saveNames) {
       String? json = await _storage.loadSaveJson(saveName);
