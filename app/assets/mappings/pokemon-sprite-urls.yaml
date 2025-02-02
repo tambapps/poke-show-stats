@@ -2406,6 +2406,14 @@ necrozma:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/necrozma.png"
   name: "Necrozma"
   artwork: "https://www.pokepedia.fr/images/thumb/6/68/Necrozma-SL.png/781px-Necrozma-SL.png"
+necrozma-dawn-wings:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/necrozma-dawn-wings.png"
+  name: "Necrozma Dawn Wings"
+  artwork: "https://www.pokepedia.fr/images/1/15/Necrozma_%28Ailes_de_l%27Aurore%29-USUL.png"
+necrozma-dusk-mane:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/necrozma-dusk-mane.png"
+  name: "Necrozma Dusk Mane"
+  artwork: "https://www.pokepedia.fr/images/7/7d/Necrozma_%28Crini%C3%A8re_du_Couchant%29-USUL.png"
 nickit:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/nickit.png"
   name: "Nickit"
@@ -4093,9 +4101,17 @@ yveltal:
 zacian:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/zacian.png"
   name: "Zacian"
+  artwork: "https://www.pokepedia.fr/images/d/dc/Zacian_%28H%C3%A9ros_Aguerri%29-EB.png"
+zacian-crowned:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/zacian-crowned.png"
+  name: "Zacian"
   artwork: "https://www.pokepedia.fr/images/thumb/5/52/Zacian_%28%C3%89p%C3%A9e_Supr%C3%AAme%29-EB.png/621px-Zacian_%28%C3%89p%C3%A9e_Supr%C3%AAme%29-EB.png"
 zamazenta:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/zamazenta.png"
+  name: "Zamazenta"
+  artwork: "https://www.pokepedia.fr/images/5/5a/Zamazenta_%28H%C3%A9ros_Aguerri%29-EB.png"
+zamazenta-crowned:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/zamazenta-crowned.png"
   name: "Zamazenta"
   artwork: "https://www.pokepedia.fr/images/thumb/c/cf/Zamazenta_%28Bouclier_Supr%C3%AAme%29-EB.png/522px-Zamazenta_%28Bouclier_Supr%C3%AAme%29-EB.png"
 zangoose:
