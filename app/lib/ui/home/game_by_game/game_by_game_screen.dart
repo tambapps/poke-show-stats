@@ -135,7 +135,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractViewModelState<
     }
   }
 
-  Widget vsText(ThemeData theme, Replay replay) => Text("vs ${replay.opposingPlayer.name}", style: theme.textTheme.titleLarge,);
+  Widget vsText(ThemeData theme, Replay replay) => SelectableText("vs ${replay.opposingPlayer.name}", style: theme.textTheme.titleLarge,);
 
   Widget viewReplayButton(AppLocalization localization, Replay replay) => TextButton(
     onPressed: () => openLink(replay.uri.toString().replaceFirst('.json', '')),
