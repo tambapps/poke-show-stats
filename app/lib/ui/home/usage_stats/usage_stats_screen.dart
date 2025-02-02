@@ -48,27 +48,58 @@ abstract class _AbstractUsageStatsState extends AbstractViewModelState<UsageStat
 
   
   Widget teraUsageTileCard(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    return TileCard(title: "Tera and Win", content: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children:
-    viewModel.pokemonUsageStats.entries.map((entry) =>
-    _duoUsageCardRow(context, localization, dimens, theme, entry.key, entry.value)).toList(),));
+    return _usageTileCard(context, localization, dimens, theme,
+        "Tera and Win",
+        "Win rate of each pokemon amongst all games it did terastalize",
+            (pokemon, stats) {
+          final int? winRate = stats.teraCount != 0 ? (stats.teraAndWinCount * 100 / stats.teraCount).truncate() : null;
+          String text = winRate != null ? "Won ${stats.teraAndWinCount} out of ${stats.teraCount} games using tera" : "Did not tera";
+          return _usageCardRow(context, localization, dimens, theme, pokemon, text, winRate, true);
+        });
   }
 
-  Widget _duoUsageCardRow(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, String pokemon, UsageStats stats) {
-    final int? winRate = stats.teraCount != 0 ? (stats.teraAndWinCount * 100 / stats.teraCount).truncate() : null;
+  Widget usageTileCard(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
+    return _usageTileCard(context, localization, dimens, theme,
+        "Usage and Win",
+        "Win rate of each pokemon amongst all games it did participate",
+            (pokemon, stats) {
+          final int winRate = (stats.winCount * 100 / stats.total).truncate();
+          String text = "Won ${stats.winCount} out of ${stats.total} games";
+          return _usageCardRow(context, localization, dimens, theme, pokemon, text, winRate, false);
+        });
+  }
+
+  Widget globalUsageTileCard(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
+    return _usageTileCard(context, localization, dimens, theme,
+        "Usage",
+        "Rate at which each pokemon was selected to participate in a game",
+            (pokemon, stats) {
+          final int winRate = (stats.total * 100 / viewModel.replaysCount).truncate();
+          String text = "Participated in ${stats.total} out of ${viewModel.replaysCount} games";
+          return _usageCardRow(context, localization, dimens, theme, pokemon, text, winRate, false);
+        });
+  }
+
+
+  Widget _usageTileCard(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme,
+      String title, String tooltip,
+      Widget Function(String, UsageStats) rowGenerator) {
+    return TileCard(title: title, tooltip: tooltip, content: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children:
+    viewModel.pokemonUsageStats.entries.map((entry) => rowGenerator(entry.key, entry.value)).toList(),));
+  }
+
+  Widget _usageCardRow(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, String pokemon, String text, int? winRate, bool displayTera) {
     final teraType = viewModel.pokepaste?.pokemons.where((p) => PokemonNames.pokemonNameMatch(p.name, pokemon)).firstOrNull?.teraType;
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         const SizedBox(width: 8.0,),
         viewModel.pokemonResourceService.getPokemonSprite(pokemon),
-        teraType != null ? viewModel.pokemonResourceService.getTeraTypeSprite(teraType, width: 64.0, height: 64.0) : SizedBox(width: 64.0,),
-        ...(winRate != null ?
-        [
-          Text("Won ${stats.teraAndWinCount} games out of ${stats.teraCount} using tera", textAlign: TextAlign.center,),
-          SizedBox(width: 75.0, child: Center(child: Text("$winRate%", style: theme.textTheme.titleLarge, textAlign: TextAlign.center),),),
-        ]
-            : [Text("Did not tera", textAlign: TextAlign.center,)]),
+        if (displayTera) teraType != null ? viewModel.pokemonResourceService.getTeraTypeSprite(teraType, width: 64.0, height: 64.0) : SizedBox(width: 64.0,),
+        Text(text, textAlign: TextAlign.center,),
+        if (winRate != null) Padding(padding: EdgeInsets.only(left: 8.0), child: Text("$winRate%", style: theme.textTheme.titleLarge, textAlign: TextAlign.end),),
         const SizedBox(width: 8.0,),
       ],);
   }
@@ -98,6 +129,10 @@ class _DesktopUsageStatsState extends _AbstractUsageStatsState {
         children: [
           edgePadding,
           teraUsageTileCard(context, localization, dimens, theme),
+          padding,
+          usageTileCard(context, localization, dimens, theme),
+          padding,
+          globalUsageTileCard(context, localization, dimens, theme),
           edgePadding,
         ],)),
       const SizedBox(height: 16.0,),

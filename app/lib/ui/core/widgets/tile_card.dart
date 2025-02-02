@@ -10,8 +10,9 @@ import '../widgets.dart';
 class TileCard extends AbstractStatelessWidget {
 
   final String title;
+  final String? tooltip;
   final Widget content;
-  const TileCard({super.key, required this.title, required this.content});
+  const TileCard({super.key, required this.title, required this.content, this.tooltip});
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
@@ -47,6 +48,12 @@ class TileCard extends AbstractStatelessWidget {
     );
   }
 
-  Widget _title(ThemeData theme) => Text(title, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),);
+  Widget _title(ThemeData theme) {
+    final text = Text(title, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),);
+    if (tooltip != null) {
+      return Tooltip(message: tooltip, child: text,);
+    }
+    return text;
+  }
 
 }
