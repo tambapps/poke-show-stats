@@ -29,6 +29,7 @@ class ReplayFiltersWidget extends StatefulWidget {
 abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFiltersWidget> with TickerProviderStateMixin {
 
   late TabController _tabController;
+  late ExpansionTileController _expansionTileController;
   ReplayFiltersViewModel get _viewModel => widget.viewModel;
   void Function(ReplayPredicate?) get applyFilters => widget.applyFilters;
 
@@ -39,6 +40,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
     super.initState();
     // The `vsync: this` ensures the TabController is synchronized with the screen's refresh rate
     _tabController = TabController(length: 6, vsync: this);
+    _expansionTileController = ExpansionTileController();
   }
 
   @override
@@ -54,6 +56,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
           borderRadius: const BorderRadius.all(Radius.circular(8)),
         ),
         child: ExpansionTile(
+          controller: _expansionTileController,
           title: Text("Replay filters"),
             subtitle: widget.totalReplaysCount != widget.matchedReplaysCount ? Text("Matched ${widget.matchedReplaysCount} replays out of ${widget.totalReplaysCount}") : null,
           children: [
@@ -87,6 +90,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
                         onPressed: () {
                           applyFilters(_filters.getPredicate());
                           _viewModel.dirty = false;
+                          _expansionTileController.collapse();
                         },
                         child: Text("Apply"))],
                 )
