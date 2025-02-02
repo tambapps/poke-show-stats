@@ -1,7 +1,7 @@
-import 'package:app2/ui/core/themes/colors.dart';
-import 'package:app2/ui/core/widgets.dart';
-import 'package:app2/ui/core/widgets/grid_listview.dart';
-import 'package:app2/ui/home/replay_entries/replay_entries_viewmodel.dart';
+import '../../../ui/core/themes/colors.dart';
+import '../../../ui/core/widgets.dart';
+import '../../../ui/core/widgets/grid_listview.dart';
+import '../../../ui/teamlytics/replay_entries/replay_entries_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 import '../../../data/models/replay.dart';

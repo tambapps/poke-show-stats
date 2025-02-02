@@ -1,6 +1,6 @@
-import 'package:app2/ui/core/localization/applocalization.dart';
-import 'package:app2/ui/core/themes/dimens.dart';
-import 'package:app2/ui/core/widgets/pokemon_moves_pie_chart.dart';
+import '../../core/localization/applocalization.dart';
+import '../../core/themes/dimens.dart';
+import '../../core/widgets/pokemon_moves_pie_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 import 'package:provider/provider.dart';

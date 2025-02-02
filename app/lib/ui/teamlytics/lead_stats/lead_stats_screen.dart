@@ -1,5 +1,5 @@
-import 'package:app2/ui/core/widgets.dart';
-import 'package:app2/ui/core/widgets/tile_card.dart';
+import '../../core/widgets.dart';
+import '../../core/widgets/tile_card.dart';
 import 'package:flutter/material.dart';
 import '../../core/localization/applocalization.dart';
 import '../../core/themes/dimens.dart';

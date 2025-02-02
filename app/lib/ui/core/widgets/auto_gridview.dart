@@ -1,6 +1,6 @@
 
 
-import 'package:app2/ui/core/utils.dart';
+import '../utils.dart';
 import 'package:flutter/material.dart';
 
 class AutoGridView extends StatelessWidget {

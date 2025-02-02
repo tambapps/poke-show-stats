@@ -1,7 +1,6 @@
-import 'package:app2/ui/core/pokeutils.dart';
-import 'package:app2/ui/core/widgets.dart';
-import 'package:app2/ui/core/widgets/pokepaste_widget.dart';
-import 'package:app2/ui/home/config/home_config_viewmodel.dart';
+import '../../../ui/core/widgets.dart';
+import '../../../ui/core/widgets/pokepaste_widget.dart';
+import '../../../ui/teamlytics/config/home_config_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 

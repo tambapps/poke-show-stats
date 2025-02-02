@@ -1,9 +1,9 @@
-import 'package:app2/data/models/replay.dart';
+import '../../../data/models/replay.dart';
 import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 
 import '../../../data/services/pokemon_resource_service.dart';
-import '../home_viewmodel.dart';
+import '../teamlytics_viewmodel.dart';
 
 class MoveUsageViewModel extends ChangeNotifier {
 
@@ -14,7 +14,7 @@ class MoveUsageViewModel extends ChangeNotifier {
     _loadStats();
   }
 
-  final HomeViewModel homeViewModel;
+  final TeamlyticsViewModel homeViewModel;
   final PokemonResourceService pokemonResourceService;
   Pokepaste? get pokepaste => homeViewModel.pokepaste;
   Map<String, Map<String, int>> _pokemonMoveUsages = {};

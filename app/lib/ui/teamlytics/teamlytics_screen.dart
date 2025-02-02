@@ -1,42 +1,42 @@
-import 'package:app2/ui/core/widgets.dart';
-import 'package:app2/ui/home/config/home_config_screen.dart';
-import 'package:app2/ui/home/config/home_config_viewmodel.dart';
-import 'package:app2/ui/home/game_by_game/game_by_game_screen.dart';
-import 'package:app2/ui/home/game_by_game/game_by_game_viewmodel.dart';
-import 'package:app2/ui/home/move_usage/move_usage_screen.dart';
-import 'package:app2/ui/home/move_usage/move_usage_viewmodel.dart';
-import 'package:app2/ui/home/replay_entries/replay_entries_screen.dart';
-import 'package:app2/ui/home/replay_entries/replay_entries_viewmodel.dart';
-import 'package:app2/ui/home/lead_stats/lead_stats_screen.dart';
-import 'package:app2/ui/home/lead_stats/lead_stats_viewmodel.dart';
-import 'package:app2/ui/home/usage_stats/usage_stats_screen.dart';
-import 'package:app2/ui/home/usage_stats/usage_stats_viewmodel.dart';
+import '../core/widgets.dart';
+import './config/home_config_screen.dart';
+import './config/home_config_viewmodel.dart';
+import './game_by_game/game_by_game_screen.dart';
+import './game_by_game/game_by_game_viewmodel.dart';
+import './move_usage/move_usage_screen.dart';
+import './move_usage/move_usage_viewmodel.dart';
+import './replay_entries/replay_entries_screen.dart';
+import './replay_entries/replay_entries_viewmodel.dart';
+import './lead_stats/lead_stats_screen.dart';
+import './lead_stats/lead_stats_viewmodel.dart';
+import './usage_stats/usage_stats_screen.dart';
+import './usage_stats/usage_stats_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../core/localization/applocalization.dart';
 import '../core/themes/dimens.dart';
 import '../core/widgets/replay_filters.dart';
-import 'home_viewmodel.dart';
+import 'teamlytics_viewmodel.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({
+class TeamlyticsScreen extends StatefulWidget {
+  const TeamlyticsScreen({
     super.key,
     required this.viewModel,
     required this.isMobile,
   });
 
-  final HomeViewModel viewModel;
+  final TeamlyticsViewModel viewModel;
   final bool isMobile;
 
   @override
-  State<HomeScreen> createState() => isMobile ? _MobileHomeScreenState() : _DesktopHomeScreenState();
+  State<TeamlyticsScreen> createState() => isMobile ? _MobileHomeScreenState() : _DesktopHomeScreenState();
 }
 
-abstract class _AbstractHomeScreenState extends AbstractViewModelState<HomeScreen> with TickerProviderStateMixin {
+abstract class _AbstractHomeScreenState extends AbstractViewModelState<TeamlyticsScreen> with TickerProviderStateMixin {
 
   @override
-  HomeViewModel get viewModel => widget.viewModel;
+  TeamlyticsViewModel get viewModel => widget.viewModel;
   late TabController _tabController;
   late ReplayFiltersViewModel _replayFiltersViewModel;
   late ReplayFilters _filters;

@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
 
-import 'package:app2/ui/home/home_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../ui/teamlytics/teamlytics_viewmodel.dart';
 import '../../../data/models/replay.dart';
 import '../../../data/services/pokemon_resource_service.dart';
 
@@ -21,7 +21,7 @@ class ReplayEntriesViewModel extends ChangeNotifier {
   List<String> get sdNames => homeViewModel.sdNames;
 
   final SdReplayParser replayParser;
-  final HomeViewModel homeViewModel;
+  final TeamlyticsViewModel homeViewModel;
   TextEditingController get addReplayURIController => homeViewModel.addReplayURIController;
 
   bool _loading = false;

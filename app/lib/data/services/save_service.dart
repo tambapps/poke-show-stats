@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 import 'dart:io';
 
-import 'package:app2/data/models/replay.dart';
-import 'package:app2/data/models/teamlytic.dart';
+import '../models/replay.dart';
+import '../models/teamlytic.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';

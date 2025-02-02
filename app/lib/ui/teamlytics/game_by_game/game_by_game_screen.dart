@@ -1,6 +1,6 @@
-import 'package:app2/data/models/replay.dart';
-import 'package:app2/ui/core/widgets/pokepaste_widget.dart';
-import 'package:app2/ui/core/widgets/replay_filters.dart';
+import '../../../data/models/replay.dart';
+import '../../core/widgets/pokepaste_widget.dart';
+import '../../core/widgets/replay_filters.dart';
 import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';

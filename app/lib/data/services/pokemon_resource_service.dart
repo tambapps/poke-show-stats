@@ -1,7 +1,7 @@
 import 'dart:collection';
 import 'dart:developer' as developer;
 
-import 'package:app2/ui/core/pokeutils.dart';
+import '../../ui/core/pokeutils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image_platform_interface/cached_network_image_platform_interface.dart';

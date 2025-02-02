@@ -1,9 +1,9 @@
 
-import 'package:app2/data/services/pokemon_resource_service.dart';
-import 'package:app2/ui/core/localization/applocalization.dart';
-import 'package:app2/ui/core/themes/dimens.dart';
-import 'package:app2/ui/core/utils.dart';
-import 'package:app2/ui/core/widgets.dart';
+import '../../../data/services/pokemon_resource_service.dart';
+import '../../core/localization/applocalization.dart';
+import '../../core/themes/dimens.dart';
+import '../../core/utils.dart';
+import '../../core/widgets.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 

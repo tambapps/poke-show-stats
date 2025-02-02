@@ -1,8 +1,8 @@
-import 'package:app2/data/services/pokemon_resource_service.dart';
+import '../../../data/services/pokemon_resource_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../data/models/replay.dart';
-import '../home_viewmodel.dart';
+import '../teamlytics_viewmodel.dart';
 
 
 class GameByGameViewModel extends ChangeNotifier {
@@ -12,7 +12,7 @@ class GameByGameViewModel extends ChangeNotifier {
     required this.pokemonResourceService,
   });
 
-  final HomeViewModel homeViewModel;
+  final TeamlyticsViewModel homeViewModel;
   final PokemonResourceService pokemonResourceService;
   List<Replay> get filteredReplays => homeViewModel.filteredReplays;
 

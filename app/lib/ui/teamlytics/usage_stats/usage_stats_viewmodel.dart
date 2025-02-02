@@ -8,10 +8,10 @@ import 'package:sd_replay_parser/sd_replay_parser.dart';
 import '../../../data/models/replay.dart';
 import '../../../data/services/pokemon_resource_service.dart';
 import '../../core/widgets/replay_filters.dart';
-import '../home_viewmodel.dart';
+import '../teamlytics_viewmodel.dart';
 
 class UsageStatsViewModel extends ChangeNotifier {
-  final HomeViewModel homeViewModel;
+  final TeamlyticsViewModel homeViewModel;
   Pokepaste? get pokepaste => homeViewModel.pokepaste;
   int get replaysCount => homeViewModel.filteredReplays.length;
 //  bool get hasReplays => homeViewModel.replays.isNotEmpty;

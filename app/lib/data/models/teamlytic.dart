@@ -1,4 +1,4 @@
-import 'package:app2/data/models/replay.dart';
+import './replay.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 part 'teamlytic.g.dart';

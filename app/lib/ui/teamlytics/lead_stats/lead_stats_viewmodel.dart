@@ -4,10 +4,10 @@ import 'package:sd_replay_parser/sd_replay_parser.dart';
 
 import '../../../data/models/replay.dart';
 import '../../../data/services/pokemon_resource_service.dart';
-import '../home_viewmodel.dart';
+import '../teamlytics_viewmodel.dart';
 
 class LeadStatsViewModel extends ChangeNotifier {
-  final HomeViewModel homeViewModel;
+  final TeamlyticsViewModel homeViewModel;
   Pokepaste? get pokepaste => homeViewModel.pokepaste;
   bool _isLoading = false;
   bool get isLoading => _isLoading;

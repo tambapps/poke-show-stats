@@ -1,17 +1,17 @@
 import 'dart:developer' as developer;
 
-import 'package:app2/data/models/teamlytic.dart';
-import 'package:app2/data/services/save_service.dart';
-import 'package:app2/ui/core/widgets/replay_filters.dart';
+import '../../../data/models/teamlytic.dart';
+import '../../../data/services/save_service.dart';
+import '../core/widgets/replay_filters.dart';
 import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
 import '../../data/models/replay.dart';
 import '../../data/services/pokemon_resource_service.dart';
 
-class HomeViewModel extends ChangeNotifier {
+class TeamlyticsViewModel extends ChangeNotifier {
 
-  HomeViewModel({required this.pokemonResourceService, required this.saveService});
+  TeamlyticsViewModel({required this.pokemonResourceService, required this.saveService});
 
   // storing it here even if it used only in the replayEntriesComponent because we don't want
   // to erase/refresh the controller each time the replayEntriesScreen state updates
