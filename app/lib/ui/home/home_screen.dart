@@ -126,17 +126,22 @@ abstract class _AbstractHomeScreenState extends AbstractViewModelState<HomeScree
             matchedReplaysCount: viewModel.filteredReplays.length,
           );
           if (viewModel.replays.isEmpty) {
-            return Center(
-              child: Text("Please enter a replays in the Replay Entries tab to consult move usages", textAlign: TextAlign.center,),
-            );
+            return _cantDisplay(replayFiltersWidget, "Please enter a replays in the Replay Entries tab to consult move usages");
           } else if (viewModel.filteredReplays.isEmpty) {
-            return Center(
-              child: Text("Applied filters matched 0 replays", textAlign: TextAlign.center,),
-            );
+            return _cantDisplay(replayFiltersWidget, "Applied filters matched 0 replays");
           } else {
             return tabContentSupplier(replayFiltersWidget);
           }
         });
+  }
+
+  Widget _cantDisplay(ReplayFiltersWidget filtersWidget, String text) {
+    return Column(children: [
+      filtersWidget,
+      Expanded(child: Center(
+        child: Text(text, textAlign: TextAlign.center,),
+      ))
+    ],);
   }
 }
 

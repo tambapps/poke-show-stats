@@ -60,7 +60,10 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
           maintainState: true,
           controller: _expansionTileController,
           title: Text("Replay filters"),
-            subtitle: widget.totalReplaysCount != widget.matchedReplaysCount ? Text("Matched ${widget.matchedReplaysCount} replays out of ${widget.totalReplaysCount}") : null,
+            subtitle: Text(
+                widget.totalReplaysCount != widget.matchedReplaysCount ?
+                "Matched ${widget.matchedReplaysCount} replays out of ${widget.totalReplaysCount}"
+                    : "${widget.totalReplaysCount} replays"),
           children: [
             Padding(padding: EdgeInsets.symmetric(horizontal: dimens.pokemonFiltersHorizontalSpacing),
               child: eloFiltersWidget(context, localization, dimens, theme),),
