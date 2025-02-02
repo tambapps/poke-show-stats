@@ -1,4 +1,5 @@
 import 'package:app2/ui/core/widgets.dart';
+import 'package:app2/ui/core/widgets/tile_card.dart';
 import 'package:flutter/material.dart';
 import '../../core/localization/applocalization.dart';
 import '../../core/themes/dimens.dart';
@@ -65,19 +66,7 @@ abstract class _AbstractLeadStatsState extends AbstractViewModelState<LeadStatsC
      */
       .toList();
     entries.sort(comparator);
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-            color: Colors.grey,
-            width: 2.0
-        ),
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
-      ),
-      child: duoUsageCardContent(
-          Text(title, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),),
-          entries.map((entry) => _duoUsageCardRow(context, localization, dimens, theme, entry.key.toList(), entry.value))
-      ),
-    );
+    return TileCard(title: title, content: Column(children: entries.map((entry) => _duoUsageCardRow(context, localization, dimens, theme, entry.key.toList(), entry.value)).toList(),));
   }
 
   Widget leadAndWinUsage(BuildContext context, AppLocalization localization, Dimens dimens,
@@ -93,14 +82,9 @@ abstract class _AbstractLeadStatsState extends AbstractViewModelState<LeadStatsC
         ),
         borderRadius: const BorderRadius.all(Radius.circular(8)),
       ),
-      child: duoUsageCardContent(
-          Text("Lead and Win", style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),),
-          entries.map((entry) => _duoUsageCardRow(context, localization, dimens, theme, [entry.key], entry.value)),
-      ),
+      child: TileCard(title: "Lead and Win", content: Column(children: entries.map((entry) => _duoUsageCardRow(context, localization, dimens, theme, [entry.key], entry.value)).toList(),)),
     );
   }
-
-  Widget duoUsageCardContent(Widget title, Iterable<Widget> entries);
 
   Widget _duoUsageCardRow(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, List<String> pokemons, LeadStats stats) {
     final int winRate = (stats.winCount * 100 / stats.total).truncate();
@@ -140,14 +124,6 @@ class _DesktopLeadStatsState extends _AbstractLeadStatsState {
       const SizedBox(height: 16.0,),
     ],);
   }
-
-  @override
-  Widget duoUsageCardContent(Widget title, Iterable<Widget> entries) {
-    return Column(children: [
-      title,
-      Expanded(child: SingleChildScrollView(child: Column(children: [...entries, const SizedBox(height: 8.0,)],),))
-    ],);
-  }
 }
 
 class _MobileLeadStatsState extends _AbstractLeadStatsState {
@@ -164,13 +140,5 @@ class _MobileLeadStatsState extends _AbstractLeadStatsState {
       leadAndWinUsage(context, localization, dimens, theme),
       padding,
     ],),);
-  }
-
-  @override
-  Widget duoUsageCardContent(Widget title, Iterable<Widget> entries) {
-    return ExpansionTile(
-      title: title,
-      children: [...entries, const SizedBox(height: 8.0,)],
-    );
   }
 }
