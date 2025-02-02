@@ -46,14 +46,13 @@ abstract class _AbstractUsageStatsState extends AbstractViewModelState<UsageStat
   }
   Widget content(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
 
-  
   Widget teraUsageTileCard(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     return _usageTileCard(context, localization, dimens, theme,
         "Tera and Win",
         "Win rate of each pokemon amongst all games it did terastalize",
             (pokemon, stats) {
           final int? winRate = stats.teraCount != 0 ? (stats.teraAndWinCount * 100 / stats.teraCount).truncate() : null;
-          String text = winRate != null ? "Won ${stats.teraAndWinCount} out of ${stats.teraCount} games using tera" : "Did not tera";
+          String text = winRate != null ? "Won\n${stats.teraAndWinCount} out of ${stats.teraCount}" : "Did not tera";
           return _usageCardRow(context, localization, dimens, theme, pokemon, text, winRate, true);
         });
   }
@@ -64,7 +63,7 @@ abstract class _AbstractUsageStatsState extends AbstractViewModelState<UsageStat
         "Win rate of each pokemon amongst all games it did participate",
             (pokemon, stats) {
           final int winRate = (stats.winCount * 100 / stats.total).truncate();
-          String text = "Won ${stats.winCount} out of ${stats.total} games";
+          String text = "Won\n${stats.winCount} out of ${stats.total} games";
           return _usageCardRow(context, localization, dimens, theme, pokemon, text, winRate, false);
         });
   }
@@ -75,19 +74,18 @@ abstract class _AbstractUsageStatsState extends AbstractViewModelState<UsageStat
         "Rate at which each pokemon was selected to participate in a game",
             (pokemon, stats) {
           final int winRate = (stats.total * 100 / viewModel.replaysCount).truncate();
-          String text = "Participated in ${stats.total} out of ${viewModel.replaysCount} games";
+          String text = "Participated in\n${stats.total} out of ${viewModel.replaysCount} games";
           return _usageCardRow(context, localization, dimens, theme, pokemon, text, winRate, false);
         });
   }
 
-
   Widget _usageTileCard(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme,
       String title, String tooltip,
       Widget Function(String, UsageStats) rowGenerator) {
-    return TileCard(title: title, tooltip: tooltip, content: Column(
+    return Padding(padding: EdgeInsets.symmetric(horizontal: 4.0), child: TileCard(title: title, tooltip: tooltip, content: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children:
-    viewModel.pokemonUsageStats.entries.map((entry) => rowGenerator(entry.key, entry.value)).toList(),));
+      viewModel.pokemonUsageStats.entries.map((entry) => rowGenerator(entry.key, entry.value)).toList(),)),);
   }
 
   Widget _usageCardRow(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, String pokemon, String text, int? winRate, bool displayTera) {
@@ -98,8 +96,8 @@ abstract class _AbstractUsageStatsState extends AbstractViewModelState<UsageStat
         const SizedBox(width: 8.0,),
         viewModel.pokemonResourceService.getPokemonSprite(pokemon),
         if (displayTera) teraType != null ? viewModel.pokemonResourceService.getTeraTypeSprite(teraType, width: 64.0, height: 64.0) : SizedBox(width: 64.0,),
-        Text(text, textAlign: TextAlign.center,),
-        if (winRate != null) Padding(padding: EdgeInsets.only(left: 8.0), child: Text("$winRate%", style: theme.textTheme.titleLarge, textAlign: TextAlign.end),),
+        Expanded(child: Text(text, textAlign: TextAlign.center,)),
+        SizedBox(width: 75.0, child: Center(child: Text(winRate != null ? "$winRate%" : "", style: theme.textTheme.titleLarge),),),
         const SizedBox(width: 8.0,),
       ],);
   }
@@ -109,8 +107,17 @@ class _MobileUsageStatsState extends _AbstractUsageStatsState {
 
   @override
   Widget content(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    // TODO: implement content
-    throw UnimplementedError();
+    const padding = SizedBox(height: 32.0,);
+    return SingleChildScrollView(child: Column(children: [
+      widget.filtersWidget,
+      padding,
+      teraUsageTileCard(context, localization, dimens, theme),
+      padding,
+      usageTileCard(context, localization, dimens, theme),
+      padding,
+      globalUsageTileCard(context, localization, dimens, theme),
+      padding,
+    ],),);
   }
 }
 

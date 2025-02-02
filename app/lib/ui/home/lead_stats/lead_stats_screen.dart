@@ -68,14 +68,14 @@ abstract class _AbstractLeadStatsState extends AbstractViewModelState<LeadStatsC
      */
       .toList();
     entries.sort(comparator);
-    return TileCard(title: title, content: Column(children: entries.map((entry) => _duoUsageCardRow(context, localization, dimens, theme, entry.key.toList(), entry.value)).toList(),));
+    return Padding(padding: EdgeInsets.symmetric(horizontal: 4.0), child: TileCard(title: title, content: Column(children: entries.map((entry) => _duoUsageCardRow(context, localization, dimens, theme, entry.key.toList(), entry.value)).toList(),)),);
   }
 
   Widget leadAndWinUsage(BuildContext context, AppLocalization localization, Dimens dimens,
       ThemeData theme) {
     final entries = viewModel.pokemonStats.entries.toList();
     entries.sort((e1, e2) => e2.value.winCount - e1.value.winCount);
-    return TileCard(title: "Lead and Win", content: Column(children: entries.map((entry) => _duoUsageCardRow(context, localization, dimens, theme, [entry.key], entry.value)).toList(),));
+    return Padding(padding: EdgeInsets.symmetric(horizontal: 4.0), child: TileCard(title: "Lead and Win", content: Column(children: entries.map((entry) => _duoUsageCardRow(context, localization, dimens, theme, [entry.key], entry.value)).toList(),)),);
   }
 
   Widget _duoUsageCardRow(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, List<String> pokemons, LeadStats stats) {
