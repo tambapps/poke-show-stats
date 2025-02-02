@@ -45,6 +45,8 @@ abstract class _AbstractHomeScreenState extends AbstractViewModelState<HomeScree
     viewModel.loadSave();
     // The `vsync: this` ensures the TabController is synchronized with the screen's refresh rate
     _tabController = TabController(length: 6, vsync: this);
+    // need to reset it as the underline always move to first position when changing screen tab
+    _tabController.addListener(() => _replayFiltersViewModel.selectedPokemonFilterIndex = 0);
     _filters = ReplayFilters();
     _replayFiltersViewModel = ReplayFiltersViewModel(pokemonResourceService: viewModel.pokemonResourceService, filters: _filters);
   }
@@ -81,7 +83,6 @@ abstract class _AbstractHomeScreenState extends AbstractViewModelState<HomeScree
     return TabBar(
       controller: _tabController,
       isScrollable: isScrollable,
-      onTap: (index) => viewModel.onTabSelected(index),
       tabs: [
         Tab(text: localization.home),
         Tab(text: localization.replayEntries),

@@ -35,8 +35,6 @@ class HomeViewModel extends ChangeNotifier {
     storeSave();
   }
 
-  int _selectedIndex = 0;
-  int get selectedIndex => _selectedIndex;
   bool _disposed = false;
 
   ReplayPredicate? _replayPredicate;
@@ -50,12 +48,6 @@ class HomeViewModel extends ChangeNotifier {
       _filteredReplays = replays.toList();
     }
     notifyListeners();
-  }
-
-  void onTabSelected(int index) {
-    // don't need to notifyListeners() because the DefaultTabController handles its own state
-    //  I am just listening to the changes of it
-    _selectedIndex = index;
   }
 
   void addReplay(Uri uri, SdReplayData replayData) {

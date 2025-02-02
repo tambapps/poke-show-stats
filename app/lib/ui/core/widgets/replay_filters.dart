@@ -40,6 +40,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
     super.initState();
     // The `vsync: this` ensures the TabController is synchronized with the screen's refresh rate
     _tabController = TabController(length: 6, vsync: this);
+    _tabController.addListener(() => _viewModel.selectedPokemonFilterIndex = _tabController.index);
     _expansionTileController = ExpansionTileController();
   }
 
@@ -56,6 +57,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
           borderRadius: const BorderRadius.all(Radius.circular(8)),
         ),
         child: ExpansionTile(
+          maintainState: true,
           controller: _expansionTileController,
           title: Text("Replay filters"),
             subtitle: widget.totalReplaysCount != widget.matchedReplaysCount ? Text("Matched ${widget.matchedReplaysCount} replays out of ${widget.totalReplaysCount}") : null,
@@ -65,11 +67,14 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
             const SizedBox(height: 16.0,),
             Text("Opponent's team", style: theme.textTheme.titleMedium, ),
             const SizedBox(height: 16.0,),
-            TabBar(
-              controller: _tabController,
-              isScrollable: widget.isMobile,
-              tabs: Iterable.generate(6, (index) => index).map((index) => Text("Pokemon ${index + 1}", style: theme.textTheme.titleMedium,)).toList(),
-            ),
+
+        Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0), child: TabBar(
+          controller: _tabController,
+          isScrollable: widget.isMobile,
+          tabs: Iterable.generate(6, (index) => index).map((index) =>
+              Padding(padding: EdgeInsets.only(bottom: 4.0),
+                child: ListenableBuilder(listenable: _viewModel, builder: (context, _) => Text("Pokemon ${index + 1}", style: theme.textTheme.titleMedium?.copyWith(color: index != _viewModel.selectedPokemonFilterIndex ? Colors.grey : null),)),)).toList(),
+        ),),
             ConstrainedBox(constraints: BoxConstraints(maxHeight: dimens.pokemonFiltersTabViewHeight),
               child: Padding(padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                 child: TabBarView(controller: _tabController, children: List.generate(6, (index) => _pokemonFilterWidget(context, localization, dimens, theme, index))),),),
@@ -208,6 +213,13 @@ class ReplayFiltersViewModel extends ChangeNotifier {
   bool get dirty => _dirty;
   set dirty(value) {
     _dirty = value;
+    notifyListeners();
+  }
+
+  int _selectedPokemonFilterIndex = 0;
+  int get selectedPokemonFilterIndex => _selectedPokemonFilterIndex;
+  set selectedPokemonFilterIndex(value) {
+    _selectedPokemonFilterIndex = value;
     notifyListeners();
   }
 }
