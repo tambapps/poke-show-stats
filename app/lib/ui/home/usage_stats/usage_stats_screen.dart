@@ -97,7 +97,7 @@ abstract class _AbstractUsageStatsState extends AbstractViewModelState<UsageStat
         viewModel.pokemonResourceService.getPokemonSprite(pokemon),
         if (displayTera) teraType != null ? viewModel.pokemonResourceService.getTeraTypeSprite(teraType, width: 64.0, height: 64.0) : SizedBox(width: 64.0,),
         Expanded(child: Text(text, textAlign: TextAlign.center,)),
-        SizedBox(width: 75.0, child: Center(child: Text(winRate != null ? "$winRate%" : "", style: theme.textTheme.titleLarge),),),
+        SizedBox(width: 60.0, child: Center(child: Text(winRate != null ? "$winRate%" : "", style: theme.textTheme.titleLarge),),),
         const SizedBox(width: 8.0,),
       ],);
   }
@@ -127,6 +127,8 @@ class _DesktopUsageStatsState extends _AbstractUsageStatsState {
   Widget content(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     const edgePadding = SizedBox(width: 32.0,);
     const padding = SizedBox(width: 64.0,);
+    double screenWidth = MediaQuery.of(context).size.width;
+    final maxWidth = screenWidth / 4;
     return Column(children: [
       widget.filtersWidget,
       const SizedBox(height: 16.0,),
@@ -135,11 +137,11 @@ class _DesktopUsageStatsState extends _AbstractUsageStatsState {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           edgePadding,
-          teraUsageTileCard(context, localization, dimens, theme),
+          ConstrainedBox(constraints: BoxConstraints(maxWidth: maxWidth), child: teraUsageTileCard(context, localization, dimens, theme),),
           padding,
-          usageTileCard(context, localization, dimens, theme),
+          ConstrainedBox(constraints: BoxConstraints(maxWidth: maxWidth), child: usageTileCard(context, localization, dimens, theme),),
           padding,
-          globalUsageTileCard(context, localization, dimens, theme),
+          ConstrainedBox(constraints: BoxConstraints(maxWidth: maxWidth), child: globalUsageTileCard(context, localization, dimens, theme),),
           edgePadding,
         ],)),
       const SizedBox(height: 16.0,),

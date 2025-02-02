@@ -81,14 +81,13 @@ abstract class _AbstractLeadStatsState extends AbstractViewModelState<LeadStatsC
   Widget _duoUsageCardRow(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, List<String> pokemons, LeadStats stats) {
     final int winRate = (stats.winCount * 100 / stats.total).truncate();
     return Row(
-        mainAxisSize: MainAxisSize.min,
       children: [
         const SizedBox(width: 8.0,),
       ...pokemons.map((pokemon) => viewModel.pokemonResourceService.getPokemonSprite(pokemon)),
         const SizedBox(width: 8.0,),
-        Text("Won\n${stats.winCount} games out of ${stats.total}", textAlign: TextAlign.center,),
+        Expanded(child: Text("Won\n${stats.winCount} games out of ${stats.total}", textAlign: TextAlign.center,)),
         const SizedBox(width: 8.0,),
-        SizedBox(width: 75.0, child: Center(child: Text("$winRate%", style: theme.textTheme.titleLarge, textAlign: TextAlign.center),),),
+        SizedBox(width: 60.0, child: Center(child: Text("$winRate%", style: theme.textTheme.titleLarge, textAlign: TextAlign.center),),),
       ],);
   }
 }
@@ -100,6 +99,8 @@ class _DesktopLeadStatsState extends _AbstractLeadStatsState {
   Widget content(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     const edgePadding = SizedBox(width: 32.0,);
     const padding = SizedBox(width: 64.0,);
+    double screenWidth = MediaQuery.of(context).size.width;
+    final maxWidth = screenWidth / 4;
     return Column(children: [
       widget.filtersWidget,
       const SizedBox(height: 16.0,),
@@ -108,11 +109,11 @@ class _DesktopLeadStatsState extends _AbstractLeadStatsState {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
         edgePadding,
-        mostCommonLeadDuo(context, localization, dimens, theme),
+        ConstrainedBox(constraints: BoxConstraints(maxWidth: maxWidth), child: mostCommonLeadDuo(context, localization, dimens, theme),),
+          padding,
+          ConstrainedBox(constraints: BoxConstraints(maxWidth: maxWidth), child: mostEffectiveLeadDuo(context, localization, dimens, theme),),
         padding,
-        mostEffectiveLeadDuo(context, localization, dimens, theme),
-        padding,
-        leadAndWinUsage(context, localization, dimens, theme),
+        ConstrainedBox(constraints: BoxConstraints(maxWidth: maxWidth), child: leadAndWinUsage(context, localization, dimens, theme),),
         edgePadding,
       ],)),
       const SizedBox(height: 16.0,),
