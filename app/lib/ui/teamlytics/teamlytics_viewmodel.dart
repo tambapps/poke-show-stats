@@ -17,12 +17,10 @@ class TeamlyticsViewModel extends ChangeNotifier {
   // to erase/refresh the controller each time the replayEntriesScreen state updates
   final TextEditingController addReplayURIController = TextEditingController();
 
-  PokemonResourceService pokemonResourceService;
+  final PokemonResourceService pokemonResourceService;
   final SaveService saveService;
 
   Teamlytic _teamlytic = Teamlytic(saveName: '', sdNames: [], replays: [], pokepaste: null);
-  // TODO hack for now as we cannot select multiple saves
-  final String saveName = "default";
 
   List<Replay> get replays => _teamlytic.replays;
   List<Replay> _filteredReplays = [];
@@ -119,7 +117,7 @@ class TeamlyticsViewModel extends ChangeNotifier {
 
   void storeSave() async => await saveService.storeSave(_teamlytic);
 
-  void loadSave() async {
+  void loadSave(String saveName) async {
     _teamlytic = await saveService.loadSave(saveName);
     _filteredReplays = _teamlytic.replays.toList();
     _notifyListenersSafely();

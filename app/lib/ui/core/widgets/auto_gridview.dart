@@ -15,6 +15,7 @@ class AutoGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> children = computeEffectiveChildren();
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: children.collateBy(columnsCount)
@@ -26,5 +27,14 @@ class AutoGridView extends StatelessWidget {
       ),))
           .toList(),
     );
+  }
+
+  List<Widget> computeEffectiveChildren() {
+    if (children.length % columnsCount == 0) return children;
+    List<Widget> effectiveChildren = children.toList();
+    while (effectiveChildren.length % columnsCount != 0) {
+      effectiveChildren.add(Container());
+    }
+    return effectiveChildren;
   }
 }

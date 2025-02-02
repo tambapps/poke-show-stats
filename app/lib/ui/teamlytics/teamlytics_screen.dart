@@ -23,9 +23,10 @@ class TeamlyticsScreen extends StatefulWidget {
   const TeamlyticsScreen({
     super.key,
     required this.viewModel,
-    required this.isMobile,
+    required this.isMobile, required this.saveName,
   });
 
+  final String saveName;
   final TeamlyticsViewModel viewModel;
   final bool isMobile;
 
@@ -44,7 +45,7 @@ abstract class _AbstractHomeScreenState extends AbstractViewModelState<Teamlytic
   @override
   void initState() {
     super.initState();
-    viewModel.loadSave();
+    viewModel.loadSave(widget.saveName);
     // The `vsync: this` ensures the TabController is synchronized with the screen's refresh rate
     _tabController = TabController(length: 6, vsync: this);
     // need to reset it as the underline always move to first position when changing screen tab

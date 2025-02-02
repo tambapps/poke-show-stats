@@ -111,7 +111,7 @@ class WebSaveStorage implements SaveStorage {
 
 abstract class SaveService {
 
-  Future<List<String>> listSaveNames();
+  Future<List<TeamlyticPreview>> listSaves();
 
   Future<Teamlytic> loadSave(String saveName);
 
@@ -120,7 +120,7 @@ abstract class SaveService {
 
 class DummySaveService implements SaveService {
   @override
-  Future<List<String>> listSaveNames() async {
+  Future<List<TeamlyticPreview>> listSaves() async {
     return [];
   }
 
@@ -142,7 +142,20 @@ class SaveServiceImpl implements SaveService {
   SaveServiceImpl({required SaveStorage storage, required final SdReplayParser replayParser}) : _storage = storage, _replayParser = replayParser;
 
   @override
-  Future<List<String>> listSaveNames() async => await _storage.listSaveNames();
+  Future<List<TeamlyticPreview>> listSaves() async {
+    var saveNames = await _storage.listSaveNames() + List.generate(10, (i) => "default");
+    List<TeamlyticPreview> saves = [];
+    for (String saveName in saveNames) {
+      String? json = await _storage.loadSaveJson(saveName);
+      Pokepaste? pokepaste;
+      if (json != null) {
+        Map<dynamic, dynamic> map = jsonDecode(json);
+        pokepaste = _loadPokepaste(map['pokepaste']);
+      }
+      saves.add(TeamlyticPreview(saveName: saveName, pokepaste: pokepaste));
+    }
+    return saves;
+  }
 
   @override
   Future<Teamlytic> loadSave(String saveName) async {

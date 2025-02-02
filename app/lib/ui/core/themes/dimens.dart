@@ -36,6 +36,9 @@ abstract final class Dimens {
   double get pokemonFiltersTabViewHeight;
   double get pieChartAspectRatio;
 
+  /* home screen */
+  int get savesColumnCount;
+
   static const Dimens desktop = _DimensDesktop();
   static const Dimens mobile = _DimensMobile();
 
@@ -76,6 +79,8 @@ final class _DimensMobile extends Dimens {
   final int pokemonArtworkFlex = 35;
   @override
   final int pokemonSheetFlex = 65;
+  @override
+  final int savesColumnCount = 1;
 
   @override
   final bool isMobile = true;
@@ -118,6 +123,8 @@ final class _DimensDesktop extends Dimens {
 
   @override
   final bool isMobile = false;
+  @override
+  final int savesColumnCount = 3;
 
   const _DimensDesktop();
 }

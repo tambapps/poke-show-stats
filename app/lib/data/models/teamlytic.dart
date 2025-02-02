@@ -15,3 +15,11 @@ class Teamlytic {
   factory Teamlytic.fromJson(Map<String, dynamic> json) => _$TeamlyticFromJson(json);
   Map<String, dynamic> toJson() => _$TeamlyticToJson(this);
 }
+
+class TeamlyticPreview {
+  final String saveName;
+  final Pokepaste? pokepaste;
+
+  TeamlyticPreview({required this.saveName, required this.pokepaste});
+
+}
