@@ -33,9 +33,10 @@ class TileCard extends AbstractStatelessWidget {
   }
 
   Widget _desktopContent(ThemeData theme) {
-    return Column(children: [
+    return Column(
+      children: [
       _title(theme),
-      Expanded(child: SingleChildScrollView(child: Column(children: [content, const SizedBox(height: 8.0,)],),))
+      Expanded(child: SingleChildScrollView(child: Padding(padding: EdgeInsets.only(bottom: 8.0), child: content,),))
     ],);
   }
 

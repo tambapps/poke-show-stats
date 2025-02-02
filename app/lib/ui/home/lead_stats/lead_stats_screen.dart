@@ -75,17 +75,7 @@ abstract class _AbstractLeadStatsState extends AbstractViewModelState<LeadStatsC
       ThemeData theme) {
     final entries = viewModel.pokemonStats.entries.toList();
     entries.sort((e1, e2) => e2.value.winCount - e1.value.winCount);
-
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-            color: Colors.grey,
-            width: 2.0
-        ),
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
-      ),
-      child: TileCard(title: "Lead and Win", content: Column(children: entries.map((entry) => _duoUsageCardRow(context, localization, dimens, theme, [entry.key], entry.value)).toList(),)),
-    );
+    return TileCard(title: "Lead and Win", content: Column(children: entries.map((entry) => _duoUsageCardRow(context, localization, dimens, theme, [entry.key], entry.value)).toList(),));
   }
 
   Widget _duoUsageCardRow(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, List<String> pokemons, LeadStats stats) {
@@ -95,9 +85,10 @@ abstract class _AbstractLeadStatsState extends AbstractViewModelState<LeadStatsC
       children: [
         const SizedBox(width: 8.0,),
       ...pokemons.map((pokemon) => viewModel.pokemonResourceService.getPokemonSprite(pokemon)),
-      SizedBox(width: 75.0, child: Center(child: Text("$winRate%", style: theme.textTheme.titleLarge,),),),
-      Text("Won\n${stats.winCount} games out of ${stats.total}", textAlign: TextAlign.center,),
         const SizedBox(width: 8.0,),
+        Text("Won\n${stats.winCount} games out of ${stats.total}", textAlign: TextAlign.center,),
+        const SizedBox(width: 8.0,),
+        SizedBox(width: 75.0, child: Center(child: Text("$winRate%", style: theme.textTheme.titleLarge, textAlign: TextAlign.center),),),
       ],);
   }
 }

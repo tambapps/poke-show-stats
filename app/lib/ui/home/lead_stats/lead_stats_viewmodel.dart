@@ -44,7 +44,7 @@ class LeadStatsViewModel extends ChangeNotifier {
   void _fillPokemonStats(Map<String, LeadStats> map, Replay replay) {
     if (replay.gameOutput == GameOutput.UNKNOWN) return;
     PlayerData player = replay.otherPlayer;
-    for (int i= 0; i < 2 && i < player.selection.length; i++) {
+    for (int i = 0; i < 2 && i < player.selection.length; i++) {
       String pokemon = player.selection[i];
       LeadStats stats = map.putIfAbsent(pokemon, () => LeadStats());
       if (replay.gameOutput == GameOutput.WIN) {

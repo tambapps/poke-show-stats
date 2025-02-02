@@ -9,6 +9,8 @@ import 'package:app2/ui/home/replay_entries/replay_entries_screen.dart';
 import 'package:app2/ui/home/replay_entries/replay_entries_viewmodel.dart';
 import 'package:app2/ui/home/lead_stats/lead_stats_screen.dart';
 import 'package:app2/ui/home/lead_stats/lead_stats_viewmodel.dart';
+import 'package:app2/ui/home/usage_stats/usage_stats_screen.dart';
+import 'package:app2/ui/home/usage_stats/usage_stats_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -107,9 +109,7 @@ abstract class _AbstractHomeScreenState extends AbstractViewModelState<HomeScree
         _tab(dimens, (filtersWidget) => GameByGameComponent(viewModel: GameByGameViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), filtersWidget: filtersWidget, isMobile: dimens.isMobile)),
         _tab(dimens, (filtersWidget) => MoveUsageComponent(viewModel: MoveUsageViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), filtersWidget: filtersWidget, isMobile: dimens.isMobile)),
         _tab(dimens, (filtersWidget) => LeadStatsComponent(viewModel: LeadStatsViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), filtersWidget: filtersWidget, isMobile: dimens.isMobile)),
-        ListenableBuilder(
-            listenable: viewModel,
-            builder: (context, _) => Center(child: Text('TODO'),))
+        _tab(dimens, (filtersWidget) => UsageStatsComponent(viewModel: UsageStatsViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), filtersWidget: filtersWidget, isMobile: dimens.isMobile)),
       ],
     );
   }

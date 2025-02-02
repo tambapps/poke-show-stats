@@ -17,16 +17,54 @@ class UsageStatsViewModel extends ChangeNotifier {
 //  bool get hasReplays => homeViewModel.replays.isNotEmpty;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-  final ReplayFiltersViewModel filtersViewModel;
   final PokemonResourceService pokemonResourceService;
+
+  Map<String, UsageStats> _pokemonUsageStats = {};
+  Map<String, UsageStats> get pokemonUsageStats => _pokemonUsageStats;
 
   UsageStatsViewModel({required this.homeViewModel,
     required this.pokemonResourceService,
-    required this.filtersViewModel,
   }) {
-  //  loadUsages();
+    _loadUsages();
   }
 
 
+  void _loadUsages() {
+    _isLoading = true;
+    notifyListeners();
+    Map<String, UsageStats> pokemonUsageStatsMap = {};
+    List<Replay> replays = homeViewModel.filteredReplays;
+    for (Replay replay in replays) {
+      _fill(pokemonUsageStatsMap, replay);
+    }
+    _pokemonUsageStats = pokemonUsageStatsMap;
+    _isLoading = false;
+    notifyListeners();
+  }
 
+  void _fill(Map<String, UsageStats> pokemonUsageStatsMap, Replay replay) {
+    for (String pokemon in replay.otherPlayer.selection) {
+      UsageStats stats = pokemonUsageStatsMap.putIfAbsent(pokemon, () => UsageStats());
+      bool terastilized = replay.otherPlayer.terastallization?.pokemon == pokemon;
+      bool won = replay.gameOutput == GameOutput.WIN;
+      if (won) {
+        stats.winCount++;
+      }
+      if (won && terastilized) {
+        stats.teraAndWinCount++;
+      }
+      if (terastilized) {
+        stats.teraCount++;
+      }
+      stats.total++;
+    }
+  }
+}
+
+
+class UsageStats {
+  int winCount = 0;
+  int teraAndWinCount = 0;
+  int teraCount = 0;
+  int total = 0;
 }
