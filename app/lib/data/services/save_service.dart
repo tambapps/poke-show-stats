@@ -28,7 +28,7 @@ class MobileSaveStorage implements SaveStorage {
   Future<String?> loadSaveJson(String saveName) async {
     try {
       final directory = await _getSavesDirectory();
-      final file = File('${directory.path}/$saveName.json');
+      final file = await _getSaveFile(saveName);
       if (!await file.exists()) {
         return null; // Return null if the file doesn't exist
       }
@@ -60,7 +60,8 @@ class MobileSaveStorage implements SaveStorage {
   Future<File> _getSaveFile(String saveName) async {
     // Get the app's documents directory
     final directory = await _getSavesDirectory();
-    return File('${directory.path}/$saveName.json');
+    // url encoding to support all characters in a save name
+    return File('${directory.path}/${Uri.encodeComponent(saveName)}.json');
   }
   @override
   Future<void> delete(String saveName) async {
@@ -127,8 +128,8 @@ class WebSaveStorage implements SaveStorage {
     return false;
   }
 
-  // TODO urlencode saveName to avoid having forbidden characters in key
-  String _saveKey(String saveName) => "${_saveKeyPrefix}_$saveName";
+  // url encoding to support all characters in a save name
+  String _saveKey(String saveName) => "${_saveKeyPrefix}_${Uri.encodeComponent(saveName)}";
 
   @override
   Future<void> delete(String saveName) async {
