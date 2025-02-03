@@ -36,7 +36,7 @@ class _TextInputDialogState extends State<TextInputDialog> {
         onChanged: (text) => setState(() => _errorText = null),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: Text(localization.cancel, style: TextStyle(color: Colors.red),)),
+        TextButton(onPressed: () => Navigator.pop(context), child: Text(localization.cancel,)),
         TextButton(onPressed: () {
           final value = _textFieldController.text;
           String? error;

@@ -27,4 +27,10 @@ class HomeViewModel extends ChangeNotifier {
     _loading = false;
     notifyListeners();
   }
+
+  void deleteSave(TeamlyticPreview save) {
+    saveService.deleteSave(save.saveName);
+    _saves = [..._saves]..removeWhere((s) => s.saveName == save.saveName);
+    notifyListeners();
+  }
 }

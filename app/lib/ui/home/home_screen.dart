@@ -1,3 +1,5 @@
+import 'package:app2/ui/core/dialogs.dart';
+
 import '../../data/models/teamlytic.dart';
 import '../../routing/routes.dart';
 import '../core/localization/applocalization.dart';
@@ -45,7 +47,7 @@ abstract class _AbstractHomeState extends AbstractViewModelState<HomeScreen> {
           child: Text("Teams", style: theme.textTheme.titleMedium,),),),
 
         Padding(padding: EdgeInsets.only(left: 16.0, bottom: 16.0), child: Align(alignment: Alignment.topLeft,
-          child: OutlinedButton(onPressed: () => _createTeamDialog(), child: Text("add team")),),),
+          child: OutlinedButton(onPressed: () => _createTeamDialog(context, localization), child: Text("add team")),),),
         !viewModel.loading ? AutoGridView(columnsCount: dimens.savesColumnCount, children: viewModel.saves.map((save) => _saveWidget(save, context, localization, dimens, theme)).toList())
         : CircularProgressIndicator(),
         // hack for android in order not to overlap the android system navigation bar
@@ -70,7 +72,10 @@ abstract class _AbstractHomeState extends AbstractViewModelState<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(save.saveName, style: theme.textTheme.titleMedium,),
+              Stack(children: [
+                Center(child: Text(save.saveName, style: theme.textTheme.titleMedium,),),
+                Align(alignment: Alignment.topRight, child: IconButton(padding: EdgeInsets.zero, icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => _deleteSaveDialog(context, localization, save)),)
+              ],),
               if (pokepaste != null)
                 Row(mainAxisSize: MainAxisSize.max,
                   // TODO bug, images not loaded on first page load
@@ -82,8 +87,28 @@ abstract class _AbstractHomeState extends AbstractViewModelState<HomeScreen> {
     );
   }
 
-  void _createTeamDialog() {
-    // TODO show dialog
+  void _createTeamDialog(BuildContext context, AppLocalization localization) {
+    showTextInputDialog(context, title: "New team", hint: "Enter team name", localization: localization,
+        validator: (input) => input.trim().isNotEmpty ? null : "Name must not be empty",
+        onSuccess: (name) {
+          context.push(Routes.teamlyticsRoute(name.trim()));
+          return true;
+        });
+  }
+
+  void _deleteSaveDialog(BuildContext context, AppLocalization localization, TeamlyticPreview save) {
+    showDialog(context: context, builder: (context) {
+      return AlertDialog(
+        title: Text("Delete team ${save.saveName}?"),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: Text(localization.cancel,)),
+          TextButton(onPressed: () {
+            viewModel.deleteSave(save);
+            Navigator.of(context).pop();
+          }, child: Text("yes", style: TextStyle(color: Colors.red)))
+        ],
+      );
+    });
   }
 }
 

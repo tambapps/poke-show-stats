@@ -17,7 +17,6 @@ class HomeConfigViewModel extends ChangeNotifier {
 
   final TeamlyticsViewModel homeViewModel;
   final PokepasteParser pokepasteParser;
-  final TextEditingController sdNameDialogController = TextEditingController();
 
   bool _pokepasteLoading = false;
   bool get pokepasteLoading => _pokepasteLoading;
@@ -62,7 +61,6 @@ class HomeConfigViewModel extends ChangeNotifier {
         hint: localization.enterSdName,
         confirmButtonText: localization.add,
         localization: localization,
-        textFieldController: sdNameDialogController,
         validator: (text) => text.trim().isNotEmpty && text.length <= 18 ? null :  "Showdown is not valid",
         onSuccess: (sdName) {
           homeViewModel.addSdName(sdName);
@@ -77,10 +75,4 @@ class HomeConfigViewModel extends ChangeNotifier {
   void removeSdName(String sdName) => homeViewModel.removeSdName(sdName);
 
   void addSdName(String sdName) => homeViewModel.addSdName(sdName);
-
-  @override
-  void dispose() {
-    sdNameDialogController.dispose();
-    super.dispose();
-  }
 }

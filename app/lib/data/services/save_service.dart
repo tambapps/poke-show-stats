@@ -14,14 +14,15 @@ abstract class SaveStorage {
 
   Future<List<String>> listSaveNames();
   Future<String?> loadSaveJson(String saveName);
-  Future<bool> storeSave(String saveName, String json);
+  Future<bool> store(String key, String json);
+  Future<void> delete(String saveName);
 }
 
 
 class MobileSaveStorage implements SaveStorage {
   static const _saveNamesKey = '_saveNames';
 
-  // uses SharedPreferences for save names, file for the resst
+  // uses SharedPreferences for save names, file for the rest
 
   @override
   Future<String?> loadSaveJson(String saveName) async {
@@ -39,17 +40,38 @@ class MobileSaveStorage implements SaveStorage {
   }
 
   @override
-  Future<bool> storeSave(String saveName, String json) async {
+  Future<bool> store(String saveName, String json) async {
     try {
-      // Get the app's documents directory
-      final directory = await _getSavesDirectory();
-      final file = File('${directory.path}/$saveName.json');
+      final file = await _getSaveFile(saveName);
       await file.writeAsString(json, flush: true);
+      final saveNames = await listSaveNames();
+      if (!saveNames.contains(saveName)) {
+        saveNames.add(saveName);
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setStringList(_saveNamesKey, saveNames);
+      }
       return true;
     } catch (e) {
       developer.log('Error storing save $saveName', error: e);
       return false;
     }
+  }
+
+  Future<File> _getSaveFile(String saveName) async {
+    // Get the app's documents directory
+    final directory = await _getSavesDirectory();
+    return File('${directory.path}/$saveName.json');
+  }
+  @override
+  Future<void> delete(String saveName) async {
+    final file = await _getSaveFile(saveName);
+    if (await file.exists()) {
+      await file.delete();
+    }
+    final saveNames = await listSaveNames();
+    saveNames.remove(saveName);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList(_saveNamesKey, saveNames);
   }
 
   @override
@@ -90,7 +112,7 @@ class WebSaveStorage implements SaveStorage {
   }
 
   @override
-  Future<bool> storeSave(String saveName, String json) async {
+  Future<bool> store(String saveName, String json) async {
     final prefs = await SharedPreferences.getInstance();
     String saveKey = _saveKey(saveName);
     bool didSave = await prefs.setString(saveKey, json);
@@ -105,7 +127,17 @@ class WebSaveStorage implements SaveStorage {
     return false;
   }
 
+  // TODO urlencode saveName to avoid having forbidden characters in key
   String _saveKey(String saveName) => "${_saveKeyPrefix}_$saveName";
+
+  @override
+  Future<void> delete(String saveName) async {
+    final prefs = await SharedPreferences.getInstance();
+    final saveNames = await listSaveNames();
+    saveNames.remove(saveName);
+    await prefs.setStringList(_saveNamesKey, saveNames);
+    await prefs.remove(_saveKey(saveName));
+  }
 
 }
 
@@ -116,6 +148,8 @@ abstract class SaveService {
   Future<Teamlytic> loadSave(String saveName);
 
   Future<void> storeSave(Teamlytic save);
+
+  Future<void> deleteSave(String saveName);
 }
 
 class DummySaveService implements SaveService {
@@ -131,6 +165,10 @@ class DummySaveService implements SaveService {
 
   @override
   Future<void> storeSave(Teamlytic save) async {
+  }
+
+  @override
+  Future<void> deleteSave(String saveName) async {
   }
 }
 
@@ -178,7 +216,10 @@ class SaveServiceImpl implements SaveService {
   }
 
   @override
-  Future<void> storeSave(Teamlytic save) async => _storage.storeSave(save.saveName, jsonEncode(save.toJson()));
+  Future<void> deleteSave(String saveName) async => await _storage.delete(saveName);
+
+  @override
+  Future<void> storeSave(Teamlytic save) async => _storage.store(save.saveName, jsonEncode(save.toJson()));
 
   List<String> _loadSdNames(List<dynamic> rawSdNames) => rawSdNames.map((sdName) => sdName.toString()).toList();
   Pokepaste? _loadPokepaste(Map<String, dynamic>? json) => json != null ? Pokepaste.fromJson(json) : null;

@@ -13,7 +13,6 @@ Future<void> showTextInputDialog(
       required String title,
       required String hint,
       required AppLocalization localization,
-      required TextEditingController textFieldController,
       required bool Function(String) onSuccess,
       String? Function(String)? validator,
       String? confirmButtonText,
