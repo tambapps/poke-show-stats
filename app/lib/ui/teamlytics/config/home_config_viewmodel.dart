@@ -63,8 +63,11 @@ class HomeConfigViewModel extends ChangeNotifier {
         confirmButtonText: localization.add,
         localization: localization,
         textFieldController: sdNameDialogController,
-        validator: (text) => text.trim().isNotEmpty && text.length <= 18,
-        onSuccess: (sdName) => homeViewModel.addSdName(sdName)
+        validator: (text) => text.trim().isNotEmpty && text.length <= 18 ? null :  "Showdown is not valid",
+        onSuccess: (sdName) {
+          homeViewModel.addSdName(sdName);
+          return true;
+        }
     );
   }
   void removePokepaste() {

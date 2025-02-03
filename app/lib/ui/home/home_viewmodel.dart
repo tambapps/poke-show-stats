@@ -11,6 +11,8 @@ class HomeViewModel extends ChangeNotifier {
 
   List<TeamlyticPreview> _saves = [];
   List<TeamlyticPreview> get saves => _saves;
+  bool _loading = false;
+  bool get loading => _loading;
 
   HomeViewModel({required this.pokemonResourceService, required this.saveService}) {
     _loadSaves();
@@ -18,8 +20,11 @@ class HomeViewModel extends ChangeNotifier {
 
 
   void _loadSaves() async {
+    _loading = true;
+    notifyListeners();
     List<TeamlyticPreview> saves = await saveService.listSaves();
     _saves = saves;
+    _loading = false;
     notifyListeners();
   }
 }

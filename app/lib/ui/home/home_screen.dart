@@ -41,10 +41,13 @@ abstract class _AbstractHomeState extends AbstractViewModelState<HomeScreen> {
         const SizedBox(height: 16.0,),
         Align(alignment: Alignment.center, child: Text("Poke ShowStats", style: theme.textTheme.titleLarge,),),
         Align(alignment: Alignment.center, child: Text("Welcome to Poke ShowStats, an app to get valuable insights from your Pokemon Showdown replays", style: theme.textTheme.labelLarge, textAlign: TextAlign.center,),),
-        Padding(padding: EdgeInsets.only(left: 16.0, top: 32.0, bottom: 16.0), child: Align(alignment: Alignment.topLeft, child: Text("Teams", style: theme.textTheme.titleMedium,),),),
+        Padding(padding: EdgeInsets.only(left: 16.0, top: 32.0, bottom: 16.0), child: Align(alignment: Alignment.topLeft,
+          child: Text("Teams", style: theme.textTheme.titleMedium,),),),
 
-        // TODO new save button
-        AutoGridView(columnsCount: dimens.savesColumnCount, children: viewModel.saves.map((save) => _saveWidget(save, context, localization, dimens, theme)).toList()),
+        Padding(padding: EdgeInsets.only(left: 16.0, bottom: 16.0), child: Align(alignment: Alignment.topLeft,
+          child: OutlinedButton(onPressed: () => _createTeamDialog(), child: Text("add team")),),),
+        !viewModel.loading ? AutoGridView(columnsCount: dimens.savesColumnCount, children: viewModel.saves.map((save) => _saveWidget(save, context, localization, dimens, theme)).toList())
+        : CircularProgressIndicator(),
         // hack for android in order not to overlap the android system navigation bar
         if (dimens.isMobile) SizedBox(height: MediaQuery.of(context).viewPadding.bottom,)
       ],),);
@@ -77,6 +80,10 @@ abstract class _AbstractHomeState extends AbstractViewModelState<HomeScreen> {
         ),
       ),
     );
+  }
+
+  void _createTeamDialog() {
+    // TODO show dialog
   }
 }
 
