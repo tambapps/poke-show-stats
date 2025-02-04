@@ -1,7 +1,8 @@
-import 'package:app2/data/services/pokemon_resource_service.dart';
 import 'package:flutter/material.dart';
 import 'localization/applocalization.dart';
 import 'themes/dimens.dart';
+
+import '../../../data/services/pokemon_resource_service.dart';
 
 abstract class AbstractState<T extends StatefulWidget> extends State<T> {
 

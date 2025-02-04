@@ -1,3 +1,6 @@
+import '../ui/screen/about/about_viewmodel.dart';
+
+import '../ui/screen/about/about_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -43,6 +46,12 @@ GoRouter router() => GoRouter(
           // Otherwise, allow navigation as is
           return null;
         }
+    ),
+    GoRoute(
+      path: Routes.about,
+      builder: (context, state) => AboutScreen(
+        viewModel: AboutViewModel(pokemonResourceService: context.read()),
+      ),
     )
   ],
 );

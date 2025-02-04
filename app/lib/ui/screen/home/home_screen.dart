@@ -1,4 +1,4 @@
-import 'package:app2/ui/core/dialogs.dart';
+import '../../core/dialogs.dart';
 
 import '../../../data/models/teamlytic.dart';
 import '../../../data/services/pokemon_resource_service.dart';
@@ -51,17 +51,15 @@ abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
           child: OutlinedButton(onPressed: () => _createTeamDialog(context, localization), child: Text("add team")),),),
         !viewModel.loading ? Expanded(child: SingleChildScrollView(child: AutoGridView(columnsCount: dimens.savesColumnCount, children: viewModel.saves.map((save) => _saveWidget(save, context, localization, dimens, theme)).toList()),))
             : CircularProgressIndicator(),
-        Align(alignment: Alignment.bottomRight, child: Padding(padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0), child: _aboutButton(),),)
+        Align(alignment: Alignment.bottomRight, child: Padding(padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0), child: _aboutButton(),),)
       ],);
   }
 
   Widget _aboutButton() {
     return InkWell(
       borderRadius: BorderRadius.circular(12), // Rounded edges
-      onTap: () {
-        // TODO about screen
-      },
-      child: Padding(padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0), child:  Text("About"),),
+      onTap: () => context.push(Routes.about),
+      child: Padding(padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0), child:  Text("About"),),
     );
   }
 
@@ -88,7 +86,6 @@ abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
               ],),
               if (pokepaste != null)
                 Row(mainAxisSize: MainAxisSize.max,
-                  // TODO bug, images not loaded on first page load
                   children: pokepaste.pokemons.map((pokemon) => Expanded(child: viewModel.pokemonResourceService.getPokemonSprite(pokemon.name))).toList(),),
               const SizedBox(height: 16.0,)
             ],),

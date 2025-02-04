@@ -1,4 +1,4 @@
-import 'package:app2/data/services/pokemon_resource_service.dart';
+import '../../../data/services/pokemon_resource_service.dart';
 
 import '../../core/widgets.dart';
 import 'config/home_config_screen.dart';
