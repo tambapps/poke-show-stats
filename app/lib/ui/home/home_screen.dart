@@ -39,8 +39,7 @@ abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
   }
 
   Widget body(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    return SingleChildScrollView(child:
-    Column(
+    return     Column(
       children: [
         const SizedBox(height: 16.0,),
         Align(alignment: Alignment.center, child: Text("Poke ShowStats", style: theme.textTheme.titleLarge,),),
@@ -50,9 +49,20 @@ abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
 
         Padding(padding: EdgeInsets.only(left: 16.0, bottom: 16.0), child: Align(alignment: Alignment.topLeft,
           child: OutlinedButton(onPressed: () => _createTeamDialog(context, localization), child: Text("add team")),),),
-        !viewModel.loading ? AutoGridView(columnsCount: dimens.savesColumnCount, children: viewModel.saves.map((save) => _saveWidget(save, context, localization, dimens, theme)).toList())
-        : CircularProgressIndicator(),
-      ],),);
+        !viewModel.loading ? Expanded(child: SingleChildScrollView(child: AutoGridView(columnsCount: dimens.savesColumnCount, children: viewModel.saves.map((save) => _saveWidget(save, context, localization, dimens, theme)).toList()),))
+            : CircularProgressIndicator(),
+        Align(alignment: Alignment.bottomRight, child: Padding(padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0), child: _aboutButton(),),)
+      ],);
+  }
+
+  Widget _aboutButton() {
+    return InkWell(
+      borderRadius: BorderRadius.circular(12), // Rounded edges
+      onTap: () {
+        // TODO about screen
+      },
+      child: Padding(padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0), child:  Text("About"),),
+    );
   }
 
   Widget _saveWidget(TeamlyticPreview save, BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
