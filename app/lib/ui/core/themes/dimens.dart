@@ -17,7 +17,6 @@ abstract final class Dimens {
 
   bool get isMobile;
   /// screen bounds
-  double get screenBoundsTopMargin;
   double get defaultScreenMargin;
 
   /* home config screen dimensions */
@@ -71,8 +70,6 @@ final class _DimensMobile extends Dimens {
   final double replayFiltersContainerPadding = 8.0;
 
   @override
-  final double screenBoundsTopMargin = 32.0;
-  @override
   final double pieChartAspectRatio = 1.0;
 
   @override
@@ -112,9 +109,6 @@ final class _DimensDesktop extends Dimens {
   final double pieChartAspectRatio = 1.5;
   @override
   final double replayFiltersContainerPadding = 32.0;
-
-  @override
-  final double screenBoundsTopMargin = 0.0;
 
   @override
   final int pokemonArtworkFlex = 45;

@@ -1,6 +1,7 @@
 import 'package:app2/ui/core/dialogs.dart';
 
 import '../../data/models/teamlytic.dart';
+import '../../data/services/pokemon_resource_service.dart';
 import '../../routing/routes.dart';
 import '../core/localization/applocalization.dart';
 import '../core/themes/dimens.dart';
@@ -24,16 +25,17 @@ class HomeScreen extends StatefulWidget {
   State<StatefulWidget> createState() => isMobile ? _MobileHomeState() : _DesktopHomeState();
 }
 
-abstract class _AbstractHomeState extends AbstractViewModelState<HomeScreen> {
+abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
 
   @override
   HomeViewModel get viewModel => widget.viewModel;
-
+  @override
+  PokemonResourceService get pokemonResourceService => viewModel.pokemonResourceService;
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    return Padding(padding: EdgeInsets.only(top: dimens.screenBoundsTopMargin), child: Scaffold(
-        body: ListenableBuilder(listenable: viewModel, builder: (context, _) => body(context, localization, dimens, theme))));
+    return Scaffold(
+        body: ListenableBuilder(listenable: viewModel, builder: (context, _) => body(context, localization, dimens, theme)));
   }
 
   Widget body(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
@@ -50,8 +52,6 @@ abstract class _AbstractHomeState extends AbstractViewModelState<HomeScreen> {
           child: OutlinedButton(onPressed: () => _createTeamDialog(context, localization), child: Text("add team")),),),
         !viewModel.loading ? AutoGridView(columnsCount: dimens.savesColumnCount, children: viewModel.saves.map((save) => _saveWidget(save, context, localization, dimens, theme)).toList())
         : CircularProgressIndicator(),
-        // hack for android in order not to overlap the android system navigation bar
-        if (dimens.isMobile) SizedBox(height: MediaQuery.of(context).viewPadding.bottom,)
       ],),);
   }
 

@@ -1,3 +1,4 @@
+import 'package:app2/data/services/pokemon_resource_service.dart';
 import 'package:flutter/material.dart';
 import 'localization/applocalization.dart';
 import 'themes/dimens.dart';
@@ -39,4 +40,22 @@ abstract class AbstractStatelessWidget extends StatelessWidget {
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
 
 
+}
+
+abstract class AbstractScreenState<T extends StatefulWidget> extends AbstractViewModelState<T>  {
+
+  PokemonResourceService get pokemonResourceService;
+
+  @override
+  Widget build(BuildContext context) {
+    // for android in order not to overlap the android system navigation bar and status bar
+    return Padding(
+        padding: MediaQuery.of(context).padding,
+        child: ListenableBuilder(
+          // need to listen to this because it loads assets asynchronously
+            listenable: pokemonResourceService,
+            builder: (context, _) => doBuild(context, AppLocalization.of(context), Dimens.of(context), Theme.of(context))
+        )
+    );
+  }
 }

@@ -1,3 +1,5 @@
+import 'package:app2/data/services/pokemon_resource_service.dart';
+
 import '../core/widgets.dart';
 import './config/home_config_screen.dart';
 import './config/home_config_viewmodel.dart';
@@ -34,10 +36,13 @@ class TeamlyticsScreen extends StatefulWidget {
   State<TeamlyticsScreen> createState() => isMobile ? _MobileHomeScreenState() : _DesktopHomeScreenState();
 }
 
-abstract class _AbstractHomeScreenState extends AbstractViewModelState<TeamlyticsScreen> with TickerProviderStateMixin {
+abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsScreen> with TickerProviderStateMixin {
 
   @override
   TeamlyticsViewModel get viewModel => widget.viewModel;
+  @override
+  PokemonResourceService get pokemonResourceService => viewModel.pokemonResourceService;
+
   late TabController _tabController;
   late ReplayFiltersViewModel _replayFiltersViewModel;
   late ReplayFilters _filters;
@@ -64,17 +69,14 @@ abstract class _AbstractHomeScreenState extends AbstractViewModelState<Teamlytic
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    return Padding(
-      padding: EdgeInsets.only(top: dimens.screenBoundsTopMargin),
-      child: DefaultTabController(
-        length: 3,
-        child: Scaffold(
-            appBar: appBar(context, localization, dimens, theme),
-            body: ListenableBuilder(
-                listenable: viewModel.pokemonResourceService,
-                builder: (context, _) => body(context, localization, dimens, theme)
-            )
-        ),
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+          appBar: appBar(context, localization, dimens, theme),
+          body: ListenableBuilder(
+              listenable: viewModel.pokemonResourceService,
+              builder: (context, _) => body(context, localization, dimens, theme)
+          )
       ),
     );
   }
@@ -153,11 +155,9 @@ class _MobileHomeScreenState extends _AbstractHomeScreenState {
 
   @override
   Widget body(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    final double navigationBarHeight = MediaQuery.of(context).viewPadding.bottom;
     return Column(children: [
       Expanded(child: tabBarView(context, localization, dimens, theme)),
       tabBar(context, localization, dimens, theme, true),
-      SizedBox(height: navigationBarHeight,)
     ],);
   }
 }
