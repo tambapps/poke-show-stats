@@ -1,6 +1,6 @@
 
 
-import 'package:app2/ui/core/utils.dart';
+import '../../core/utils.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
