@@ -25,6 +25,12 @@ class AboutScreen extends StatefulWidget {
 
 class _AboutScreenState extends AbstractScreenState<AboutScreen> {
 
+  final linkTextStyle = TextStyle(
+    color: Colors.blue,
+    fontWeight: FontWeight.bold,
+    decoration: TextDecoration.underline, // Underline effect
+  );
+
   @override
   AboutViewModel get viewModel => widget.viewModel;
 
@@ -41,10 +47,10 @@ class _AboutScreenState extends AbstractScreenState<AboutScreen> {
           children: [
             const SizedBox(height: 32.0,),
             Align(alignment: Alignment.topCenter, child: Text("About me", style: theme.textTheme.titleLarge,),),
-            Padding(padding: EdgeInsets.only(left: 16.0, top: 16.0), child: _aboutMeText(),),
+            Padding(padding: EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0), child: _aboutMeText(),),
             const SizedBox(height: 64.0,),
             Align(alignment: Alignment.topCenter, child: Text("Credits", style: theme.textTheme.titleLarge,),),
-            Padding(padding: EdgeInsets.only(left: 16.0, top: 16.0), child: _creditsText(),),
+            Padding(padding: EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0), child: _creditsText(),),
         ],),));
   }
 
@@ -58,11 +64,7 @@ class _AboutScreenState extends AbstractScreenState<AboutScreen> {
           ),
           TextSpan(
             text: "jarman",
-            style: TextStyle(
-              color: Colors.blue,
-              fontWeight: FontWeight.bold,
-              decoration: TextDecoration.underline, // Underline effect
-            ),
+            style: linkTextStyle,
             recognizer: TapGestureRecognizer()..onTap = () => openLink("https://x.com/jarmanVGC"),
           ),
           TextSpan(
@@ -70,11 +72,7 @@ class _AboutScreenState extends AbstractScreenState<AboutScreen> {
           ),
           TextSpan(
             text: "tambapps",
-            style: TextStyle(
-              color: Colors.blue,
-              fontWeight: FontWeight.bold,
-              decoration: TextDecoration.underline, // Underline effect
-            ),
+            style: linkTextStyle,
             recognizer: TapGestureRecognizer()..onTap = () => openLink("https://github.com/tambapps/"),
           ),
           TextSpan(
@@ -85,31 +83,30 @@ class _AboutScreenState extends AbstractScreenState<AboutScreen> {
           ),
           TextSpan(
             text: "here",
-            style: TextStyle(
-              color: Colors.blue,
-              fontWeight: FontWeight.bold,
-              decoration: TextDecoration.underline, // Underline effect
-            ),
+            style: linkTextStyle,
             recognizer: TapGestureRecognizer()..onTap = () => openLink("https://github.com/tambapps/pokemon-teamlytics/"),
           )
         ],
       ),
+      textAlign: TextAlign.justify,
     );
   }
   Widget _creditsText() {
-    return Row(children: [
-      InkWell(
-        onTap: () => openLink("https://www.deviantart.com/jormxdos"),
-        child: Text(
-          "jormxdos",
-          style: TextStyle(
-            color: Colors.blue,
-            fontWeight: FontWeight.bold,
-            decoration: TextDecoration.underline, // Underline effect like a hyperlink
+    return Text.rich(
+      TextSpan(
+        text: "",
+        children: [
+          TextSpan(
+            text: "jormxdos",
+            style: linkTextStyle,
+            recognizer: TapGestureRecognizer()..onTap = () => openLink("https://www.deviantart.com/jormxdos"),
           ),
-        ),
+          TextSpan(
+            text: " to have designed the tera type logos",
+          ),
+        ],
       ),
-      Text(" to have designed the tera type logos")
-    ],);
+      textAlign: TextAlign.justify,
+    );
   }
 }
