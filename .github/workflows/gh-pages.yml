@@ -1,0 +1,41 @@
+name: Deploy Web App to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.27.2'
+          channel: stable
+
+      - name: Enable web support
+        run: flutter config --enable-web
+
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: app
+
+      - name: Build Flutter Web
+        run: flutter build web --web-renderer html --base-href="/pokemon-teamlytics/"
+        working-directory: app
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: app/build/web
+          clean: true
