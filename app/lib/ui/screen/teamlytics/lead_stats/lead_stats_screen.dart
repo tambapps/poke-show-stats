@@ -1,9 +1,9 @@
-import '../../core/widgets.dart';
-import '../../core/widgets/tile_card.dart';
+import '../../../core/widgets.dart';
+import '../../../core/widgets/tile_card.dart';
 import 'package:flutter/material.dart';
-import '../../core/localization/applocalization.dart';
-import '../../core/themes/dimens.dart';
-import '../../core/widgets/replay_filters.dart';
+import '../../../core/localization/applocalization.dart';
+import '../../../core/themes/dimens.dart';
+import '../../../core/widgets/replay_filters.dart';
 import 'lead_stats_viewmodel.dart';
 
 class LeadStatsComponent extends StatefulWidget {

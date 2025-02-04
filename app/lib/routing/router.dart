@@ -1,12 +1,12 @@
-import 'package:app2/ui/home/home_screen.dart';
-import 'package:app2/ui/home/home_viewmodel.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../ui/screen/home/home_screen.dart';
+import '../ui/screen/home/home_viewmodel.dart';
 import './routes.dart';
-import '../ui/teamlytics/teamlytics_viewmodel.dart';
+import '../ui/screen/teamlytics/teamlytics_viewmodel.dart';
 import '../ui/core/themes/dimens.dart';
-import '../ui/teamlytics/teamlytics_screen.dart';
+import '../ui/screen/teamlytics/teamlytics_screen.dart';
 
 // router bug when app ran from IDE on refresh, it always redirects to default route, but not when ran from terminal
 // https://github.com/flutter/flutter/issues/114597

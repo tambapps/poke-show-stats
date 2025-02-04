@@ -1,13 +1,13 @@
-import '../../../ui/core/themes/colors.dart';
-import '../../../ui/core/widgets.dart';
-import '../../../ui/core/widgets/grid_listview.dart';
-import '../../../ui/teamlytics/replay_entries/replay_entries_viewmodel.dart';
+import '../../../core/themes/colors.dart';
+import '../../../core/widgets.dart';
+import '../../../core/widgets/grid_listview.dart';
+import 'replay_entries_viewmodel.dart';
 import 'package:flutter/material.dart';
 
-import '../../../data/models/replay.dart';
-import '../../core/localization/applocalization.dart';
-import '../../core/themes/dimens.dart';
-import '../../core/utils.dart';
+import '../../../../data/models/replay.dart';
+import '../../../core/localization/applocalization.dart';
+import '../../../core/themes/dimens.dart';
+import '../../../core/utils.dart';
 
 
 class ReplayEntriesComponent extends StatefulWidget {

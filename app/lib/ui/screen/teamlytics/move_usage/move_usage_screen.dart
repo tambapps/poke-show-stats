@@ -1,12 +1,12 @@
-import '../../core/localization/applocalization.dart';
-import '../../core/themes/dimens.dart';
-import '../../core/widgets/pokemon_moves_pie_chart.dart';
+import '../../../core/localization/applocalization.dart';
+import '../../../core/themes/dimens.dart';
+import '../../../core/widgets/pokemon_moves_pie_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/widgets.dart';
-import '../../core/widgets/replay_filters.dart';
+import '../../../core/widgets.dart';
+import '../../../core/widgets/replay_filters.dart';
 import 'move_usage_viewmodel.dart';
 
 class MoveUsageComponent extends StatefulWidget {

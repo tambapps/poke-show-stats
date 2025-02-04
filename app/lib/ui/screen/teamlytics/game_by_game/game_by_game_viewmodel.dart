@@ -1,7 +1,7 @@
-import '../../../data/services/pokemon_resource_service.dart';
+import '../../../../data/services/pokemon_resource_service.dart';
 import 'package:flutter/material.dart';
 
-import '../../../data/models/replay.dart';
+import '../../../../data/models/replay.dart';
 import '../teamlytics_viewmodel.dart';
 
 

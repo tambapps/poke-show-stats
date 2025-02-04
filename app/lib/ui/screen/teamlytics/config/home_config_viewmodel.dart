@@ -1,9 +1,9 @@
-import '../../../data/services/pokemon_resource_service.dart';
-import '../../core/localization/applocalization.dart';
+import '../../../../data/services/pokemon_resource_service.dart';
+import '../../../core/localization/applocalization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
-import '../../core/dialogs.dart';
+import '../../../core/dialogs.dart';
 import '../teamlytics_viewmodel.dart';
 
 class HomeConfigViewModel extends ChangeNotifier {

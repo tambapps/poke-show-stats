@@ -1,25 +1,25 @@
 import 'package:app2/data/services/pokemon_resource_service.dart';
 
-import '../core/widgets.dart';
-import './config/home_config_screen.dart';
-import './config/home_config_viewmodel.dart';
-import './game_by_game/game_by_game_screen.dart';
+import '../../core/widgets.dart';
+import 'config/home_config_screen.dart';
+import 'config/home_config_viewmodel.dart';
+import 'game_by_game/game_by_game_screen.dart';
 import './game_by_game/game_by_game_viewmodel.dart';
 import './move_usage/move_usage_screen.dart';
-import './move_usage/move_usage_viewmodel.dart';
+import 'move_usage/move_usage_viewmodel.dart';
 import './replay_entries/replay_entries_screen.dart';
-import './replay_entries/replay_entries_viewmodel.dart';
+import 'replay_entries/replay_entries_viewmodel.dart';
 import './lead_stats/lead_stats_screen.dart';
-import './lead_stats/lead_stats_viewmodel.dart';
+import 'lead_stats/lead_stats_viewmodel.dart';
 import './usage_stats/usage_stats_screen.dart';
 import './usage_stats/usage_stats_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../core/localization/applocalization.dart';
-import '../core/themes/dimens.dart';
-import '../core/widgets/replay_filters.dart';
-import 'teamlytics_viewmodel.dart';
+import '../../core/localization/applocalization.dart';
+import '../../core/themes/dimens.dart';
+import '../../core/widgets/replay_filters.dart';
+import './teamlytics_viewmodel.dart';
 
 class TeamlyticsScreen extends StatefulWidget {
   const TeamlyticsScreen({

@@ -6,9 +6,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../ui/teamlytics/teamlytics_viewmodel.dart';
-import '../../../data/models/replay.dart';
-import '../../../data/services/pokemon_resource_service.dart';
+import '../teamlytics_viewmodel.dart';
+import '../../../../data/models/replay.dart';
+import '../../../../data/services/pokemon_resource_service.dart';
 
 class ReplayEntriesViewModel extends ChangeNotifier {
 

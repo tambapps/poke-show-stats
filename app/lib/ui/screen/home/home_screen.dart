@@ -1,13 +1,13 @@
 import 'package:app2/ui/core/dialogs.dart';
 
-import '../../data/models/teamlytic.dart';
-import '../../data/services/pokemon_resource_service.dart';
-import '../../routing/routes.dart';
-import '../core/localization/applocalization.dart';
-import '../core/themes/dimens.dart';
-import '../core/widgets.dart';
-import '../core/widgets/auto_gridview.dart';
-import './home_viewmodel.dart';
+import '../../../data/models/teamlytic.dart';
+import '../../../data/services/pokemon_resource_service.dart';
+import '../../../routing/routes.dart';
+import '../../core/localization/applocalization.dart';
+import '../../core/themes/dimens.dart';
+import '../../core/widgets.dart';
+import '../../core/widgets/auto_gridview.dart';
+import 'home_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

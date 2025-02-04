@@ -1,15 +1,15 @@
-import '../../../data/models/replay.dart';
-import '../../core/widgets/pokepaste_widget.dart';
-import '../../core/widgets/replay_filters.dart';
+import '../../../../data/models/replay.dart';
+import '../../../core/widgets/pokepaste_widget.dart';
+import '../../../core/widgets/replay_filters.dart';
 import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
 
-import '../../core/localization/applocalization.dart';
-import '../../core/themes/dimens.dart';
-import '../../core/utils.dart';
-import '../../core/widgets.dart';
-import 'game_by_game_viewmodel.dart';
+import '../../../core/localization/applocalization.dart';
+import '../../../core/themes/dimens.dart';
+import '../../../core/utils.dart';
+import '../../../core/widgets.dart';
+import './game_by_game_viewmodel.dart';
 
 class GameByGameComponent extends StatefulWidget {
   final GameByGameViewModel viewModel;

@@ -1,11 +1,11 @@
-import '../../../ui/core/widgets.dart';
-import '../../../ui/core/widgets/pokepaste_widget.dart';
-import '../../../ui/teamlytics/config/home_config_viewmodel.dart';
+import '../../../core/widgets.dart';
+import '../../../core/widgets/pokepaste_widget.dart';
+import 'home_config_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 
-import '../../core/localization/applocalization.dart';
-import '../../core/themes/dimens.dart';
+import '../../../core/localization/applocalization.dart';
+import '../../../core/themes/dimens.dart';
 
 
 class HomeConfigComponent extends StatefulWidget {
