@@ -1,6 +1,7 @@
+import 'package:pokemon_core/pokemon_core.dart';
+
 import '../../../data/services/pokemon_resource_service.dart';
 import '../localization/applocalization.dart';
-import '../pokeutils.dart';
 import '../themes/dimens.dart';
 import '../widgets.dart';
 import '../widgets/auto_gridview.dart';
@@ -143,7 +144,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
     return autoCompleteTextInput(labelText: labelText, suggestions: suggestions,
         controller: controller,
         displayStringForOption: (entry) => _displayedName(entry.key.replaceAll('-', ' ')),
-        suggestionsMatcher: (textEditingValue, option) => PokemonNames.normalize(option.key).contains(PokemonNames.normalize(textEditingValue.text)));
+        suggestionsMatcher: (textEditingValue, option) => Pokemon.normalize(option.key).contains(Pokemon.normalize(textEditingValue.text)));
   }
 
   Widget autoCompleteTextInput<T extends Object>({required String labelText,
@@ -309,25 +310,25 @@ class PokemonFilters {
   ReplayPredicate? getPredicate() {
     List<ReplayPredicate> predicates = [];
     if (pokemonNameController.text.trim().isNotEmpty) {
-      final pokemon = PokemonNames.normalize(pokemonNameController.text.trim());
-      predicates.add((replay) => replay.opposingPlayer.team.any((pokemonName) => PokemonNames.pokemonNameMatch(pokemon, pokemonName)));
+      final pokemon = Pokemon.normalize(pokemonNameController.text.trim());
+      predicates.add((replay) => replay.opposingPlayer.team.any((pokemonName) => Pokemon.nameMatch(pokemon, pokemonName)));
     }
     if (itemController.text.trim().isNotEmpty) {
-      final item = PokemonNames.normalize(itemController.text.trim());
-      predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => item == PokemonNames.normalizeNullable(pokemon.item)));
+      final item = Pokemon.normalize(itemController.text.trim());
+      predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => item == Pokemon.normalizeNullable(pokemon.item)));
     }
     if (abilityController.text.trim().isNotEmpty) {
-      final ability = PokemonNames.normalize(abilityController.text.trim());
-      predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => ability == PokemonNames.normalize(pokemon.ability)));
+      final ability = Pokemon.normalize(abilityController.text.trim());
+      predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => ability == Pokemon.normalize(pokemon.ability)));
     }
     if (teraTypeController.text.trim().isNotEmpty) {
-      final teraType = PokemonNames.normalize(teraTypeController.text.trim());
-      predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => teraType == PokemonNames.normalize(pokemon.teraType)));
+      final teraType = Pokemon.normalize(teraTypeController.text.trim());
+      predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => teraType == Pokemon.normalize(pokemon.teraType)));
     }
     for (TextEditingController moveController in moveControllers) {
       if (moveController.text.trim().isNotEmpty) {
-        final move = PokemonNames.normalize(moveController.text.trim());
-        predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => pokemon.moves.any((pokemonMove) => move == PokemonNames.normalize(pokemonMove))));
+        final move = Pokemon.normalize(moveController.text.trim());
+        predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => pokemon.moves.any((pokemonMove) => move == Pokemon.normalize(pokemonMove))));
       }
     }
     return predicates.isNotEmpty ? (replay) => predicates.every((predicate) => predicate(replay)) : null;

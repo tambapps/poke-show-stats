@@ -28,6 +28,8 @@ class ReplayEntriesViewModel extends ChangeNotifier {
   bool get loading => _loading;
 
   void loadReplays() async {
+    // TODO bug when many. we add replays one by one so each time a new replay is added, this viewmodel is reconstructed and the 
+    //   loading boolean is false
     if (loading) return;
     String text = addReplayURIController.text.trim();
     StringBuffer failedUrls = StringBuffer();

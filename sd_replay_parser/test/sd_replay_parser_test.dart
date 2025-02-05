@@ -21,32 +21,32 @@ void main() {
       expect(replay.uploadTime, equals(1735820009));
 
       PlayerData player1 = replay.player1;
-      expect(player1.leads, ['Rillaboom', 'Raging Bolt'], reason: 'Player 1 has incorrect leads');
-      expect(player1.selection, ['Rillaboom', 'Raging Bolt', 'Calyrex-Shadow', 'Ogerpon-Hearthflame']);
+      expect(player1.leads, ['rillaboom', 'raging-bolt'], reason: 'Player 1 has incorrect leads');
+      expect(player1.selection, ['rillaboom', 'raging-bolt', 'calyrex-shadow', 'ogerpon-hearthflame']);
       expect(player1.team, [
-        'Calyrex-Shadow',
-        'Incineroar',
-        'Rillaboom',
-        'Urshifu',
-        'Raging Bolt',
-        'Ogerpon-Hearthflame'
+        'calyrex-shadow',
+        'incineroar',
+        'rillaboom',
+        'urshifu',
+        'raging-bolt',
+        'ogerpon-hearthflame'
       ]);
-      expect(player1.terastallization, Terastallization(pokemon: 'Raging Bolt', type: 'Electric'));
+      expect(player1.terastallization, Terastallization(pokemon: 'raging-bolt', type: 'Electric'));
       expect(player1.beforeElo, 1358);
       expect(player1.afterElo, 1332);
 
       PlayerData player2 = replay.player2;
-      expect(player2.leads, ['Miraidon', 'Entei'], reason: 'Player 2 has incorrect leads');
-      expect(player2.selection, ['Miraidon', 'Entei', 'Whimsicott', 'Chien-Pao']);
+      expect(player2.leads, ['miraidon', 'entei'], reason: 'Player 2 has incorrect leads');
+      expect(player2.selection, ['miraidon', 'entei', 'whimsicott', 'chien-pao']);
       expect(player2.team, [
-        'Miraidon',
-        'Entei',
-        'Chien-Pao',
-        'Iron Hands',
-        'Whimsicott',
-        'Ogerpon-Cornerstone'
+        'miraidon',
+        'entei',
+        'chien-pao',
+        'iron-hands',
+        'whimsicott',
+        'ogerpon-cornerstone'
       ]);
-      expect(player2.terastallization, Terastallization(pokemon: 'Entei', type: 'Normal'));
+      expect(player2.terastallization, Terastallization(pokemon: 'entei', type: 'Normal'));
       expect(player2.beforeElo, 1256);
       expect(player2.afterElo, 1288);
 

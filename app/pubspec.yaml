@@ -34,10 +34,12 @@ dependencies:
     sdk: flutter
   provider: ^6.1.2 # dependency injection
   go_router: ^14.6.3
-  sd_replay_parser:
-    path: ../sd_replay_parser
+  pokemon_core:
+    path: ../pokemon_core
   pokepaste_parser:
     path: ../pokepaste_parser
+  sd_replay_parser:
+    path: ../sd_replay_parser
   http: ^1.2.2
   fluttertoast: ^8.2.10
   url_launcher: ^6.3.1

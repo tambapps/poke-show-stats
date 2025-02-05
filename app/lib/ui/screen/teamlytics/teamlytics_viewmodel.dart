@@ -54,6 +54,14 @@ class TeamlyticsViewModel extends ChangeNotifier {
     Replay replay = Replay(uri: uri, data: replayData, opposingPlayer: opposingPlayer, gameOutput: output);
     replay.trySetElo(replays);
     _teamlytic.replays = [...replays, replay];
+    // reversed because in case of 3 games, G2 must have its elo in order for G1 to find it
+    for (Replay replay in _teamlytic.replays.reversed) {
+      if (replay.data.player1.beforeElo == null && replay.data.player1.afterElo == null
+          && replay.data.nextBattle != null) {
+        // we're in an intermediate battle (G1 or G2 when it is not the last game) and we need to fetch elo from final battle
+        replay.trySetElo(replays);
+      }
+    }
     if (_replayPredicate == null || _replayPredicate!(replay)) {
       _filteredReplays = [..._filteredReplays, replay];
     }

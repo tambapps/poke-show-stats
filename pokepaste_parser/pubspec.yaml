@@ -8,6 +8,8 @@ environment:
 
 dependencies:
   json_annotation: ^4.9.0
+  pokemon_core:
+    path: ../pokemon_core
 
 dev_dependencies:
   lints: ^5.0.0

@@ -1,3 +1,4 @@
+import 'package:pokemon_core/pokemon_core.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 
 import 'model.dart';
@@ -94,9 +95,9 @@ class SdReplayParser {
   }
   String _pokemonName(String rawName) {
     if (rawName.endsWith("-*")) {
-      return rawName.substring(0, rawName.length - 2);
+      rawName = rawName.substring(0, rawName.length - 2);
     }
-    return rawName;
+    return Pokemon.normalize(rawName);
   }
 
   Pokemon _parsePokemonOts(String pokemonLog) {

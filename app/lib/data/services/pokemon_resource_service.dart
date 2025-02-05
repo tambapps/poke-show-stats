@@ -1,7 +1,8 @@
 import 'dart:collection';
 import 'dart:developer' as developer;
 
-import '../../ui/core/pokeutils.dart';
+import 'package:pokemon_core/pokemon_core.dart';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image_platform_interface/cached_network_image_platform_interface.dart';
@@ -127,14 +128,14 @@ class PokemonResourceService extends ChangeNotifier {
   Uri? _getPokemonArtworkUri(String pokemon) => _getKey(pokemon, 'artwork', _pokemonMappings);
 
   Uri? _getKey(String key, String uriKey, Map<dynamic, dynamic> mappings)  {
-    Map<dynamic, dynamic>? pokemonUrls = mappings[PokemonNames.normalize(key)];
+    Map<dynamic, dynamic>? pokemonUrls = mappings[Pokemon.normalize(key)];
     if (pokemonUrls == null) return null;
     String uri = pokemonUrls[uriKey];
     return Uri.parse(uri);
   }
 
   dynamic? getPokemonMove(String move) {
-    return _pokemonMoves[PokemonNames.normalize(move)];
+    return _pokemonMoves[Pokemon.normalize(move)];
   }
 
   void _loadAsync() async {

@@ -1,8 +1,9 @@
+import 'package:pokemon_core/pokemon_core.dart';
+
 import '../../../core/widgets/tile_card.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/localization/applocalization.dart';
-import '../../../core/pokeutils.dart';
 import '../../../core/themes/dimens.dart';
 import '../../../core/widgets.dart';
 import '../../../core/widgets/replay_filters.dart';
@@ -89,7 +90,7 @@ abstract class _AbstractUsageStatsState extends AbstractViewModelState<UsageStat
   }
 
   Widget _usageCardRow(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, String pokemon, String text, int? winRate, bool displayTera) {
-    final teraType = viewModel.pokepaste?.pokemons.where((p) => PokemonNames.pokemonNameMatch(p.name, pokemon)).firstOrNull?.teraType;
+    final teraType = viewModel.pokepaste?.pokemons.where((p) => Pokemon.nameMatch(p.name, pokemon)).firstOrNull?.teraType;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [

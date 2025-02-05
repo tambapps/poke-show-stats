@@ -1,3 +1,5 @@
+import 'package:pokemon_core/pokemon_core.dart';
+
 import '../../../core/localization/applocalization.dart';
 import '../../../core/themes/dimens.dart';
 import '../../../core/widgets/pokemon_moves_pie_chart.dart';
@@ -55,7 +57,8 @@ abstract class _MoveUsageComponentState extends AbstractViewModelState<MoveUsage
   Widget moveUsagesWidget(Pokepaste pokepaste, Map<String, Map<String, int>> moveUsages);
 
   Widget pokemonMoveUsagesWidget(Map<String, Map<String, int>> moveUsages, Pokemon pokemon) {
-    Map<String, int> pokemonMoveUsages = moveUsages[pokemon.name] ?? {};
+    Map<String, int> pokemonMoveUsages = moveUsages[Pokemon.normalizeToBase(pokemon.name)] ?? {};
+    print(moveUsages);
     final viewModel = PokemonMovesPieChartViewModel(pokemonResourceService: context.read(), pokemonName: pokemon.name, pokemonMoveUsages: pokemonMoveUsages);
     return PokemonMovesPieChart(viewModel: viewModel);
   }

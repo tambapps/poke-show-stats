@@ -1,5 +1,7 @@
 import 'dart:collection';
 
+import 'package:pokemon_core/pokemon_core.dart';
+
 import 'model.dart';
 
 class PokepasteParser {

@@ -1,3 +1,5 @@
+import 'package:pokemon_core/pokemon_core.dart';
+
 import '../../../data/services/pokemon_resource_service.dart';
 import '../localization/applocalization.dart';
 import '../themes/dimens.dart';

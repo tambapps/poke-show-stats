@@ -1,3 +1,5 @@
+import 'package:pokemon_core/pokemon_core.dart';
+
 import '../../../../data/models/replay.dart';
 import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
@@ -37,7 +39,8 @@ class MoveUsageViewModel extends ChangeNotifier {
 
   void _merge(Map<String, Map<String, int>> resultMap, Map<String, Map<String, int>> map) {
     map.forEach((String pokemonName, Map<String, int> pokemonMoves) {
-      resultMap.update(pokemonName, (resultPokemonMoves) {
+      // TODO do same for other pokemon maps in other widgets
+      resultMap.update(Pokemon.normalizeToBase(pokemonName), (resultPokemonMoves) {
         pokemonMoves.forEach((moveName, count) =>
             resultPokemonMoves.update(moveName, (resultMoveCount) => resultMoveCount + count,
                 ifAbsent: () => count));
