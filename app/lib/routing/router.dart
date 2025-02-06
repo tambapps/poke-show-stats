@@ -20,7 +20,7 @@ GoRouter router() => GoRouter(
       path: Routes.home,
       builder: (context, state) => HomeScreen(
           isMobile: Dimens.of(context).isMobile,
-        viewModel: HomeViewModel(pokemonResourceService: context.read(), saveService: context.read()),
+        viewModel: context.read(),
       ),
     ),
     GoRoute(

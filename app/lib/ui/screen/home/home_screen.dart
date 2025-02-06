@@ -25,32 +25,36 @@ class HomeScreen extends StatefulWidget {
   State<StatefulWidget> createState() => isMobile ? _MobileHomeState() : _DesktopHomeState();
 }
 
-abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
+abstract class _AbstractHomeState extends AbstractState<HomeScreen> {
 
-  @override
   HomeViewModel get viewModel => widget.viewModel;
-  @override
   PokemonResourceService get pokemonResourceService => viewModel.pokemonResourceService;
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     return Scaffold(
-        body: ListenableBuilder(listenable: viewModel, builder: (context, _) => body(context, localization, dimens, theme)));
+        body: body(context, localization, dimens, theme));
   }
 
   Widget body(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    return     Column(
+    return Column(
       children: [
         const SizedBox(height: 16.0,),
         Align(alignment: Alignment.center, child: Text("Poke ShowStats", style: theme.textTheme.titleLarge,),),
         Align(alignment: Alignment.center, child: Text("Welcome to Poke ShowStats, an app to get valuable insights from your Pokemon Showdown replays", style: theme.textTheme.labelLarge, textAlign: TextAlign.center,),),
         Padding(padding: EdgeInsets.only(left: 16.0, top: 32.0, bottom: 16.0), child: Align(alignment: Alignment.topLeft,
           child: Text("Teams", style: theme.textTheme.titleMedium,),),),
-
         Padding(padding: EdgeInsets.only(left: 16.0, bottom: 16.0), child: Align(alignment: Alignment.topLeft,
           child: OutlinedButton(onPressed: () => _createTeamDialog(context, localization), child: Text("add team")),),),
-        !viewModel.loading ? Expanded(child: SingleChildScrollView(child: AutoGridView(columnsCount: dimens.savesColumnCount, children: viewModel.saves.map((save) => _saveWidget(save, context, localization, dimens, theme)).toList()),))
-            : CircularProgressIndicator(),
+        Expanded(child: ValueListenableBuilder(
+          valueListenable: viewModel.loading,
+          builder: (context, loading, child) {
+            if (loading) {
+              return CircularProgressIndicator();
+            }
+            return SingleChildScrollView(child: AutoGridView(columnsCount: dimens.savesColumnCount, children: viewModel.saves.map((save) => _saveWidget(save, context, localization, dimens, theme)).toList()),);
+          },
+        )),
         Align(alignment: Alignment.bottomRight, child: Padding(padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0), child: _aboutButton(),),)
       ],);
   }

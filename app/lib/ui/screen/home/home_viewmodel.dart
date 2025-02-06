@@ -4,15 +4,14 @@ import '../../../data/services/pokemon_resource_service.dart';
 import '../../../data/services/save_service.dart';
 import '../../../data/models/teamlytic.dart';
 
-class HomeViewModel extends ChangeNotifier {
+class HomeViewModel {
 
   final PokemonResourceService pokemonResourceService;
   final SaveService saveService;
 
   List<TeamlyticPreview> _saves = [];
   List<TeamlyticPreview> get saves => _saves;
-  bool _loading = false;
-  bool get loading => _loading;
+  final ValueNotifier<bool> loading = ValueNotifier(false);
 
   HomeViewModel({required this.pokemonResourceService, required this.saveService}) {
     _loadSaves();
@@ -20,17 +19,17 @@ class HomeViewModel extends ChangeNotifier {
 
 
   void _loadSaves() async {
-    _loading = true;
-    notifyListeners();
+    loading.value = true;
+  //  notifyListeners();
     List<TeamlyticPreview> saves = await saveService.listSaves();
     _saves = saves;
-    _loading = false;
-    notifyListeners();
+    loading.value = false;
+  //  notifyListeners();
   }
 
   void deleteSave(TeamlyticPreview save) {
     saveService.deleteSave(save.saveName);
     _saves = [..._saves]..removeWhere((s) => s.saveName == save.saveName);
-    notifyListeners();
+//    notifyListeners();
   }
 }

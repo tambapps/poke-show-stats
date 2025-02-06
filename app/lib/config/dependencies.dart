@@ -1,3 +1,5 @@
+import 'package:poke_showstats/ui/screen/home/home_viewmodel.dart';
+
 import '../../../data/services/save_service.dart';
 import 'package:flutter/foundation.dart';
 
@@ -24,6 +26,11 @@ List<SingleChildWidget> get providers {
     ProxyProvider2<SaveStorage, SdReplayParser, SaveService>(
       create: (context) => DummySaveService(),
       update: (context, saveStorage, replayParser,_) => SaveServiceImpl(storage: saveStorage, replayParser: replayParser),
-    )
+    ),
+    // view models
+    // TODO handle the refresh of the pokemon resource service
+    ProxyProvider2<PokemonResourceService, SaveService, HomeViewModel>(
+      update: (context, pokemonResourceService, saveService,_) => HomeViewModel(pokemonResourceService: pokemonResourceService, saveService: saveService),
+    ),
   ];
 }
