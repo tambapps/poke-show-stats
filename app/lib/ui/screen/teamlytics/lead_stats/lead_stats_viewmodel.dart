@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokemon_core/pokemon_core.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
 
@@ -56,7 +57,7 @@ class LeadStatsViewModel extends ChangeNotifier {
 
   void _fill(Map<Duo<String>, LeadStats> map, Replay replay) {
     if (replay.gameOutput == GameOutput.UNKNOWN) return;
-    Duo<String> duo = Duo(replay.otherPlayer.selection[0], replay.otherPlayer.selection[1]);
+    Duo<String> duo = Duo(Pokemon.normalize(replay.otherPlayer.selection[0]), Pokemon.normalize(replay.otherPlayer.selection[1]));
     LeadStats stats = map.putIfAbsent(duo, () => LeadStats());
     if (replay.gameOutput == GameOutput.WIN) {
       stats.winCount++;

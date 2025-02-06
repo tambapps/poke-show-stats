@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import '../../../data/services/pokemon_resource_service.dart';
 import '../../core/localization/applocalization.dart';
 import '../../core/themes/dimens.dart';
@@ -41,7 +43,7 @@ class _PokemonMovesPieChartState extends AbstractViewModelState<PokemonMovesPieC
 
     List<Widget> sectionLegends = [];
 
-    for (int i = 0; i < sections.length; i++) {
+    for (int i = 0; i < widget.viewModel.pokemonMoveUsages.length; i++) {
       String moveName = widget.viewModel.pokemonMoveUsages[i].key;
       sectionLegends.add(Padding(padding: EdgeInsets.symmetric(vertical: 4.0),
         child: Row(children: [
@@ -76,7 +78,8 @@ class _PokemonMovesPieChartState extends AbstractViewModelState<PokemonMovesPieC
 
 class PokemonMovesPieChartViewModel extends ChangeNotifier {
 
-  static final _sectionColors = [Colors.blue, Colors.green, Colors.orange, Colors.purple];
+  static final _sectionColors = [Colors.blue, Colors.green, Colors.orange, Colors.purple, Colors.cyanAccent];
+  static final _random = Random();
   final PokemonResourceService pokemonResourceService;
   final String pokemonName;
   final List<MapEntry<String, int>> pokemonMoveUsages;
@@ -104,7 +107,7 @@ class PokemonMovesPieChartViewModel extends ChangeNotifier {
           value: entry.value.toDouble(),
           title: "${(entry.value / total * 100.0).toStringAsFixed(2)}%",
           titleStyle: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
-          color: _sectionColors[i]
+          color: i < _sectionColors.length ? _sectionColors[i] : Colors.black
       ));
     }
     return sections;
