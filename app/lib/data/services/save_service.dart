@@ -165,12 +165,15 @@ class DummySaveService implements SaveService {
 
   @override
   Future<Teamlytic> loadSave(String saveName) async {
-    return Teamlytic(saveName: saveName, sdNames: [], replays: [], pokepaste: null);
+    return Teamlytic(saveName: saveName, sdNames: [], replays: [], pokepaste: null,
+    lastUpdatedAt: currentTimeMillis());
   }
 
   @override
   Future<Teamlytic> loadSample(String sampleName) async {
-    return Teamlytic(saveName: sampleName, sdNames: [], replays: [], pokepaste: null);
+    return Teamlytic(saveName: sampleName, sdNames: [], replays: [], pokepaste: null,
+      lastUpdatedAt: currentTimeMillis()
+    );
   }
 
   @override
@@ -196,11 +199,15 @@ class SaveServiceImpl implements SaveService {
     for (String saveName in saveNames) {
       String? json = await _storage.loadSaveJson(saveName);
       Pokepaste? pokepaste;
+      int lastUpdatedAt = currentTimeMillis();
       if (json != null) {
         Map<dynamic, dynamic> map = jsonDecode(json);
         pokepaste = _loadPokepaste(map['pokepaste']);
+        if (map['lastUpdatedAt'] != null) {
+          lastUpdatedAt = map['lastUpdatedAt'];
+        }
       }
-      saves.add(TeamlyticPreview(saveName: saveName, pokepaste: pokepaste));
+      saves.add(TeamlyticPreview(saveName: saveName, pokepaste: pokepaste, lastUpdatedAt: lastUpdatedAt));
     }
     return saves;
   }
@@ -227,7 +234,8 @@ class SaveServiceImpl implements SaveService {
         saveName: saveName,
         sdNames: _loadSdNames(map['sdNames']),
         replays: await _loadReplays(map['replays'], reloadedReplayRef),
-        pokepaste: _loadPokepaste(map['pokepaste'])
+        pokepaste: _loadPokepaste(map['pokepaste']),
+        lastUpdatedAt: map['lastUpdatedAt'] ?? currentTimeMillis()
     );
     if (reloadedReplayRef[0]) {
     storeSave(teamlytic);
@@ -239,7 +247,10 @@ class SaveServiceImpl implements SaveService {
   Future<void> deleteSave(String saveName) async => await _storage.delete(saveName);
 
   @override
-  Future<void> storeSave(Teamlytic save) async => _storage.store(save.saveName, jsonEncode(save.toJson()));
+  Future<void> storeSave(Teamlytic save) async {
+    save.lastUpdatedAt = currentTimeMillis();
+    await _storage.store(save.saveName, jsonEncode(save.toJson()));
+  }
 
   List<String> _loadSdNames(List<dynamic> rawSdNames) => rawSdNames.map((sdName) => sdName.toString()).toList();
   Pokepaste? _loadPokepaste(Map<String, dynamic>? json) => json != null ? Pokepaste.fromJson(json) : null;
@@ -284,14 +295,15 @@ class SaveServiceImpl implements SaveService {
     return replays;
   }
 
-  Teamlytic _emptySave(String saveName) => Teamlytic(saveName: saveName, sdNames: [], replays: [], pokepaste: null);
+  Teamlytic _emptySave(String saveName) => Teamlytic(saveName: saveName, sdNames: [], replays: [], pokepaste: null, lastUpdatedAt: currentTimeMillis());
 
   Replay _errorReplay(Uri uri) {
     final player = _errorPlayer();
-    final data = SdReplayData(player1: player, player2: player, uploadTime: DateTime.now().millisecondsSinceEpoch, formatId: 'error', rating: 0, parserVersion: SdReplayParser.parserVersion, winner: player.name, nextBattle: null);
+    final data = SdReplayData(player1: player, player2: player, uploadTime: currentTimeMillis(), formatId: 'error', rating: 0, parserVersion: SdReplayParser.parserVersion, winner: player.name, nextBattle: null);
     return Replay(uri: uri, data: data, gameOutput: GameOutput.UNKNOWN, opposingPlayer: _errorPlayer());
   }
 
   PlayerData _errorPlayer() => PlayerData(name: "<ERROR>", team: [], selection: [], moveUsages: {});
 }
 
+int currentTimeMillis() => DateTime.now().millisecondsSinceEpoch;

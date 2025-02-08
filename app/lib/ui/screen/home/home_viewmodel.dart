@@ -19,13 +19,15 @@ class HomeViewModel {
 
   void _loadSaves() async {
     loading.value = true;
-    saves.value = await saveService.listSaves();
+    final fetchedSaves = await saveService.listSaves();
+    fetchedSaves.sort((a, b) => - a.lastUpdatedAt.compareTo(b.lastUpdatedAt));
+    saves.value = fetchedSaves;
     loading.value = false;
   }
 
-  void deleteSave(TeamlyticPreview save) {
-    saveService.deleteSave(save.saveName);
-    saves.value = [...saves.value]..removeWhere((s) => s.saveName == save.saveName);
+  void deleteSave(TeamlyticPreview save) async {
+    await saveService.deleteSave(save.saveName);
+    _loadSaves();
   }
 
   Future<Teamlytic> createSave(String saveName) async {
@@ -33,7 +35,7 @@ class HomeViewModel {
     final teamlytic = await saveService.loadSave(saveName);
     // make sure it is stored so that when we go back to home screen we see this save
     await saveService.storeSave(teamlytic);
-    saves.value = [...saves.value, TeamlyticPreview.from(teamlytic)];
+    _loadSaves();
     return teamlytic;
   }
 
@@ -44,8 +46,16 @@ class HomeViewModel {
       saveName = "Copy of $saveName";
     }
     teamlytic.saveName = saveName;
-    saves.value = [...saves.value, TeamlyticPreview.from(teamlytic)];
     await saveService.storeSave(teamlytic);
+    _loadSaves();
     return teamlytic;
+  }
+
+  Future<void> changeName(String newName, TeamlyticPreview save) async {
+    final teamlytic = await saveService.loadSave(save.saveName);
+    await saveService.deleteSave(teamlytic.saveName);
+    teamlytic.saveName = newName;
+    await saveService.storeSave(teamlytic);
+    _loadSaves();
   }
 }

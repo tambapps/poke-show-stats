@@ -119,7 +119,7 @@ class TeamlyticsViewModel {
     teamlyticChangeNotifier.dispose();
   }
 
-  void storeSave() async => await saveService.storeSave(Teamlytic(saveName: saveName, sdNames: sdNames, replays: replays, pokepaste: pokepaste));
+  void storeSave() async => await saveService.storeSave(Teamlytic(saveName: saveName, sdNames: sdNames, replays: replays, pokepaste: pokepaste, lastUpdatedAt: currentTimeMillis()));
 
   void loadSave() async {
     Teamlytic teamlytic = await saveService.loadSave(saveName);

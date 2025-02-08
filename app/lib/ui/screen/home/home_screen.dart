@@ -94,7 +94,12 @@ abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
             children: [
               Stack(children: [
                 Center(child: Text(save.saveName, style: theme.textTheme.titleMedium,),),
-                Align(alignment: Alignment.topRight, child: IconButton(padding: EdgeInsets.zero, icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => _deleteSaveDialog(context, localization, save)),)
+                Align(alignment: Alignment.topRight, child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(padding: EdgeInsets.zero, icon: Icon(Icons.edit), iconSize: 16, onPressed: () => _changeNameDialog(context, localization, save)),
+                    IconButton(padding: EdgeInsets.zero, icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => _deleteSaveDialog(context, localization, save))
+                ],),)
               ],),
               if (pokepaste != null)
                 Row(mainAxisSize: MainAxisSize.max,
@@ -151,6 +156,24 @@ abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
     }
     final teamlytic = await viewModel.createSaveFromSample(sampleName);
     context.push(Routes.teamlyticsRoute(teamlytic.saveName));
+  }
+
+  void _changeNameDialog(BuildContext context, AppLocalization localization, TeamlyticPreview save) {
+    showTextInputDialog(context, title: "Change name", hint: "Enter team name", localization: localization,
+        validator: (input) {
+          String name = input.trim();
+          if (name.isEmpty) {
+            return "Name must not be empty";
+          }
+          if (viewModel.saves.value.any((s) => s.saveName == name && name != save.saveName)) {
+            return "Team already exists";
+          }
+          return null;
+        },
+        onSuccess: (name) {
+          viewModel.changeName(name.trim(), save);
+          return true;
+        });
   }
 
   void _deleteSaveDialog(BuildContext context, AppLocalization localization, TeamlyticPreview save) {

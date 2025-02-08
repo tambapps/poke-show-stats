@@ -9,8 +9,9 @@ class Teamlytic {
   List<String> sdNames;
   List<Replay> replays;
   Pokepaste? pokepaste;
+  int lastUpdatedAt;
 
-  Teamlytic({required this.saveName, required this.sdNames, required this.replays, required this.pokepaste});
+  Teamlytic({required this.saveName, required this.sdNames, required this.replays, required this.pokepaste, required this.lastUpdatedAt});
 
   factory Teamlytic.fromJson(Map<String, dynamic> json) => _$TeamlyticFromJson(json);
   Map<String, dynamic> toJson() => _$TeamlyticToJson(this);
@@ -19,9 +20,10 @@ class Teamlytic {
 class TeamlyticPreview {
   final String saveName;
   final Pokepaste? pokepaste;
+  int lastUpdatedAt;
 
-  TeamlyticPreview({required this.saveName, required this.pokepaste});
+  TeamlyticPreview({required this.saveName, required this.pokepaste, required this.lastUpdatedAt});
 
-  TeamlyticPreview.from(Teamlytic teamlytic): this(saveName: teamlytic.saveName, pokepaste: teamlytic.pokepaste);
+  TeamlyticPreview.from(Teamlytic teamlytic): this(saveName: teamlytic.saveName, pokepaste: teamlytic.pokepaste, lastUpdatedAt: teamlytic.lastUpdatedAt);
 
 }
