@@ -71,7 +71,6 @@ abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsSc
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-          appBar: appBar(context, localization, dimens, theme),
           body: ListenableBuilder(
               listenable: viewModel.pokemonResourceService,
               builder: (context, _) => body(context, localization, dimens, theme)
@@ -80,11 +79,16 @@ abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsSc
     );
   }
 
-  PreferredSizeWidget? appBar(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
   Widget body(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
 
-  TabBar tabBar(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, bool isScrollable) {
+  Widget backButton() => IconButton(
+    icon: const Icon(Icons.arrow_back),
+    onPressed: () => Navigator.pop(context),
+  );
+
+  Widget tabBar(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, bool isScrollable) {
     return TabBar(
+      dividerColor: dimens.isMobile ? Colors.transparent : null,
       controller: _tabController,
       isScrollable: isScrollable,
       tabs: [
@@ -150,26 +154,30 @@ abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsSc
 class _MobileHomeScreenState extends _AbstractHomeScreenState {
 
   @override
-  PreferredSizeWidget? appBar(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) => null;
-
-  @override
   Widget body(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     return Column(children: [
       Expanded(child: tabBarView(context, localization, dimens, theme)),
-      tabBar(context, localization, dimens, theme, true),
+      Row(children: [
+        backButton(),
+        Expanded(child: tabBar(context, localization, dimens, theme, true))
+      ],),
     ],);
   }
 }
 
 class _DesktopHomeScreenState extends _AbstractHomeScreenState {
-  @override
-  PreferredSizeWidget? appBar(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    return tabBar(context, localization, dimens, theme, false);
-  }
 
   @override
   Widget body(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    return tabBarView(context, localization, dimens, theme);
+    return Column(children: [
+      Stack(children: [
+        tabBar(context, localization, dimens, theme, false),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: backButton(),)
+      ],),
+      Expanded(child: tabBarView(context, localization, dimens, theme))
+    ],);
   }
 
 }
