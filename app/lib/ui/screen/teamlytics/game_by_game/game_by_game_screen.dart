@@ -23,38 +23,31 @@ class GameByGameComponent extends StatefulWidget {
   State createState() => isMobile ? _MobileGameByGameComponentState() : _DesktopGameByGameComponentState();
 }
 
-abstract class _AbstractGameByGameComponentState extends AbstractViewModelState<GameByGameComponent> {
+abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGameComponent> {
 
-  final Map<Replay, NoteEditingContext> _replayNoteEditingContextMap = {};
-  @override
   GameByGameViewModel get viewModel => widget.viewModel;
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    return ListenableBuilder(
-        listenable: viewModel,
-        builder: (context, _) {
-          return ListView.separated(
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return widget.filtersWidget;
-                } else if (index == 1) {
-                  return headerWidget(context, localization, dimens, theme);
-                }
-                final replay = viewModel.filteredReplays[index - 2];
-                return _gbgWidget(context, localization, dimens, theme, replay);
-              },
-              separatorBuilder: (context, index) {
-                if (index <= 1) return Container();
-                return Padding(padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 64.0), child: Divider(
-                  color: Colors.grey,
-                  thickness: 2,
-                  height: 1,
-                ),);
-              },
-              itemCount: viewModel.filteredReplays.length + 2 // + 2 because filters and header component
-          );
-        }
+    return ListView.separated(
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            return widget.filtersWidget;
+          } else if (index == 1) {
+            return headerWidget(context, localization, dimens, theme);
+          }
+          final replay = viewModel.filteredReplays[index - 2];
+          return _gbgWidget(context, localization, dimens, theme, replay);
+        },
+        separatorBuilder: (context, index) {
+          if (index <= 1) return Container();
+          return Padding(padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 64.0), child: Divider(
+            color: Colors.grey,
+            thickness: 2,
+            height: 1,
+          ),);
+        },
+        itemCount: viewModel.filteredReplays.length + 2 // + 2 because filters and header component
     );
   }
 
@@ -92,47 +85,53 @@ abstract class _AbstractGameByGameComponentState extends AbstractViewModelState<
   }
 
   Widget _gbgNotesWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay) {
-    final noteEditingContext = _replayNoteEditingContextMap[replay];
-    if (noteEditingContext == null) {
-      if (replay.notes?.trim().isEmpty ?? true) {
-        return OutlinedButton(onPressed: () => viewModel.editNote(_replayNoteEditingContextMap, replay), child: Text(localization.addNotes));
-      } else {
-        return Row(children: [
-          Expanded(
-              child: Text(replay.notes!, textAlign: TextAlign.center,)),
-          const SizedBox(width: 16),
-          OutlinedButton(
-            onPressed: () => viewModel.editNote(_replayNoteEditingContextMap, replay),
-            child: Text(localization.editNotes),
-          ),
-          const SizedBox(width: 16),
-        ],);
-      }
-    } else {
-      return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
-        child: Row(children: [
-          Expanded(
-              child: ConstrainedBox(constraints: BoxConstraints(
-                maxHeight: 200, // give max height to prevent from overflowing
-              ), child: TextField(
-                maxLines: null,
-                controller: noteEditingContext.controller,
-                decoration: InputDecoration(
-                  labelText: localization.notes,
-                  border: OutlineInputBorder(),
-                ),
-              ),)
-          ),
-          const SizedBox(width: 16),
-          OutlinedButton(
-            onPressed: () => viewModel.saveNotes(_replayNoteEditingContextMap, replay, noteEditingContext.controller.text),
-            child: Text(localization.save),
-          ),
-          const SizedBox(width: 16),
-        ],),
-      );
-    }
+    final noteEditingContext = viewModel.getEditingContext(replay);
+    return ListenableBuilder(
+      listenable: noteEditingContext,
+      builder: (context, _) {
+        final controller =  noteEditingContext.controller;
+        if (controller == null) {
+          if (replay.notes?.trim().isEmpty ?? true) {
+            return OutlinedButton(onPressed: () => noteEditingContext.edit(), child: Text(localization.addNotes));
+          } else {
+            return Row(children: [
+              Expanded(
+                  child: Text(replay.notes!, textAlign: TextAlign.center,)),
+              const SizedBox(width: 16),
+              OutlinedButton(
+                onPressed: () => noteEditingContext.edit(initialValue: replay.notes),
+                child: Text(localization.editNotes),
+              ),
+              const SizedBox(width: 16),
+            ],);
+          }
+        } else {
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(children: [
+              Expanded(
+                  child: ConstrainedBox(constraints: BoxConstraints(
+                    maxHeight: 200, // give max height to prevent from overflowing
+                  ), child: TextField(
+                    maxLines: null,
+                    controller: controller,
+                    decoration: InputDecoration(
+                      labelText: localization.notes,
+                      border: OutlineInputBorder(),
+                    ),
+                  ),)
+              ),
+              const SizedBox(width: 16),
+              OutlinedButton(
+                onPressed: () => viewModel.saveNotes(replay, noteEditingContext),
+                child: Text(localization.save),
+              ),
+              const SizedBox(width: 16),
+            ],),
+          );
+        }
+      },
+    );
   }
 
   Widget vsText(ThemeData theme, Replay replay) => SelectableText("vs ${replay.opposingPlayer.name}", style: theme.textTheme.titleLarge,);
@@ -193,15 +192,6 @@ abstract class _AbstractGameByGameComponentState extends AbstractViewModelState<
       );
     }).toList();
     return playerPickContainer(children);
-  }
-
-  @override
-  void dispose() {
-    for (var context in _replayNoteEditingContextMap.values) {
-      context.controller.dispose();
-    }
-    _replayNoteEditingContextMap.clear();
-    super.dispose();
   }
 }
 

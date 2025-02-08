@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../data/models/replay.dart';
 import '../teamlytics_viewmodel.dart';
 
-
-class GameByGameViewModel extends ChangeNotifier {
+class GameByGameViewModel {
 
   GameByGameViewModel({
     required this.homeViewModel,
@@ -15,26 +14,42 @@ class GameByGameViewModel extends ChangeNotifier {
   final TeamlyticsViewModel homeViewModel;
   final PokemonResourceService pokemonResourceService;
   List<Replay> get filteredReplays => homeViewModel.filteredReplays;
+  final Map<Replay, NoteEditingContext> _replayNoteEditingContextMap = {};
 
-  void editNote(Map<Replay, NoteEditingContext> replayNoteEditingContextMap, Replay replay) {
-    replayNoteEditingContextMap[replay] = NoteEditingContext(replay.notes ?? "");
-    notifyListeners();
+  NoteEditingContext getEditingContext(Replay replay) => _replayNoteEditingContextMap.putIfAbsent(replay, () => NoteEditingContext());
+
+  void saveNotes(Replay replay, NoteEditingContext context) {
+    replay.notes = context.controller?.text;
+    homeViewModel.storeSave();
+    context.view();
   }
 
-  void saveNotes(Map<Replay, NoteEditingContext> replayNoteEditingContextMap, Replay replay, String notes) {
-    replay.notes = notes;
-    NoteEditingContext? context = replayNoteEditingContextMap.remove(replay);
-    context?.dispose();
-    homeViewModel.storeSave();
-    notifyListeners();
+  void dispose() {
+    for (NoteEditingContext context in _replayNoteEditingContextMap.values) {
+      context.dispose();
+    }
   }
 }
 
-class NoteEditingContext {
-  final controller = TextEditingController();
-  NoteEditingContext(String initialValue) {
-    controller.text = initialValue;
+class NoteEditingContext extends ChangeNotifier {
+  TextEditingController? _controller;
+  TextEditingController? get controller => _controller;
+
+  NoteEditingContext();
+
+  void edit({String? initialValue}) {
+    _controller = TextEditingController(text: initialValue);
+    notifyListeners();
   }
 
-  void dispose() => controller.dispose();
+  void view() {
+    _controller = null;
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
+  }
 }
