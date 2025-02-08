@@ -1,5 +1,7 @@
 import 'dart:developer' as developer;
 
+import 'package:poke_showstats/ui/core/utils.dart';
+
 import '../../../../data/models/teamlytic.dart';
 import '../../../../data/services/save_service.dart';
 import '../../core/widgets/replay_filters.dart';
@@ -9,31 +11,37 @@ import 'package:sd_replay_parser/sd_replay_parser.dart';
 import '../../../data/models/replay.dart';
 import '../../../data/services/pokemon_resource_service.dart';
 
-class TeamlyticsViewModel extends ChangeNotifier {
+class TeamlyticsViewModel {
 
-  TeamlyticsViewModel({required this.pokemonResourceService, required this.saveService});
+  TeamlyticsViewModel({required this.pokemonResourceService, required this.saveService}) {
+    replaysNotifier.addListener(() {
+      filteredReplaysNotifier.value = replayPredicate != null ? replays.where(replayPredicate!).toList() : replays.toList();
+    });
+  }
 
   // storing it here even if it used only in the replayEntriesComponent because we don't want
   // to erase/refresh the controller each time the replayEntriesScreen state updates
+  // TODO no. don't store it here
   final TextEditingController addReplayURIController = TextEditingController();
 
   final PokemonResourceService pokemonResourceService;
   final SaveService saveService;
 
-  Teamlytic _teamlytic = Teamlytic(saveName: '', sdNames: [], replays: [], pokepaste: null);
+  final ValueNotifier<String> saveNameNotifier = ValueNotifier("");
+  final ValueNotifier<List<String>> sdNamesNotifier = ValueNotifier([]);
+  final ValueNotifier<List<Replay>> replaysNotifier = ValueNotifier([]);
+  final ValueNotifier<List<Replay>> filteredReplaysNotifier = ValueNotifier([]);
+  final ValueNotifier<Pokepaste?> pokepasteNotifier = ValueNotifier(null);
+  late ChangeNotifier teamlyticChangeNotifier = CompositeChangeNotifier([saveNameNotifier, sdNamesNotifier, replaysNotifier, filteredReplaysNotifier, pokepasteNotifier]);
 
-  List<Replay> get replays => _teamlytic.replays;
-  List<Replay> _filteredReplays = [];
-  List<Replay> get filteredReplays => _filteredReplays;
-  List<String> get sdNames => _teamlytic.sdNames;
-  Pokepaste? get pokepaste => _teamlytic.pokepaste;
+  List<Replay> get replays => replaysNotifier.value;
+  List<Replay> get filteredReplays => filteredReplaysNotifier.value;
+  List<String> get sdNames => sdNamesNotifier.value;
+  Pokepaste? get pokepaste => pokepasteNotifier.value;
   set pokepaste(Pokepaste? value) {
-    _teamlytic.pokepaste = value;
-    notifyListeners();
+    pokepasteNotifier.value = value;
     storeSave();
   }
-
-  bool _disposed = false;
 
   ReplayPredicate? _replayPredicate;
   ReplayPredicate? get replayPredicate => _replayPredicate;
@@ -41,11 +49,10 @@ class TeamlyticsViewModel extends ChangeNotifier {
     _replayPredicate = value;
     if (value != null) {
       developer.log("Applying filters...");
-      _filteredReplays = replays.where(value).toList();
+      filteredReplaysNotifier.value = replays.where(value).toList();
     } else {
-      _filteredReplays = replays.toList();
+      filteredReplaysNotifier.value = replays.toList();
     }
-    notifyListeners();
   }
 
   void addReplay(Uri uri, SdReplayData replayData) {
@@ -53,19 +60,15 @@ class TeamlyticsViewModel extends ChangeNotifier {
     GameOutput output = _computeGameOutput(replayData);
     Replay replay = Replay(uri: uri, data: replayData, opposingPlayer: opposingPlayer, gameOutput: output);
     replay.trySetElo(replays);
-    _teamlytic.replays = [...replays, replay];
+    replaysNotifier.value = [...replays, replay];
     // reversed because in case of 3 games, G2 must have its elo in order for G1 to find it
-    for (Replay replay in _teamlytic.replays.reversed) {
+    for (Replay replay in replays.reversed) {
       if (replay.data.player1.beforeElo == null && replay.data.player1.afterElo == null
           && replay.data.nextBattle != null) {
         // we're in an intermediate battle (G1 or G2 when it is not the last game) and we need to fetch elo from final battle
         replay.trySetElo(replays);
       }
     }
-    if (_replayPredicate == null || _replayPredicate!(replay)) {
-      _filteredReplays = [..._filteredReplays, replay];
-    }
-    notifyListeners();
     storeSave();
   }
 
@@ -89,27 +92,23 @@ class TeamlyticsViewModel extends ChangeNotifier {
   }
 
   void removeReplay(Replay replay) {
-    _teamlytic.replays = [...replays]..remove(replay);
-    _filteredReplays = [..._filteredReplays]..remove(replay);
-    notifyListeners();
+    replaysNotifier.value = [...replays]..remove(replay);
     storeSave();
   }
 
   // async to avoid freezing the UI
   void addSdName(String sdName) {
     if (!sdNames.contains(sdName)) {
-      _teamlytic.sdNames = [...sdNames, sdName];
+      sdNamesNotifier.value = [...sdNames, sdName];
       _recomputeReplayOutputs();
-      notifyListeners();
       storeSave();
     }
   }
 
   // async to avoid freezing the UI
   void removeSdName(String sdName) async {
-    _teamlytic.sdNames = [...sdNames]..remove(sdName);
+    sdNamesNotifier.value = [...sdNames]..remove(sdName);
     _recomputeReplayOutputs();
-    _notifyListenersSafely();
     storeSave();
   }
 
@@ -117,28 +116,22 @@ class TeamlyticsViewModel extends ChangeNotifier {
     List<Replay> updatedReplays = replays.map((replay) {
       return Replay(uri: replay.uri, data: replay.data, gameOutput: _computeGameOutput(replay.data), opposingPlayer: _computeOpposingPlayer(replay.data));
     }).toList();
-    _teamlytic.replays = updatedReplays;
-    if (replayPredicate != null) {
-      _filteredReplays = replays.where(replayPredicate!).toList();
-    }
+    replaysNotifier.value = updatedReplays;
   }
 
-  void storeSave() async => await saveService.storeSave(_teamlytic);
+  void dispose() {
+    // will remove listener of replaysNotifier
+    teamlyticChangeNotifier.dispose();
+  }
+
+  void storeSave() async => await saveService.storeSave(Teamlytic(saveName: saveNameNotifier.value, sdNames: sdNames, replays: replays, pokepaste: pokepaste));
 
   void loadSave(String saveName) async {
-    _teamlytic = await saveService.loadSave(saveName);
-    _filteredReplays = _teamlytic.replays.toList();
-    _notifyListenersSafely();
+    Teamlytic teamlytic = await saveService.loadSave(saveName);
+    saveNameNotifier.value = teamlytic.saveName;
+    sdNamesNotifier.value = teamlytic.sdNames;
+    pokepasteNotifier.value = teamlytic.pokepaste;
+    replaysNotifier.value = teamlytic.replays;
   }
 
-  void _notifyListenersSafely() {
-    if (!_disposed) notifyListeners();
-  }
-
-  @override
-  void dispose() {
-    addReplayURIController.dispose();
-    super.dispose();
-    _disposed = true;
-  }
 }

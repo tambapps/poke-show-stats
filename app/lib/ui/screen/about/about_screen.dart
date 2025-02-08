@@ -31,7 +31,6 @@ class _AboutScreenState extends AbstractScreenState<AboutScreen> {
     decoration: TextDecoration.underline, // Underline effect
   );
 
-  @override
   AboutViewModel get viewModel => widget.viewModel;
 
   @override

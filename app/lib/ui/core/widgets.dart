@@ -15,6 +15,7 @@ abstract class AbstractState<T extends StatefulWidget> extends State<T> {
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
 }
 
+// TODO delete this
 abstract class AbstractViewModelState<T extends StatefulWidget> extends AbstractState<T> {
 
   ChangeNotifier get viewModel;
@@ -43,7 +44,7 @@ abstract class AbstractStatelessWidget extends StatelessWidget {
 
 }
 
-abstract class AbstractScreenState<T extends StatefulWidget> extends AbstractViewModelState<T>  {
+abstract class AbstractScreenState<T extends StatefulWidget> extends AbstractState<T>  {
 
   PokemonResourceService get pokemonResourceService;
 

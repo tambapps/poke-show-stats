@@ -1,3 +1,5 @@
+import 'package:poke_showstats/ui/core/utils.dart';
+
 import '../../../data/services/pokemon_resource_service.dart';
 
 import '../../core/widgets.dart';
@@ -38,7 +40,6 @@ class TeamlyticsScreen extends StatefulWidget {
 
 abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsScreen> with TickerProviderStateMixin {
 
-  @override
   TeamlyticsViewModel get viewModel => widget.viewModel;
   @override
   PokemonResourceService get pokemonResourceService => viewModel.pokemonResourceService;
@@ -104,10 +105,10 @@ abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsSc
       controller: _tabController,
       children: [
         ListenableBuilder(
-            listenable: viewModel,
+            listenable: viewModel.teamlyticChangeNotifier,
             builder: (context, _) => HomeConfigComponent(viewModel: HomeConfigViewModel(homeViewModel: viewModel, pokepasteParser: context.read()), isMobile: dimens.isMobile,)),
         ListenableBuilder(
-            listenable: viewModel,
+            listenable: viewModel.teamlyticChangeNotifier,
             builder: (context, _) => ReplayEntriesComponent(viewModel: ReplayEntriesViewModel(replayParser: context.read(), homeViewModel: viewModel), isMobile: dimens.isMobile,)),
         _tab(dimens, (filtersWidget) => GameByGameComponent(viewModel: GameByGameViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), filtersWidget: filtersWidget, isMobile: dimens.isMobile)),
         _tab(dimens, (filtersWidget) => MoveUsageComponent(viewModel: MoveUsageViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), filtersWidget: filtersWidget, isMobile: dimens.isMobile)),
@@ -119,18 +120,18 @@ abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsSc
 
   Widget _tab(Dimens dimens, Widget Function(ReplayFiltersWidget) tabContentSupplier) {
     return ListenableBuilder(
-        listenable: viewModel,
+        listenable: viewModel.teamlyticChangeNotifier,
         builder: (context, _) {
           final replayFiltersWidget = ReplayFiltersWidget(
               viewModel: _replayFiltersViewModel,
               applyFilters: (replayPredicate) => viewModel.replayPredicate = replayPredicate,
               isMobile: dimens.isMobile,
-            totalReplaysCount: viewModel.replays.length,
-            matchedReplaysCount: viewModel.filteredReplays.length,
+            totalReplaysCount: viewModel.replaysNotifier.value.length,
+            matchedReplaysCount: viewModel.filteredReplaysNotifier.value.length,
           );
-          if (viewModel.replays.isEmpty) {
+          if (viewModel.replaysNotifier.value.isEmpty) {
             return _cantDisplay(replayFiltersWidget, "Please enter a replays in the Replay Entries tab to consult move usages");
-          } else if (viewModel.filteredReplays.isEmpty) {
+          } else if (viewModel.filteredReplaysNotifier.value.isEmpty) {
             return _cantDisplay(replayFiltersWidget, "Applied filters matched 0 replays");
           } else {
             return tabContentSupplier(replayFiltersWidget);

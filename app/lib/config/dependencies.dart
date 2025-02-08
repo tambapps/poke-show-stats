@@ -9,6 +9,9 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
 
+import '../ui/screen/teamlytics/config/home_config_viewmodel.dart';
+import '../ui/screen/teamlytics/teamlytics_viewmodel.dart';
+
 List<SingleChildWidget> get providers {
   return [
     ListenableProvider(
@@ -28,9 +31,19 @@ List<SingleChildWidget> get providers {
       update: (context, saveStorage, replayParser,_) => SaveServiceImpl(storage: saveStorage, replayParser: replayParser),
     ),
     // view models
-    // TODO handle the refresh of the pokemon resource service
     ProxyProvider2<PokemonResourceService, SaveService, HomeViewModel>(
       update: (context, pokemonResourceService, saveService,_) => HomeViewModel(pokemonResourceService: pokemonResourceService, saveService: saveService),
     ),
+    ProxyProvider2<PokemonResourceService, SaveService, TeamlyticsViewModel>(
+      update: (context, pokemonResourceService, saveService,_) => TeamlyticsViewModel(pokemonResourceService: context.read(), saveService: context.read()),
+    ),
+  ];
+}
+
+List<SingleChildWidget> teamlyticsProviders(String saveName) {
+  return [
+    Provider(
+      create: (context) => HomeConfigViewModel(homeViewModel: context.read(), pokepasteParser: context.read()),
+    )
   ];
 }

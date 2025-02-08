@@ -25,9 +25,10 @@ class HomeScreen extends StatefulWidget {
   State<StatefulWidget> createState() => isMobile ? _MobileHomeState() : _DesktopHomeState();
 }
 
-abstract class _AbstractHomeState extends AbstractState<HomeScreen> {
+abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
 
   HomeViewModel get viewModel => widget.viewModel;
+  @override
   PokemonResourceService get pokemonResourceService => viewModel.pokemonResourceService;
 
   @override

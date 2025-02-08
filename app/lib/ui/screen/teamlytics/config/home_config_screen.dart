@@ -19,11 +19,10 @@ class HomeConfigComponent extends StatefulWidget {
   _HomeConfigComponentState createState() => isMobile ? _MobileHomeConfigComponentState() : _DesktopHomeConfigComponentState();
 }
 
-abstract class _HomeConfigComponentState extends AbstractViewModelState<HomeConfigComponent> {
+abstract class _HomeConfigComponentState extends AbstractState<HomeConfigComponent> {
 
   late TextEditingController _pokepasteController;
 
-  @override
   HomeConfigViewModel get viewModel => widget.viewModel;
 
   @override

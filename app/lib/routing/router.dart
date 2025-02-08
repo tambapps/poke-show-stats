@@ -1,3 +1,4 @@
+import '../config/dependencies.dart';
 import '../ui/screen/about/about_viewmodel.dart';
 
 import '../ui/screen/about/about_screen.dart';
@@ -19,7 +20,7 @@ GoRouter router() => GoRouter(
     GoRoute(
       path: Routes.home,
       builder: (context, state) => HomeScreen(
-          isMobile: Dimens.of(context).isMobile,
+        isMobile: Dimens.of(context).isMobile,
         viewModel: context.read(),
       ),
     ),
@@ -28,11 +29,12 @@ GoRouter router() => GoRouter(
       builder: (context, state) {
         final String saveName = state.uri.queryParameters[Routes.saveNameQueryParam] ?? "default";
 
-        return TeamlyticsScreen(
-          isMobile: Dimens.of(context).isMobile,
-          viewModel: TeamlyticsViewModel(pokemonResourceService: context.read(), saveService: context.read()),
-            saveName: saveName
-        );
+        return MultiProvider(providers: teamlyticsProviders(saveName),
+          child: TeamlyticsScreen(
+              isMobile: Dimens.of(context).isMobile,
+              viewModel: context.read(),
+              saveName: saveName
+          ),);
       },
         redirect: (context, state) {
           // Check if the query parameter 'saveName' is present
