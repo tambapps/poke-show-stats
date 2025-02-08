@@ -120,7 +120,7 @@ class _AboutScreenState extends AbstractScreenState<AboutScreen> {
               TextSpan(
                 text: "here",
                 style: linkTextStyle,
-                recognizer: TapGestureRecognizer()..onTap = () => openLink("https://github.com/tambapps/pokemon-teamlytics/"),
+                recognizer: TapGestureRecognizer()..onTap = () => openLink("https://github.com/tambapps/poke-show-stats/"),
               ),
               TextSpan(
                 text: ".",
