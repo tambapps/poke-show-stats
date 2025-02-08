@@ -15,19 +15,6 @@ abstract class AbstractState<T extends StatefulWidget> extends State<T> {
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
 }
 
-// TODO delete this
-abstract class AbstractViewModelState<T extends StatefulWidget> extends AbstractState<T> {
-
-  ChangeNotifier get viewModel;
-
-  @override
-  void dispose() {
-    viewModel.dispose();
-    super.dispose();
-  }
-}
-
-
 
 abstract class AbstractStatelessWidget extends StatelessWidget {
 

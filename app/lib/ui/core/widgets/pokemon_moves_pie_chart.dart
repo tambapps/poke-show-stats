@@ -1,5 +1,4 @@
-
-import 'dart:math';
+import 'package:provider/provider.dart';
 
 import '../../../data/services/pokemon_resource_service.dart';
 import '../../core/localization/applocalization.dart';
@@ -10,25 +9,22 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 
-class PokemonMovesPieChart extends StatefulWidget {
+class PokemonMovesPieChart extends AbstractStatelessWidget {
+  static final _sectionColors = [Colors.blue, Colors.green, Colors.orange, Colors.purple, Colors.cyanAccent];
 
-  final PokemonMovesPieChartViewModel viewModel;
-  const PokemonMovesPieChart({super.key, required this.viewModel});
+  final Map<String, int> moveUsages;
+  final String pokemonName;
 
-  @override
-  State createState() => _PokemonMovesPieChartState();
-}
-
-class _PokemonMovesPieChartState extends AbstractViewModelState<PokemonMovesPieChart> {
-
-  @override
-  PokemonMovesPieChartViewModel get viewModel => widget.viewModel;
+  const PokemonMovesPieChart({super.key, required this.moveUsages, required this.pokemonName});
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-   // final dimens = Dimens.of(context);
-    final List<PieChartSectionData> sections = viewModel.getSections(theme);
-    final pokemonSpriteWidget = viewModel.getPokemonSprite(100.0);
+    final List<MapEntry<String, int>> moveUsagesList = moveUsages.entries.toList();
+    moveUsagesList.sort((e1, e2) =>  e2.value - e1.value);
+
+    final PokemonResourceService pokemonResourceService = context.read();
+    final List<PieChartSectionData> sections = _getSections(moveUsagesList, theme);
+    final pokemonSpriteWidget = pokemonResourceService.getPokemonSprite(pokemonName, width: 100.0, height: 100.0);;
     if (sections.isEmpty) {
       return Stack(children: [
         Column(
@@ -41,18 +37,6 @@ class _PokemonMovesPieChartState extends AbstractViewModelState<PokemonMovesPieC
       ],);
     }
 
-    List<Widget> sectionLegends = [];
-
-    for (int i = 0; i < widget.viewModel.pokemonMoveUsages.length; i++) {
-      String moveName = widget.viewModel.pokemonMoveUsages[i].key;
-      sectionLegends.add(Padding(padding: EdgeInsets.symmetric(vertical: 4.0),
-        child: Row(children: [
-          Center(child: Container(width: 32.0, height: 32.0, color: sections[i].color,),),
-          const SizedBox(width: 16.0,),
-          Expanded(child: Tooltip(message: moveName, child: Text(moveName, overflow: TextOverflow.ellipsis,),))
-        ]),
-      ));
-    }
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -68,32 +52,29 @@ class _PokemonMovesPieChartState extends AbstractViewModelState<PokemonMovesPieC
             ),),
           Transform.translate(offset: Offset(0, - 15), child: pokemonSpriteWidget,)
         ],),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: sectionLegends.collateBy(2).map((list) => Expanded(child: Column(children: list,))).toList(),)
+        _legendWidget(moveUsagesList, sections)
     ],);
   }
-}
 
+  Widget _legendWidget(List<MapEntry<String, int>> moveUsagesList, List<PieChartSectionData> sections) {
+    List<Widget> sectionLegends = [];
 
-class PokemonMovesPieChartViewModel extends ChangeNotifier {
-
-  static final _sectionColors = [Colors.blue, Colors.green, Colors.orange, Colors.purple, Colors.cyanAccent];
-  static final _random = Random();
-  final PokemonResourceService pokemonResourceService;
-  final String pokemonName;
-  final List<MapEntry<String, int>> pokemonMoveUsages;
-
-  PokemonMovesPieChartViewModel({
-    required this.pokemonResourceService,
-    required this.pokemonName,
-    required Map<String, int> pokemonMoveUsages}): pokemonMoveUsages = pokemonMoveUsages.entries.toList() {
-    this.pokemonMoveUsages.sort((e1, e2) =>  e2.value - e1.value);
+    for (int i = 0; i < moveUsagesList.length; i++) {
+      String moveName = moveUsagesList[i].key;
+      sectionLegends.add(Padding(padding: EdgeInsets.symmetric(vertical: 4.0),
+        child: Row(children: [
+          Center(child: Container(width: 32.0, height: 32.0, color: sections[i].color,),),
+          const SizedBox(width: 16.0,),
+          Expanded(child: Tooltip(message: moveName, child: Text(moveName, overflow: TextOverflow.ellipsis,),))
+        ]),
+      ));
+    }
+    return         Row(
+      mainAxisSize: MainAxisSize.min,
+      children: sectionLegends.collateBy(2).map((list) => Expanded(child: Column(children: list,))).toList(),);
   }
 
-  Widget getPokemonSprite(double size) => pokemonResourceService.getPokemonSprite(pokemonName, width: size, height: size);
-
-  List<PieChartSectionData> getSections(ThemeData theme) {
+  List<PieChartSectionData> _getSections(List<MapEntry<String, int>> pokemonMoveUsages, ThemeData theme) {
     if (pokemonMoveUsages.isEmpty) {
       return [];
     }

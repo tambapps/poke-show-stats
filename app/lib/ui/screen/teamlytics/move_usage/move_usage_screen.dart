@@ -5,7 +5,6 @@ import '../../../core/themes/dimens.dart';
 import '../../../core/widgets/pokemon_moves_pie_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
-import 'package:provider/provider.dart';
 
 import '../../../core/widgets.dart';
 import '../../../core/widgets/replay_filters.dart';
@@ -59,8 +58,7 @@ abstract class _MoveUsageComponentState extends AbstractState<MoveUsageComponent
 
   Widget pokemonMoveUsagesWidget(Map<String, Map<String, int>> moveUsages, Pokemon pokemon) {
     Map<String, int> pokemonMoveUsages = moveUsages[Pokemon.normalizeToBase(pokemon.name)] ?? {};
-    final viewModel = PokemonMovesPieChartViewModel(pokemonResourceService: context.read(), pokemonName: pokemon.name, pokemonMoveUsages: pokemonMoveUsages);
-    return PokemonMovesPieChart(viewModel: viewModel);
+    return PokemonMovesPieChart(pokemonName: pokemon.name, moveUsages: pokemonMoveUsages);
   }
 }
 
