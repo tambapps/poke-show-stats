@@ -7,7 +7,7 @@ import 'package:pokepaste_parser/pokepaste_parser.dart';
 import '../../../../data/services/pokemon_resource_service.dart';
 import '../teamlytics_viewmodel.dart';
 
-class MoveUsageViewModel extends ChangeNotifier {
+class MoveUsageViewModel {
 
   MoveUsageViewModel({
     required this.homeViewModel,
@@ -19,27 +19,23 @@ class MoveUsageViewModel extends ChangeNotifier {
   final TeamlyticsViewModel homeViewModel;
   final PokemonResourceService pokemonResourceService;
   Pokepaste? get pokepaste => homeViewModel.pokepaste;
-  Map<String, Map<String, int>> _pokemonMoveUsages = {};
-  Map<String, Map<String, int>> get pokemonMoveUsages => _pokemonMoveUsages;
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
+
+  ValueNotifier<Map<String, Map<String, int>>> pokemonMoveUsages = ValueNotifier({});
+  ValueNotifier<bool> isLoading = ValueNotifier(false);
 
   void _loadStats() async {
-    _isLoading = true;
-    notifyListeners();
+    isLoading.value = true;
     List<Replay> replays = homeViewModel.filteredReplays;
     Map<String, Map<String, int>> map = {};
     for (Replay replay in replays) {
       _merge(map, replay.otherPlayer.moveUsages);
     }
-    _pokemonMoveUsages = map;
-    _isLoading = false;
-    notifyListeners();
+    pokemonMoveUsages.value = map;
+    isLoading.value = false;
   }
 
   void _merge(Map<String, Map<String, int>> resultMap, Map<String, Map<String, int>> map) {
     map.forEach((String pokemonName, Map<String, int> pokemonMoves) {
-      // TODO do same for other pokemon maps in other widgets
       resultMap.update(Pokemon.normalizeToBase(pokemonName), (resultPokemonMoves) {
         pokemonMoves.forEach((moveName, count) =>
             resultPokemonMoves.update(moveName, (resultMoveCount) => resultMoveCount + count,

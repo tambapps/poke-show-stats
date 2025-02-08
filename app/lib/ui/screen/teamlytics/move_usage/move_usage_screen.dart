@@ -23,8 +23,8 @@ class MoveUsageComponent extends StatefulWidget {
 }
 
 
-abstract class _MoveUsageComponentState extends AbstractViewModelState<MoveUsageComponent> {
-  @override
+abstract class _MoveUsageComponentState extends AbstractState<MoveUsageComponent> {
+
   MoveUsageViewModel get viewModel => widget.viewModel;
 
   @override
@@ -35,22 +35,23 @@ abstract class _MoveUsageComponentState extends AbstractViewModelState<MoveUsage
         child: Text("Please enter a pokepaste in the Home tab to consult move usages", textAlign: TextAlign.center,),
       );
     }
-    return ListenableBuilder(
-        listenable: viewModel,
-        builder: (context, _) {
-          if (viewModel.isLoading) {
+    return ValueListenableBuilder(
+      valueListenable: viewModel.isLoading,
+        builder: (context, isLoading, _) {
+          if (isLoading) {
             return Center(
               child: CircularProgressIndicator(),
             );
           }
-          final moveUsages = viewModel.pokemonMoveUsages;
-          return SingleChildScrollView(
-            child: Column(children: [
-              widget.filtersWidget,
-              moveUsagesWidget(pokepaste, moveUsages),
-              const SizedBox(height: 32.0,)
-            ],),
-          );
+          return ValueListenableBuilder(
+              valueListenable: viewModel.pokemonMoveUsages,
+              builder: (context, pokemonMoveUsages, _) => SingleChildScrollView(
+                child: Column(children: [
+                  widget.filtersWidget,
+                  moveUsagesWidget(pokepaste, pokemonMoveUsages),
+                  const SizedBox(height: 32.0,)
+                ],),
+              ));
         });
   }
 

@@ -12,6 +12,7 @@ import 'package:provider/single_child_widget.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
 
 import '../ui/screen/teamlytics/config/home_config_viewmodel.dart';
+import '../ui/screen/teamlytics/move_usage/move_usage_viewmodel.dart';
 import '../ui/screen/teamlytics/teamlytics_viewmodel.dart';
 
 List<SingleChildWidget> get providers {
@@ -55,6 +56,9 @@ List<SingleChildWidget> teamlyticsProviders(String saveName) {
     ProxyProvider<TeamlyticsViewModel, GameByGameViewModel> (
       update: (context, teamlyticsViewModel, _) => GameByGameViewModel(homeViewModel: teamlyticsViewModel, pokemonResourceService: context.read()),
       dispose: (_, viewModel) => viewModel.dispose(),
+    ),
+    ProxyProvider<TeamlyticsViewModel, MoveUsageViewModel> (
+      update: (context, teamlyticsViewModel, _) => MoveUsageViewModel(homeViewModel: teamlyticsViewModel, pokemonResourceService: context.read()),
     ),
   ];
 }
