@@ -104,7 +104,7 @@ abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsSc
       children: [
         ListenableBuilder(
             listenable: viewModel.teamlyticChangeNotifier,
-            builder: (context, _) => HomeConfigComponent(viewModel: HomeConfigViewModel(homeViewModel: viewModel, pokepasteParser: context.read()), isMobile: dimens.isMobile,)),
+            builder: (context, _) => HomeConfigComponent(viewModel: context.read(), isMobile: dimens.isMobile,)),
         ListenableBuilder(
             listenable: viewModel.teamlyticChangeNotifier,
             builder: (context, _) => ReplayEntriesComponent(viewModel: ReplayEntriesViewModel(replayParser: context.read(), homeViewModel: viewModel), isMobile: dimens.isMobile,)),

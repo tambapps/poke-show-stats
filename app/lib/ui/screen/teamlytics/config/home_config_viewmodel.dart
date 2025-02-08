@@ -6,7 +6,7 @@ import 'package:pokepaste_parser/pokepaste_parser.dart';
 import '../../../core/dialogs.dart';
 import '../teamlytics_viewmodel.dart';
 
-class HomeConfigViewModel extends ChangeNotifier {
+class HomeConfigViewModel {
 
   HomeConfigViewModel({required this.homeViewModel, required this.pokepasteParser});
 
@@ -18,12 +18,11 @@ class HomeConfigViewModel extends ChangeNotifier {
   final TeamlyticsViewModel homeViewModel;
   final PokepasteParser pokepasteParser;
 
-  bool _pokepasteLoading = false;
-  bool get pokepasteLoading => _pokepasteLoading;
+  ValueNotifier<bool> pokepasteLoadingNotifier = ValueNotifier(false);
 
   void loadPokepaste(TextEditingController pokepasteController) async {
+    pokepasteLoadingNotifier.value = true;
     String input = pokepasteController.text.trim();
-    _setPokepasteLoading(true);
     Pokepaste pokepaste;
     try {
       pokepaste = pokepasteParser.parse(input);
@@ -35,12 +34,7 @@ class HomeConfigViewModel extends ChangeNotifier {
       errorMessage('Pokepaste does not have any pokemon');
     }
     homeViewModel.pokepaste = pokepaste;
-    _setPokepasteLoading(false);
-  }
-
-  void _setPokepasteLoading(bool loading) {
-    _pokepasteLoading = loading;
-    notifyListeners();
+    pokepasteLoadingNotifier.value = false;
   }
 
   void errorMessage(String message) {
@@ -61,7 +55,7 @@ class HomeConfigViewModel extends ChangeNotifier {
         hint: localization.enterSdName,
         confirmButtonText: localization.add,
         localization: localization,
-        validator: (text) => text.trim().isNotEmpty && text.length <= 18 ? null :  "Showdown is not valid",
+        validator: (text) => text.trim().isNotEmpty && text.length <= 18 ? null :  "Showdown name is not valid",
         onSuccess: (sdName) {
           homeViewModel.addSdName(sdName);
           return true;

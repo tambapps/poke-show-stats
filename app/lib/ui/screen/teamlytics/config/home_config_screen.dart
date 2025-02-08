@@ -82,36 +82,35 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
 
   List<Widget> pokepasteForm(AppLocalization localization, ThemeData theme, EdgeInsets padding, Widget title) {
     return [
-      ListenableBuilder(listenable: viewModel,
-          builder: (context, _) =>       Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-            Padding(padding: padding, child: title,),
-            Padding(padding: EdgeInsets.symmetric(vertical: 8)),
-            Padding(
-              padding: padding,
-              child: TextField(
-                maxLines: null,
-                controller: _pokepasteController,
-                decoration: InputDecoration(
-                  labelText: localization.pasteSomething,
-                  border: OutlineInputBorder(),
-                ),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(padding: padding, child: title,),
+          Padding(padding: EdgeInsets.symmetric(vertical: 8)),
+          Padding(
+            padding: padding,
+            child: TextField(
+              maxLines: null,
+              controller: _pokepasteController,
+              decoration: InputDecoration(
+                labelText: localization.pasteSomething,
+                border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 20,),
-            Padding(
-              padding: padding,
-              child: Align(
-                alignment: Alignment.topRight,
-                child: viewModel.pokepasteLoading ? CircularProgressIndicator()  : OutlinedButton(
-                  onPressed: () => viewModel.loadPokepaste(_pokepasteController),
-                  child: Text(localization.load,),
-                ),
-              ),
-            )
-          ],)
-      )
+          ),
+          SizedBox(height: 20,),
+          Padding(
+            padding: padding,
+            child: Align(
+              alignment: Alignment.topRight,
+              child: ValueListenableBuilder(valueListenable: viewModel.pokepasteLoadingNotifier,
+                  builder: (context, pokepasteLoading, _) => pokepasteLoading ? CircularProgressIndicator()  : OutlinedButton(
+                    onPressed: () => viewModel.loadPokepaste(_pokepasteController),
+                    child: Text(localization.load,),
+                  )),
+            ),
+          )
+        ],)
     ];
   }
 
