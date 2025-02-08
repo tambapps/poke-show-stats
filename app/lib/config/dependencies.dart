@@ -34,14 +34,15 @@ List<SingleChildWidget> get providers {
     ProxyProvider2<PokemonResourceService, SaveService, HomeViewModel>(
       update: (context, pokemonResourceService, saveService,_) => HomeViewModel(pokemonResourceService: pokemonResourceService, saveService: saveService),
     ),
-    ProxyProvider2<PokemonResourceService, SaveService, TeamlyticsViewModel>(
-      update: (context, pokemonResourceService, saveService,_) => TeamlyticsViewModel(pokemonResourceService: context.read(), saveService: context.read()),
-    ),
   ];
 }
 
 List<SingleChildWidget> teamlyticsProviders(String saveName) {
   return [
+    ProxyProvider2<PokemonResourceService, SaveService, TeamlyticsViewModel>(
+      update: (context, pokemonResourceService, saveService,_) => TeamlyticsViewModel(saveName: saveName, pokemonResourceService: context.read(), saveService: context.read()),
+      dispose: (_, viewModel) => viewModel.dispose(),
+    ),
     Provider(
       create: (context) => HomeConfigViewModel(homeViewModel: context.read(), pokepasteParser: context.read()),
     )

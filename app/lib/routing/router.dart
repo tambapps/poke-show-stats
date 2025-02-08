@@ -30,10 +30,9 @@ GoRouter router() => GoRouter(
         final String saveName = state.uri.queryParameters[Routes.saveNameQueryParam] ?? "default";
 
         return MultiProvider(providers: teamlyticsProviders(saveName),
-          child: TeamlyticsScreen(
-              isMobile: Dimens.of(context).isMobile,
-              viewModel: context.read(),
-              saveName: saveName
+          builder: (context, _) => TeamlyticsScreen(
+            isMobile: Dimens.of(context).isMobile,
+            viewModel: context.read(),
           ),);
       },
         redirect: (context, state) {

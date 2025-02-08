@@ -13,7 +13,7 @@ import '../../../data/services/pokemon_resource_service.dart';
 
 class TeamlyticsViewModel {
 
-  TeamlyticsViewModel({required this.pokemonResourceService, required this.saveService}) {
+  TeamlyticsViewModel({required this.saveName, required this.pokemonResourceService, required this.saveService}) {
     replaysNotifier.addListener(() {
       filteredReplaysNotifier.value = replayPredicate != null ? replays.where(replayPredicate!).toList() : replays.toList();
     });
@@ -27,12 +27,12 @@ class TeamlyticsViewModel {
   final PokemonResourceService pokemonResourceService;
   final SaveService saveService;
 
-  final ValueNotifier<String> saveNameNotifier = ValueNotifier("");
+  final String saveName;
   final ValueNotifier<List<String>> sdNamesNotifier = ValueNotifier([]);
   final ValueNotifier<List<Replay>> replaysNotifier = ValueNotifier([]);
   final ValueNotifier<List<Replay>> filteredReplaysNotifier = ValueNotifier([]);
   final ValueNotifier<Pokepaste?> pokepasteNotifier = ValueNotifier(null);
-  late ChangeNotifier teamlyticChangeNotifier = CompositeChangeNotifier([saveNameNotifier, sdNamesNotifier, replaysNotifier, filteredReplaysNotifier, pokepasteNotifier]);
+  late ChangeNotifier teamlyticChangeNotifier = CompositeChangeNotifier([sdNamesNotifier, replaysNotifier, filteredReplaysNotifier, pokepasteNotifier]);
 
   List<Replay> get replays => replaysNotifier.value;
   List<Replay> get filteredReplays => filteredReplaysNotifier.value;
@@ -122,16 +122,15 @@ class TeamlyticsViewModel {
   void dispose() {
     // will remove listener of replaysNotifier
     teamlyticChangeNotifier.dispose();
+    addReplayURIController.dispose();
   }
 
-  void storeSave() async => await saveService.storeSave(Teamlytic(saveName: saveNameNotifier.value, sdNames: sdNames, replays: replays, pokepaste: pokepaste));
+  void storeSave() async => await saveService.storeSave(Teamlytic(saveName: saveName, sdNames: sdNames, replays: replays, pokepaste: pokepaste));
 
-  void loadSave(String saveName) async {
+  void loadSave() async {
     Teamlytic teamlytic = await saveService.loadSave(saveName);
-    saveNameNotifier.value = teamlytic.saveName;
     sdNamesNotifier.value = teamlytic.sdNames;
     pokepasteNotifier.value = teamlytic.pokepaste;
     replaysNotifier.value = teamlytic.replays;
   }
-
 }

@@ -1,4 +1,3 @@
-import 'package:poke_showstats/ui/core/utils.dart';
 
 import '../../../data/services/pokemon_resource_service.dart';
 
@@ -27,10 +26,9 @@ class TeamlyticsScreen extends StatefulWidget {
   const TeamlyticsScreen({
     super.key,
     required this.viewModel,
-    required this.isMobile, required this.saveName,
+    required this.isMobile,
   });
 
-  final String saveName;
   final TeamlyticsViewModel viewModel;
   final bool isMobile;
 
@@ -51,7 +49,7 @@ abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsSc
   @override
   void initState() {
     super.initState();
-    viewModel.loadSave(widget.saveName);
+    viewModel.loadSave();
     // The `vsync: this` ensures the TabController is synchronized with the screen's refresh rate
     _tabController = TabController(length: 6, vsync: this);
     // need to reset it as the underline always move to first position when changing screen tab
