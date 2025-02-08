@@ -11,9 +11,10 @@ class TextInputDialog extends StatefulWidget {
   final String title;
   final String? hint;
   final String? confirmButtonText;
+  final String? initialValue;
   final bool Function(String) onSuccess;
   final Validator? validator;
-  const TextInputDialog({super.key, this.hint, required this.onSuccess, required this.validator, required this.title, this.confirmButtonText});
+  const TextInputDialog({super.key, this.hint, required this.onSuccess, required this.validator, required this.title, this.confirmButtonText, this.initialValue});
 
   @override
   State<StatefulWidget> createState() => _TextInputDialogState();
@@ -58,6 +59,9 @@ class _TextInputDialogState extends State<TextInputDialog> {
   @override
   void initState() {
     _textFieldController = TextEditingController();
+    if (widget.initialValue != null) {
+      _textFieldController.text = widget.initialValue!;
+    }
     super.initState();
   }
 

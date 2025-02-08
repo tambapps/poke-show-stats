@@ -124,7 +124,7 @@ abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
           return null;
         },
         onSuccess: (name) {
-      viewModel.createSave(name.trim()).then((teamlytic) => context.push(Routes.teamlyticsRoute(teamlytic.saveName)));
+      viewModel.createSave(name.trim());
       return true;
     });
   }
@@ -154,12 +154,13 @@ abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
     if (sampleName == null) {
       return;
     }
-    final teamlytic = await viewModel.createSaveFromSample(sampleName);
-    context.push(Routes.teamlyticsRoute(teamlytic.saveName));
+    await viewModel.createSaveFromSample(sampleName);
   }
 
   void _changeNameDialog(BuildContext context, AppLocalization localization, TeamlyticPreview save) {
     showTextInputDialog(context, title: "Change name", hint: "Enter team name", localization: localization,
+        initialValue: save.saveName,
+        confirmButtonText: "Update",
         validator: (input) {
           String name = input.trim();
           if (name.isEmpty) {
@@ -185,7 +186,7 @@ abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
           TextButton(onPressed: () {
             viewModel.deleteSave(save);
             Navigator.of(context).pop();
-          }, child: Text("yes", style: TextStyle(color: Colors.red)))
+          }, child: Text("Delete", style: TextStyle(color: Colors.red)))
         ],
       );
     });

@@ -126,6 +126,8 @@ class WebSaveStorage implements SaveStorage {
         await prefs.setStringList(_saveNamesKey, saveNames);
       }
       return true;
+    } else {
+      developer.log("WARNING: Couldn't save $saveName");
     }
     return false;
   }

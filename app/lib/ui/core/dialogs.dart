@@ -16,16 +16,18 @@ Future<void> showTextInputDialog(
       required bool Function(String) onSuccess,
       String? Function(String)? validator,
       String? confirmButtonText,
+      String? initialValue
     }) {
   return showDialog(
       context: context,
       builder: (context) {
         return TextInputDialog(
-          title: title,
-          hint: hint,
-          onSuccess: onSuccess,
-          validator: validator,
-          confirmButtonText: confirmButtonText,
+            title: title,
+            hint: hint,
+            onSuccess: onSuccess,
+            validator: validator,
+            confirmButtonText: confirmButtonText,
+            initialValue: initialValue
         );
       });
 }
