@@ -58,7 +58,6 @@ abstract class _MoveUsageComponentState extends AbstractViewModelState<MoveUsage
 
   Widget pokemonMoveUsagesWidget(Map<String, Map<String, int>> moveUsages, Pokemon pokemon) {
     Map<String, int> pokemonMoveUsages = moveUsages[Pokemon.normalizeToBase(pokemon.name)] ?? {};
-    print(moveUsages);
     final viewModel = PokemonMovesPieChartViewModel(pokemonResourceService: context.read(), pokemonName: pokemon.name, pokemonMoveUsages: pokemonMoveUsages);
     return PokemonMovesPieChart(viewModel: viewModel);
   }
