@@ -39,21 +39,28 @@ class _AboutScreenState extends AbstractScreenState<AboutScreen> {
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
+
     return Scaffold(
-        body: SingleChildScrollView(child:
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 32.0,),
-            Align(alignment: Alignment.topCenter, child: Text("About me", style: theme.textTheme.titleLarge,),),
-            Padding(padding: EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0), child: _aboutMeText(),),
-            const SizedBox(height: 64.0,),
-            Align(alignment: Alignment.topCenter, child: Text("About the app", style: theme.textTheme.titleLarge,),),
-            Padding(padding: EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0), child: _aboutTheAppText(),),
-            const SizedBox(height: 64.0,),
-            Align(alignment: Alignment.topCenter, child: Text("Credits", style: theme.textTheme.titleLarge,),),
-            Padding(padding: EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0), child: _creditsText(),),
-        ],),));
+        body: Stack(children: [
+          SingleChildScrollView(child:
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 32.0,),
+              Align(alignment: Alignment.topCenter, child: Text("About me", style: theme.textTheme.titleLarge,),),
+              Padding(padding: EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0), child: _aboutMeText(),),
+              const SizedBox(height: 64.0,),
+              Align(alignment: Alignment.topCenter, child: Text("About the app", style: theme.textTheme.titleLarge,),),
+              Padding(padding: EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0), child: _aboutTheAppText(),),
+              const SizedBox(height: 64.0,),
+              Align(alignment: Alignment.topCenter, child: Text("Credits", style: theme.textTheme.titleLarge,),),
+              Padding(padding: EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0), child: _creditsText(),),
+            ],),),
+          Align(alignment: Alignment.topLeft, child:    IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pop(context),
+          ),),
+        ],));
   }
 
   Widget _aboutMeText() {
