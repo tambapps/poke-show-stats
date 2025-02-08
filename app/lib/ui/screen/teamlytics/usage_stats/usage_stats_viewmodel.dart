@@ -1,26 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:pokepaste_parser/pokepaste_parser.dart';
 
 import '../../../../data/models/replay.dart';
-import '../../../../data/services/pokemon_resource_service.dart';
 import '../teamlytics_viewmodel.dart';
 
-class UsageStatsViewModel {
-  final TeamlyticsViewModel homeViewModel;
-  Pokepaste? get pokepaste => homeViewModel.pokepaste;
-  int get replaysCount => homeViewModel.filteredReplays.length;
+class UsageStatsViewModel extends TeamlyticsTabViewModel {
 
   final ValueNotifier<bool> isLoading = ValueNotifier(false);
   final ValueNotifier<Map<String, UsageStats>> pokemonUsageStats = ValueNotifier({});
 
-  final PokemonResourceService pokemonResourceService;
-
-
-  UsageStatsViewModel({required this.homeViewModel,
-    required this.pokemonResourceService,
-  }) {
+  UsageStatsViewModel({required super.homeViewModel}) {
     _loadUsages();
   }
+
+  @override
+  void onTeamlyticsChanged() => _loadUsages();
 
   void _loadUsages() {
     isLoading.value = true;

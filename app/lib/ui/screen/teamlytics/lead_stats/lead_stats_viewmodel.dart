@@ -1,28 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:pokemon_core/pokemon_core.dart';
-import 'package:pokepaste_parser/pokepaste_parser.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
 
 import '../../../../data/models/replay.dart';
-import '../../../../data/services/pokemon_resource_service.dart';
 import '../teamlytics_viewmodel.dart';
 
-class LeadStatsViewModel {
-  final TeamlyticsViewModel homeViewModel;
-  Pokepaste? get pokepaste => homeViewModel.pokepaste;
-
+class LeadStatsViewModel extends TeamlyticsTabViewModel {
 
   final ValueNotifier<bool> isLoading = ValueNotifier(false);
-  final PokemonResourceService pokemonResourceService;
-
   ValueNotifier<Stats> stats = ValueNotifier(Stats());
 
-  LeadStatsViewModel({required this.homeViewModel,
-    required this.pokemonResourceService,
-  }) {
-    // TODO listen to home viewmodel to reload on teamlytics change, same for other viewmodels
+  LeadStatsViewModel({required super.homeViewModel}) {
     _loadUsages();
   }
+
+  @override
+  void onTeamlyticsChanged() => _loadUsages();
 
   void _loadUsages() async {
     isLoading.value = true;

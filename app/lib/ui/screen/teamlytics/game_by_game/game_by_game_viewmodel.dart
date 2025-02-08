@@ -1,20 +1,13 @@
-import '../../../../data/services/pokemon_resource_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../data/models/replay.dart';
 import '../teamlytics_viewmodel.dart';
 
-class GameByGameViewModel {
+class GameByGameViewModel extends TeamlyticsTabViewModel {
 
-  GameByGameViewModel({
-    required this.homeViewModel,
-    required this.pokemonResourceService,
-  });
-
-  final TeamlyticsViewModel homeViewModel;
-  final PokemonResourceService pokemonResourceService;
-  List<Replay> get filteredReplays => homeViewModel.filteredReplays;
   final Map<Replay, NoteEditingContext> _replayNoteEditingContextMap = {};
+
+  GameByGameViewModel({required super.homeViewModel});
 
   NoteEditingContext getEditingContext(Replay replay) => _replayNoteEditingContextMap.putIfAbsent(replay, () => NoteEditingContext());
 
@@ -28,6 +21,11 @@ class GameByGameViewModel {
     for (NoteEditingContext context in _replayNoteEditingContextMap.values) {
       context.dispose();
     }
+  }
+
+  @override
+  void onTeamlyticsChanged() {
+    // nothing to do as we just displays the filteredReplays that we got from the parent viewmodel
   }
 }
 

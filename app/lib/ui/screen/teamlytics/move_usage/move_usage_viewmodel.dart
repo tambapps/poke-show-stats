@@ -2,26 +2,19 @@ import 'package:pokemon_core/pokemon_core.dart';
 
 import '../../../../data/models/replay.dart';
 import 'package:flutter/material.dart';
-import 'package:pokepaste_parser/pokepaste_parser.dart';
-
-import '../../../../data/services/pokemon_resource_service.dart';
 import '../teamlytics_viewmodel.dart';
 
-class MoveUsageViewModel {
-
-  MoveUsageViewModel({
-    required this.homeViewModel,
-    required this.pokemonResourceService,
-  }) {
-    _loadStats();
-  }
-
-  final TeamlyticsViewModel homeViewModel;
-  final PokemonResourceService pokemonResourceService;
-  Pokepaste? get pokepaste => homeViewModel.pokepaste;
+class MoveUsageViewModel extends TeamlyticsTabViewModel {
 
   ValueNotifier<Map<String, Map<String, int>>> pokemonMoveUsages = ValueNotifier({});
   ValueNotifier<bool> isLoading = ValueNotifier(false);
+
+  MoveUsageViewModel({required super.homeViewModel}) {
+    _loadStats();
+  }
+
+  @override
+  void onTeamlyticsChanged() => _loadStats();
 
   void _loadStats() async {
     isLoading.value = true;

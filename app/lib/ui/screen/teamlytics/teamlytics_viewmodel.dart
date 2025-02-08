@@ -128,3 +128,17 @@ class TeamlyticsViewModel {
     replaysNotifier.value = teamlytic.replays;
   }
 }
+
+abstract class TeamlyticsTabViewModel {
+  final TeamlyticsViewModel homeViewModel;
+  Pokepaste? get pokepaste => homeViewModel.pokepaste;
+  int get replaysCount => homeViewModel.filteredReplays.length;
+  PokemonResourceService get pokemonResourceService => homeViewModel.pokemonResourceService;
+  List<Replay> get filteredReplays => homeViewModel.filteredReplays;
+
+  TeamlyticsTabViewModel({required this.homeViewModel}) {
+    homeViewModel.teamlyticChangeNotifier.addListener(onTeamlyticsChanged);
+  }
+
+  void onTeamlyticsChanged();
+}

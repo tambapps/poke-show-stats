@@ -56,17 +56,17 @@ List<SingleChildWidget> teamlyticsProviders(String saveName) {
       dispose: (_, viewModel) => viewModel.dispose(),
     ),
     ProxyProvider<TeamlyticsViewModel, GameByGameViewModel> (
-      update: (context, teamlyticsViewModel, _) => GameByGameViewModel(homeViewModel: teamlyticsViewModel, pokemonResourceService: context.read()),
+      update: (context, teamlyticsViewModel, _) => GameByGameViewModel(homeViewModel: teamlyticsViewModel),
       dispose: (_, viewModel) => viewModel.dispose(),
     ),
     ProxyProvider<TeamlyticsViewModel, MoveUsageViewModel> (
-      update: (context, teamlyticsViewModel, _) => MoveUsageViewModel(homeViewModel: teamlyticsViewModel, pokemonResourceService: context.read()),
+      update: (context, teamlyticsViewModel, _) => MoveUsageViewModel(homeViewModel: teamlyticsViewModel),
     ),
     ProxyProvider<TeamlyticsViewModel, LeadStatsViewModel> (
-      update: (context, teamlyticsViewModel, _) => LeadStatsViewModel(homeViewModel: teamlyticsViewModel, pokemonResourceService: context.read()),
+      update: (context, teamlyticsViewModel, _) => LeadStatsViewModel(homeViewModel: teamlyticsViewModel),
     ),
     ProxyProvider<TeamlyticsViewModel, UsageStatsViewModel> (
-      update: (context, teamlyticsViewModel, _) => UsageStatsViewModel(homeViewModel: teamlyticsViewModel, pokemonResourceService: context.read()),
+      update: (context, teamlyticsViewModel, _) => UsageStatsViewModel(homeViewModel: teamlyticsViewModel),
     ),
   ];
 }
