@@ -9,7 +9,6 @@ import '../../../core/localization/applocalization.dart';
 import '../../../core/themes/dimens.dart';
 import '../../../core/utils.dart';
 
-
 class ReplayEntriesComponent extends StatefulWidget {
   final ReplayEntriesViewModel viewModel;
   final bool isMobile;
@@ -20,32 +19,32 @@ class ReplayEntriesComponent extends StatefulWidget {
   State createState() => isMobile ? _MobileReplayEntriesComponentState() : _DesktopReplayEntriesComponentState();
 }
 
-abstract class _AbstractReplayEntriesComponentState extends AbstractViewModelState<ReplayEntriesComponent> {
+abstract class _AbstractReplayEntriesComponentState extends AbstractState<ReplayEntriesComponent> {
 
-  @override
   ReplayEntriesViewModel get viewModel => widget.viewModel;
 
-  Widget addReplayRow(AppLocalization localization) => ListenableBuilder(listenable: viewModel, builder: (context, _) => Row(
-    children: [
-      Expanded(
-        child: TextField(
-          maxLines: null,
-          controller: viewModel.addReplayURIController,
-          decoration: InputDecoration(
-            labelText: localization.replayUrls,
-            border: OutlineInputBorder(),
+  Widget addReplayRow(AppLocalization localization) => ValueListenableBuilder(valueListenable: viewModel.loading,
+      builder: (context, loading, _) => Row(
+        children: [
+          Expanded(
+            child: TextField(
+              maxLines: null,
+              controller: viewModel.addReplayURIController,
+              readOnly: loading,
+              decoration: InputDecoration(
+                labelText: localization.replayUrls,
+                border: OutlineInputBorder(),
+              ),
+            )
+            ,
           ),
-        )
-        ,
-      ),
-      const SizedBox(width: 16),
-      SizedBox(width: 100.0, child: viewModel.loading ? CircularProgressIndicator() : ElevatedButton(
-        onPressed: () => viewModel.loadReplays(),
-        child: Text(localization.add),
-      )
-        ,)
-    ],
-  ));
+          const SizedBox(width: 16),
+          SizedBox(width: 100.0, child: loading ? CircularProgressIndicator() : ElevatedButton(
+            onPressed: () => viewModel.loadReplays(),
+            child: Text(localization.add),
+          ),)
+        ],
+      ));
 
   Widget cancelButton(Replay replay) => IconButton(icon: Icon(Icons.cancel_outlined), iconSize: 16, onPressed: () => viewModel.removeReplay(replay));
 
@@ -166,5 +165,4 @@ class _DesktopReplayEntriesComponentState extends _AbstractReplayEntriesComponen
       ],
     );
   }
-
 }

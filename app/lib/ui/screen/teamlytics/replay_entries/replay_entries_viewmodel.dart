@@ -10,7 +10,7 @@ import '../teamlytics_viewmodel.dart';
 import '../../../../data/models/replay.dart';
 import '../../../../data/services/pokemon_resource_service.dart';
 
-class ReplayEntriesViewModel extends ChangeNotifier {
+class ReplayEntriesViewModel {
 
   ReplayEntriesViewModel({
     required this.replayParser,
@@ -22,18 +22,15 @@ class ReplayEntriesViewModel extends ChangeNotifier {
 
   final SdReplayParser replayParser;
   final TeamlyticsViewModel homeViewModel;
-  TextEditingController get addReplayURIController => homeViewModel.addReplayURIController;
+  final TextEditingController addReplayURIController = TextEditingController();
 
-  bool _loading = false;
-  bool get loading => _loading;
+  ValueNotifier<bool> loading = ValueNotifier(false);
 
   void loadReplays() async {
-    // TODO bug when many. we add replays one by one so each time a new replay is added, this viewmodel is reconstructed and the 
-    //   loading boolean is false
-    if (loading) return;
+    if (loading.value) return;
     String text = addReplayURIController.text.trim();
     StringBuffer failedUrls = StringBuffer();
-    _setLoading(true);
+    loading.value = true;
     for (String rawInput in text.split(RegExp(r'\s+'))) {
       String input = rawInput.trim();
       if (input.isEmpty) continue;
@@ -41,7 +38,7 @@ class ReplayEntriesViewModel extends ChangeNotifier {
         failedUrls.writeln(input);
       }
     }
-    _setLoading(false);
+    loading.value = false;
     addReplayURIController.text = failedUrls.toString().trim();
   }
 
@@ -93,11 +90,7 @@ class ReplayEntriesViewModel extends ChangeNotifier {
     return replayParser.parse(data);
   }
 
-  void _setLoading(bool loading) {
-    _loading = loading;
-    notifyListeners();
-  }
-
   void removeReplay(Replay replay) => homeViewModel.removeReplay(replay);
 
+  void dispose() => addReplayURIController.dispose();
 }

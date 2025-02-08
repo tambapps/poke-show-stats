@@ -1,4 +1,5 @@
 import 'package:poke_showstats/ui/screen/home/home_viewmodel.dart';
+import 'package:poke_showstats/ui/screen/teamlytics/replay_entries/replay_entries_viewmodel.dart';
 
 import '../../../data/services/save_service.dart';
 import 'package:flutter/foundation.dart';
@@ -43,8 +44,12 @@ List<SingleChildWidget> teamlyticsProviders(String saveName) {
       update: (context, pokemonResourceService, saveService,_) => TeamlyticsViewModel(saveName: saveName, pokemonResourceService: context.read(), saveService: context.read()),
       dispose: (_, viewModel) => viewModel.dispose(),
     ),
-    Provider(
-      create: (context) => HomeConfigViewModel(homeViewModel: context.read(), pokepasteParser: context.read()),
+    ProxyProvider<TeamlyticsViewModel, HomeConfigViewModel> (
+      update: (context, teamlyticsViewModel, _) => HomeConfigViewModel(homeViewModel: teamlyticsViewModel, pokepasteParser: context.read()),
+    ),
+    ProxyProvider<TeamlyticsViewModel, ReplayEntriesViewModel> (
+      update: (context, teamlyticsViewModel, _) => ReplayEntriesViewModel(homeViewModel: teamlyticsViewModel, replayParser: context.read()),
+      dispose: (_, viewModel) => viewModel.dispose(),
     )
   ];
 }

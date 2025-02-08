@@ -19,11 +19,6 @@ class TeamlyticsViewModel {
     });
   }
 
-  // storing it here even if it used only in the replayEntriesComponent because we don't want
-  // to erase/refresh the controller each time the replayEntriesScreen state updates
-  // TODO no. don't store it here
-  final TextEditingController addReplayURIController = TextEditingController();
-
   final PokemonResourceService pokemonResourceService;
   final SaveService saveService;
 
@@ -122,7 +117,6 @@ class TeamlyticsViewModel {
   void dispose() {
     // will remove listener of replaysNotifier
     teamlyticChangeNotifier.dispose();
-    addReplayURIController.dispose();
   }
 
   void storeSave() async => await saveService.storeSave(Teamlytic(saveName: saveName, sdNames: sdNames, replays: replays, pokepaste: pokepaste));
