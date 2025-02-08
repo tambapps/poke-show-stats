@@ -18,9 +18,8 @@ class LeadStatsComponent extends StatefulWidget {
 
 }
 
-abstract class _AbstractLeadStatsState extends AbstractViewModelState<LeadStatsComponent> {
+abstract class _AbstractLeadStatsState extends AbstractState<LeadStatsComponent> {
 
-  @override
   LeadStatsViewModel get viewModel => widget.viewModel;
 
   @override
@@ -31,15 +30,15 @@ abstract class _AbstractLeadStatsState extends AbstractViewModelState<LeadStatsC
         child: Text("Please enter a pokepaste in the Home tab to consult move usages", textAlign: TextAlign.center,),
       );
     }
-    return ListenableBuilder(
-        listenable: viewModel,
-        builder: (context, _) {
-          if (viewModel.isLoading) {
+    return ValueListenableBuilder(
+        valueListenable: viewModel.isLoading,
+        builder: (context, isLoading,  _) {
+          if (isLoading) {
             return Center(
               child: CircularProgressIndicator(),
             );
           }
-          return content(context, localization, dimens, theme);
+          return ListenableBuilder(listenable: viewModel.stats, builder: (context, _) => content(context, localization, dimens, theme));
         });
   }
 
@@ -59,7 +58,7 @@ abstract class _AbstractLeadStatsState extends AbstractViewModelState<LeadStatsC
       ThemeData theme, String title,
       int Function(MapEntry<Duo<String>, LeadStats>, MapEntry<Duo<String>, LeadStats>) comparator
       ) {
-    final entries = viewModel.duoStatsMap.entries
+    final entries = viewModel.stats.value.duoStatsMap.entries
     /* is it needed?
       .where((entry) =>
         pokepaste.pokemons.any((pokemon) => PokemonNames.pokemonNameMatch(pokemon.name, entry.key.first)) &&
@@ -73,7 +72,7 @@ abstract class _AbstractLeadStatsState extends AbstractViewModelState<LeadStatsC
 
   Widget leadAndWinUsage(BuildContext context, AppLocalization localization, Dimens dimens,
       ThemeData theme) {
-    final entries = viewModel.pokemonStats.entries.toList();
+    final entries = viewModel.stats.value.pokemonStats.entries.toList();
     entries.sort((e1, e2) => e2.value.winCount - e1.value.winCount);
     return Padding(padding: EdgeInsets.symmetric(horizontal: 4.0), child: TileCard(title: "Lead and Win", content: Column(children: entries.map((entry) => _duoUsageCardRow(context, localization, dimens, theme, [entry.key], entry.value)).toList(),)),);
   }

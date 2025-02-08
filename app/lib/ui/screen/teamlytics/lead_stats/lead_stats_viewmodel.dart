@@ -7,18 +7,15 @@ import '../../../../data/models/replay.dart';
 import '../../../../data/services/pokemon_resource_service.dart';
 import '../teamlytics_viewmodel.dart';
 
-class LeadStatsViewModel extends ChangeNotifier {
+class LeadStatsViewModel {
   final TeamlyticsViewModel homeViewModel;
   Pokepaste? get pokepaste => homeViewModel.pokepaste;
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
+
+
+  final ValueNotifier<bool> isLoading = ValueNotifier(false);
   final PokemonResourceService pokemonResourceService;
 
-  Map<Duo<String>, LeadStats> _duoStatsMap = {};
-  Map<Duo<String>, LeadStats> get duoStatsMap => _duoStatsMap;
-
-  Map<String, LeadStats> _pokemonStats = {};
-  Map<String, LeadStats> get pokemonStats => _pokemonStats;
+  ValueNotifier<Stats> stats = ValueNotifier(Stats());
 
   LeadStatsViewModel({required this.homeViewModel,
     required this.pokemonResourceService,
@@ -27,8 +24,7 @@ class LeadStatsViewModel extends ChangeNotifier {
   }
 
   void _loadUsages() async {
-    _isLoading = true;
-    notifyListeners();
+    isLoading.value = true;
     List<Replay> replays = homeViewModel.filteredReplays;
     Map<Duo<String>, LeadStats> duoStatsMap = {};
     Map<String, LeadStats> pokemonStatsMap = {};
@@ -36,10 +32,8 @@ class LeadStatsViewModel extends ChangeNotifier {
       _fill(duoStatsMap, replay);
       _fillPokemonStats(pokemonStatsMap, replay);
     }
-    _duoStatsMap = duoStatsMap;
-    _pokemonStats = pokemonStatsMap;
-    _isLoading = false;
-    notifyListeners();
+    stats.value = Stats(duoStatsMap: duoStatsMap, pokemonStats: pokemonStatsMap);
+    isLoading.value = false;
   }
 
   void _fillPokemonStats(Map<String, LeadStats> map, Replay replay) {
@@ -66,6 +60,14 @@ class LeadStatsViewModel extends ChangeNotifier {
   }
 }
 
+class Stats {
+
+  final Map<Duo<String>, LeadStats> duoStatsMap;
+  final Map<String, LeadStats> pokemonStats;
+
+  Stats({this.duoStatsMap = const {}, this.pokemonStats = const {}});
+
+}
 
 class LeadStats {
   int winCount = 0;

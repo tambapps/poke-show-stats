@@ -110,7 +110,7 @@ abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsSc
             builder: (context, _) => ReplayEntriesComponent(viewModel: context.read(), isMobile: dimens.isMobile,)),
         _tab(dimens, (filtersWidget) => GameByGameComponent(viewModel: context.read(), filtersWidget: filtersWidget, isMobile: dimens.isMobile)),
         _tab(dimens, (filtersWidget) => MoveUsageComponent(viewModel: context.read(), filtersWidget: filtersWidget, isMobile: dimens.isMobile)),
-        _tab(dimens, (filtersWidget) => LeadStatsComponent(viewModel: LeadStatsViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), filtersWidget: filtersWidget, isMobile: dimens.isMobile)),
+        _tab(dimens, (filtersWidget) => LeadStatsComponent(viewModel: context.read(), filtersWidget: filtersWidget, isMobile: dimens.isMobile)),
         _tab(dimens, (filtersWidget) => UsageStatsComponent(viewModel: UsageStatsViewModel(homeViewModel: viewModel, pokemonResourceService: context.read()), filtersWidget: filtersWidget, isMobile: dimens.isMobile)),
       ],
     );
