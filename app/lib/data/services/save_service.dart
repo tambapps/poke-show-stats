@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 import 'dart:io';
 
+import 'package:flutter/services.dart';
+
 import '../models/replay.dart';
 import '../models/teamlytic.dart';
 import 'package:path_provider/path_provider.dart';
@@ -148,6 +150,8 @@ abstract class SaveService {
 
   Future<Teamlytic> loadSave(String saveName);
 
+  Future<Teamlytic> loadSample(String sampleName);
+
   Future<void> storeSave(Teamlytic save);
 
   Future<void> deleteSave(String saveName);
@@ -162,6 +166,11 @@ class DummySaveService implements SaveService {
   @override
   Future<Teamlytic> loadSave(String saveName) async {
     return Teamlytic(saveName: saveName, sdNames: [], replays: [], pokepaste: null);
+  }
+
+  @override
+  Future<Teamlytic> loadSample(String sampleName) async {
+    return Teamlytic(saveName: sampleName, sdNames: [], replays: [], pokepaste: null);
   }
 
   @override
@@ -199,6 +208,16 @@ class SaveServiceImpl implements SaveService {
   @override
   Future<Teamlytic> loadSave(String saveName) async {
     String? json = await _storage.loadSaveJson(saveName);
+    return _doLoad(saveName, json);
+  }
+
+  @override
+  Future<Teamlytic> loadSample(String sampleName) async {
+    String json = await rootBundle.loadString("assets/samples/$sampleName.json");
+    return _doLoad(sampleName, json);
+  }
+
+  Future<Teamlytic> _doLoad(String saveName, String? json) async {
     if (json == null) {
       return _emptySave(saveName);
     }
@@ -211,7 +230,7 @@ class SaveServiceImpl implements SaveService {
         pokepaste: _loadPokepaste(map['pokepaste'])
     );
     if (reloadedReplayRef[0]) {
-      storeSave(teamlytic);
+    storeSave(teamlytic);
     }
     return teamlytic;
   }

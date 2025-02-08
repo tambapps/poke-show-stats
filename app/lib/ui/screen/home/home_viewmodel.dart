@@ -9,8 +9,7 @@ class HomeViewModel {
   final PokemonResourceService pokemonResourceService;
   final SaveService saveService;
 
-  List<TeamlyticPreview> _saves = [];
-  List<TeamlyticPreview> get saves => _saves;
+  final ValueNotifier<List<TeamlyticPreview>> saves = ValueNotifier([]);
   final ValueNotifier<bool> loading = ValueNotifier(false);
 
   HomeViewModel({required this.pokemonResourceService, required this.saveService}) {
@@ -20,16 +19,33 @@ class HomeViewModel {
 
   void _loadSaves() async {
     loading.value = true;
-  //  notifyListeners();
-    List<TeamlyticPreview> saves = await saveService.listSaves();
-    _saves = saves;
+    saves.value = await saveService.listSaves();
     loading.value = false;
-  //  notifyListeners();
   }
 
   void deleteSave(TeamlyticPreview save) {
     saveService.deleteSave(save.saveName);
-    _saves = [..._saves]..removeWhere((s) => s.saveName == save.saveName);
-//    notifyListeners();
+    saves.value = [...saves.value]..removeWhere((s) => s.saveName == save.saveName);
+  }
+
+  Future<Teamlytic> createSave(String saveName) async {
+    // will create a new one if it didn't existed
+    final teamlytic = await saveService.loadSave(saveName);
+    // make sure it is stored so that when we go back to home screen we see this save
+    await saveService.storeSave(teamlytic);
+    saves.value = [...saves.value, TeamlyticPreview.from(teamlytic)];
+    return teamlytic;
+  }
+
+  Future<Teamlytic> createSaveFromSample(String sampleName) async {
+    final teamlytic = await saveService.loadSample(sampleName);
+    String saveName = sampleName;
+    while (saves.value.any((s) => s.saveName == saveName)) {
+      saveName = "Copy of $saveName";
+    }
+    teamlytic.saveName = saveName;
+    saves.value = [...saves.value, TeamlyticPreview.from(teamlytic)];
+    await saveService.storeSave(teamlytic);
+    return teamlytic;
   }
 }

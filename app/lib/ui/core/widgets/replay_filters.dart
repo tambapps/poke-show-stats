@@ -213,6 +213,7 @@ class ReplayFiltersViewModel extends ChangeNotifier {
   final PokemonResourceService pokemonResourceService;
   final ReplayFilters filters;
 
+  // TODO review this with valuenotifier
   bool _dirty = false;
   bool get dirty => _dirty;
   set dirty(value) {

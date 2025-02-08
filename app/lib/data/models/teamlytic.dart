@@ -22,4 +22,6 @@ class TeamlyticPreview {
 
   TeamlyticPreview({required this.saveName, required this.pokepaste});
 
+  TeamlyticPreview.from(Teamlytic teamlytic): this(saveName: teamlytic.saveName, pokepaste: teamlytic.pokepaste);
+
 }

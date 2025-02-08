@@ -46,14 +46,21 @@ abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
         Padding(padding: EdgeInsets.only(left: 16.0, top: 32.0, bottom: 16.0), child: Align(alignment: Alignment.topLeft,
           child: Text("Teams", style: theme.textTheme.titleMedium,),),),
         Padding(padding: EdgeInsets.only(left: 16.0, bottom: 16.0), child: Align(alignment: Alignment.topLeft,
-          child: OutlinedButton(onPressed: () => _createTeamDialog(context, localization), child: Text("add team")),),),
+          child: Row(children: [
+            OutlinedButton(onPressed: () => _createTeamDialog(context, localization), child: Text("new team")),
+            const SizedBox(width: 32.0,),
+            OutlinedButton(onPressed: () => _sampleTeamDialog(context, localization), child: Text("sample team"))
+          ],),),),
         Expanded(child: ValueListenableBuilder(
           valueListenable: viewModel.loading,
           builder: (context, loading, child) {
             if (loading) {
               return CircularProgressIndicator();
             }
-            return SingleChildScrollView(child: AutoGridView(columnsCount: dimens.savesColumnCount, children: viewModel.saves.map((save) => _saveWidget(save, context, localization, dimens, theme)).toList()),);
+            return ValueListenableBuilder(valueListenable: viewModel.saves,
+                builder: (context, saves, _) => SingleChildScrollView(child:
+                AutoGridView(columnsCount: dimens.savesColumnCount,
+                    children: saves.map((save) => _saveWidget(save, context, localization, dimens, theme)).toList()),));
           },
         )),
         Align(alignment: Alignment.bottomRight, child: Padding(padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0), child: _aboutButton(),),)
@@ -101,11 +108,49 @@ abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
 
   void _createTeamDialog(BuildContext context, AppLocalization localization) {
     showTextInputDialog(context, title: "New team", hint: "Enter team name", localization: localization,
-        validator: (input) => input.trim().isNotEmpty ? null : "Name must not be empty",
+        validator: (input) {
+          String name = input.trim();
+          if (name.isEmpty) {
+            return "Name must not be empty";
+          }
+          if (viewModel.saves.value.any((s) => s.saveName == name)) {
+            return "Team already exists";
+          }
+          return null;
+        },
         onSuccess: (name) {
-          context.push(Routes.teamlyticsRoute(name.trim()));
-          return true;
-        });
+      viewModel.createSave(name.trim()).then((teamlytic) => context.push(Routes.teamlyticsRoute(teamlytic.saveName)));
+      return true;
+    });
+  }
+
+  void _sampleTeamDialog(BuildContext context, AppLocalization localization) async {
+    final List<String> items = ['electrizer'];
+    String? sampleName = await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Select a sample'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: items.map((item) {
+                return ListTile(
+                  title: Text(item),
+                  onTap: () => Navigator.pop(context, item),
+                );
+              }).toList(),
+            ),
+          ),
+        );
+      },
+    );
+
+    if (sampleName == null) {
+      return;
+    }
+    final teamlytic = await viewModel.createSaveFromSample(sampleName);
+    context.push(Routes.teamlyticsRoute(teamlytic.saveName));
   }
 
   void _deleteSaveDialog(BuildContext context, AppLocalization localization, TeamlyticPreview save) {
