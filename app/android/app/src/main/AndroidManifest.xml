@@ -11,9 +11,9 @@
         </intent>
     </queries>
     <application
-        android:label="app2"
+        android:label="Poke ShowStats"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/catching_pokemon">
         <activity
             android:name=".MainActivity"
             android:exported="true"
