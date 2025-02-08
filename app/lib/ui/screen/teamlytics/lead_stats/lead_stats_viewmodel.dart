@@ -20,6 +20,7 @@ class LeadStatsViewModel {
   LeadStatsViewModel({required this.homeViewModel,
     required this.pokemonResourceService,
   }) {
+    // TODO listen to home viewmodel to reload on teamlytics change, same for other viewmodels
     _loadUsages();
   }
 

@@ -5,17 +5,16 @@ import '../../../../data/models/replay.dart';
 import '../../../../data/services/pokemon_resource_service.dart';
 import '../teamlytics_viewmodel.dart';
 
-class UsageStatsViewModel extends ChangeNotifier {
+class UsageStatsViewModel {
   final TeamlyticsViewModel homeViewModel;
   Pokepaste? get pokepaste => homeViewModel.pokepaste;
   int get replaysCount => homeViewModel.filteredReplays.length;
-//  bool get hasReplays => homeViewModel.replays.isNotEmpty;
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
+
+  final ValueNotifier<bool> isLoading = ValueNotifier(false);
+  final ValueNotifier<Map<String, UsageStats>> pokemonUsageStats = ValueNotifier({});
+
   final PokemonResourceService pokemonResourceService;
 
-  Map<String, UsageStats> _pokemonUsageStats = {};
-  Map<String, UsageStats> get pokemonUsageStats => _pokemonUsageStats;
 
   UsageStatsViewModel({required this.homeViewModel,
     required this.pokemonResourceService,
@@ -23,18 +22,15 @@ class UsageStatsViewModel extends ChangeNotifier {
     _loadUsages();
   }
 
-
   void _loadUsages() {
-    _isLoading = true;
-    notifyListeners();
+    isLoading.value = true;
     Map<String, UsageStats> pokemonUsageStatsMap = {};
     List<Replay> replays = homeViewModel.filteredReplays;
     for (Replay replay in replays) {
       _fill(pokemonUsageStatsMap, replay);
     }
-    _pokemonUsageStats = pokemonUsageStatsMap;
-    _isLoading = false;
-    notifyListeners();
+    pokemonUsageStats.value = pokemonUsageStatsMap;
+    isLoading.value = false;
   }
 
   void _fill(Map<String, UsageStats> pokemonUsageStatsMap, Replay replay) {

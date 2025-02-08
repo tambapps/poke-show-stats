@@ -15,6 +15,7 @@ import '../ui/screen/teamlytics/config/home_config_viewmodel.dart';
 import '../ui/screen/teamlytics/lead_stats/lead_stats_viewmodel.dart';
 import '../ui/screen/teamlytics/move_usage/move_usage_viewmodel.dart';
 import '../ui/screen/teamlytics/teamlytics_viewmodel.dart';
+import '../ui/screen/teamlytics/usage_stats/usage_stats_viewmodel.dart';
 
 List<SingleChildWidget> get providers {
   return [
@@ -63,6 +64,9 @@ List<SingleChildWidget> teamlyticsProviders(String saveName) {
     ),
     ProxyProvider<TeamlyticsViewModel, LeadStatsViewModel> (
       update: (context, teamlyticsViewModel, _) => LeadStatsViewModel(homeViewModel: teamlyticsViewModel, pokemonResourceService: context.read()),
+    ),
+    ProxyProvider<TeamlyticsViewModel, UsageStatsViewModel> (
+      update: (context, teamlyticsViewModel, _) => UsageStatsViewModel(homeViewModel: teamlyticsViewModel, pokemonResourceService: context.read()),
     ),
   ];
 }

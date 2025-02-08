@@ -21,9 +21,8 @@ class UsageStatsComponent extends StatefulWidget {
 
 }
 
-abstract class _AbstractUsageStatsState extends AbstractViewModelState<UsageStatsComponent> {
+abstract class _AbstractUsageStatsState extends AbstractState<UsageStatsComponent> {
 
-  @override
   UsageStatsViewModel get viewModel => widget.viewModel;
 
   @override
@@ -34,17 +33,18 @@ abstract class _AbstractUsageStatsState extends AbstractViewModelState<UsageStat
         child: Text("Please enter a pokepaste in the Home tab to consult move usages", textAlign: TextAlign.center,),
       );
     }
-    return ListenableBuilder(
-        listenable: viewModel,
-        builder: (context, _) {
-          if (viewModel.isLoading) {
+    return ValueListenableBuilder(
+        valueListenable: viewModel.isLoading,
+        builder: (context, isLoading, _) {
+          if (isLoading) {
             return Center(
               child: CircularProgressIndicator(),
             );
           }
-          return content(context, localization, dimens, theme);
+          return ListenableBuilder(listenable: viewModel.pokemonUsageStats, builder: (context, _) => content(context, localization, dimens, theme));
         });
   }
+
   Widget content(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
 
   Widget teraUsageTileCard(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
@@ -86,7 +86,7 @@ abstract class _AbstractUsageStatsState extends AbstractViewModelState<UsageStat
     return Padding(padding: EdgeInsets.symmetric(horizontal: 4.0), child: TileCard(title: title, tooltip: tooltip, content: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children:
-      viewModel.pokemonUsageStats.entries.map((entry) => rowGenerator(entry.key, entry.value)).toList(),)),);
+      viewModel.pokemonUsageStats.value.entries.map((entry) => rowGenerator(entry.key, entry.value)).toList(),)),);
   }
 
   Widget _usageCardRow(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, String pokemon, String text, int? winRate, bool displayTera) {
