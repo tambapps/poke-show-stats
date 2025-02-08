@@ -1,0 +1,734 @@
+adaptability:
+  name: "Adaptability"
+aerilate:
+  name: "Aerilate"
+aftermath:
+  name: "Aftermath"
+air-lock:
+  name: "Air Lock"
+analytic:
+  name: "Analytic"
+anger-point:
+  name: "Anger Point"
+anger-shell:
+  name: "Anger Shell"
+anticipation:
+  name: "Anticipation"
+aqua-boost:
+  name: "Aqua Boost"
+arena-trap:
+  name: "Arena Trap"
+armor-tail:
+  name: "Armor Tail"
+aroma-veil:
+  name: "Aroma Veil"
+as-one-glastrier:
+  name: "As One"
+as-one-spectrier:
+  name: "As One"
+aura-break:
+  name: "Aura Break"
+bad-dreams:
+  name: "Bad Dreams"
+ball-fetch:
+  name: "Ball Fetch"
+battery:
+  name: "Battery"
+battle-armor:
+  name: "Battle Armor"
+battle-bond:
+  name: "Battle Bond"
+beads-of-ruin:
+  name: "Beads of Ruin"
+beast-boost:
+  name: "Beast Boost"
+berserk:
+  name: "Berserk"
+big-pecks:
+  name: "Big Pecks"
+black-hole:
+  name: "Black Hole"
+blaze:
+  name: "Blaze"
+bodyguard:
+  name: "Bodyguard"
+bonanza:
+  name: "Bonanza"
+bulletproof:
+  name: "Bulletproof"
+calming:
+  name: "Calming"
+celebrate:
+  name: "Celebrate"
+cheek-pouch:
+  name: "Cheek Pouch"
+chilling-neigh:
+  name: "Chilling Neigh"
+chlorophyll:
+  name: "Chlorophyll"
+clear-body:
+  name: "Clear Body"
+climber:
+  name: "Climber"
+cloud-nine:
+  name: "Cloud Nine"
+color-change:
+  name: "Color Change"
+comatose:
+  name: "Comatose"
+commander:
+  name: "Commander"
+competitive:
+  name: "Competitive"
+compound-eyes:
+  name: "Compound Eyes"
+confidence:
+  name: "Confidence"
+conqueror:
+  name: "Conqueror"
+contrary:
+  name: "Contrary"
+corrosion:
+  name: "Corrosion"
+costar:
+  name: "Costar"
+cotton-down:
+  name: "Cotton Down"
+cud-chew:
+  name: "Cud Chew"
+curious-medicine:
+  name: "Curious Medicine"
+cursed-body:
+  name: "Cursed Body"
+cute-charm:
+  name: "Cute Charm"
+damp:
+  name: "Damp"
+dancer:
+  name: "Dancer"
+dark-aura:
+  name: "Dark Aura"
+dauntless-shield:
+  name: "Dauntless Shield"
+daze:
+  name: "Daze"
+dazzling:
+  name: "Dazzling"
+decoy:
+  name: "Decoy"
+deep-sleep:
+  name: "Deep Sleep"
+defeatist:
+  name: "Defeatist"
+defiant:
+  name: "Defiant"
+delta-stream:
+  name: "Delta Stream"
+desolate-land:
+  name: "Desolate Land"
+disguise:
+  name: "Disguise"
+disgust:
+  name: "Disgust"
+dodge:
+  name: "Dodge"
+download:
+  name: "Download"
+dragons-maw:
+  name: "Dragon’s Maw"
+drizzle:
+  name: "Drizzle"
+drought:
+  name: "Drought"
+dry-skin:
+  name: "Dry Skin"
+early-bird:
+  name: "Early Bird"
+earth-eater:
+  name: "Earth Eater"
+effect-spore:
+  name: "Effect Spore"
+electric-surge:
+  name: "Electric Surge"
+electromorphosis:
+  name: "Electromorphosis"
+embody-aspect:
+  name: "Embody Aspect"
+emergency-exit:
+  name: "Emergency Exit"
+explode:
+  name: "Explode"
+fairy-aura:
+  name: "Fairy Aura"
+filter:
+  name: "Filter"
+flame-body:
+  name: "Flame Body"
+flame-boost:
+  name: "Flame Boost"
+flare-boost:
+  name: "Flare Boost"
+flash-fire:
+  name: "Flash Fire"
+flower-gift:
+  name: "Flower Gift"
+flower-veil:
+  name: "Flower Veil"
+fluffy:
+  name: "Fluffy"
+forecast:
+  name: "Forecast"
+forewarn:
+  name: "Forewarn"
+fortune:
+  name: "Fortune"
+friend-guard:
+  name: "Friend Guard"
+frighten:
+  name: "Frighten"
+frisk:
+  name: "Frisk"
+frostbite:
+  name: "Frostbite"
+full-metal-body:
+  name: "Full Metal Body"
+fur-coat:
+  name: "Fur Coat"
+gale-wings:
+  name: "Gale Wings"
+galvanize:
+  name: "Galvanize"
+gluttony:
+  name: "Gluttony"
+good-as-gold:
+  name: "Good as Gold"
+gooey:
+  name: "Gooey"
+gorilla-tactics:
+  name: "Gorilla Tactics"
+grass-cloak:
+  name: "Grass Cloak"
+grass-pelt:
+  name: "Grass Pelt"
+grassy-surge:
+  name: "Grassy Surge"
+grim-neigh:
+  name: "Grim Neigh"
+guard-dog:
+  name: "Guard Dog"
+gulp:
+  name: "Gulp"
+gulp-missile:
+  name: "Gulp Missile"
+guts:
+  name: "Guts"
+hadron-engine:
+  name: "Hadron Engine"
+harvest:
+  name: "Harvest"
+healer:
+  name: "Healer"
+heatproof:
+  name: "Heatproof"
+heavy-metal:
+  name: "Heavy Metal"
+herbivore:
+  name: "Herbivore"
+hero:
+  name: "Hero"
+high-rise:
+  name: "High-rise"
+honey-gather:
+  name: "Honey Gather"
+hospitality:
+  name: "Hospitality"
+hot-blooded:
+  name: "Hot Blooded"
+huge-power:
+  name: "Huge Power"
+hunger-switch:
+  name: "Hunger Switch"
+hustle:
+  name: "Hustle"
+hydration:
+  name: "Hydration"
+hyper-cutter:
+  name: "Hyper Cutter"
+ice-body:
+  name: "Ice Body"
+ice-face:
+  name: "Ice Face"
+ice-scales:
+  name: "Ice Scales"
+illuminate:
+  name: "Illuminate"
+illusion:
+  name: "Illusion"
+immunity:
+  name: "Immunity"
+imposter:
+  name: "Imposter"
+infiltrator:
+  name: "Infiltrator"
+innards-out:
+  name: "Innards Out"
+inner-focus:
+  name: "Inner Focus"
+insomnia:
+  name: "Insomnia"
+instinct:
+  name: "Instinct"
+interference:
+  name: "Interference"
+intimidate:
+  name: "Intimidate"
+intrepid-sword:
+  name: "Intrepid Sword"
+iron-barbs:
+  name: "Iron Barbs"
+iron-fist:
+  name: "Iron Fist"
+jagged-edge:
+  name: "Jagged Edge"
+justified:
+  name: "Justified"
+keen-eye:
+  name: "Keen Eye"
+klutz:
+  name: "Klutz"
+last-bastion:
+  name: "Last Bastion"
+leaf-guard:
+  name: "Leaf Guard"
+levitate:
+  name: "Levitate"
+libero:
+  name: "Libero"
+life-force:
+  name: "Life Force"
+light-metal:
+  name: "Light Metal"
+lightning-rod:
+  name: "Lightning Rod"
+limber:
+  name: "Limber"
+lingering-aroma:
+  name: "Lingering Aroma"
+liquid-ooze:
+  name: "Liquid Ooze"
+liquid-voice:
+  name: "Liquid Voice"
+long-reach:
+  name: "Long Reach"
+lullaby:
+  name: "Lullaby"
+lunchbox:
+  name: "Lunchbox"
+magic-bounce:
+  name: "Magic Bounce"
+magic-guard:
+  name: "Magic Guard"
+magician:
+  name: "Magician"
+magma-armor:
+  name: "Magma Armor"
+magnet-pull:
+  name: "Magnet Pull"
+marvel-scale:
+  name: "Marvel Scale"
+medic:
+  name: "Medic"
+mega-launcher:
+  name: "Mega Launcher"
+melee:
+  name: "Melee"
+merciless:
+  name: "Merciless"
+mimicry:
+  name: "Mimicry"
+minds-eye:
+  name: "Mind’s Eye"
+minus:
+  name: "Minus"
+mirror-armor:
+  name: "Mirror Armor"
+misty-surge:
+  name: "Misty Surge"
+mold-breaker:
+  name: "Mold Breaker"
+mood-maker:
+  name: "Mood Maker"
+moody:
+  name: "Moody"
+motor-drive:
+  name: "Motor Drive"
+mountaineer:
+  name: "Mountaineer"
+moxie:
+  name: "Moxie"
+multiscale:
+  name: "Multiscale"
+multitype:
+  name: "Multitype"
+mummy:
+  name: "Mummy"
+mycelium-might:
+  name: "Mycelium Might"
+natural-cure:
+  name: "Natural Cure"
+neuroforce:
+  name: "Neuroforce"
+neutralizing-gas:
+  name: "Neutralizing Gas"
+no-guard:
+  name: "No Guard"
+nomad:
+  name: "Nomad"
+normalize:
+  name: "Normalize"
+nurse:
+  name: "Nurse"
+oblivious:
+  name: "Oblivious"
+omnipotent:
+  name: "Omnipotent"
+opportunist:
+  name: "Opportunist"
+orichalcum-pulse:
+  name: "Orichalcum Pulse"
+overcoat:
+  name: "Overcoat"
+overgrow:
+  name: "Overgrow"
+own-tempo:
+  name: "Own Tempo"
+parental-bond:
+  name: "Parental Bond"
+parry:
+  name: "Parry"
+pastel-veil:
+  name: "Pastel Veil"
+perception:
+  name: "Perception"
+perish-body:
+  name: "Perish Body"
+pickpocket:
+  name: "Pickpocket"
+pickup:
+  name: "Pickup"
+pixilate:
+  name: "Pixilate"
+plus:
+  name: "Plus"
+poison-heal:
+  name: "Poison Heal"
+poison-point:
+  name: "Poison Point"
+poison-puppeteer:
+  name: "Poison Puppeteer"
+poison-touch:
+  name: "Poison Touch"
+power-construct:
+  name: "Power Construct"
+power-nap:
+  name: "Power Nap"
+power-of-alchemy:
+  name: "Power of Alchemy"
+power-spot:
+  name: "Power Spot"
+prankster:
+  name: "Prankster"
+pressure:
+  name: "Pressure"
+pride:
+  name: "Pride"
+primordial-sea:
+  name: "Primordial Sea"
+prism-armor:
+  name: "Prism Armor"
+propeller-tail:
+  name: "Propeller Tail"
+protean:
+  name: "Protean"
+protosynthesis:
+  name: "Protosynthesis"
+psychic-surge:
+  name: "Psychic Surge"
+punk-rock:
+  name: "Punk Rock"
+pure-power:
+  name: "Pure Power"
+purifying-salt:
+  name: "Purifying Salt"
+quark-drive:
+  name: "Quark Drive"
+queenly-majesty:
+  name: "Queenly Majesty"
+quick-draw:
+  name: "Quick Draw"
+quick-feet:
+  name: "Quick Feet"
+rain-dish:
+  name: "Rain Dish"
+rattled:
+  name: "Rattled"
+receiver:
+  name: "Receiver"
+reckless:
+  name: "Reckless"
+refrigerate:
+  name: "Refrigerate"
+regenerator:
+  name: "Regenerator"
+ripen:
+  name: "Ripen"
+rivalry:
+  name: "Rivalry"
+rks-system:
+  name: "RKS System"
+rock-head:
+  name: "Rock Head"
+rocky-payload:
+  name: "Rocky Payload"
+rough-skin:
+  name: "Rough Skin"
+run-away:
+  name: "Run Away"
+run-up:
+  name: "Run Up"
+sand-force:
+  name: "Sand Force"
+sand-rush:
+  name: "Sand Rush"
+sand-spit:
+  name: "Sand Spit"
+sand-stream:
+  name: "Sand Stream"
+sand-veil:
+  name: "Sand Veil"
+sandpit:
+  name: "Sandpit"
+sap-sipper:
+  name: "Sap Sipper"
+schooling:
+  name: "Schooling"
+scrappy:
+  name: "Scrappy"
+screen-cleaner:
+  name: "Screen Cleaner"
+seed-sower:
+  name: "Seed Sower"
+sequence:
+  name: "Sequence"
+serene-grace:
+  name: "Serene Grace"
+shackle:
+  name: "Shackle"
+shadow-dash:
+  name: "Shadow Dash"
+shadow-shield:
+  name: "Shadow Shield"
+shadow-tag:
+  name: "Shadow Tag"
+share:
+  name: "Share"
+sharpness:
+  name: "Sharpness"
+shed-skin:
+  name: "Shed Skin"
+sheer-force:
+  name: "Sheer Force"
+shell-armor:
+  name: "Shell Armor"
+shield:
+  name: "Shield"
+shield-dust:
+  name: "Shield Dust"
+shields-down:
+  name: "Shields Down"
+simple:
+  name: "Simple"
+skater:
+  name: "Skater"
+skill-link:
+  name: "Skill Link"
+slow-start:
+  name: "Slow Start"
+slush-rush:
+  name: "Slush Rush"
+sniper:
+  name: "Sniper"
+snow-cloak:
+  name: "Snow Cloak"
+snow-warning:
+  name: "Snow Warning"
+solar-power:
+  name: "Solar Power"
+solid-rock:
+  name: "Solid Rock"
+soul-heart:
+  name: "Soul-Heart"
+soundproof:
+  name: "Soundproof"
+speed-boost:
+  name: "Speed Boost"
+spirit:
+  name: "Spirit"
+sponge:
+  name: "Sponge"
+sprint:
+  name: "Sprint"
+stakeout:
+  name: "Stakeout"
+stall:
+  name: "Stall"
+stalwart:
+  name: "Stalwart"
+stamina:
+  name: "Stamina"
+stance-change:
+  name: "Stance Change"
+static:
+  name: "Static"
+steadfast:
+  name: "Steadfast"
+stealth:
+  name: "Stealth"
+steam-engine:
+  name: "Steam Engine"
+steelworker:
+  name: "Steelworker"
+steely-spirit:
+  name: "Steely Spirit"
+stench:
+  name: "Stench"
+sticky-hold:
+  name: "Sticky Hold"
+storm-drain:
+  name: "Storm Drain"
+strong-jaw:
+  name: "Strong Jaw"
+sturdy:
+  name: "Sturdy"
+suction-cups:
+  name: "Suction Cups"
+super-luck:
+  name: "Super Luck"
+supersweet-syrup:
+  name: "Supersweet Syrup"
+supreme-overlord:
+  name: "Supreme Overlord"
+surge-surfer:
+  name: "Surge Surfer"
+swarm:
+  name: "Swarm"
+sweet-veil:
+  name: "Sweet Veil"
+swift-swim:
+  name: "Swift Swim"
+sword-of-ruin:
+  name: "Sword of Ruin"
+symbiosis:
+  name: "Symbiosis"
+synchronize:
+  name: "Synchronize"
+tablets-of-ruin:
+  name: "Tablets of Ruin"
+tangled-feet:
+  name: "Tangled Feet"
+tangling-hair:
+  name: "Tangling Hair"
+technician:
+  name: "Technician"
+telepathy:
+  name: "Telepathy"
+tenacity:
+  name: "Tenacity"
+tera-shell:
+  name: "Tera Shell"
+tera-shift:
+  name: "Tera Shift"
+teraform-zero:
+  name: "Teraform Zero"
+teravolt:
+  name: "Teravolt"
+thermal-exchange:
+  name: "Thermal Exchange"
+thick-fat:
+  name: "Thick Fat"
+thrust:
+  name: "Thrust"
+tinted-lens:
+  name: "Tinted Lens"
+torrent:
+  name: "Torrent"
+tough-claws:
+  name: "Tough Claws"
+toxic-boost:
+  name: "Toxic Boost"
+toxic-chain:
+  name: "Toxic Chain"
+toxic-debris:
+  name: "Toxic Debris"
+trace:
+  name: "Trace"
+transistor:
+  name: "Transistor"
+triage:
+  name: "Triage"
+truant:
+  name: "Truant"
+turboblaze:
+  name: "Turboblaze"
+unaware:
+  name: "Unaware"
+unburden:
+  name: "Unburden"
+unnerve:
+  name: "Unnerve"
+unseen-fist:
+  name: "Unseen Fist"
+vanguard:
+  name: "Vanguard"
+vessel-of-ruin:
+  name: "Vessel of Ruin"
+victory-star:
+  name: "Victory Star"
+vital-spirit:
+  name: "Vital Spirit"
+volt-absorb:
+  name: "Volt Absorb"
+wandering-spirit:
+  name: "Wandering Spirit"
+warm-blanket:
+  name: "Warm Blanket"
+water-absorb:
+  name: "Water Absorb"
+water-bubble:
+  name: "Water Bubble"
+water-compaction:
+  name: "Water Compaction"
+water-veil:
+  name: "Water Veil"
+wave-rider:
+  name: "Wave Rider"
+weak-armor:
+  name: "Weak Armor"
+well-baked-body:
+  name: "Well-Baked Body"
+white-smoke:
+  name: "White Smoke"
+wimp-out:
+  name: "Wimp Out"
+wind-power:
+  name: "Wind Power"
+wind-rider:
+  name: "Wind Rider"
+wonder-guard:
+  name: "Wonder Guard"
+wonder-skin:
+  name: "Wonder Skin"
+zen-mode:
+  name: "Zen Mode"
+zero-to-hero:
+  name: "Zero to Hero"
