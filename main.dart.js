@@ -93747,9 +93747,9 @@ return A.ao2(A.bz(A.a([p,n,s,A.bz(q,r,o,"tambapps")],t.VO),q,q,""),q,B.cm)},
 a9j(){var s=null,r=A.ax("I built this app because I wanted one single UI in which I could keep track of how I use a team and take notes to improve myself and know how to handle different match-ups.",s,s,s,s,s,B.cm,s),q=A.bz(s,s,s,"This app "),p=A.bz(s,s,A.eE(s,s,s,s,s,s,s,s,s,s,s,s,s,s,B.bS,s,s,!0,s,s,s,s,s,s,s,s),"collects no data"),o=A.bz(s,s,s,"."),n=A.bz(s,s,s," All data is saved on your local storage (of your web browser or mobile phone)."),m=A.bz(s,s,s," You can check the source code of this app "),l=A.ry(s,s)
 l.bn=new A.apT()
 return A.bA(A.a([r,A.ao2(A.bz(A.a([q,p,o,n,m,A.bz(s,l,this.y,"here"),A.bz(s,s,s,".")],t.VO),s,s,""),s,B.cm)],t.p),B.bd,B.p,B.w)},
-abL(){var s=null,r=A.ry(s,s)
-r.bn=new A.apU()
-return A.bA(A.a([A.ao2(A.bz(A.a([A.bz(s,r,this.y,"jormxdos"),A.bz(s,s,s," to have designed the tera type logos.")],t.VO),s,s,""),s,B.cm),B.hu,A.ax("Shoutout to me, to have developed the whole app by myself from scratch.",s,s,s,s,s,B.cm,s)],t.p),B.bd,B.p,B.w)}}
+abL(){var s=null,r=A.bz(s,s,s,"Shoutout to "),q=A.ry(s,s)
+q.bn=new A.apU()
+return A.bA(A.a([A.ao2(A.bz(A.a([r,A.bz(s,q,this.y,"jormxdos"),A.bz(s,s,s," to have designed the tera type logos.")],t.VO),s,s,""),s,B.cm),B.hu,A.ax("Shoutout to me to have developed the whole app by myself from scratch.",s,s,s,s,s,B.cm,s)],t.p),B.bd,B.p,B.w)}}
 A.apV.prototype={
 $0(){A.hO(this.a,!1).mB(null)
 return null},
@@ -94759,7 +94759,7 @@ $2(a,b){var s=this
 return s.a.vO(a,s.b,s.c,s.d)},
 $S:28}
 A.ar6.prototype={
-$2(a,b){var s=this,r=b.c,q=r!==0?B.d.aX(b.b*100/r):null,p=q!=null?"Won\n"+b.b+" out of "+r:"Did not tera"
+$2(a,b){var s=this,r=b.c,q=r!==0?B.d.aX(b.b*100/r):null,p=q!=null?"Won\n"+b.b+" out of "+r+" games":"Did not tera"
 return s.a.IH(s.b,s.c,s.d,s.e,a,p,q,!0)},
 $S:117}
 A.ar7.prototype={
