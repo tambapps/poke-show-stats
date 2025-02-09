@@ -30,6 +30,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
     return ListView.separated(
+      padding: EdgeInsets.zero,
         itemBuilder: (context, index) {
           if (index == 0) {
             return widget.filtersWidget;
