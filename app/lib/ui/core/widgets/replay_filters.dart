@@ -41,7 +41,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
     super.initState();
     // The `vsync: this` ensures the TabController is synchronized with the screen's refresh rate
     _tabController = TabController(length: 6, vsync: this);
-    _tabController.addListener(() => _viewModel.selectedPokemonFilterIndex = _tabController.index);
+    _tabController.addListener(() => _viewModel.selectedPokemonFilterIndex.value = _tabController.index);
     _expansionTileController = ExpansionTileController();
   }
 
@@ -77,28 +77,30 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
           isScrollable: widget.isMobile,
           tabs: Iterable.generate(6, (index) => index).map((index) =>
               Padding(padding: EdgeInsets.only(bottom: 4.0),
-                child: ListenableBuilder(listenable: _viewModel, builder: (context, _) => Text("Pokemon ${index + 1}", style: theme.textTheme.titleMedium?.copyWith(color: index != _viewModel.selectedPokemonFilterIndex ? Colors.grey : null),)),)).toList(),
+                child: ValueListenableBuilder(
+                    valueListenable: _viewModel.selectedPokemonFilterIndex,
+                    builder: (context, selectedPokemonFilterIndex, _) => Text("Pokemon ${index + 1}", style: theme.textTheme.titleMedium?.copyWith(color: index != selectedPokemonFilterIndex ? Colors.grey : null),)),)).toList(),
         ),),
             ConstrainedBox(constraints: BoxConstraints(maxHeight: dimens.pokemonFiltersTabViewHeight),
               child: Padding(padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                 child: TabBarView(controller: _tabController, children: List.generate(6, (index) => _pokemonFilterWidget(context, localization, dimens, theme, index))),),),
             Align(alignment: Alignment.bottomRight,
               child: Padding(padding: EdgeInsets.symmetric(horizontal: dimens.pokemonFiltersHorizontalSpacing, vertical: 8.0),
-                child: ListenableBuilder(
-                    listenable: _viewModel, builder: (context, _) => Row(
+                child: ValueListenableBuilder(
+                    valueListenable: _viewModel.dirty, builder: (context, dirty, _) => Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     OutlinedButton(onPressed: () {
-                      _viewModel.dirty = true;
+                      _viewModel.dirty.value = true;
                       _filters.clear();
                     }, child: Text("Clear")), const SizedBox(width: 16.0,),
                     OutlinedButton(
                         style: OutlinedButton.styleFrom(
-                          side: _viewModel.dirty ? const BorderSide(color: Colors.orange) : null,
+                          side: dirty ? const BorderSide(color: Colors.orange) : null,
                         ),
                         onPressed: () {
                           applyFilters(_filters.getPredicate());
-                          _viewModel.dirty = false;
+                          _viewModel.dirty.value = false;
                           _expansionTileController.collapse();
                         },
                         child: Text("Apply"))],
@@ -156,7 +158,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
       child: ControlledAutoComplete<T>(
         controller: controller,
         suggestions: suggestions,
-        onSelected: (_) => _viewModel.dirty = true,
+        onSelected: (_) => _viewModel.dirty.value = true,
         displayStringForOption: displayStringForOption,
         suggestionsMatcher: suggestionsMatcher,
         fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
@@ -164,7 +166,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
             controller: controller,
             focusNode: focusNode,
             onSubmitted: (value) => onFieldSubmitted(),
-            onChanged: (_) => _viewModel.dirty = true,
+            onChanged: (_) => _viewModel.dirty.value = true,
             decoration: InputDecoration(
               labelText: labelText,
               border: OutlineInputBorder(),
@@ -206,27 +208,18 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
   }
 }
 
-class ReplayFiltersViewModel extends ChangeNotifier {
+class ReplayFiltersViewModel {
 
   ReplayFiltersViewModel({required this.pokemonResourceService, required this.filters});
 
   final PokemonResourceService pokemonResourceService;
   final ReplayFilters filters;
 
-  // TODO review this with valuenotifier
-  bool _dirty = false;
-  bool get dirty => _dirty;
-  set dirty(value) {
-    _dirty = value;
-    notifyListeners();
-  }
+  ValueNotifier<bool> dirty = ValueNotifier(false);
 
-  int _selectedPokemonFilterIndex = 0;
-  int get selectedPokemonFilterIndex => _selectedPokemonFilterIndex;
-  set selectedPokemonFilterIndex(value) {
-    _selectedPokemonFilterIndex = value;
-    notifyListeners();
-  }
+
+  ValueNotifier<int> selectedPokemonFilterIndex = ValueNotifier(0);
+
 }
 
 class _DesktopReplayFiltersWidgetState extends _AbstractReplayFiltersWidgetState {

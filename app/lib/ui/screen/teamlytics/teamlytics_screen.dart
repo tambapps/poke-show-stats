@@ -53,7 +53,7 @@ abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsSc
     // The `vsync: this` ensures the TabController is synchronized with the screen's refresh rate
     _tabController = TabController(length: 6, vsync: this);
     // need to reset it as the underline always move to first position when changing screen tab
-    _tabController.addListener(() => _replayFiltersViewModel.selectedPokemonFilterIndex = 0);
+    _tabController.addListener(() => _replayFiltersViewModel.selectedPokemonFilterIndex.value = 0);
     _filters = ReplayFilters();
     _replayFiltersViewModel = ReplayFiltersViewModel(pokemonResourceService: viewModel.pokemonResourceService, filters: _filters);
   }
@@ -61,7 +61,6 @@ abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsSc
   @override
   void dispose() {
     _tabController.dispose();
-    _replayFiltersViewModel.dispose();
     _filters.dispose();
     super.dispose();
   }
