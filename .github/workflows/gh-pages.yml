@@ -30,7 +30,7 @@ jobs:
         working-directory: app
 
       - name: Build Flutter Web
-        run: flutter build web --web-renderer html --base-href="/pokemon-teamlytics/"
+        run: flutter build web --web-renderer html --base-href="/poke-show-stats/"
         working-directory: app
 
       - name: Deploy to GitHub Pages
