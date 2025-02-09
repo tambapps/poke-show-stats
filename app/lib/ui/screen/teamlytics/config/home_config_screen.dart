@@ -31,6 +31,8 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
     return ListView(
       children: [
         SizedBox(height: dimens.homeConfigScreenTopPadding,),
+        Padding(padding: padding, child: Text(viewModel.saveName, style: theme.textTheme.titleLarge?.copyWith(fontSize: 40.0),),),
+        const SizedBox(height: 16.0,),
         Padding(padding: padding,
           child: Row(
           children: [

@@ -98,7 +98,7 @@ final class _DimensDesktop extends Dimens {
   @override
   final double pokepastePokemonIconsOffset = 25.0;
   @override
-  final double homeConfigScreenTopPadding = 36;
+  final double homeConfigScreenTopPadding = 26.0;
   @override
   final int pokemonFiltersColumnsCount = 4;
   @override

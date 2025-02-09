@@ -14,6 +14,7 @@ class HomeConfigViewModel {
   List<String> get sdNames => homeViewModel.sdNames;
   Pokepaste? get pokepaste => homeViewModel.pokepaste;
   PokemonResourceService get pokemonResourceService => homeViewModel.pokemonResourceService;
+  String get saveName => homeViewModel.saveName;
 
   final TeamlyticsViewModel homeViewModel;
   final PokepasteParser pokepasteParser;
