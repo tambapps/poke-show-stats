@@ -53,7 +53,7 @@ abstract class _AbstractUsageStatsState extends AbstractState<UsageStatsComponen
         "Win rate of each pokemon amongst all games it did terastalize",
             (pokemon, stats) {
           final int? winRate = stats.teraCount != 0 ? (stats.teraAndWinCount * 100 / stats.teraCount).truncate() : null;
-          String text = winRate != null ? "Won\n${stats.teraAndWinCount} out of ${stats.teraCount}" : "Did not tera";
+          String text = winRate != null ? "Won\n${stats.teraAndWinCount} out of ${stats.teraCount} games" : "Did not tera";
           return _usageCardRow(context, localization, dimens, theme, pokemon, text, winRate, true);
         });
   }

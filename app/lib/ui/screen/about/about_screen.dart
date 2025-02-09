@@ -142,6 +142,9 @@ class _AboutScreenState extends AbstractScreenState<AboutScreen> {
             text: "",
             children: [
               TextSpan(
+                text: "Shoutout to ",
+              ),
+              TextSpan(
                 text: "jormxdos",
                 style: linkTextStyle,
                 recognizer: TapGestureRecognizer()..onTap = () => openLink("https://www.deviantart.com/jormxdos"),
@@ -154,7 +157,7 @@ class _AboutScreenState extends AbstractScreenState<AboutScreen> {
           textAlign: TextAlign.justify,
         ),
         const SizedBox(height: 8.0,),
-        Text("Shoutout to me, to have developed the whole app by myself from scratch.", textAlign: TextAlign.justify,)
+        Text("Shoutout to me to have developed the whole app by myself from scratch.", textAlign: TextAlign.justify,)
       ],);
   }
 }
