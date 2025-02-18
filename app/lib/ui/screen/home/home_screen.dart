@@ -130,7 +130,7 @@ abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
   }
 
   void _sampleTeamDialog(BuildContext context, AppLocalization localization) async {
-    final List<String> items = ['electrizer'];
+    final List<String> items = ['electrizer', 'delpHOx'];
     String? sampleName = await showDialog<String>(
       context: context,
       builder: (BuildContext context) {
