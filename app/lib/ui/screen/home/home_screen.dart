@@ -80,7 +80,8 @@ abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
       child: InkWell(
-        onTap: () => context.push(Routes.teamlyticsRoute(save.saveName)),
+        // reload in case some modifications were made (e.g; a save deleted/created, team-sheet changed...)
+        onTap: () => context.push(Routes.teamlyticsRoute(save.saveName)).then((_) => viewModel.loadSaves()),
         child: Container(
           decoration: BoxDecoration(
             border: Border.all(

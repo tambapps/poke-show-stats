@@ -13,11 +13,11 @@ class HomeViewModel {
   final ValueNotifier<bool> loading = ValueNotifier(false);
 
   HomeViewModel({required this.pokemonResourceService, required this.saveService}) {
-    _loadSaves();
+    loadSaves();
   }
 
 
-  Future<void> _loadSaves() async {
+  Future<void> loadSaves() async {
     loading.value = true;
     final fetchedSaves = await saveService.listSaves();
     fetchedSaves.sort((a, b) => - a.lastUpdatedAt.compareTo(b.lastUpdatedAt));
@@ -27,7 +27,7 @@ class HomeViewModel {
 
   Future<void> deleteSave(TeamlyticPreview save) async {
     await saveService.deleteSave(save.saveName);
-    await _loadSaves();
+    await loadSaves();
   }
 
   Future<Teamlytic> createSave(String saveName) async {
@@ -56,6 +56,6 @@ class HomeViewModel {
     await saveService.deleteSave(teamlytic.saveName);
     teamlytic.saveName = newName;
     await saveService.storeSave(teamlytic);
-    await _loadSaves();
+    await loadSaves();
   }
 }
