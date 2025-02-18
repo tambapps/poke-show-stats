@@ -49,7 +49,6 @@ abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsSc
   @override
   void initState() {
     super.initState();
-    viewModel.loadSave();
     // The `vsync: this` ensures the TabController is synchronized with the screen's refresh rate
     _tabController = TabController(length: 6, vsync: this);
     // need to reset it as the underline always move to first position when changing screen tab

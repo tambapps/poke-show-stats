@@ -29,28 +29,34 @@ extension Collate<T> on Iterable<T> {
 
 
 class CompositeChangeNotifier extends ChangeNotifier {
-  final List<ChangeNotifier> _notifiers;
+  final List<ChangeNotifier> notifiers;
 
-  CompositeChangeNotifier(this._notifiers);
+  CompositeChangeNotifier(this.notifiers);
 
   @override
   void addListener(VoidCallback listener) {
-    for (final notifier in _notifiers) notifier.addListener(listener);
+    for (final notifier in notifiers) notifier.addListener(listener);
     super.addListener(listener);
   }
 
   @override
-  bool get hasListeners => _notifiers.any((notifier) => notifier.hasListeners);
+  bool get hasListeners => notifiers.any((notifier) => notifier.hasListeners);
 
   @override
   void removeListener(VoidCallback listener) {
-    for (final notifier in _notifiers) notifier.removeListener(listener);
+    for (final notifier in notifiers) notifier.removeListener(listener);
     super.removeListener(listener);
   }
 
   @override
   void dispose() {
-    for (final notifier in _notifiers) notifier.dispose();
+    for (final notifier in notifiers) notifier.dispose();
     super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    for (final notifier in notifiers) notifier.notifyListeners();
+    super.notifyListeners();
   }
 }

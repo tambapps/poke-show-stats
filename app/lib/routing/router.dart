@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:poke_showstats/data/models/teamlytic.dart';
+import 'package:poke_showstats/data/services/save_service.dart';
+
 import '../config/dependencies.dart';
 import '../ui/screen/about/about_viewmodel.dart';
 
@@ -28,12 +32,19 @@ GoRouter router() => GoRouter(
       path: Routes.teamlytic,
       builder: (context, state) {
         final String saveName = state.uri.queryParameters[Routes.saveNameQueryParam] ?? "default";
-
-        return MultiProvider(providers: teamlyticsProviders(saveName),
-          builder: (context, _) => TeamlyticsScreen(
-            isMobile: Dimens.of(context).isMobile,
-            viewModel: context.read(),
-          ),);
+        final SaveService saveService = context.read();
+        return FutureBuilder<Teamlytic>(
+            future: Future(() async => saveService.loadSave(saveName)),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return MultiProvider(providers: teamlyticsProviders(snapshot.data!),
+                  builder: (context, _) => TeamlyticsScreen(
+                    isMobile: Dimens.of(context).isMobile,
+                    viewModel: context.read(),
+                  ),);
+              }
+              return Center(child: CircularProgressIndicator(),);
+            });
       },
         redirect: (context, state) {
           // Check if the query parameter 'saveName' is present

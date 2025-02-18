@@ -1,3 +1,4 @@
+import 'package:poke_showstats/data/models/teamlytic.dart';
 import 'package:poke_showstats/ui/screen/home/home_viewmodel.dart';
 import 'package:poke_showstats/ui/screen/teamlytics/game_by_game/game_by_game_viewmodel.dart';
 import 'package:poke_showstats/ui/screen/teamlytics/replay_entries/replay_entries_viewmodel.dart';
@@ -42,10 +43,13 @@ List<SingleChildWidget> get providers {
   ];
 }
 
-List<SingleChildWidget> teamlyticsProviders(String saveName) {
+List<SingleChildWidget> teamlyticsProviders(Teamlytic teamlytic) {
   return [
     ProxyProvider2<PokemonResourceService, SaveService, TeamlyticsViewModel>(
-      update: (context, pokemonResourceService, saveService,_) => TeamlyticsViewModel(saveName: saveName, pokemonResourceService: context.read(), saveService: context.read()),
+      update: (context, pokemonResourceService, saveService,_) => TeamlyticsViewModel(
+          teamlytic: teamlytic,
+          pokemonResourceService: context.read(),
+          saveService: context.read()),
       dispose: (_, viewModel) => viewModel.dispose(),
     ),
     ProxyProvider<TeamlyticsViewModel, HomeConfigViewModel> (

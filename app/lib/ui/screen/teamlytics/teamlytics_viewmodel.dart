@@ -13,7 +13,11 @@ import '../../../data/services/pokemon_resource_service.dart';
 
 class TeamlyticsViewModel {
 
-  TeamlyticsViewModel({required this.saveName, required this.pokemonResourceService, required this.saveService}) {
+  TeamlyticsViewModel({required Teamlytic teamlytic, required this.pokemonResourceService, required this.saveService}): saveName = teamlytic.saveName {
+    sdNamesNotifier.value = teamlytic.sdNames;
+    pokepasteNotifier.value = teamlytic.pokepaste;
+    replaysNotifier.value = teamlytic.replays;
+    filteredReplaysNotifier.value = replaysNotifier.value.toList();
     replaysNotifier.addListener(() {
       filteredReplaysNotifier.value = replayPredicate != null ? replays.where(replayPredicate!).toList() : replays.toList();
     });
@@ -121,12 +125,6 @@ class TeamlyticsViewModel {
 
   void storeSave() async => await saveService.storeSave(Teamlytic(saveName: saveName, sdNames: sdNames, replays: replays, pokepaste: pokepaste, lastUpdatedAt: currentTimeMillis()));
 
-  void loadSave() async {
-    Teamlytic teamlytic = await saveService.loadSave(saveName);
-    sdNamesNotifier.value = teamlytic.sdNames;
-    pokepasteNotifier.value = teamlytic.pokepaste;
-    replaysNotifier.value = teamlytic.replays;
-  }
 }
 
 abstract class TeamlyticsTabViewModel {
