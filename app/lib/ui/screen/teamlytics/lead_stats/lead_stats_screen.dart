@@ -1,3 +1,6 @@
+import 'package:poke_showstats/data/models/replay.dart';
+import 'package:pokepaste_parser/pokepaste_parser.dart';
+
 import '../../../core/widgets.dart';
 import '../../../core/widgets/tile_card.dart';
 import 'package:flutter/material.dart';
@@ -10,36 +13,25 @@ class LeadStatsComponent extends StatefulWidget {
   final LeadStatsViewModel viewModel;
   final bool isMobile;
   final ReplayFiltersWidget filtersWidget;
+  final LeadStats stats;
+  final List<Replay> filteredReplays;
 
-  const LeadStatsComponent({super.key, required this.viewModel, required this.isMobile, required this.filtersWidget});
+  const LeadStatsComponent({super.key, required this.viewModel, required this.isMobile,
+    required this.filtersWidget, required this.filteredReplays, required this.stats, });
 
   @override
   State createState() => isMobile ? _MobileLeadStatsState() : _DesktopLeadStatsState();
 
 }
 
+// could be stateless
 abstract class _AbstractLeadStatsState extends AbstractState<LeadStatsComponent> {
 
   LeadStatsViewModel get viewModel => widget.viewModel;
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    final pokepaste = viewModel.pokepaste;
-    if (pokepaste == null) {
-      return Center(
-        child: Text("Please enter a pokepaste in the Home tab to consult move usages", textAlign: TextAlign.center,),
-      );
-    }
-    return ValueListenableBuilder(
-        valueListenable: viewModel.isLoading,
-        builder: (context, isLoading,  _) {
-          if (isLoading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return ListenableBuilder(listenable: viewModel.stats, builder: (context, _) => content(context, localization, dimens, theme));
-        });
+    return content(context, localization, dimens, theme);
   }
 
   Widget content(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
@@ -56,9 +48,9 @@ abstract class _AbstractLeadStatsState extends AbstractState<LeadStatsComponent>
 
   Widget _duoUsageCard(BuildContext context, AppLocalization localization, Dimens dimens,
       ThemeData theme, String title,
-      int Function(MapEntry<Duo<String>, LeadStats>, MapEntry<Duo<String>, LeadStats>) comparator
+      int Function(MapEntry<Duo<String>, WinStats>, MapEntry<Duo<String>, WinStats>) comparator
       ) {
-    final entries = viewModel.stats.value.duoStatsMap.entries
+    final entries = widget.stats.duoStatsMap.entries
     /* is it needed?
       .where((entry) =>
         pokepaste.pokemons.any((pokemon) => PokemonNames.pokemonNameMatch(pokemon.name, entry.key.first)) &&
@@ -72,12 +64,12 @@ abstract class _AbstractLeadStatsState extends AbstractState<LeadStatsComponent>
 
   Widget leadAndWinUsage(BuildContext context, AppLocalization localization, Dimens dimens,
       ThemeData theme) {
-    final entries = viewModel.stats.value.pokemonStats.entries.toList();
+    final entries = widget.stats.pokemonStats.entries.toList();
     entries.sort((e1, e2) => e2.value.winCount - e1.value.winCount);
     return Padding(padding: EdgeInsets.symmetric(horizontal: 4.0), child: TileCard(title: "Lead and Win", content: Column(children: entries.map((entry) => _duoUsageCardRow(context, localization, dimens, theme, [entry.key], entry.value)).toList(),)),);
   }
 
-  Widget _duoUsageCardRow(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, List<String> pokemons, LeadStats stats) {
+  Widget _duoUsageCardRow(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, List<String> pokemons, WinStats stats) {
     final int winRate = (stats.winCount * 100 / stats.total).truncate();
     return Row(
       children: [

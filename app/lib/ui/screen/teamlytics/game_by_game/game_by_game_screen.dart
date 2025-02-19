@@ -15,8 +15,9 @@ class GameByGameComponent extends StatefulWidget {
   final GameByGameViewModel viewModel;
   final bool isMobile;
   final ReplayFiltersWidget filtersWidget;
+  final List<Replay> filteredReplays;
 
-  const GameByGameComponent({super.key, required this.viewModel, required this.isMobile, required this.filtersWidget});
+  const GameByGameComponent({super.key, required this.viewModel, required this.isMobile, required this.filtersWidget, required this.filteredReplays});
 
 
   @override
@@ -37,7 +38,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
           } else if (index == 1) {
             return headerWidget(context, localization, dimens, theme);
           }
-          final replay = viewModel.filteredReplays[index - 2];
+          final replay = widget.filteredReplays[index - 2];
           return _gbgWidget(context, localization, dimens, theme, replay);
         },
         separatorBuilder: (context, index) {
@@ -48,13 +49,13 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
             height: 1,
           ),);
         },
-        itemCount: viewModel.filteredReplays.length + 2 // + 2 because filters and header component
+        itemCount: widget.filteredReplays.length + 2 // + 2 because filters and header component
     );
   }
 
   Widget headerWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    final double? winRateRatio = viewModel.filteredReplays.isEmpty ? null
-             : viewModel.filteredReplays.where((replay) => replay.gameOutput == GameOutput.WIN).length.toDouble() / viewModel.filteredReplays.length.toDouble();
+    final double? winRateRatio = widget.filteredReplays.isEmpty ? null
+             : widget.filteredReplays.where((replay) => replay.gameOutput == GameOutput.WIN).length.toDouble() / widget.filteredReplays.length.toDouble();
     final textStyle = theme.textTheme.titleLarge;
     return Padding(
         padding: const EdgeInsets.only(left: 32.0, top: 8.0, bottom: 64.0),

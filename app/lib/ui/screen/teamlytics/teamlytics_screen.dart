@@ -109,16 +109,19 @@ abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsSc
             builder: (context, _) => HomeConfigComponent(viewModel: context.read(), isMobile: dimens.isMobile,)),
         ListenableBuilder(
             listenable: viewModel.teamlyticChangeNotifier,
-            builder: (context, _) => ReplayEntriesComponent(viewModel: context.read(), isMobile: dimens.isMobile,)),
-        _tab(dimens, (filtersWidget) => GameByGameComponent(viewModel: context.read(), filtersWidget: filtersWidget, isMobile: dimens.isMobile)),
-        _tab(dimens, (filtersWidget) => MoveUsageComponent(viewModel: context.read(), filtersWidget: filtersWidget, isMobile: dimens.isMobile)),
-        _tab(dimens, (filtersWidget) => LeadStatsComponent(viewModel: context.read(), filtersWidget: filtersWidget, isMobile: dimens.isMobile)),
-        _tab(dimens, (filtersWidget) => UsageStatsComponent(viewModel: context.read(), filtersWidget: filtersWidget, isMobile: dimens.isMobile)),
+            builder: (context, _) => ReplayEntriesComponent(viewModel: context.read(), replays: viewModel.replays, isMobile: dimens.isMobile,)),
+        _tab(dimens, (filtersWidget) => GameByGameComponent(viewModel: context.read(), filtersWidget: filtersWidget, isMobile: dimens.isMobile, filteredReplays: viewModel.filteredReplays,)),
+        _tab(dimens, (filtersWidget) => MoveUsageComponent(viewModel: context.read(), filtersWidget: filtersWidget,
+            isMobile: dimens.isMobile, pokepaste: viewModel.pokepaste!, pokemonMoveUsageStats: PokemonMoveUsageStats.fromReplays(viewModel.filteredReplays),)),
+        _tab(dimens, (filtersWidget) => LeadStatsComponent(viewModel: context.read(), filtersWidget: filtersWidget, isMobile: dimens.isMobile,
+          filteredReplays: viewModel.filteredReplays, stats: LeadStats.fromReplays(viewModel.filteredReplays),), preventIfNoPokepaste: true),
+        _tab(dimens, (filtersWidget) => UsageStatsComponent(viewModel: context.read(), filtersWidget: filtersWidget, isMobile: dimens.isMobile,
+            filteredReplays: viewModel.filteredReplays, pokepaste: viewModel.pokepaste!, pokemonUsageStats: PokemonUsageStats.fromReplays(viewModel.filteredReplays),), preventIfNoPokepaste: true),
       ],
     );
   }
 
-  Widget _tab(Dimens dimens, Widget Function(ReplayFiltersWidget) tabContentSupplier) {
+  Widget _tab(Dimens dimens, Widget Function(ReplayFiltersWidget) tabContentSupplier, {bool preventIfNoPokepaste = false}) {
     return ListenableBuilder(
         listenable: viewModel.teamlyticChangeNotifier,
         builder: (context, _) {
@@ -133,6 +136,8 @@ abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsSc
             return _cantDisplay(replayFiltersWidget, "Please enter a replays in the Replay Entries tab to consult move usages");
           } else if (viewModel.filteredReplaysNotifier.value.isEmpty) {
             return _cantDisplay(replayFiltersWidget, "Applied filters matched 0 replays");
+          } else if (viewModel.pokepaste == null && preventIfNoPokepaste) {
+            return _cantDisplay(replayFiltersWidget, "Please enter a pokepaste in the Home tab to consult move usages");
           } else {
             return tabContentSupplier(replayFiltersWidget);
           }

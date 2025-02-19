@@ -18,6 +18,7 @@ class TeamlyticsViewModel {
     pokepasteNotifier.value = teamlytic.pokepaste;
     replaysNotifier.value = teamlytic.replays;
     filteredReplaysNotifier.value = replaysNotifier.value.toList();
+    print("I was here");
     replaysNotifier.addListener(() {
       filteredReplaysNotifier.value = replayPredicate != null ? replays.where(replayPredicate!).toList() : replays.toList();
     });
@@ -128,15 +129,12 @@ class TeamlyticsViewModel {
 }
 
 abstract class TeamlyticsTabViewModel {
+  // TODO remove this
   final TeamlyticsViewModel homeViewModel;
-  Pokepaste? get pokepaste => homeViewModel.pokepaste;
-  int get replaysCount => homeViewModel.filteredReplays.length;
   PokemonResourceService get pokemonResourceService => homeViewModel.pokemonResourceService;
-  List<Replay> get filteredReplays => homeViewModel.filteredReplays;
 
   TeamlyticsTabViewModel({required this.homeViewModel}) {
-    homeViewModel.teamlyticChangeNotifier.addListener(onTeamlyticsChanged);
+    //homeViewModel.teamlyticChangeNotifier.addListener(onTeamlyticsChanged);
   }
 
-  void onTeamlyticsChanged();
 }

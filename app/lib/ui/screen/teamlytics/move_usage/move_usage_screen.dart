@@ -14,44 +14,30 @@ class MoveUsageComponent extends StatefulWidget {
   final MoveUsageViewModel viewModel;
   final bool isMobile;
   final ReplayFiltersWidget filtersWidget;
+  final Pokepaste pokepaste;
+  final PokemonMoveUsageStats pokemonMoveUsageStats;
 
-  const MoveUsageComponent({super.key, required this.viewModel, required this.isMobile, required this.filtersWidget});
+  const MoveUsageComponent({super.key, required this.viewModel, required this.isMobile, required this.filtersWidget, required this.pokepaste, required this.pokemonMoveUsageStats});
 
   @override
   _MoveUsageComponentState createState() => isMobile ? _MobileMoveUsageComponentState() : _DesktopMoveUsageComponentState();
 }
 
 
+// could be a stateless widdget
 abstract class _MoveUsageComponentState extends AbstractState<MoveUsageComponent> {
 
   MoveUsageViewModel get viewModel => widget.viewModel;
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    final pokepaste = viewModel.pokepaste;
-    if (pokepaste == null) {
-      return Center(
-        child: Text("Please enter a pokepaste in the Home tab to consult move usages", textAlign: TextAlign.center,),
-      );
-    }
-    return ValueListenableBuilder(
-      valueListenable: viewModel.isLoading,
-        builder: (context, isLoading, _) {
-          if (isLoading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return ValueListenableBuilder(
-              valueListenable: viewModel.pokemonMoveUsages,
-              builder: (context, pokemonMoveUsages, _) => SingleChildScrollView(
-                child: Column(children: [
-                  widget.filtersWidget,
-                  moveUsagesWidget(pokepaste, pokemonMoveUsages),
-                  const SizedBox(height: 32.0,)
-                ],),
-              ));
-        });
+    return SingleChildScrollView(
+      child: Column(children: [
+        widget.filtersWidget,
+        moveUsagesWidget(widget.pokepaste, widget.pokemonMoveUsageStats.usages),
+        const SizedBox(height: 32.0,)
+      ],),
+    );
   }
 
   Widget moveUsagesWidget(Pokepaste pokepaste, Map<String, Map<String, int>> moveUsages);

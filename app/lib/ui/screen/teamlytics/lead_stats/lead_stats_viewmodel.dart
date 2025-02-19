@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:pokemon_core/pokemon_core.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
 
@@ -7,35 +6,33 @@ import '../teamlytics_viewmodel.dart';
 
 class LeadStatsViewModel extends TeamlyticsTabViewModel {
 
-  final ValueNotifier<bool> isLoading = ValueNotifier(false);
-  ValueNotifier<Stats> stats = ValueNotifier(Stats());
+  LeadStatsViewModel({required super.homeViewModel});
 
-  LeadStatsViewModel({required super.homeViewModel}) {
-    _loadUsages();
-  }
+}
 
-  @override
-  void onTeamlyticsChanged() => _loadUsages();
+class LeadStats {
 
-  void _loadUsages() async {
-    isLoading.value = true;
-    List<Replay> replays = homeViewModel.filteredReplays;
-    Map<Duo<String>, LeadStats> duoStatsMap = {};
-    Map<String, LeadStats> pokemonStatsMap = {};
+  final Map<Duo<String>, WinStats> duoStatsMap;
+  final Map<String, WinStats> pokemonStats;
+
+  LeadStats({this.duoStatsMap = const {}, this.pokemonStats = const {}});
+
+  static LeadStats fromReplays(List<Replay> replays) {
+    Map<Duo<String>, WinStats> duoStatsMap = {};
+    Map<String, WinStats> pokemonStatsMap = {};
     for (Replay replay in replays) {
       _fill(duoStatsMap, replay);
       _fillPokemonStats(pokemonStatsMap, replay);
     }
-    stats.value = Stats(duoStatsMap: duoStatsMap, pokemonStats: pokemonStatsMap);
-    isLoading.value = false;
+    return LeadStats(duoStatsMap: duoStatsMap, pokemonStats: pokemonStatsMap);
   }
 
-  void _fillPokemonStats(Map<String, LeadStats> map, Replay replay) {
+  static void _fillPokemonStats(Map<String, WinStats> map, Replay replay) {
     if (replay.gameOutput == GameOutput.UNKNOWN) return;
     PlayerData player = replay.otherPlayer;
     for (int i = 0; i < 2 && i < player.selection.length; i++) {
       String pokemon = player.selection[i];
-      LeadStats stats = map.putIfAbsent(pokemon, () => LeadStats());
+      WinStats stats = map.putIfAbsent(pokemon, () => WinStats());
       if (replay.gameOutput == GameOutput.WIN) {
         stats.winCount++;
       }
@@ -43,10 +40,10 @@ class LeadStatsViewModel extends TeamlyticsTabViewModel {
     }
   }
 
-  void _fill(Map<Duo<String>, LeadStats> map, Replay replay) {
+  static void _fill(Map<Duo<String>, WinStats> map, Replay replay) {
     if (replay.gameOutput == GameOutput.UNKNOWN) return;
     Duo<String> duo = Duo(Pokemon.normalize(replay.otherPlayer.selection[0]), Pokemon.normalize(replay.otherPlayer.selection[1]));
-    LeadStats stats = map.putIfAbsent(duo, () => LeadStats());
+    WinStats stats = map.putIfAbsent(duo, () => WinStats());
     if (replay.gameOutput == GameOutput.WIN) {
       stats.winCount++;
     }
@@ -54,16 +51,7 @@ class LeadStatsViewModel extends TeamlyticsTabViewModel {
   }
 }
 
-class Stats {
-
-  final Map<Duo<String>, LeadStats> duoStatsMap;
-  final Map<String, LeadStats> pokemonStats;
-
-  Stats({this.duoStatsMap = const {}, this.pokemonStats = const {}});
-
-}
-
-class LeadStats {
+class WinStats {
   int winCount = 0;
   int total = 0;
 
@@ -71,7 +59,7 @@ class LeadStats {
 
   @override
   String toString() {
-    return 'LeadStats{winCount: $winCount, total: $total}';
+    return 'WinStats{winCount: $winCount, total: $total}';
   }
 }
 

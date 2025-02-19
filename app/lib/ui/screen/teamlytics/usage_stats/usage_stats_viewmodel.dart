@@ -5,28 +5,24 @@ import '../teamlytics_viewmodel.dart';
 
 class UsageStatsViewModel extends TeamlyticsTabViewModel {
 
-  final ValueNotifier<bool> isLoading = ValueNotifier(false);
-  final ValueNotifier<Map<String, UsageStats>> pokemonUsageStats = ValueNotifier({});
+  UsageStatsViewModel({required super.homeViewModel});
 
-  UsageStatsViewModel({required super.homeViewModel}) {
-    _loadUsages();
-  }
+}
 
-  @override
-  void onTeamlyticsChanged() => _loadUsages();
+class PokemonUsageStats {
+  final Map<String, UsageStats> usages;
 
-  void _loadUsages() {
-    isLoading.value = true;
+  PokemonUsageStats(this.usages);
+
+  static PokemonUsageStats fromReplays(List<Replay> replays) {
     Map<String, UsageStats> pokemonUsageStatsMap = {};
-    List<Replay> replays = homeViewModel.filteredReplays;
     for (Replay replay in replays) {
       _fill(pokemonUsageStatsMap, replay);
     }
-    pokemonUsageStats.value = pokemonUsageStatsMap;
-    isLoading.value = false;
+    return PokemonUsageStats(pokemonUsageStatsMap);
   }
 
-  void _fill(Map<String, UsageStats> pokemonUsageStatsMap, Replay replay) {
+  static void _fill(Map<String, UsageStats> pokemonUsageStatsMap, Replay replay) {
     for (String pokemon in replay.otherPlayer.selection) {
       UsageStats stats = pokemonUsageStatsMap.putIfAbsent(pokemon, () => UsageStats());
       bool terastilized = replay.otherPlayer.terastallization?.pokemon == pokemon;
@@ -43,8 +39,8 @@ class UsageStatsViewModel extends TeamlyticsTabViewModel {
       stats.total++;
     }
   }
-}
 
+}
 
 class UsageStats {
   int winCount = 0;

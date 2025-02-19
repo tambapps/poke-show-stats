@@ -6,28 +6,24 @@ import '../teamlytics_viewmodel.dart';
 
 class MoveUsageViewModel extends TeamlyticsTabViewModel {
 
-  ValueNotifier<Map<String, Map<String, int>>> pokemonMoveUsages = ValueNotifier({});
-  ValueNotifier<bool> isLoading = ValueNotifier(false);
+  MoveUsageViewModel({required super.homeViewModel});
 
-  MoveUsageViewModel({required super.homeViewModel}) {
-    _loadStats();
-  }
+}
 
-  @override
-  void onTeamlyticsChanged() => _loadStats();
+class PokemonMoveUsageStats {
+  final Map<String, Map<String, int>> usages;
 
-  void _loadStats() async {
-    isLoading.value = true;
-    List<Replay> replays = homeViewModel.filteredReplays;
+  PokemonMoveUsageStats(this.usages);
+
+  static PokemonMoveUsageStats fromReplays(List<Replay> replays) {
     Map<String, Map<String, int>> map = {};
     for (Replay replay in replays) {
       _merge(map, replay.otherPlayer.moveUsages);
     }
-    pokemonMoveUsages.value = map;
-    isLoading.value = false;
+    return PokemonMoveUsageStats(map);
   }
 
-  void _merge(Map<String, Map<String, int>> resultMap, Map<String, Map<String, int>> map) {
+  static void _merge(Map<String, Map<String, int>> resultMap, Map<String, Map<String, int>> map) {
     map.forEach((String pokemonName, Map<String, int> pokemonMoves) {
       resultMap.update(Pokemon.normalizeToBase(pokemonName), (resultPokemonMoves) {
         pokemonMoves.forEach((moveName, count) =>
@@ -37,4 +33,5 @@ class MoveUsageViewModel extends TeamlyticsTabViewModel {
       }, ifAbsent: () => {...pokemonMoves});
     });
   }
+
 }

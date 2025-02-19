@@ -1,5 +1,7 @@
 import 'package:pokemon_core/pokemon_core.dart';
+import 'package:pokepaste_parser/pokepaste_parser.dart';
 
+import '../../../../data/models/replay.dart';
 import '../../../core/widgets/tile_card.dart';
 import 'package:flutter/material.dart';
 
@@ -13,36 +15,25 @@ class UsageStatsComponent extends StatefulWidget {
   final UsageStatsViewModel viewModel;
   final bool isMobile;
   final ReplayFiltersWidget filtersWidget;
+  final List<Replay> filteredReplays;
+  final Pokepaste pokepaste;
+  final PokemonUsageStats pokemonUsageStats;
 
-  const UsageStatsComponent({super.key, required this.viewModel, required this.isMobile, required this.filtersWidget});
+  const UsageStatsComponent({super.key, required this.viewModel, required this.isMobile, required this.filtersWidget, required this.filteredReplays, required this.pokepaste, required this.pokemonUsageStats});
 
   @override
   State createState() => isMobile ? _MobileUsageStatsState() : _DesktopUsageStatsState();
 
 }
 
+// could be stateless
 abstract class _AbstractUsageStatsState extends AbstractState<UsageStatsComponent> {
 
   UsageStatsViewModel get viewModel => widget.viewModel;
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    final pokepaste = viewModel.pokepaste;
-    if (pokepaste == null) {
-      return Center(
-        child: Text("Please enter a pokepaste in the Home tab to consult move usages", textAlign: TextAlign.center,),
-      );
-    }
-    return ValueListenableBuilder(
-        valueListenable: viewModel.isLoading,
-        builder: (context, isLoading, _) {
-          if (isLoading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return ListenableBuilder(listenable: viewModel.pokemonUsageStats, builder: (context, _) => content(context, localization, dimens, theme));
-        });
+    return content(context, localization, dimens, theme);
   }
 
   Widget content(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
@@ -74,8 +65,8 @@ abstract class _AbstractUsageStatsState extends AbstractState<UsageStatsComponen
         "Usage",
         "Rate at which each pokemon was selected to participate in a game",
             (pokemon, stats) {
-          final int winRate = (stats.total * 100 / viewModel.replaysCount).truncate();
-          String text = "Participated in\n${stats.total} out of ${viewModel.replaysCount} games";
+          final int winRate = (stats.total * 100 / widget.filteredReplays.length).truncate();
+          String text = "Participated in\n${stats.total} out of ${widget.filteredReplays.length} games";
           return _usageCardRow(context, localization, dimens, theme, pokemon, text, winRate, false);
         });
   }
@@ -86,11 +77,11 @@ abstract class _AbstractUsageStatsState extends AbstractState<UsageStatsComponen
     return Padding(padding: EdgeInsets.symmetric(horizontal: 4.0), child: TileCard(title: title, tooltip: tooltip, content: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children:
-      viewModel.pokemonUsageStats.value.entries.map((entry) => rowGenerator(entry.key, entry.value)).toList(),)),);
+      widget.pokemonUsageStats.usages.entries.map((entry) => rowGenerator(entry.key, entry.value)).toList(),)),);
   }
 
   Widget _usageCardRow(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, String pokemon, String text, int? winRate, bool displayTera) {
-    final teraType = viewModel.pokepaste?.pokemons.where((p) => Pokemon.nameMatch(p.name, pokemon)).firstOrNull?.teraType;
+    final teraType = widget.pokepaste?.pokemons.where((p) => Pokemon.nameMatch(p.name, pokemon)).firstOrNull?.teraType;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [

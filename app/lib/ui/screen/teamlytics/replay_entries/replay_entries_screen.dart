@@ -12,8 +12,9 @@ import '../../../core/utils.dart';
 class ReplayEntriesComponent extends StatefulWidget {
   final ReplayEntriesViewModel viewModel;
   final bool isMobile;
+  final List<Replay> replays;
 
-  const ReplayEntriesComponent({super.key, required this.viewModel, required this.isMobile});
+  const ReplayEntriesComponent({super.key, required this.viewModel, required this.isMobile, required this.replays});
 
   @override
   State createState() => isMobile ? _MobileReplayEntriesComponentState() : _DesktopReplayEntriesComponentState();
@@ -82,7 +83,7 @@ class _MobileReplayEntriesComponentState extends _AbstractReplayEntriesComponent
       Flexible(flex: 9,
           fit: FlexFit.loose, // this is because we want this component to shrink when we open the keyboard
           child: ListView.separated(itemBuilder: (context, index) {
-            final Replay replay = viewModel.replays[index];
+            final Replay replay = widget.replays[index];
             final replayLink = replay.uri.toString().replaceFirst('.json', '');
             Color? color = getGameOutputColor(replay);
             return Container(
@@ -102,7 +103,7 @@ class _MobileReplayEntriesComponentState extends _AbstractReplayEntriesComponent
               thickness: 2,
               height: 1,
             ),);
-          }, itemCount: viewModel.replays.length)
+          }, itemCount: widget.replays.length)
       ),
       Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16),
@@ -140,7 +141,7 @@ class _DesktopReplayEntriesComponentState extends _AbstractReplayEntriesComponen
                   Center(child: Text('', style: theme.textTheme.titleMedium, textAlign: TextAlign.center),),
                 ],
                 rowBuilder: (context, index) {
-                  final Replay replay = viewModel.replays[index];
+                  final Replay replay = widget.replays[index];
                   final replayLink = replay.uri.toString().replaceFirst('.json', '');
                   Color? color = getGameOutputColor(replay);
                   return GridListViewRow(decoration: BoxDecoration(color: color),
@@ -154,7 +155,7 @@ class _DesktopReplayEntriesComponentState extends _AbstractReplayEntriesComponen
                       ]
                   );
                 },
-                itemCount: viewModel.replays.length
+                itemCount: widget.replays.length
             )
         ),
         Padding(

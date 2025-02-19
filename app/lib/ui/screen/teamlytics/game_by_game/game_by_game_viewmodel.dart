@@ -22,11 +22,6 @@ class GameByGameViewModel extends TeamlyticsTabViewModel {
       context.dispose();
     }
   }
-
-  @override
-  void onTeamlyticsChanged() {
-    // nothing to do as we just displays the filteredReplays that we got from the parent viewmodel
-  }
 }
 
 class NoteEditingContext extends ChangeNotifier {
