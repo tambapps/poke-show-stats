@@ -18,7 +18,6 @@ class TeamlyticsViewModel {
     pokepasteNotifier.value = teamlytic.pokepaste;
     replaysNotifier.value = teamlytic.replays;
     filteredReplaysNotifier.value = replaysNotifier.value.toList();
-    print("I was here");
     replaysNotifier.addListener(() {
       filteredReplaysNotifier.value = replayPredicate != null ? replays.where(replayPredicate!).toList() : replays.toList();
     });
@@ -121,7 +120,7 @@ class TeamlyticsViewModel {
 
   void dispose() {
     // will remove listener of replaysNotifier
-    teamlyticChangeNotifier.dispose();
+    //teamlyticChangeNotifier.dispose();
   }
 
   void storeSave() async => await saveService.storeSave(Teamlytic(saveName: saveName, sdNames: sdNames, replays: replays, pokepaste: pokepaste, lastUpdatedAt: currentTimeMillis()));

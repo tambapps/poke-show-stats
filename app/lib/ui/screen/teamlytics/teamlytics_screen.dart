@@ -1,4 +1,3 @@
-
 import '../../../data/services/pokemon_resource_service.dart';
 
 import '../../core/widgets.dart';

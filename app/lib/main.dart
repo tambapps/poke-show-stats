@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'config/dependencies.dart';
@@ -10,7 +9,9 @@ import 'ui/core/themes/theme.dart';
 
 void main() {
   // needed for web to updates URL. no impact on mobile
-  GoRouter.optionURLReflectsImperativeAPIs = true;
+  // in the end I didn't activated it because it introduce many bugs when refreshing a page
+  // on the non home page (displayed content is not always up to date with the values of ValueNotifiers
+  //GoRouter.optionURLReflectsImperativeAPIs = true;
   runApp(
     MultiProvider(
       providers: providers,

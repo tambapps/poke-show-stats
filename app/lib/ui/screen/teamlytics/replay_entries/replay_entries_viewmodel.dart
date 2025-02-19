@@ -14,15 +14,12 @@ class ReplayEntriesViewModel {
 
   ReplayEntriesViewModel({
     required this.replayParser,
-    required this.homeViewModel});
+    required this.teamlyticsViewModel});
 
-  PokemonResourceService get pokemonResourceService => homeViewModel.pokemonResourceService;
-  // TODO remove this, pass to widget
-  List<Replay> get replays => homeViewModel.replays;
-  List<String> get sdNames => homeViewModel.sdNames;
+  PokemonResourceService get pokemonResourceService => teamlyticsViewModel.pokemonResourceService;
 
   final SdReplayParser replayParser;
-  final TeamlyticsViewModel homeViewModel;
+  final TeamlyticsViewModel teamlyticsViewModel;
   final TextEditingController addReplayURIController = TextEditingController();
 
   ValueNotifier<bool> loading = ValueNotifier(false);
@@ -44,7 +41,7 @@ class ReplayEntriesViewModel {
   }
 
   Future<bool> _loadReplay(String input) async {
-    if (replays.any((replay) => replay.uri.toString().replaceFirst('.json', '') == input.replaceFirst('.json', ''))) {
+    if (teamlyticsViewModel.replays.any((replay) => replay.uri.toString().replaceFirst('.json', '') == input.replaceFirst('.json', ''))) {
       _errorToast("Duplicate entry");
       return false;
     }
@@ -63,7 +60,7 @@ class ReplayEntriesViewModel {
       _errorToast(e is Error ? e.toString() : 'Unknown error');
       return false;
     }
-    homeViewModel.addReplay(uri, replayData);
+    teamlyticsViewModel.addReplay(uri, replayData);
     return true;
   }
 
@@ -91,7 +88,7 @@ class ReplayEntriesViewModel {
     return replayParser.parse(data);
   }
 
-  void removeReplay(Replay replay) => homeViewModel.removeReplay(replay);
+  void removeReplay(Replay replay) => teamlyticsViewModel.removeReplay(replay);
 
   void dispose() => addReplayURIController.dispose();
 }
