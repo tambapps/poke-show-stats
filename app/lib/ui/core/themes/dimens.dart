@@ -31,6 +31,7 @@ abstract final class Dimens {
   /* replay filters dimensions */
   double get replayFiltersContainerPadding;
   int get pokemonFiltersColumnsCount;
+  int get selectionFiltersColumnsCount;
   double get pokemonFiltersHorizontalSpacing;
   double get pokemonFiltersTabViewHeight;
   double get pieChartAspectRatio;
@@ -63,7 +64,9 @@ final class _DimensMobile extends Dimens {
   @override
   final int pokemonFiltersColumnsCount = 2;
   @override
-  final double pokemonFiltersTabViewHeight = 400.0;
+  final int selectionFiltersColumnsCount = 2;
+  @override
+  final double pokemonFiltersTabViewHeight = 350.0;
   @override
   final double pokemonFiltersHorizontalSpacing = 8.0;
   @override
@@ -101,6 +104,8 @@ final class _DimensDesktop extends Dimens {
   final double homeConfigScreenTopPadding = 26.0;
   @override
   final int pokemonFiltersColumnsCount = 4;
+  @override
+  final int selectionFiltersColumnsCount = 4;
   @override
   final double pokemonFiltersTabViewHeight = 200.0;
   @override

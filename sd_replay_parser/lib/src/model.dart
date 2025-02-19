@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 part 'model.g.dart';
@@ -33,7 +35,7 @@ class PlayerData {
   final List<String> selection;
   int? beforeElo;
   int? afterElo;
-  List<String> get leads => selection.sublist(0, 2);
+  List<String> get leads => selection.sublist(0, min(2, selection.length));
   Terastallization? terastallization;
   Pokepaste? pokepaste;
   // pokemonName -> moveName -> count

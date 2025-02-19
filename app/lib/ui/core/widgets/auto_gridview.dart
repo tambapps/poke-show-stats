@@ -9,9 +9,10 @@ class AutoGridView extends StatelessWidget {
   final List<Widget> children;
   final double horizontalCellSpacing;
   final double verticalCellSpacing;
+  final CrossAxisAlignment rowCrossAxisAlignment;
 
   const AutoGridView({super.key, required this.columnsCount, required this.children, this.horizontalCellSpacing = 0.0,
-    this.verticalCellSpacing = 0.0});
+    this.verticalCellSpacing = 0.0, this.rowCrossAxisAlignment = CrossAxisAlignment.center});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,7 @@ class AutoGridView extends StatelessWidget {
       children: children.collateBy(columnsCount)
           .map((rowChildren) => Padding(padding: EdgeInsets.symmetric(vertical: verticalCellSpacing),
       child: Row(
+        crossAxisAlignment: rowCrossAxisAlignment,
         children: rowChildren.map((child) =>
             Expanded(child: Padding(padding: EdgeInsets.symmetric(horizontal: horizontalCellSpacing), child: child,))
         ).toList(),

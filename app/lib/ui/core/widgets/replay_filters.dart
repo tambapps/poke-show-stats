@@ -71,7 +71,6 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
             const SizedBox(height: 16.0,),
             Text("Opponent's team", style: theme.textTheme.titleMedium, ),
             const SizedBox(height: 16.0,),
-
         Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0), child: TabBar(
           controller: _tabController,
           isScrollable: widget.isMobile,
@@ -84,6 +83,11 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
             ConstrainedBox(constraints: BoxConstraints(maxHeight: dimens.pokemonFiltersTabViewHeight),
               child: Padding(padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                 child: TabBarView(controller: _tabController, children: List.generate(6, (index) => _pokemonFilterWidget(context, localization, dimens, theme, index))),),),
+
+            Text("Your selection", style: theme.textTheme.titleMedium, ),
+            const SizedBox(height: 16.0,),
+            yourSelectionWidget(context, localization, dimens, theme),
+            const SizedBox(height: 32.0,),
             Align(alignment: Alignment.bottomRight,
               child: Padding(padding: EdgeInsets.symmetric(horizontal: dimens.pokemonFiltersHorizontalSpacing, vertical: 8.0),
                 child: ValueListenableBuilder(
@@ -113,9 +117,48 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
     );
   }
 
+  Widget yourSelectionWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
+    return AutoGridView(
+      columnsCount: dimens.pokemonFiltersColumnsCount,
+      verticalCellSpacing: 8.0,
+      horizontalCellSpacing: dimens.pokemonFiltersHorizontalSpacing,
+      rowCrossAxisAlignment: CrossAxisAlignment.start,
+      children:  List.generate(4, (index) {
+        final PokemonSelectionFilter filter = _filters.selectionFilters[index];
+        return Expanded(child: Padding(padding: EdgeInsets.symmetric(horizontal: dimens.pokemonFiltersHorizontalSpacing),
+          child: selectionFilterWidget(context, localization, dimens, theme, filter, leadOption: index < 2),));
+      }),  // Explicitly specify a list of widgets
+    );
+  }
+
+  Widget selectionFilterWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, PokemonSelectionFilter filter, {bool leadOption = false}) {
+    if (leadOption) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          pokemonNameTextInput(controller: filter.pokemonNameController),
+          ValueListenableBuilder(valueListenable: filter.asLead,
+              builder: (context, asLead, _) => CheckboxListTile(
+                title: Text("As lead"),
+                value: asLead,
+                onChanged: (newValue) {
+                  filter.asLead.value = newValue ?? false;
+                  _viewModel.dirty.value = true;
+                },
+                controlAffinity: ListTileControlAffinity.leading,
+              )
+          )
+        ],);
+    } else {
+      return pokemonNameTextInput(controller: filter.pokemonNameController);
+    }
+  }
+
+  Widget pokemonNameTextInput({String labelText = "Pokemon", required TextEditingController controller}) => autoCompleteMapTextInput(labelText: labelText, suggestions: _viewModel.pokemonResourceService.pokemonMappings, controller: controller);
+
   Widget eloFiltersWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
   Widget _pokemonFilterWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, int index) {
-    final pokemonFilters = _filters.pokemons[index];
+    final pokemonFilters = _filters.opposingTeamPokemons[index];
 
     // computing it here to avoid computing it 4 times
     List<MapEntry<dynamic, dynamic>> moveSuggestionEntries = _viewModel.pokemonResourceService.pokemonMoves.entries.toList();
@@ -125,7 +168,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
       verticalCellSpacing: 8.0,
       horizontalCellSpacing: dimens.pokemonFiltersHorizontalSpacing,
       children: [
-        autoCompleteMapTextInput(labelText: "Pokemon", suggestions: _viewModel.pokemonResourceService.pokemonMappings, controller: pokemonFilters.pokemonNameController),
+        pokemonNameTextInput(controller: pokemonFilters.pokemonNameController),
         autoCompleteMapTextInput(labelText: "Item", suggestions: _viewModel.pokemonResourceService.itemMappings, controller: pokemonFilters.itemController),
         autoCompleteMapTextInput(labelText: "Ability", suggestions: _viewModel.pokemonResourceService.abilities, controller: pokemonFilters.abilityController),
         autoCompleteStringTextInput(labelText: "Tera Type", suggestions: _viewModel.pokemonResourceService.teraTypes, controller: pokemonFilters.teraTypeController),
@@ -254,7 +297,8 @@ class ReplayFilters {
   final TextEditingController minEloController = TextEditingController();
   final TextEditingController maxEloController = TextEditingController();
 
-  final List<PokemonFilters> pokemons = List.generate(6, (_) => PokemonFilters());
+  final List<PokemonFilters> opposingTeamPokemons = List.generate(6, (_) => PokemonFilters());
+  final List<PokemonSelectionFilter> selectionFilters = List.generate(4, (_) => PokemonSelectionFilter());
 
   ReplayPredicate? getPredicate() {
     List<ReplayPredicate> predicates = [];
@@ -267,8 +311,14 @@ class ReplayFilters {
       final minElo = int.tryParse(maxEloController.text.trim()) ?? 0;
       predicates.add((replay) => replay.opposingPlayer.beforeElo != null && replay.opposingPlayer.beforeElo! <= minElo);
     }
-    for (PokemonFilters pokemonFilters in pokemons) {
+    for (PokemonFilters pokemonFilters in opposingTeamPokemons) {
       ReplayPredicate? pokemonPredicate = pokemonFilters.getPredicate();
+      if (pokemonPredicate != null) {
+        predicates.add(pokemonPredicate);
+      }
+    }
+    for (PokemonSelectionFilter selectionFilter in selectionFilters) {
+      ReplayPredicate? pokemonPredicate = selectionFilter.getPredicate();
       if (pokemonPredicate != null) {
         predicates.add(pokemonPredicate);
       }
@@ -280,16 +330,22 @@ class ReplayFilters {
   void clear() {
     minEloController.clear();
     maxEloController.clear();
-    for (PokemonFilters pokemonFilters in pokemons) {
+    for (PokemonFilters pokemonFilters in opposingTeamPokemons) {
       pokemonFilters.clear();
+    }
+    for (PokemonSelectionFilter selectionFilter in selectionFilters) {
+      selectionFilter.clear();
     }
   }
 
   void dispose() {
     minEloController.dispose();
     maxEloController.dispose();
-    for (PokemonFilters pokemonFilters in pokemons) {
+    for (PokemonFilters pokemonFilters in opposingTeamPokemons) {
       pokemonFilters.dispose();
+    }
+    for (PokemonSelectionFilter filter in selectionFilters) {
+      filter.dispose();
     }
   }
 }
@@ -347,4 +403,29 @@ class PokemonFilters {
       moveController.dispose();
     }
   }
+}
+
+class PokemonSelectionFilter {
+  final pokemonNameController = TextEditingController();
+  final ValueNotifier<bool> asLead = ValueNotifier(false);
+
+  void dispose() => pokemonNameController.dispose();
+
+  ReplayPredicate? getPredicate() {
+    final String pokemon = pokemonNameController.text.trim();
+    if (pokemonNameController.text.trim().isEmpty) {
+      return null;
+    }
+    if (asLead.value) {
+      return (replay) => replay.otherPlayer.leads.any((pokemonName) => Pokemon.nameMatch(pokemon, pokemonName));
+    } else {
+      return (replay) => replay.otherPlayer.selection.any((pokemonName) => Pokemon.nameMatch(pokemon, pokemonName));
+    }
+  }
+
+  void clear() {
+    pokemonNameController.clear();
+    asLead.value = false;
+  }
+
 }
