@@ -118,6 +118,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
   }
 
   Widget yourSelectionWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
+
     return AutoGridView(
       columnsCount: dimens.pokemonFiltersColumnsCount,
       verticalCellSpacing: 8.0,
@@ -125,8 +126,8 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
       rowCrossAxisAlignment: CrossAxisAlignment.start,
       children:  List.generate(4, (index) {
         final PokemonSelectionFilter filter = _filters.selectionFilters[index];
-        return Expanded(child: Padding(padding: EdgeInsets.symmetric(horizontal: dimens.pokemonFiltersHorizontalSpacing),
-          child: selectionFilterWidget(context, localization, dimens, theme, filter, leadOption: index < 2),));
+        return Padding(padding: EdgeInsets.symmetric(horizontal: dimens.pokemonFiltersHorizontalSpacing),
+          child: selectionFilterWidget(context, localization, dimens, theme, filter, leadOption: index < 2),);
       }),  // Explicitly specify a list of widgets
     );
   }
@@ -139,7 +140,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
           pokemonNameTextInput(controller: filter.pokemonNameController),
           ValueListenableBuilder(valueListenable: filter.asLead,
               builder: (context, asLead, _) => CheckboxListTile(
-                title: Text("As lead"),
+                title: Text("as lead", textAlign: TextAlign.center,),
                 value: asLead,
                 onChanged: (newValue) {
                   filter.asLead.value = newValue ?? false;
