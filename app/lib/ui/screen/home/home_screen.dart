@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:file_picker/file_picker.dart';
 
 import '../../core/dialogs.dart';
@@ -71,14 +69,12 @@ abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
 
   void _importTeam() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(dialogTitle: "Import team", type: FileType.custom, allowedExtensions: ['json']);
-    if (result == null) {
+    if (result == null || result.files.isEmpty) {
       return;
     }
-    final bytes = result.files.first.bytes;
-    if (bytes == null) {
-      return;
-    }
-    viewModel.importSave(utf8.decode(bytes));
+    final file = result.files.first;
+    final text = await file.xFile.readAsString();
+    viewModel.importSave(text);
   }
 
   Widget _aboutButton() {

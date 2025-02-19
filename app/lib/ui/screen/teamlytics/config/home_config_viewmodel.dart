@@ -91,6 +91,7 @@ class HomeConfigViewModel {
       );
       return;
     }
+    // only works for web. In android/ios it saves the file in an application-specific directory instead of the Downloads folder
     await FileSaver.instance.saveFile(name: saveName, ext: "json", bytes: utf8.encode(saveJson));
   }
 }

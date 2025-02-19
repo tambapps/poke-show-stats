@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import '../../../core/widgets.dart';
 import '../../../core/widgets/pokepaste_widget.dart';
 import 'home_config_viewmodel.dart';
@@ -67,9 +69,12 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
         // pokepaste
         ...pokepaste(localization, dimens, theme, padding),
         const SizedBox(height: 32.0,),
-        Padding(padding: EdgeInsets.only(left: 16.0),
-          child: Align(alignment: Alignment.topLeft, child: OutlinedButton(onPressed: () => viewModel.exportSave(), child: Text("export team")),),),
-        const SizedBox(height: 32.0,),
+        if (kIsWeb) // only adding it for web because it doesn't work as expected for Android/iOs
+        ...[
+          Padding(padding: EdgeInsets.only(left: 16.0),
+            child: Align(alignment: Alignment.topLeft, child: OutlinedButton(onPressed: () => viewModel.exportSave(), child: Text("export team")),),),
+          const SizedBox(height: 32.0,),
+        ]
       ],
     );
   }
