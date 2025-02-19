@@ -81,7 +81,7 @@ abstract class _AbstractUsageStatsState extends AbstractState<UsageStatsComponen
   }
 
   Widget _usageCardRow(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, String pokemon, String text, int? winRate, bool displayTera) {
-    final teraType = widget.pokepaste?.pokemons.where((p) => Pokemon.nameMatch(p.name, pokemon)).firstOrNull?.teraType;
+    final teraType = widget.pokepaste.pokemons.where((p) => Pokemon.nameMatch(p.name, pokemon)).firstOrNull?.teraType;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [

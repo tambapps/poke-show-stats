@@ -29,7 +29,6 @@ class MobileSaveStorage implements SaveStorage {
   @override
   Future<String?> loadSaveJson(String saveName) async {
     try {
-      final directory = await _getSavesDirectory();
       final file = await _getSaveFile(saveName);
       if (!await file.exists()) {
         return null; // Return null if the file doesn't exist

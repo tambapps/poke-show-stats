@@ -127,14 +127,3 @@ class TeamlyticsViewModel {
   void storeSave() async => await saveService.storeSave(Teamlytic(saveName: saveName, sdNames: sdNames, replays: replays, pokepaste: pokepaste, lastUpdatedAt: currentTimeMillis()));
 
 }
-
-abstract class TeamlyticsTabViewModel {
-  // TODO remove this
-  final TeamlyticsViewModel homeViewModel;
-  PokemonResourceService get pokemonResourceService => homeViewModel.pokemonResourceService;
-
-  TeamlyticsTabViewModel({required this.homeViewModel}) {
-    //homeViewModel.teamlyticChangeNotifier.addListener(onTeamlyticsChanged);
-  }
-
-}

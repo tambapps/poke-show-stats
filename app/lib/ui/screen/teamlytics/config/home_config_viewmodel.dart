@@ -27,7 +27,7 @@ class HomeConfigViewModel {
     Pokepaste pokepaste;
     try {
       pokepaste = pokepasteParser.parse(input);
-    } on PokepasteParsingException catch(e) {
+    } on PokepasteParsingException {
       errorMessage('This is not a valid pokepaste');
       return;
     }

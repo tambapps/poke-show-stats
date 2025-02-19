@@ -1,5 +1,4 @@
 import 'package:poke_showstats/data/models/replay.dart';
-import 'package:pokepaste_parser/pokepaste_parser.dart';
 
 import '../../../core/widgets.dart';
 import '../../../core/widgets/tile_card.dart';

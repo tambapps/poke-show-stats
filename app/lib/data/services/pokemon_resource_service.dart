@@ -5,7 +5,7 @@ import 'package:pokemon_core/pokemon_core.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:cached_network_image_platform_interface/cached_network_image_platform_interface.dart';
+//import 'package:cached_network_image_platform_interface/cached_network_image_platform_interface.dart';
 import 'package:flutter/services.dart';
 import 'package:yaml/yaml.dart';
 import '../../ui/core/themes/dimens.dart';
@@ -134,7 +134,7 @@ class PokemonResourceService extends ChangeNotifier {
     return Uri.parse(uri);
   }
 
-  dynamic? getPokemonMove(String move) {
+  dynamic getPokemonMove(String move) {
     return _pokemonMoves[Pokemon.normalize(move)];
   }
 

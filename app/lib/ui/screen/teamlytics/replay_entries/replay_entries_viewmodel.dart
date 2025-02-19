@@ -17,6 +17,7 @@ class ReplayEntriesViewModel {
     required this.homeViewModel});
 
   PokemonResourceService get pokemonResourceService => homeViewModel.pokemonResourceService;
+  // TODO remove this, pass to widget
   List<Replay> get replays => homeViewModel.replays;
   List<String> get sdNames => homeViewModel.sdNames;
 
@@ -57,9 +58,9 @@ class ReplayEntriesViewModel {
     final SdReplayData replayData;
     try {
       replayData = await _fetchReplayData(uri);
-    } on dynamic catch (e) {
+    } on Object catch (e) {
       developer.log("Error while fetching replay $uri");
-      _errorToast(e.message);
+      _errorToast(e is Error ? e.toString() : 'Unknown error');
       return false;
     }
     homeViewModel.addReplay(uri, replayData);

@@ -10,9 +10,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../ui/screen/home/home_screen.dart';
-import '../ui/screen/home/home_viewmodel.dart';
 import './routes.dart';
-import '../ui/screen/teamlytics/teamlytics_viewmodel.dart';
 import '../ui/core/themes/dimens.dart';
 import '../ui/screen/teamlytics/teamlytics_screen.dart';
 

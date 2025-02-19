@@ -60,17 +60,17 @@ List<SingleChildWidget> teamlyticsProviders(Teamlytic teamlytic) {
       dispose: (_, viewModel) => viewModel.dispose(),
     ),
     ProxyProvider<TeamlyticsViewModel, GameByGameViewModel> (
-      update: (context, teamlyticsViewModel, _) => GameByGameViewModel(homeViewModel: teamlyticsViewModel),
+      update: (context, teamlyticsViewModel, _) => GameByGameViewModel(teamlyticsViewModel: teamlyticsViewModel),
       dispose: (_, viewModel) => viewModel.dispose(),
     ),
-    ProxyProvider<TeamlyticsViewModel, MoveUsageViewModel> (
-      update: (context, teamlyticsViewModel, _) => MoveUsageViewModel(homeViewModel: teamlyticsViewModel),
+    Provider(
+      create: (context) => MoveUsageViewModel(),
     ),
-    ProxyProvider<TeamlyticsViewModel, LeadStatsViewModel> (
-      update: (context, teamlyticsViewModel, _) => LeadStatsViewModel(homeViewModel: teamlyticsViewModel),
+    Provider (
+      create: (context) => LeadStatsViewModel(pokemonResourceService: context.read()),
     ),
-    ProxyProvider<TeamlyticsViewModel, UsageStatsViewModel> (
-      update: (context, teamlyticsViewModel, _) => UsageStatsViewModel(homeViewModel: teamlyticsViewModel),
+    Provider(
+      create: (context) => UsageStatsViewModel(pokemonResourceService: context.read()),
     ),
   ];
 }

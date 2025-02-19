@@ -2,11 +2,13 @@ import 'package:pokemon_core/pokemon_core.dart';
 import 'package:sd_replay_parser/sd_replay_parser.dart';
 
 import '../../../../data/models/replay.dart';
-import '../teamlytics_viewmodel.dart';
+import '../../../../data/services/pokemon_resource_service.dart';
 
-class LeadStatsViewModel extends TeamlyticsTabViewModel {
+class LeadStatsViewModel {
 
-  LeadStatsViewModel({required super.homeViewModel});
+  final PokemonResourceService pokemonResourceService;
+
+  LeadStatsViewModel({required this.pokemonResourceService});
 
 }
 

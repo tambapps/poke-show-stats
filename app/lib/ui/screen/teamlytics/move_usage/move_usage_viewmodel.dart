@@ -1,12 +1,10 @@
 import 'package:pokemon_core/pokemon_core.dart';
 
 import '../../../../data/models/replay.dart';
-import 'package:flutter/material.dart';
-import '../teamlytics_viewmodel.dart';
 
-class MoveUsageViewModel extends TeamlyticsTabViewModel {
+class MoveUsageViewModel {
 
-  MoveUsageViewModel({required super.homeViewModel});
+  MoveUsageViewModel();
 
 }
 

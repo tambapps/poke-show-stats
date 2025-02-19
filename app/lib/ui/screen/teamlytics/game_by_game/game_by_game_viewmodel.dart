@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:poke_showstats/data/services/pokemon_resource_service.dart';
 
 import '../../../../data/models/replay.dart';
 import '../teamlytics_viewmodel.dart';
 
-class GameByGameViewModel extends TeamlyticsTabViewModel {
+class GameByGameViewModel  {
 
   final Map<Replay, NoteEditingContext> _replayNoteEditingContextMap = {};
+  final TeamlyticsViewModel _teamlyticsViewModel;
+  PokemonResourceService get pokemonResourceService => _teamlyticsViewModel.pokemonResourceService;
 
-  GameByGameViewModel({required super.homeViewModel});
+  GameByGameViewModel({required TeamlyticsViewModel teamlyticsViewModel}) : _teamlyticsViewModel = teamlyticsViewModel;
+
 
   NoteEditingContext getEditingContext(Replay replay) => _replayNoteEditingContextMap.putIfAbsent(replay, () => NoteEditingContext());
 
   void saveNotes(Replay replay, NoteEditingContext context) {
     replay.notes = context.controller?.text;
-    homeViewModel.storeSave();
+    _teamlyticsViewModel.storeSave();
     context.view();
   }
 

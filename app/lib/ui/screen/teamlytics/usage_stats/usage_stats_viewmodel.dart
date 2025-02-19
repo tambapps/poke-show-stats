@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-
 import '../../../../data/models/replay.dart';
-import '../teamlytics_viewmodel.dart';
+import '../../../../data/services/pokemon_resource_service.dart';
 
-class UsageStatsViewModel extends TeamlyticsTabViewModel {
+class UsageStatsViewModel {
 
-  UsageStatsViewModel({required super.homeViewModel});
+  final PokemonResourceService pokemonResourceService;
+
+  UsageStatsViewModel({required this.pokemonResourceService});
 
 }
 
