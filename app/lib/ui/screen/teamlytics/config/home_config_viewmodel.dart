@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+import 'package:file_saver/file_saver.dart';
+import 'package:poke_showstats/data/services/save_service.dart';
+
 import '../../../../data/services/pokemon_resource_service.dart';
 import '../../../core/localization/applocalization.dart';
 import 'package:flutter/material.dart';
@@ -8,16 +13,17 @@ import '../teamlytics_viewmodel.dart';
 
 class HomeConfigViewModel {
 
-  HomeConfigViewModel({required this.homeViewModel, required this.pokepasteParser});
+  HomeConfigViewModel({required this.teamlyticsViewmodel, required this.pokepasteParser, required this.saveService});
 
   // home view model properties
-  List<String> get sdNames => homeViewModel.sdNames;
-  Pokepaste? get pokepaste => homeViewModel.pokepaste;
-  PokemonResourceService get pokemonResourceService => homeViewModel.pokemonResourceService;
-  String get saveName => homeViewModel.saveName;
+  List<String> get sdNames => teamlyticsViewmodel.sdNames;
+  Pokepaste? get pokepaste => teamlyticsViewmodel.pokepaste;
+  PokemonResourceService get pokemonResourceService => teamlyticsViewmodel.pokemonResourceService;
+  String get saveName => teamlyticsViewmodel.saveName;
 
-  final TeamlyticsViewModel homeViewModel;
+  final TeamlyticsViewModel teamlyticsViewmodel;
   final PokepasteParser pokepasteParser;
+  final SaveService saveService;
 
   ValueNotifier<bool> pokepasteLoadingNotifier = ValueNotifier(false);
 
@@ -34,7 +40,7 @@ class HomeConfigViewModel {
     if (pokepaste.pokemons.isEmpty) {
       errorMessage('Pokepaste does not have any pokemon');
     }
-    homeViewModel.pokepaste = pokepaste;
+    teamlyticsViewmodel.pokepaste = pokepaste;
     pokepasteLoadingNotifier.value = false;
   }
 
@@ -58,16 +64,33 @@ class HomeConfigViewModel {
         localization: localization,
         validator: (text) => text.trim().isNotEmpty && text.length <= 18 ? null :  "Showdown name is not valid",
         onSuccess: (sdName) {
-          homeViewModel.addSdName(sdName);
+          teamlyticsViewmodel.addSdName(sdName);
           return true;
         }
     );
   }
   void removePokepaste() {
-    homeViewModel.pokepaste = null;
+    teamlyticsViewmodel.pokepaste = null;
   }
 
-  void removeSdName(String sdName) => homeViewModel.removeSdName(sdName);
+  void removeSdName(String sdName) => teamlyticsViewmodel.removeSdName(sdName);
 
-  void addSdName(String sdName) => homeViewModel.addSdName(sdName);
+  void addSdName(String sdName) => teamlyticsViewmodel.addSdName(sdName);
+
+  void exportSave() async {
+    String? saveJson = await saveService.loadSaveJson(saveName);
+    if (saveJson == null) {
+      Fluttertoast.showToast(
+        msg: "Couldn't export save",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      return;
+    }
+    await FileSaver.instance.saveFile(name: saveName, ext: "json", bytes: utf8.encode(saveJson));
+  }
 }

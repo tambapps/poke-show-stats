@@ -63,9 +63,13 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
                 ],);
               }
           ),),
-        SizedBox(height: 32,),
+        const SizedBox(height: 32.0,),
         // pokepaste
-        ...pokepaste(localization, dimens, theme, padding)
+        ...pokepaste(localization, dimens, theme, padding),
+        const SizedBox(height: 32.0,),
+        Padding(padding: EdgeInsets.only(left: 16.0),
+          child: Align(alignment: Alignment.topLeft, child: OutlinedButton(onPressed: () => viewModel.exportSave(), child: Text("export team")),),),
+        const SizedBox(height: 32.0,),
       ],
     );
   }

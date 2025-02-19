@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:file_picker/file_picker.dart';
+
 import '../../core/dialogs.dart';
 
 import '../../../data/models/teamlytic.dart';
@@ -46,11 +50,7 @@ abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
         Padding(padding: EdgeInsets.only(left: 16.0, top: 32.0, bottom: 16.0), child: Align(alignment: Alignment.topLeft,
           child: Text("Teams", style: theme.textTheme.titleMedium,),),),
         Padding(padding: EdgeInsets.only(left: 16.0, bottom: 16.0), child: Align(alignment: Alignment.topLeft,
-          child: Row(children: [
-            OutlinedButton(onPressed: () => _createTeamDialog(context, localization), child: Text("new team")),
-            const SizedBox(width: 32.0,),
-            OutlinedButton(onPressed: () => _sampleTeamDialog(context, localization), child: Text("sample team"))
-          ],),),),
+          child: newTeamButtons(context, localization, dimens, theme),),),
         Expanded(child: ValueListenableBuilder(
           valueListenable: viewModel.loading,
           builder: (context, loading, child) {
@@ -65,6 +65,20 @@ abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
         )),
         Align(alignment: Alignment.bottomRight, child: Padding(padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0), child: _aboutButton(),),)
       ],);
+  }
+
+  Widget newTeamButtons(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
+
+  void _importTeam() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(dialogTitle: "Import team", type: FileType.custom, allowedExtensions: ['json']);
+    if (result == null) {
+      return;
+    }
+    final bytes = result.files.first.bytes;
+    if (bytes == null) {
+      return;
+    }
+    viewModel.importSave(utf8.decode(bytes));
   }
 
   Widget _aboutButton() {
@@ -195,9 +209,32 @@ abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
 }
 
 class _MobileHomeState extends _AbstractHomeState {
-
+  @override
+  Widget newTeamButtons(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
+    return Column(children: [
+      Row(children: [
+        OutlinedButton(onPressed: () => _createTeamDialog(context, localization), child: Text("new team")),
+        const SizedBox(width: 32.0,),
+        OutlinedButton(onPressed: () => _sampleTeamDialog(context, localization), child: Text("sample team"))
+      ],),
+      const SizedBox(height: 16.0,),
+      Row(children: [
+        OutlinedButton(onPressed: () => _importTeam(), child: Text("import team")),
+      ],)
+    ],);
+  }
 }
 
 class _DesktopHomeState extends _AbstractHomeState {
 
+  @override
+  Widget newTeamButtons(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
+    return Row(children: [
+      OutlinedButton(onPressed: () => _createTeamDialog(context, localization), child: Text("new team")),
+      const SizedBox(width: 32.0,),
+      OutlinedButton(onPressed: () => _sampleTeamDialog(context, localization), child: Text("sample team")),
+      const SizedBox(width: 32.0,),
+      OutlinedButton(onPressed: () => _importTeam(), child: Text("import team"))
+    ],);
+  }
 }

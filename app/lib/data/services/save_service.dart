@@ -151,11 +151,15 @@ abstract class SaveService {
 
   Future<Teamlytic> loadSave(String saveName);
 
+  Future<String?> loadSaveJson(String saveName);
+
   Future<Teamlytic> loadSample(String sampleName);
 
   Future<void> storeSave(Teamlytic save);
 
   Future<void> deleteSave(String saveName);
+
+  Future<Teamlytic> importSave(String saveJson);
 }
 
 class DummySaveService implements SaveService {
@@ -178,8 +182,18 @@ class DummySaveService implements SaveService {
   }
 
   @override
+  Future<Teamlytic> importSave(String saveJson) async {
+    return Teamlytic(saveName: "dummy", sdNames: [], replays: [], pokepaste: null,
+      lastUpdatedAt: currentTimeMillis()
+    );
+  }
+
+  @override
   Future<void> storeSave(Teamlytic save) async {
   }
+
+  @override
+  Future<String?> loadSaveJson(String saveName) async => null;
 
   @override
   Future<void> deleteSave(String saveName) async {
@@ -214,10 +228,32 @@ class SaveServiceImpl implements SaveService {
   }
 
   @override
+  Future<Teamlytic> importSave(String saveJson) async {
+    final saves = (await listSaves()).map((save) => save.saveName).toList();
+    Map<dynamic, dynamic> map = jsonDecode(saveJson);
+    String saveName = map['saveName']?.toString() ?? "Imported Team";
+    if (saves.any((s) => s == saveName)) {
+      int i = 1;
+      String newSaveName;
+      do {
+        newSaveName = "$saveName $i";
+        i++;
+      } while (saves.any((s) => s == newSaveName));
+      saveName = newSaveName;
+    }
+    Teamlytic teamlytic = await _doLoadFromMap(saveName, map);
+    storeSave(teamlytic);
+    return teamlytic;
+  }
+
+  @override
   Future<Teamlytic> loadSave(String saveName) async {
     String? json = await _storage.loadSaveJson(saveName);
     return _doLoad(saveName, json);
   }
+
+  @override
+  Future<String?> loadSaveJson(String saveName) => _storage.loadSaveJson(saveName);
 
   @override
   Future<Teamlytic> loadSample(String sampleName) async {
@@ -230,6 +266,10 @@ class SaveServiceImpl implements SaveService {
       return _emptySave(saveName);
     }
     Map<dynamic, dynamic> map = jsonDecode(json);
+    return _doLoadFromMap(saveName, map);
+  }
+
+  Future<Teamlytic> _doLoadFromMap(String saveName, Map<dynamic, dynamic> map) async {
     List<bool> reloadedReplayRef = [false];
     final teamlytic = Teamlytic(
         saveName: saveName,

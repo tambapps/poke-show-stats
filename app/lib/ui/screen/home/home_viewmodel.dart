@@ -58,4 +58,9 @@ class HomeViewModel {
     await saveService.storeSave(teamlytic);
     await loadSaves();
   }
+
+  Future<void> importSave(String saveJson) async {
+    final teamlytic = await saveService.importSave(saveJson);
+    saves.value = [TeamlyticPreview.from(teamlytic), ...saves.value];
+  }
 }
