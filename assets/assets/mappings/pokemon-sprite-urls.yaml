@@ -209,7 +209,15 @@ barraskewda:
 basculegion:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/basculegion.png"
   name: "Basculegion"
-  artwork: "https://www.pokepedia.fr/images/c/cc/Paragruel-LPA.png"
+  artwork: "https://www.pokepedia.fr/images/b/bd/Paragruel_%28M%C3%A2le%29-LPA.png"
+basculegion-m:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/basculegion.png"
+  name: "Basculegion"
+  artwork: "https://www.pokepedia.fr/images/b/bd/Paragruel_%28M%C3%A2le%29-LPA.png"
+basculegion-f:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/basculegion-female.png"
+  name: "Basculegion"
+  artwork: "https://www.pokepedia.fr/images/2/23/Paragruel_%28Femelle%29-LPA.png"
 basculin:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/basculin.png"
   name: "Basculin"
@@ -2191,6 +2199,10 @@ masquerain:
   name: "Masquerain"
   artwork: "https://www.pokepedia.fr/images/thumb/a/a9/Maskadra-RS.png/792px-Maskadra-RS.png"
 maushold:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/maushold-family3.png"
+  name: "Maushold"
+  artwork: "https://www.pokepedia.fr/images/6/63/Famignol_%28Famille_de_Quatre%29-EV.png"
+maushold-four:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/maushold.png"
   name: "Maushold"
   artwork: "https://www.pokepedia.fr/images/6/63/Famignol_%28Famille_de_Quatre%29-EV.png"
@@ -2452,8 +2464,12 @@ nincada:
   artwork: "https://www.pokepedia.fr/images/f/f6/Ningale-RS.png"
 ninetales:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/ninetales.png"
-  name: "Ninetales"
+  name: "Alolan Ninetales"
   artwork: "https://www.pokepedia.fr/images/thumb/0/0c/Feunard-RFVF.png/623px-Feunard-RFVF.png"
+ninetales-alola:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/ninetales-alolan.png"
+  name: "Ninetales"
+  artwork: "https://www.pokepedia.fr/images/c/c8/Feunard_d%27Alola-SL.png"
 ninjask:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/ninjask.png"
   name: "Ninjask"
