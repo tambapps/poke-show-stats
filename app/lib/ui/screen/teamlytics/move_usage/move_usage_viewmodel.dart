@@ -24,9 +24,12 @@ class PokemonMoveUsageStats {
   static void _merge(Map<String, Map<String, int>> resultMap, Map<String, Map<String, int>> map) {
     map.forEach((String pokemonName, Map<String, int> pokemonMoves) {
       resultMap.update(Pokemon.normalizeToBase(pokemonName), (resultPokemonMoves) {
-        pokemonMoves.forEach((moveName, count) =>
+        pokemonMoves.forEach((moveName, count) {
+          if (Pokemon.normalize(moveName) != 'struggle') {
             resultPokemonMoves.update(moveName, (resultMoveCount) => resultMoveCount + count,
-                ifAbsent: () => count));
+                ifAbsent: () => count);
+          }
+        });
         return resultPokemonMoves;
       }, ifAbsent: () => {...pokemonMoves});
     });
