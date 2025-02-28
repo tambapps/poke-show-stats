@@ -12,6 +12,7 @@ import '../../../data/models/replay.dart';
 import 'controlled_autocomplete.dart';
 
 typedef ReplayPredicate = bool Function(Replay);
+typedef PokemonPredicate = bool Function(Pokemon);
 
 class ReplayFiltersWidget extends StatefulWidget {
   final ReplayFiltersViewModel viewModel;
@@ -359,30 +360,39 @@ class PokemonFilters {
   final moveControllers = List.generate(4, (_) => TextEditingController());
 
   ReplayPredicate? getPredicate() {
-    List<ReplayPredicate> predicates = [];
-    if (pokemonNameController.text.trim().isNotEmpty) {
-      final pokemon = Pokemon.normalize(pokemonNameController.text.trim());
-      predicates.add((replay) => replay.opposingPlayer.team.any((pokemonName) => Pokemon.nameMatch(pokemon, pokemonName)));
-    }
+    List<PokemonPredicate> predicates = [];
     if (itemController.text.trim().isNotEmpty) {
       final item = Pokemon.normalize(itemController.text.trim());
-      predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => item == Pokemon.normalizeNullable(pokemon.item)));
+      predicates.add((pokemon) => item == Pokemon.normalizeNullable(pokemon.item));
     }
     if (abilityController.text.trim().isNotEmpty) {
       final ability = Pokemon.normalize(abilityController.text.trim());
-      predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => ability == Pokemon.normalize(pokemon.ability)));
+      predicates.add((pokemon) => ability == Pokemon.normalize(pokemon.ability));
     }
     if (teraTypeController.text.trim().isNotEmpty) {
       final teraType = Pokemon.normalize(teraTypeController.text.trim());
-      predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => teraType == Pokemon.normalize(pokemon.teraType)));
+      predicates.add((pokemon) => teraType == Pokemon.normalize(pokemon.teraType));
     }
     for (TextEditingController moveController in moveControllers) {
       if (moveController.text.trim().isNotEmpty) {
         final move = Pokemon.normalize(moveController.text.trim());
-        predicates.add((replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => pokemon.moves.any((pokemonMove) => move == Pokemon.normalize(pokemonMove))));
+        predicates.add((pokemon) => pokemon.moves.any((pokemonMove) => move == Pokemon.normalize(pokemonMove)));
       }
     }
-    return predicates.isNotEmpty ? (replay) => predicates.every((predicate) => predicate(replay)) : null;
+
+    // doing it on last because we will check if other filters were specified
+    if (pokemonNameController.text.trim().isNotEmpty) {
+      final pokemonName = Pokemon.normalize(pokemonNameController.text.trim());
+      if (predicates.isEmpty) {
+        // returning here because some games might not have OTS and we just want a match on pokemon name which can happen on opposing player team
+        return (replay) => replay.opposingPlayer.team.any((pName) => Pokemon.nameMatch(pokemonName, pName));
+      }
+      predicates.add((pokemon) => Pokemon.nameMatch(pokemon.name, pokemonName));
+    }
+
+    return predicates.isNotEmpty ?
+        (replay) => replay.opposingPlayer.pokepaste != null && replay.opposingPlayer.pokepaste!.pokemons.any((pokemon) => predicates.every((predicate) => predicate(pokemon)))
+        : null;
   }
 
   void clear() {
