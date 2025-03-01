@@ -18,6 +18,7 @@ class TeamlyticsViewModel {
     sdNamesNotifier.value = teamlytic.sdNames;
     pokepasteNotifier.value = teamlytic.pokepaste;
     replaysNotifier.value = teamlytic.replays;
+    matchUpsNotifiers.value = teamlytic.matchUps;
     filteredReplaysNotifier.value = replaysNotifier.value.toList();
     replaysNotifier.addListener(() {
       filteredReplaysNotifier.value = replayPredicate != null ? replays.where(replayPredicate!).toList() : replays.toList();
@@ -74,6 +75,16 @@ class TeamlyticsViewModel {
     storeSave();
   }
 
+  void addMatchUp(MatchUp matchUp) {
+    matchUpsNotifiers.value = [...matchUps, matchUp];
+    storeSave();
+  }
+
+  void removeMatchUp(MatchUp matchUp) {
+    matchUpsNotifiers.value = [...matchUps]..remove(matchUp);
+    storeSave();
+  }
+
   GameOutput _computeGameOutput(SdReplayData replayData) {
     if (sdNames.isEmpty) {
       return GameOutput.UNKNOWN;
@@ -127,5 +138,6 @@ class TeamlyticsViewModel {
   }
 
   void storeSave() async => await saveService.storeSave(Teamlytic(saveName: saveName, sdNames: sdNames, replays: replays, matchUps: matchUps, pokepaste: pokepaste, lastUpdatedAt: currentTimeMillis()));
+
 
 }

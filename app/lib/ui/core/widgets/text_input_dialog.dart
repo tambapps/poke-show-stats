@@ -14,7 +14,9 @@ class TextInputDialog extends StatefulWidget {
   final String? initialValue;
   final bool Function(String) onSuccess;
   final Validator? validator;
-  const TextInputDialog({super.key, this.hint, required this.onSuccess, required this.validator, required this.title, this.confirmButtonText, this.initialValue});
+  final int? maxLines;
+  const TextInputDialog({super.key, this.hint, required this.onSuccess,
+    required this.validator, required this.title, this.confirmButtonText, this.initialValue, this.maxLines});
 
   @override
   State<StatefulWidget> createState() => _TextInputDialogState();
@@ -32,6 +34,7 @@ class _TextInputDialogState extends State<TextInputDialog> {
     return AlertDialog(
       title: Text(widget.title),
       content: TextField(
+        maxLines: widget.maxLines,
         controller: _textFieldController,
         decoration: InputDecoration(hintText: widget.hint, errorText: _errorText, errorStyle: TextStyle(color: Colors.red)),
         onChanged: (text) => setState(() => _errorText = null),

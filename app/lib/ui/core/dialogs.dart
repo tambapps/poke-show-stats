@@ -2,8 +2,11 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:poke_showstats/data/services/pokemon_resource_service.dart';
+import 'package:pokepaste_parser/pokepaste_parser.dart';
 
 import 'localization/applocalization.dart';
+import 'widgets/pokepaste_widget.dart';
 import 'widgets/text_input_dialog.dart';
 
 // a problem with that is that we can't display validation error message
@@ -16,7 +19,8 @@ Future<void> showTextInputDialog(
       required bool Function(String) onSuccess,
       String? Function(String)? validator,
       String? confirmButtonText,
-      String? initialValue
+      String? initialValue,
+      int? maxLines = 1
     }) {
   return showDialog(
       context: context,
@@ -27,7 +31,23 @@ Future<void> showTextInputDialog(
             onSuccess: onSuccess,
             validator: validator,
             confirmButtonText: confirmButtonText,
-            initialValue: initialValue
+            initialValue: initialValue,
+            maxLines: maxLines
+        );
+      });
+}
+
+
+void showTeamSheetDialog({required BuildContext context, required String title,
+  required Pokepaste pokepaste, required PokemonResourceService pokemonResourceService}) {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(title),
+          content: SingleChildScrollView(child: PokepasteWidget(pokepaste: pokepaste, pokemonResourceService: pokemonResourceService),),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(context), child: Text("OK",))],
         );
       });
 }

@@ -5,10 +5,9 @@ part 'matchup.g.dart';
 @JsonSerializable()
 class MatchUp {
 
-  final String? name;
-  final Pokepaste? pokepaste;
-  // TODO display as markdown?
-  final String? notes;
+  String? name;
+  Pokepaste? pokepaste;
+  String? notes;
 
   MatchUp({required this.name, required this.pokepaste, required this.notes});
 

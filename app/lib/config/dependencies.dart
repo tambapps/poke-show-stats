@@ -73,8 +73,9 @@ List<SingleChildWidget> teamlyticsProviders(Teamlytic teamlytic) {
     Provider(
       create: (context) => UsageStatsViewModel(pokemonResourceService: context.read()),
     ),
-    Provider(
-      create: (context) => MatchUpNotesViewmodel(pokemonResourceService: context.read()),
+    ProxyProvider<TeamlyticsViewModel, MatchUpNotesViewmodel> (
+      update: (context, teamlyticsViewModel, _) => MatchUpNotesViewmodel(pokemonResourceService: context.read(), teamlyticsViewModel: teamlyticsViewModel, pokepasteParser: context.read()),
+      dispose: (context, viewModel) => viewModel.dispose(),
     ),
   ];
 }

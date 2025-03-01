@@ -1,4 +1,5 @@
 import '../../../../data/models/replay.dart';
+import '../../../core/dialogs.dart';
 import '../../../core/widgets/pokepaste_widget.dart';
 import '../../../core/widgets/replay_filters.dart';
 import 'package:flutter/material.dart';
@@ -224,24 +225,14 @@ class _MobileGameByGameComponentState extends _AbstractGameByGameComponentState 
       ),
       const SizedBox(height: 4,),
       if (replay.data.isOts)
-        ...[OutlinedButton(onPressed: () => _openOts(replay.opposingPlayer.name, replay.opposingPlayer.pokepaste!), child: Text("OTS")), const SizedBox(height: 4.0,)],
+        ...[OutlinedButton(onPressed: () => showTeamSheetDialog(
+            context: context,
+            title: "${replay.opposingPlayer.name}'s team",
+            pokepaste: replay.opposingPlayer.pokepaste!,
+            pokemonResourceService: viewModel.pokemonResourceService), child: Text("OTS")), const SizedBox(height: 4.0,)],
       viewReplayButton(localization, replay)
     ],);
   }
-
-  void _openOts(String playerName, Pokepaste pokepaste) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("$playerName's team"),
-            content: SingleChildScrollView(child: PokepasteWidget(pokepaste: pokepaste, pokemonResourceService: viewModel.pokemonResourceService),),
-            actions: [
-              TextButton(onPressed: () => Navigator.pop(context), child: Text("OK",))],
-          );
-        });
-  }
-
 }
 
 class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState with TickerProviderStateMixin {
@@ -264,13 +255,9 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
       vsText(theme, replay),
       SizedBox(width: 8,),
       // opponent team
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: replay.opposingPlayer.team
-            .map((pokemon) =>
-        viewModel.pokemonResourceService.getPokemonSprite(pokemon))
-            .toList(),
-      ),
+    ...replay.opposingPlayer.team
+        .map((pokemon) =>
+        viewModel.pokemonResourceService.getPokemonSprite(pokemon)),
       const SizedBox(width: 16.0,),
       if (replay.data.isOts)
       ...[OutlinedButton(onPressed: () => _openOts(replay.opposingPlayer.name, replay.opposingPlayer.pokepaste!), child: Text("OTS")), const SizedBox(width: 16.0,)],
