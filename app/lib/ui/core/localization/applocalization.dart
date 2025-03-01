@@ -21,7 +21,7 @@ class AppLocalization {
     'addSdName': 'Add Pokemon Showdown name',
     'enterSdName': 'Enter name',
     'pokepaste': 'Pokepaste',
-    'pasteSomething': 'Paste something here!',
+    'pasteSomething': 'Paste the pokepaste\'s content here (not the URL)',
     'load': 'Load',
     'change': 'Change',
     'add': 'Add',
@@ -39,6 +39,7 @@ class AppLocalization {
     'opposingTeam': 'Opposing Team',
     'leadStats': 'Lead Stats',
     'usageStats': 'Usage Stats',
+    'matchUpNotes': 'Match-up Notes',
   };
 
   // If string for "label" does not exist, will show "[LABEL]"
@@ -51,6 +52,7 @@ class AppLocalization {
   String get moveUsages => _get('moveUsages');
   String get leadStats => _get('leadStats');
   String get usageStats => _get('usageStats');
+  String get matchUpNotes => _get('matchUpNotes');
   String get showdownNames => _get('sdNames');
   String get addSdName => _get('addSdName');
   String get enterSdName => _get('enterSdName');

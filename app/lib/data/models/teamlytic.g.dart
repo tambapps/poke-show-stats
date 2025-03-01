@@ -13,6 +13,9 @@ Teamlytic _$TeamlyticFromJson(Map<String, dynamic> json) => Teamlytic(
       replays: (json['replays'] as List<dynamic>)
           .map((e) => Replay.fromJson(e as Map<String, dynamic>))
           .toList(),
+      matchUps: (json['matchUps'] as List<dynamic>)
+          .map((e) => MatchUp.fromJson(e as Map<String, dynamic>))
+          .toList(),
       pokepaste: json['pokepaste'] == null
           ? null
           : Pokepaste.fromJson(json['pokepaste'] as Map<String, dynamic>),
@@ -23,6 +26,7 @@ Map<String, dynamic> _$TeamlyticToJson(Teamlytic instance) => <String, dynamic>{
       'saveName': instance.saveName,
       'sdNames': instance.sdNames,
       'replays': instance.replays,
+      'matchUps': instance.matchUps,
       'pokepaste': instance.pokepaste,
       'lastUpdatedAt': instance.lastUpdatedAt,
     };

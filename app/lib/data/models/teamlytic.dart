@@ -1,38 +1,20 @@
+import 'package:poke_showstats/data/models/matchup.dart';
+
 import './replay.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 part 'teamlytic.g.dart';
 
-abstract class ITeamlytic {
-  String get saveName;
-
-  List<String> get sdNames;
-  set sdNames(List<String> value);
-
-  List<Replay> get replays;
-  set replays(List<Replay> value);
-
-  Pokepaste? get pokepaste;
-  set pokepaste(Pokepaste? value);
-
-  int get lastUpdatedAt;
-  set lastUpdatedAt(int value);
-}
-
 @JsonSerializable()
-class Teamlytic extends ITeamlytic {
-  @override
+class Teamlytic {
   String saveName;
-  @override
   List<String> sdNames;
-  @override
   List<Replay> replays;
-  @override
+  List<MatchUp> matchUps;
   Pokepaste? pokepaste;
-  @override
   int lastUpdatedAt;
 
-  Teamlytic({required this.saveName, required this.sdNames, required this.replays, required this.pokepaste, required this.lastUpdatedAt});
+  Teamlytic({required this.saveName, required this.sdNames, required this.replays, required this.matchUps, required this.pokepaste, required this.lastUpdatedAt});
 
   factory Teamlytic.fromJson(Map<String, dynamic> json) => _$TeamlyticFromJson(json);
   Map<String, dynamic> toJson() => _$TeamlyticToJson(this);

@@ -1,3 +1,5 @@
+import 'package:poke_showstats/ui/screen/teamlytics/matchup_notes/matchup_notes_screen.dart';
+
 import '../../../data/services/pokemon_resource_service.dart';
 
 import '../../core/widgets.dart';
@@ -46,7 +48,7 @@ abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsSc
   void initState() {
     super.initState();
     // The `vsync: this` ensures the TabController is synchronized with the screen's refresh rate
-    _tabController = TabController(length: 6, vsync: this);
+    _tabController = TabController(length: 7, vsync: this);
     // need to reset it as the underline always move to first position when changing screen tab
     _tabController.addListener(() => _replayFiltersViewModel.selectedPokemonFilterIndex.value = 0);
     _filters = ReplayFilters();
@@ -92,6 +94,7 @@ abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsSc
         Tab(text: localization.moveUsages),
         Tab(text: localization.leadStats),
         Tab(text: localization.usageStats),
+        Tab(text: localization.matchUpNotes),
       ],
     );
   }
@@ -113,6 +116,9 @@ abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsSc
           filteredReplays: viewModel.filteredReplays, stats: LeadStats.fromReplays(viewModel.filteredReplays),), preventIfNoPokepaste: true),
         _tab(dimens, (filtersWidget) => UsageStatsComponent(viewModel: context.read(), filtersWidget: filtersWidget, isMobile: dimens.isMobile,
             filteredReplays: viewModel.filteredReplays, pokepaste: viewModel.pokepaste!, pokemonUsageStats: PokemonUsageStats.fromReplays(viewModel.filteredReplays),), preventIfNoPokepaste: true),
+        ValueListenableBuilder(
+            valueListenable: viewModel.matchUpsNotifiers,
+            builder: (context, matchUps, _) => MatchUpNotesComponent(viewModel: context.read(), matchUps: matchUps, isMobile: dimens.isMobile,))
       ],
     );
   }

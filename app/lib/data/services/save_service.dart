@@ -3,6 +3,7 @@ import 'dart:developer' as developer;
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:poke_showstats/data/models/matchup.dart';
 
 import '../models/replay.dart';
 import '../models/teamlytic.dart';
@@ -170,20 +171,20 @@ class DummySaveService implements SaveService {
 
   @override
   Future<Teamlytic> loadSave(String saveName) async {
-    return Teamlytic(saveName: saveName, sdNames: [], replays: [], pokepaste: null,
+    return Teamlytic(saveName: saveName, sdNames: [], replays: [], matchUps: [], pokepaste: null,
     lastUpdatedAt: currentTimeMillis());
   }
 
   @override
   Future<Teamlytic> loadSample(String sampleName) async {
-    return Teamlytic(saveName: sampleName, sdNames: [], replays: [], pokepaste: null,
+    return Teamlytic(saveName: sampleName, sdNames: [], replays: [], matchUps: [], pokepaste: null,
       lastUpdatedAt: currentTimeMillis()
     );
   }
 
   @override
   Future<Teamlytic> importSave(String saveJson) async {
-    return Teamlytic(saveName: "dummy", sdNames: [], replays: [], pokepaste: null,
+    return Teamlytic(saveName: "dummy", sdNames: [], replays: [], matchUps: [], pokepaste: null,
       lastUpdatedAt: currentTimeMillis()
     );
   }
@@ -275,6 +276,7 @@ class SaveServiceImpl implements SaveService {
         saveName: saveName,
         sdNames: _loadSdNames(map['sdNames']),
         replays: await _loadReplays(map['replays'], reloadedReplayRef),
+        matchUps: _loadMatchUps(map),
         pokepaste: _loadPokepaste(map['pokepaste']),
         lastUpdatedAt: map['lastUpdatedAt'] ?? currentTimeMillis()
     );
@@ -295,6 +297,12 @@ class SaveServiceImpl implements SaveService {
 
   List<String> _loadSdNames(List<dynamic> rawSdNames) => rawSdNames.map((sdName) => sdName.toString()).toList();
   Pokepaste? _loadPokepaste(Map<String, dynamic>? json) => json != null ? Pokepaste.fromJson(json) : null;
+
+  List<MatchUp> _loadMatchUps(Map<dynamic, dynamic> map) {
+    if (!map.containsKey('matchUps') || map['matchUps'] is! List) return [];
+    List<dynamic> rawMatchUps = map['matchUps'];
+    return rawMatchUps.map((rawMatchUp) => MatchUp.fromJson(rawMatchUp)).toList();
+  }
 
   Future<List<Replay>> _loadReplays(List<dynamic> jsonReplays, List<bool> reloadedReplayRef) async {
     List<Replay> replays = [];
@@ -336,7 +344,7 @@ class SaveServiceImpl implements SaveService {
     return replays;
   }
 
-  Teamlytic _emptySave(String saveName) => Teamlytic(saveName: saveName, sdNames: [], replays: [], pokepaste: null, lastUpdatedAt: currentTimeMillis());
+  Teamlytic _emptySave(String saveName) => Teamlytic(saveName: saveName, sdNames: [], replays: [], matchUps: [], pokepaste: null, lastUpdatedAt: currentTimeMillis());
 
   Replay _errorReplay(Uri uri) {
     final player = _errorPlayer();

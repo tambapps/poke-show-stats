@@ -1,5 +1,6 @@
 import 'dart:developer' as developer;
 
+import 'package:poke_showstats/data/models/matchup.dart';
 import 'package:poke_showstats/ui/core/utils.dart';
 
 import '../../../../data/models/teamlytic.dart';
@@ -30,10 +31,12 @@ class TeamlyticsViewModel {
   final ValueNotifier<List<String>> sdNamesNotifier = ValueNotifier([]);
   final ValueNotifier<List<Replay>> replaysNotifier = ValueNotifier([]);
   final ValueNotifier<List<Replay>> filteredReplaysNotifier = ValueNotifier([]);
+  final ValueNotifier<List<MatchUp>> matchUpsNotifiers = ValueNotifier([]);
   final ValueNotifier<Pokepaste?> pokepasteNotifier = ValueNotifier(null);
-  late ChangeNotifier teamlyticChangeNotifier = CompositeChangeNotifier([sdNamesNotifier, replaysNotifier, filteredReplaysNotifier, pokepasteNotifier]);
+  late ChangeNotifier teamlyticChangeNotifier = CompositeChangeNotifier([sdNamesNotifier, replaysNotifier, filteredReplaysNotifier, pokepasteNotifier, matchUpsNotifiers]);
 
   List<Replay> get replays => replaysNotifier.value;
+  List<MatchUp> get matchUps => matchUpsNotifiers.value;
   List<Replay> get filteredReplays => filteredReplaysNotifier.value;
   List<String> get sdNames => sdNamesNotifier.value;
   Pokepaste? get pokepaste => pokepasteNotifier.value;
@@ -123,6 +126,6 @@ class TeamlyticsViewModel {
     //teamlyticChangeNotifier.dispose();
   }
 
-  void storeSave() async => await saveService.storeSave(Teamlytic(saveName: saveName, sdNames: sdNames, replays: replays, pokepaste: pokepaste, lastUpdatedAt: currentTimeMillis()));
+  void storeSave() async => await saveService.storeSave(Teamlytic(saveName: saveName, sdNames: sdNames, replays: replays, matchUps: matchUps, pokepaste: pokepaste, lastUpdatedAt: currentTimeMillis()));
 
 }
