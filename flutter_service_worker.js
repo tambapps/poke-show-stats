@@ -56,7 +56,7 @@ const RESOURCES = {"canvaskit/skwasm.js": "ac0f73826b925320a1e9b0d3fd7da61c",
 "assets/assets/images/moves/ground.png": "c6f288424a62f0c7adf7f04e5165c197",
 "assets/assets/images/moves/fighting.png": "979595111ec29b9804a65acf5d8fd925",
 "assets/assets/images/moves/steel.png": "21b17b2f765e3ecd7197bdf29092c374",
-"assets/assets/samples/electrizer.json": "7677fab708edabf08c6264bc2c7ebb04",
+"assets/assets/samples/electrizer.json": "fa8d09951d01864c3a3fc88f49baa73f",
 "assets/assets/samples/delpHOx.json": "7eb1b9b8713661afa6c93a9fc0501263",
 "assets/assets/mappings/moves.yaml": "8d75647af60269c318f6e3908bb94bae",
 "assets/assets/mappings/pokemon-sprite-urls.yaml": "5a1bda088543e8a5049769d870d18499",
@@ -80,7 +80,7 @@ const RESOURCES = {"canvaskit/skwasm.js": "ac0f73826b925320a1e9b0d3fd7da61c",
 "icons/Icon-maskable-192.png": "ded96ec534fcdd55f4af08d529271ccf",
 "manifest.json": "6b9773aa3c77d839209523195a2097e8",
 "favicon.png": "df4f04beee348ddade0c5dfbf71539c0",
-"flutter_bootstrap.js": "732cf8c7e1921167b6bc14871a1129a7"};
+"flutter_bootstrap.js": "a8e06625eaaec55200bf8e5ef9273063"};
 // The application shell files that are downloaded before a service worker can
 // start.
 const CORE = ["main.dart.js",
