@@ -2,6 +2,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:poke_showstats/data/services/pokemon_resource_service.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 
@@ -47,7 +48,12 @@ void showTeamSheetDialog({required BuildContext context, required String title,
           title: Text(title),
           content: SingleChildScrollView(child: PokepasteWidget(pokepaste: pokepaste, pokemonResourceService: pokemonResourceService),),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(context), child: Text("OK",))],
+            TextButton(onPressed: () {
+              Clipboard.setData(ClipboardData(text: pokepaste.toString()));
+              Navigator.pop(context);
+            }, child: Text("Copy",)),
+            TextButton(onPressed: () => Navigator.pop(context), child: Text("OK",)),
+            ],
         );
       });
 }

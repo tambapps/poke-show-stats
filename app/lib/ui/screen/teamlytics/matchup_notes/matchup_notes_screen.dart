@@ -101,12 +101,11 @@ abstract class _AbstractMatchUpNotesState extends AbstractState<MatchUpNotesComp
       ],),);
   }
   Widget pokepasteButton(MatchUp matchUp, AppLocalization localization) {
-
     return OutlinedButton(onPressed: () {
-
       showTextInputDialog(context,
           title: localization.pokepaste,
           hint: localization.pasteSomething,
+          initialValue: matchUp.pokepaste?.toString(),
           maxLines: null,
           validator: (text) => viewModel.validatePokepaste(text),
           localization: localization,

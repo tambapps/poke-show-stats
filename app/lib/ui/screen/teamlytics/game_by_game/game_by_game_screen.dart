@@ -260,21 +260,12 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
         viewModel.pokemonResourceService.getPokemonSprite(pokemon)),
       const SizedBox(width: 16.0,),
       if (replay.data.isOts)
-      ...[OutlinedButton(onPressed: () => _openOts(replay.opposingPlayer.name, replay.opposingPlayer.pokepaste!), child: Text("OTS")), const SizedBox(width: 16.0,)],
+      ...[OutlinedButton(onPressed: () => showTeamSheetDialog(
+          context: context,
+          title: "${replay.opposingPlayer.name}'s team",
+          pokepaste: replay.opposingPlayer.pokepaste!,
+          pokemonResourceService: viewModel.pokemonResourceService), child: Text("OTS")), const SizedBox(width: 16.0,)],
       viewReplayButton(localization, replay)
     ],);
-  }
-
-  void _openOts(String playerName, Pokepaste pokepaste) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("$playerName's team"),
-            content: PokepasteWidget(pokepaste: pokepaste, pokemonResourceService: viewModel.pokemonResourceService),
-            actions: [
-              TextButton(onPressed: () => Navigator.pop(context), child: Text("OK",))],
-          );
-        });
   }
 }

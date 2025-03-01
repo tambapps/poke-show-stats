@@ -1,3 +1,4 @@
+import 'package:pokemon_core/pokemon_core.dart';
 import 'package:pokepaste_parser/pokepaste_parser.dart';
 import 'package:test/test.dart';
 import 'package:http/http.dart' as http;
@@ -84,6 +85,11 @@ void main() {
       ];
       for (int i = 0; i < expectedMons.length; i++) {
         expect(pokepaste.pokemons[i], expectedMons[i]);
+      }
+
+      Pokepaste fromString = parser.parse(pokepaste.toString());
+      for (int i = 0; i < pokepaste.pokemons.length; i++) {
+        expect(fromString.pokemons[i], pokepaste.pokemons[i]);
       }
     });
   });

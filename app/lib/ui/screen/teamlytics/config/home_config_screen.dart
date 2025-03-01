@@ -136,6 +136,12 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
     _pokepasteController.dispose();
     super.dispose();
   }
+
+  void _removePokepaste(Pokepaste pokepaste) {
+    _pokepasteController.text = pokepaste.toString();
+    print(pokepaste.toString());
+    viewModel.removePokepaste();
+  }
 }
 
 class _MobileHomeConfigComponentState extends _HomeConfigComponentState {
@@ -148,7 +154,7 @@ class _MobileHomeConfigComponentState extends _HomeConfigComponentState {
           title,
           SizedBox(width: 16,),
           OutlinedButton(
-            onPressed: () => viewModel.removePokepaste(),
+            onPressed: () => _removePokepaste(pokepaste),
             child: Text(localization.change,),
           )
         ],
@@ -174,7 +180,7 @@ class _DesktopHomeConfigComponentState extends _HomeConfigComponentState {
             title,
             SizedBox(width: 16,),
             OutlinedButton(
-              onPressed: () => viewModel.removePokepaste(),
+              onPressed: () => _removePokepaste(pokepaste),
               child: Text(localization.change,),
             )
           ],
