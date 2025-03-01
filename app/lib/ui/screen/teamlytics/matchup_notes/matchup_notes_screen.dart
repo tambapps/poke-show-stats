@@ -100,7 +100,7 @@ abstract class _AbstractMatchUpNotesState extends AbstractState<MatchUpNotesComp
         IconButton(onPressed: () => viewModel.deleteMatchUp(matchUp), iconSize: 32.0, icon: Icon(Icons.delete), color: Colors.red,)
       ],),);
   }
-  Widget pokepasteButton(MatchUp matchUp, AppLocalization localization) {
+  Widget changePokepasteButton(MatchUp matchUp, AppLocalization localization) {
     return OutlinedButton(onPressed: () {
       showTextInputDialog(context,
           title: localization.pokepaste,
@@ -119,21 +119,68 @@ abstract class _AbstractMatchUpNotesState extends AbstractState<MatchUpNotesComp
           });
     }, child: Text(matchUp.pokepaste != null ? "change pokepaste" : "add pokepaste"));
   }
+
+  Widget matchUpNameWidget(MatchUp matchUp, ThemeData theme) => Text(matchUp.name ?? "<no name>", style: theme.textTheme.titleLarge?.copyWith(fontSize: 32.0),);
+
+  Widget nameTextField(MatchUpEditingContext editingContext) => TextField(
+    controller: editingContext.nameController,
+    decoration: InputDecoration(
+      labelText: "Match-up name",
+      border: OutlineInputBorder(),
+    ),
+  );
+
+  Widget notesTextField(MatchUpEditingContext editingContext) => TextField(
+    maxLines: null,
+    controller: editingContext.notesController,
+    decoration: InputDecoration(
+      labelText: "Notes",
+      border: OutlineInputBorder(),
+    ),
+  );
 }
 
 class _MobileMatchUpNotesState extends _AbstractMatchUpNotesState {
   @override
   Widget matchUpWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, MatchUp matchUp) {
-    // TODO: implement matchUp
-    throw UnimplementedError();
+    return Column(children: [
+      matchUpNameWidget(matchUp, theme),
+      if (matchUp.pokepaste != null)
+        pokepastePreview(matchUp.pokepaste!),
+      const SizedBox(height: 16.0,),
+      Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+        if (matchUp.pokepaste != null)
+          teamSheetButton(context, matchUp),
+        editMatchUpButton(matchUp),
+      ],),
+      const SizedBox(height: 16.0,),
+      Text(matchUp.notes ?? "<no notes>"),
+    ],);
   }
 
   @override
   Widget editingMatchUpWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, MatchUp matchUp, MatchUpEditingContext editingContext) {
-    // TODO: implement editingMatchUpWidget
-    throw UnimplementedError();
+    const elementsPadding = SizedBox(height: 16.0,);
+    return Column(children: [
+      nameTextField(editingContext),
+      if (matchUp.pokepaste != null)
+        pokepastePreview(matchUp.pokepaste!),
+      elementsPadding,
+      changePokepasteButton(matchUp, localization),
+      elementsPadding,
+      notesTextField(editingContext),
+      elementsPadding,
+      editActionButtons(context, editingContext, matchUp)
+    ],);
   }
 
+  Widget pokepastePreview(Pokepaste pokepaste) => Row(
+    children: pokepaste.pokemons.map((pokemon) =>
+        Expanded(child: viewModel.pokemonResourceService.getPokemonSprite(pokemon.name)))
+        .toList(),
+  );
 }
 
 class _DesktopMatchUpNotesState extends _AbstractMatchUpNotesState {
@@ -144,7 +191,7 @@ class _DesktopMatchUpNotesState extends _AbstractMatchUpNotesState {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
       Row(children: [
-        Text(matchUp.name ?? "<no name>", style: theme.textTheme.titleLarge?.copyWith(fontSize: 32.0),),
+        matchUpNameWidget(matchUp, theme),
         if (matchUp.pokepaste != null)
           ...[
             ...matchUp.pokepaste!.pokemons
@@ -165,35 +212,21 @@ class _DesktopMatchUpNotesState extends _AbstractMatchUpNotesState {
   @override
   Widget editingMatchUpWidget(BuildContext context, AppLocalization localization,
       Dimens dimens, ThemeData theme, MatchUp matchUp, MatchUpEditingContext editingContext) {
-    // theme.textTheme.titleLarge?.copyWith(fontSize: 32.0)
     const elementsPadding = SizedBox(height: 32.0,);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TextField(
-          controller: editingContext.nameController,
-          decoration: InputDecoration(
-            labelText: "Match-up name",
-            border: OutlineInputBorder(),
-          ),
-        ),
+        nameTextField(editingContext),
         elementsPadding,
         Row(children: [
-          pokepasteButton(matchUp, localization),
+          changePokepasteButton(matchUp, localization),
           if (matchUp.pokepaste != null)
             ...matchUp.pokepaste!.pokemons
                 .map((pokemon) =>
                 viewModel.pokemonResourceService.getPokemonSprite(pokemon.name)),
         ],),
         elementsPadding,
-        TextField(
-          maxLines: null,
-          controller: editingContext.notesController,
-          decoration: InputDecoration(
-            labelText: "Notes",
-            border: OutlineInputBorder(),
-          ),
-        ),
+        notesTextField(editingContext),
         elementsPadding,
         editActionButtons(context, editingContext, matchUp),
       ],);
