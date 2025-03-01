@@ -6,3 +6,5 @@ to improve on using this team.
 
 
 Visit the website [here](https://tambapps.github.io/poke-show-stats/).
+
+Or download the Android app [here](https://play.google.com/store/apps/details?id=com.tambapps.pokemon.showstats).
