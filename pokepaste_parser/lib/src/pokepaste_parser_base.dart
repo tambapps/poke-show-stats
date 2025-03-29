@@ -5,6 +5,8 @@ import 'package:pokemon_core/pokemon_core.dart';
 import 'model.dart';
 
 class PokepasteParser {
+  static final RegExp _pokemonHeaderRegex = RegExp(r'(\S+)(?: \(([^()]+)\))?(?: \(([FM])\))?(?: @ (\S+))?');
+
   Pokepaste parse(String input) {
     List<Pokemon> pokemons = [];
     // need to trim the whole input because it may end with empty line(s)
@@ -14,17 +16,7 @@ class PokepasteParser {
       // need to specify moves to have a mutable list
       Pokemon pokemon = Pokemon(moves: []);
       String line = lines.removeFirst();
-      List<String> firstLineFields = line.split("@");
-      if (firstLineFields.length != 2) {
-        throw PokepasteParsingException("Invalid pokepaste");
-      }
-      String firstPart = firstLineFields.first.trim();
-      if (firstPart.contains('(')) {
-        pokemon.gender = firstPart.substring(firstPart.indexOf('(') + 1, firstPart.indexOf(')'));
-        firstPart = firstPart.substring(0, firstPart.indexOf('(')).trim();
-      }
-      pokemon.name = firstPart.replaceAll(' ', '-');
-      pokemon.item = firstLineFields.last.trim();
+      _parsePokemonHeaderLine(line, pokemon);
       while (lines.isNotEmpty && (line = lines.removeFirst()).isNotEmpty) {
         if (line.startsWith('Ability:')) {
           pokemon.ability = _extractLeft(line);
@@ -48,6 +40,48 @@ class PokepasteParser {
       throw PokepasteParsingException("No pokemon was found");
     }
     return Pokepaste(pokemons);
+  }
+
+  void _parsePokemonHeaderLine(String line, Pokemon pokemon) {
+    // first handle object and then discard it from
+    if (line.contains("@")) {
+      List<String> firstLineFields = line.split("@");
+      pokemon.item = firstLineFields.last.trim();
+      line = firstLineFields.first.trim();
+    }
+
+    int nbParenthesis = _countOccurrences(line, '(');
+    switch (nbParenthesis) {
+      case 0:
+        // no surname and no specific gender
+        pokemon.name = line.replaceAll(' ', '-');
+        break;
+      case 1:
+        // surname or gender
+        String parenthesisContent = line.substring(line.indexOf('(') + 1, line.indexOf(')')).replaceAll(' ', '-');
+        if (parenthesisContent == 'M' || parenthesisContent  == 'F') {
+          pokemon.name = line.substring(0, line.indexOf('(')).trim().replaceAll(' ', '-');
+          pokemon.gender = parenthesisContent;
+        } else {
+          pokemon.name = parenthesisContent;
+        }
+        break;
+      case 2:
+      // both surname and gender
+        pokemon.name = line.substring(line.indexOf('(') + 1, line.indexOf(')')).replaceAll(' ', '-');
+        pokemon.gender = line.substring(line.lastIndexOf('(') + 1, line.lastIndexOf(')'));
+        break;
+      default:
+        throw PokepasteParsingException("Invalid pokepaste");
+    }
+  }
+
+  int _countOccurrences(String input, String char) {
+    int count = 0;
+    for (int i = 0; i < input.length; i++) {
+      if (input[i] == char) count++;
+    }
+    return count;
   }
 
   Stats _parseStats(String line, int defaultValue) {
