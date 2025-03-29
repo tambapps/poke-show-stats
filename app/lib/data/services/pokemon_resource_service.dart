@@ -72,6 +72,9 @@ class PokemonResourceService extends ChangeNotifier {
 
   // if the guy doesn't respond just use the ones here https://www.pokepedia.fr/Cat%C3%A9gorie:Image_de_type_de_Pok%C3%A9mon_%C3%89carlate_et_Violet
   Widget getTeraTypeSprite(String type, {double? width, double? height}) {
+    if (type == 'None') {
+      return Container();
+    }
     return Tooltip(
       message: "Tera $type",
       child: Image(image: AssetImage('assets/images/tera-types/${type.toLowerCase()}.png'), width: width, height: height,),

@@ -26,6 +26,10 @@ class Pokemon {
       return s.substring(0, s.length - 6);
     } else if (s.endsWith("-incarnate")) {
       return s.substring(0, s.length - 10);
+    } else if (s.startsWith("ursaluna")) {
+      return "ursaluna";
+    } else if (s.startsWith("rotom")) {
+      return "rotom";
     }
     return s;
   }
