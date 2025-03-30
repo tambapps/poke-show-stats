@@ -18,22 +18,39 @@ class Pokemon {
   static String normalizeToBase(String input) {
     String s = normalize(input);
     // TODO handle all special forms
+    // TODO could be optimized using a tree search?
     if (s.startsWith("urshifu")) {
       return "urshifu";
     } else if (s.startsWith("ogerpon")) {
       return "ogerpon";
     } else if (s.endsWith("-galar")) {
       return s.substring(0, s.length - 6);
+    } else if (s.endsWith("-alola")) {
+      return s.substring(0, s.length - 6);
+    } else if (s.endsWith("-paldea")) {
+      // because of Tauros-Paldea-Aqua
+      return s.substring(0, s.indexOf("-paldea"));
     } else if (s.endsWith("-incarnate")) {
       return s.substring(0, s.length - 10);
     } else if (s.startsWith("ursaluna")) {
       return "ursaluna";
     } else if (s.startsWith("rotom")) {
       return "rotom";
+    } else if (s.startsWith("terapagos")) {
+      return "terapagos";
+    } else if (s.startsWith("zamazenta")) {
+      return "zamazenta";
+    } else if (s.startsWith("zacian")) {
+      return "zacian";
+    } else if (s.startsWith("necrozma")) {
+      return "necrozma";
+    } else if (s.startsWith("calyrex")) {
+      return "calyrex";
+    } else if (s.startsWith("kyurem")) {
+      return "kyurem";
     }
     return s;
   }
-
 
   String name;
   String? gender;
