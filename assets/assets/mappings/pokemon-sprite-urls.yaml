@@ -3010,6 +3010,26 @@ rotom:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/rotom.png"
   name: "Rotom"
   artwork: "https://www.pokepedia.fr/images/thumb/d/dd/Motisma_%28Forme_Normale%29-DEPS.png/749px-Motisma_%28Forme_Normale%29-DEPS.png"
+rotom-fan:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/rotom-fan.png"
+  name: "Rotom Fan"
+  artwork: "https://www.pokepedia.fr/images/6/6b/Motisma_%28H%C3%A9lice%29-Pt.png"
+rotom-frost:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/rotom-frost.png"
+  name: "Rotom Frost"
+  artwork: "https://www.pokepedia.fr/images/0/06/Motisma_%28Froid%29-Pt.png"
+rotom-heat:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/rotom-heat.png"
+  name: "Rotom Heat"
+  artwork: "https://www.pokepedia.fr/images/3/34/Motisma_%28Chaleur%29-Pt.png"
+rotom-mow:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/rotom-mow.png"
+  name: "Rotom Mow"
+  artwork: "https://www.pokepedia.fr/images/8/81/Motisma_%28Tonte%29-Pt.png"
+rotom-wash:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/rotom-wash.png"
+  name: "Rotom Wash"
+  artwork: "https://www.pokepedia.fr/images/a/a8/Motisma_%28Lavage%29-Pt.png"
 rowlet:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/rowlet.png"
   name: "Rowlet"
