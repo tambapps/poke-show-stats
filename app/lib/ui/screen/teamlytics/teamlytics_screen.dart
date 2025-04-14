@@ -1,3 +1,4 @@
+import 'package:poke_showstats/data/models/replay.dart';
 import 'package:poke_showstats/ui/screen/teamlytics/matchup_notes/matchup_notes_screen.dart';
 
 import '../../../data/services/pokemon_resource_service.dart';
@@ -134,12 +135,17 @@ abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsSc
             totalReplaysCount: viewModel.replaysNotifier.value.length,
             matchedReplaysCount: viewModel.filteredReplaysNotifier.value.length,
           );
-          if (viewModel.replaysNotifier.value.isEmpty) {
-            return _cantDisplay(replayFiltersWidget, "Please enter a replays in the Replay Entries tab to consult move usages");
+
+          if (viewModel.sdNames.isEmpty) {
+            return _cantDisplay(replayFiltersWidget, "Please enter your showdown name(s) in the home tab so that I can identify which player you are in replays");
+          } else if (viewModel.replays.isEmpty) {
+            return _cantDisplay(replayFiltersWidget, "Please enter replays in the Replay Entries tab to consult data");
+          } else if (viewModel.replays.every((replay) => replay.gameOutput == GameOutput.UNKNOWN)) {
+            return _cantDisplay(replayFiltersWidget, "No showdown name(s) entered matched any of your replays players. Please check them");
           } else if (viewModel.filteredReplaysNotifier.value.isEmpty) {
             return _cantDisplay(replayFiltersWidget, "Applied filters matched 0 replays");
           } else if (viewModel.pokepaste == null && preventIfNoPokepaste) {
-            return _cantDisplay(replayFiltersWidget, "Please enter a pokepaste in the Home tab to consult move usages");
+            return _cantDisplay(replayFiltersWidget, "Please enter a pokepaste in the Home tab to consult usages");
           } else {
             return tabContentSupplier(replayFiltersWidget);
           }
