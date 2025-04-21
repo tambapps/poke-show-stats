@@ -8,13 +8,14 @@ part 'teamlytic.g.dart';
 @JsonSerializable()
 class Teamlytic {
   String saveName;
+  String? teamNotes;
   List<String> sdNames;
   List<Replay> replays;
   List<MatchUp> matchUps;
   Pokepaste? pokepaste;
   int lastUpdatedAt;
 
-  Teamlytic({required this.saveName, required this.sdNames, required this.replays, required this.matchUps, required this.pokepaste, required this.lastUpdatedAt});
+  Teamlytic({required this.saveName, required this.sdNames, required this.replays, required this.matchUps, required this.pokepaste, required this.lastUpdatedAt, required this.teamNotes});
 
   factory Teamlytic.fromJson(Map<String, dynamic> json) => _$TeamlyticFromJson(json);
   Map<String, dynamic> toJson() => _$TeamlyticToJson(this);

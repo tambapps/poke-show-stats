@@ -24,8 +24,10 @@ class HomeConfigViewModel {
   final TeamlyticsViewModel teamlyticsViewmodel;
   final PokepasteParser pokepasteParser;
   final SaveService saveService;
+  final teamNotesEditingController = TextEditingController();
 
   ValueNotifier<bool> pokepasteLoadingNotifier = ValueNotifier(false);
+  ValueNotifier<bool> editingTeamNotes = ValueNotifier(false);
 
   void loadPokepaste(TextEditingController pokepasteController) async {
     pokepasteLoadingNotifier.value = true;
@@ -93,5 +95,20 @@ class HomeConfigViewModel {
     }
     // only works for web. In android/ios it saves the file in an application-specific directory instead of the Downloads folder
     await FileSaver.instance.saveFile(name: saveName, ext: "json", bytes: utf8.encode(saveJson));
+  }
+
+  void editTeamNotes() {
+    teamNotesEditingController.text = teamlyticsViewmodel.teamNotes ?? "";
+    editingTeamNotes.value = true;
+  }
+
+  void saveTeamNotes() {
+    teamlyticsViewmodel.teamNotes = teamNotesEditingController.text;
+    teamNotesEditingController.text = "";
+    editingTeamNotes.value = false;
+  }
+
+  void dispose() {
+    teamNotesEditingController.dispose();
   }
 }

@@ -69,6 +69,9 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
         // pokepaste
         ...pokepaste(localization, dimens, theme, padding),
         const SizedBox(height: 32.0,),
+        Padding(padding: EdgeInsets.only(left: 16.0),
+          child: teamNotes(context, localization, dimens, theme),),
+        const SizedBox(height: 32.0,),
         if (kIsWeb) // only adding it for web because it doesn't work as expected for Android/iOs
         ...[
           Padding(padding: EdgeInsets.only(left: 16.0),
@@ -76,6 +79,44 @@ abstract class _HomeConfigComponentState extends AbstractState<HomeConfigCompone
           const SizedBox(height: 32.0,),
         ]
       ],
+    );
+  }
+
+  Widget teamNotes(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
+    return ValueListenableBuilder(
+      valueListenable: viewModel.teamlyticsViewmodel.teamNotesNotifier,
+      builder: (context,teamNotes, _) {
+        return ValueListenableBuilder(
+            valueListenable: viewModel.editingTeamNotes,
+            builder: (context, editing, _) {
+              if (!editing) {
+                if (teamNotes == null || teamNotes.isEmpty) {
+                  return Align(alignment: Alignment.topLeft, child: OutlinedButton(onPressed: () => viewModel.editTeamNotes(), child: Text("add team notes")),);
+                }
+                return Column(
+                  children: [
+                    Text(teamNotes),
+                    Align(alignment: Alignment.topLeft, child: OutlinedButton(onPressed: () => viewModel.editTeamNotes(), child: Text("edit notes")),)
+                  ],
+                );
+              }
+              return Column(
+                children: [
+                  TextField(
+                    maxLines: null,
+                    controller: viewModel.teamNotesEditingController,
+                    decoration: InputDecoration(
+                      labelText: "Team notes",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 8.0,),
+                  OutlinedButton(onPressed: () => viewModel.saveTeamNotes(), child: Text("save notes"))
+                ],
+              );
+            }
+        );
+      },
     );
   }
 

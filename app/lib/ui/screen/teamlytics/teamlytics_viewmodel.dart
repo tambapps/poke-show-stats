@@ -19,6 +19,7 @@ class TeamlyticsViewModel {
     pokepasteNotifier.value = teamlytic.pokepaste;
     replaysNotifier.value = teamlytic.replays;
     matchUpsNotifiers.value = teamlytic.matchUps;
+    teamNotesNotifier.value = teamlytic.teamNotes;
     filteredReplaysNotifier.value = replaysNotifier.value.toList();
     replaysNotifier.addListener(() {
       filteredReplaysNotifier.value = replayPredicate != null ? replays.where(replayPredicate!).toList() : replays.toList();
@@ -34,7 +35,8 @@ class TeamlyticsViewModel {
   final ValueNotifier<List<Replay>> filteredReplaysNotifier = ValueNotifier([]);
   final ValueNotifier<List<MatchUp>> matchUpsNotifiers = ValueNotifier([]);
   final ValueNotifier<Pokepaste?> pokepasteNotifier = ValueNotifier(null);
-  late ChangeNotifier teamlyticChangeNotifier = CompositeChangeNotifier([sdNamesNotifier, replaysNotifier, filteredReplaysNotifier, pokepasteNotifier, matchUpsNotifiers]);
+  final ValueNotifier<String?> teamNotesNotifier = ValueNotifier(null);
+  late ChangeNotifier teamlyticChangeNotifier = CompositeChangeNotifier([sdNamesNotifier, replaysNotifier, filteredReplaysNotifier, pokepasteNotifier, matchUpsNotifiers, teamNotesNotifier]);
 
   List<Replay> get replays => replaysNotifier.value;
   List<MatchUp> get matchUps => matchUpsNotifiers.value;
@@ -43,6 +45,12 @@ class TeamlyticsViewModel {
   Pokepaste? get pokepaste => pokepasteNotifier.value;
   set pokepaste(Pokepaste? value) {
     pokepasteNotifier.value = value;
+    storeSave();
+  }
+
+  String? get teamNotes => teamNotesNotifier.value;
+  set teamNotes(String? value) {
+    teamNotesNotifier.value = value;
     storeSave();
   }
 
@@ -137,7 +145,7 @@ class TeamlyticsViewModel {
     //teamlyticChangeNotifier.dispose();
   }
 
-  void storeSave() async => await saveService.storeSave(Teamlytic(saveName: saveName, sdNames: sdNames, replays: replays, matchUps: matchUps, pokepaste: pokepaste, lastUpdatedAt: currentTimeMillis()));
+  void storeSave() async => await saveService.storeSave(Teamlytic(saveName: saveName, sdNames: sdNames, replays: replays, matchUps: matchUps, pokepaste: pokepaste, lastUpdatedAt: currentTimeMillis(), teamNotes: teamNotes));
 
 
 }

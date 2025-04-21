@@ -54,7 +54,7 @@ List<SingleChildWidget> teamlyticsProviders(Teamlytic teamlytic) {
       dispose: (_, viewModel) => viewModel.dispose(),
     ),
     ProxyProvider<TeamlyticsViewModel, HomeConfigViewModel> (
-      update: (context, teamlyticsViewModel, _) => HomeConfigViewModel(teamlyticsViewmodel: teamlyticsViewModel, pokepasteParser: context.read(), saveService: context.read()),
+      update: (context, teamlyticsViewModel, _) => HomeConfigViewModel(teamlyticsViewmodel: teamlyticsViewModel, pokepasteParser: context.read(), saveService: context.read()), dispose: (c, v) => v.dispose(),
     ),
     ProxyProvider<TeamlyticsViewModel, ReplayEntriesViewModel> (
       update: (context, teamlyticsViewModel, _) => ReplayEntriesViewModel(teamlyticsViewModel: teamlyticsViewModel, replayParser: context.read()),
