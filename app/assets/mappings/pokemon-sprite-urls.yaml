@@ -1910,6 +1910,14 @@ kyurem:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/kyurem.png"
   name: "Kyurem"
   artwork: "https://www.pokepedia.fr/images/thumb/a/a5/Kyurem-NB.png/662px-Kyurem-NB.png"
+kyurem-black:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/kyurem-black.png"
+  name: "Kyurem"
+  artwork: "https://www.pokepedia.fr/images/3/3d/Kyurem_Noir_%28Mode_Overdrive%29-N2B2.png"
+kyurem-white:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/kyurem-white.png"
+  name: "Kyurem White"
+  artwork: "https://www.pokepedia.fr/images/2/25/Kyurem_Blanc_%28Mode_Overdrive%29-N2B2.png"
 lairon:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/lairon.png"
   name: "Lairon"
@@ -3270,6 +3278,10 @@ sinistcha:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/sinistcha.png"
   name: "Sinistcha"
   artwork: "https://www.pokepedia.fr/images/thumb/3/37/Th%C3%A9ffroyable-EV.png/422px-Th%C3%A9ffroyable-EV.png"
+sinistcha-masterpiece:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/sinistcha.png"
+  name: "Sinistcha"
+  artwork: "https://www.pokepedia.fr/images/thumb/3/37/Th%C3%A9ffroyable-EV.png/422px-Th%C3%A9ffroyable-EV.png"
 sinistea:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/sinistea.png"
   name: "Sinistea"
@@ -4022,6 +4034,10 @@ weezing:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/weezing.png"
   name: "Weezing"
   artwork: "https://www.pokepedia.fr/images/thumb/3/38/Smogogo-RFVF.png/709px-Smogogo-RFVF.png"
+weezing-galar:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/weezing-galarian.png"
+  name: "Weezing Galar"
+  artwork: "https://www.pokepedia.fr/images/1/15/Smogogo_de_Galar-EB.png"
 whimsicott:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/whimsicott.png"
   name: "Whimsicott"
