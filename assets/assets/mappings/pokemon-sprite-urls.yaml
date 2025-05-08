@@ -1910,6 +1910,14 @@ kyurem:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/kyurem.png"
   name: "Kyurem"
   artwork: "https://www.pokepedia.fr/images/thumb/a/a5/Kyurem-NB.png/662px-Kyurem-NB.png"
+kyurem-black:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/kyurem-black.png"
+  name: "Kyurem"
+  artwork: "https://www.pokepedia.fr/images/3/3d/Kyurem_Noir_%28Mode_Overdrive%29-N2B2.png"
+kyurem-white:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/kyurem-white.png"
+  name: "Kyurem White"
+  artwork: "https://www.pokepedia.fr/images/2/25/Kyurem_Blanc_%28Mode_Overdrive%29-N2B2.png"
 lairon:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/lairon.png"
   name: "Lairon"
@@ -3267,6 +3275,10 @@ simisear:
   name: "Simisear"
   artwork: "https://www.pokepedia.fr/images/thumb/7/7b/Flamoutan-NB.png/589px-Flamoutan-NB.png"
 sinistcha:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/sinistcha.png"
+  name: "Sinistcha"
+  artwork: "https://www.pokepedia.fr/images/thumb/3/37/Th%C3%A9ffroyable-EV.png/422px-Th%C3%A9ffroyable-EV.png"
+sinistcha-masterpiece:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/sinistcha.png"
   name: "Sinistcha"
   artwork: "https://www.pokepedia.fr/images/thumb/3/37/Th%C3%A9ffroyable-EV.png/422px-Th%C3%A9ffroyable-EV.png"
