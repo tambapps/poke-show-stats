@@ -1,4 +1,5 @@
 import 'package:poke_showstats/data/models/replay.dart';
+import 'package:poke_showstats/ui/screen/teamlytics/match_by_match/match_by_match_screen.dart';
 import 'package:poke_showstats/ui/screen/teamlytics/matchup_notes/matchup_notes_screen.dart';
 
 import '../../../data/services/pokemon_resource_service.dart';
@@ -49,7 +50,7 @@ abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsSc
   void initState() {
     super.initState();
     // The `vsync: this` ensures the TabController is synchronized with the screen's refresh rate
-    _tabController = TabController(length: 7, vsync: this);
+    _tabController = TabController(length: 8, vsync: this);
     // need to reset it as the underline always move to first position when changing screen tab
     _tabController.addListener(() => _replayFiltersViewModel.selectedPokemonFilterIndex.value = 0);
     _filters = ReplayFilters();
@@ -92,6 +93,7 @@ abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsSc
         Tab(text: localization.home),
         Tab(text: localization.replayEntries),
         Tab(text: localization.gameByGame),
+        Tab(text: localization.matchByMatch),
         Tab(text: localization.moveUsages),
         Tab(text: localization.leadStats),
         Tab(text: localization.usageStats),
@@ -111,6 +113,7 @@ abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsSc
             listenable: viewModel.teamlyticChangeNotifier,
             builder: (context, _) => ReplayEntriesComponent(viewModel: context.read(), replays: viewModel.replays, isMobile: dimens.isMobile,)),
         _tab(dimens, (filtersWidget) => GameByGameComponent(viewModel: context.read(), filtersWidget: filtersWidget, isMobile: dimens.isMobile, filteredReplays: viewModel.filteredReplays,)),
+        _tab(dimens, (filtersWidget) => MatchByMatchComponent(viewModel: context.read(), filtersWidget: filtersWidget, isMobile: dimens.isMobile, filteredReplays: viewModel.filteredReplays,)),
         _tab(dimens, (filtersWidget) => MoveUsageComponent(viewModel: context.read(), filtersWidget: filtersWidget,
             isMobile: dimens.isMobile, pokepaste: viewModel.pokepaste!, pokemonMoveUsageStats: PokemonMoveUsageStats.fromReplays(viewModel.filteredReplays),)),
         _tab(dimens, (filtersWidget) => LeadStatsComponent(viewModel: context.read(), filtersWidget: filtersWidget, isMobile: dimens.isMobile,

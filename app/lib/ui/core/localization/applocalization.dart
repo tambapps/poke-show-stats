@@ -16,6 +16,7 @@ class AppLocalization {
     'home': 'Home',
     'replayEntries': 'Replay Entries',
     'gameByGame': 'Game by Game',
+    'matchByMatch': 'Match by Match',
     'moveUsages': 'Move Usages',
     'sdNames': 'Showdown names',
     'addSdName': 'Add Pokemon Showdown name',
@@ -49,6 +50,7 @@ class AppLocalization {
   String get home => _get('home');
   String get replayEntries => _get('replayEntries');
   String get gameByGame => _get('gameByGame');
+  String get matchByMatch => _get('matchByMatch');
   String get moveUsages => _get('moveUsages');
   String get leadStats => _get('leadStats');
   String get usageStats => _get('usageStats');
