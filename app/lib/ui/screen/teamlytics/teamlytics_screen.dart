@@ -156,12 +156,15 @@ abstract class _AbstractHomeScreenState extends AbstractScreenState<TeamlyticsSc
   }
 
   Widget _cantDisplay(ReplayFiltersWidget filtersWidget, String text) {
-    return Column(children: [
-      filtersWidget,
-      Expanded(child: Center(
-        child: Text(text, textAlign: TextAlign.center,),
-      ))
-    ],);
+    return SingleChildScrollView(
+      child: Column(children: [
+        filtersWidget,
+        const SizedBox(height: 64.0,),
+        Center(
+          child: Text(text, textAlign: TextAlign.center,),
+        )
+      ],),
+    );
   }
 }
 

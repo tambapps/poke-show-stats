@@ -134,7 +134,6 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
             const SizedBox(height: 16.0,)
           ];
         }
-        // TODO overflow bug when showing details
         children.add(Align(
           alignment: Alignment.bottomRight,
           child: Padding(
