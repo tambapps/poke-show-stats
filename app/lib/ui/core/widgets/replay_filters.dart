@@ -14,7 +14,6 @@ import 'controlled_autocomplete.dart';
 typedef ReplayPredicate = bool Function(Replay);
 typedef PokemonPredicate = bool Function(Pokemon);
 
-// TODO add checkbox to add details to opponent's team (just display the 6 pokemonNames by default)
 class ReplayFiltersWidget extends StatefulWidget {
   final ReplayFiltersViewModel viewModel;
   final void Function(ReplayPredicate?) applyFilters;
@@ -73,19 +72,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
             const SizedBox(height: 16.0,),
             Text("Opponent's team", style: theme.textTheme.titleMedium, ),
             const SizedBox(height: 16.0,),
-        Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0), child: TabBar(
-          controller: _tabController,
-          isScrollable: widget.isMobile,
-          tabs: Iterable.generate(6, (index) => index).map((index) =>
-              Padding(padding: EdgeInsets.only(bottom: 4.0),
-                child: ValueListenableBuilder(
-                    valueListenable: _viewModel.selectedPokemonFilterIndex,
-                    builder: (context, selectedPokemonFilterIndex, _) => Text("Pokemon ${index + 1}", style: theme.textTheme.titleMedium?.copyWith(color: index != selectedPokemonFilterIndex ? Colors.grey : null),)),)).toList(),
-        ),),
-            ConstrainedBox(constraints: BoxConstraints(maxHeight: dimens.pokemonFiltersTabViewHeight),
-              child: Padding(padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                child: TabBarView(controller: _tabController, children: List.generate(6, (index) => _pokemonFilterWidget(context, localization, dimens, theme, index))),),),
-
+            _opponentTeamFilters(context, localization, dimens, theme),
             Text("Your selection", style: theme.textTheme.titleMedium, ),
             const SizedBox(height: 16.0,),
             yourSelectionWidget(context, localization, dimens, theme),
@@ -118,6 +105,57 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
       ),
     );
   }
+
+  Widget _opponentTeamFilters(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
+    return ValueListenableBuilder(
+      valueListenable: _viewModel.showDetailsNotifier,
+      builder: (_, showDetails, __) {
+        final List<Widget> children;
+
+        if (showDetails) {
+          children = [
+            Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0), child: TabBar(
+              controller: _tabController,
+              isScrollable: widget.isMobile,
+              tabs: Iterable.generate(6, (index) => index).map((index) =>
+                  Padding(padding: EdgeInsets.only(bottom: 4.0),
+                    child: ValueListenableBuilder(
+                        valueListenable: _viewModel.selectedPokemonFilterIndex,
+                        builder: (context, selectedPokemonFilterIndex, _) => Text("Pokemon ${index + 1}", style: theme.textTheme.titleMedium?.copyWith(color: index != selectedPokemonFilterIndex ? Colors.grey : null),)),)).toList(),
+            ),),
+            ConstrainedBox(constraints: BoxConstraints(maxHeight: dimens.pokemonFiltersTabViewHeight),
+              child: Padding(padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                child: TabBarView(controller: _tabController, children: List.generate(6, (index) => _pokemonFilterWidget(context, localization, dimens, theme, index))),),),
+          ];
+        } else {
+          children = [
+            opponentTeamGridView(List.generate(_filters.opposingTeamPokemons.length,
+                    (index) => pokemonNameTextInput(controller: _filters.opposingTeamPokemons[index].pokemonNameController, labelText: "Pokemon ${index+1}"))),
+            const SizedBox(height: 16.0,)
+          ];
+        }
+        // TODO overflow bug when showing details
+        children.add(Align(
+          alignment: Alignment.bottomRight,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 16.0, bottom: 32.0),
+            child: OutlinedButton(onPressed: () {
+              if (showDetails) {
+                for (PokemonFilters pokemonFilters in _filters.opposingTeamPokemons) {
+                  pokemonFilters.clear(clearName: false);
+                }
+                _viewModel.dirty.value = true;
+              }
+              _viewModel.showDetailsNotifier.value = !showDetails;
+            }, child: Text(showDetails ? "Hide Details" : "Show Details")),
+          ),
+        ));
+        return Column(children: children,);
+      },
+    );
+  }
+
+  Widget opponentTeamGridView(List<Widget> children);
 
   Widget yourSelectionWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
 
@@ -272,10 +310,9 @@ class ReplayFiltersViewModel {
   final PokemonResourceService pokemonResourceService;
   final ReplayFilters filters;
 
-  ValueNotifier<bool> dirty = ValueNotifier(false);
-
-
-  ValueNotifier<int> selectedPokemonFilterIndex = ValueNotifier(0);
+  final ValueNotifier<bool> dirty = ValueNotifier(false);
+  final ValueNotifier<bool> showDetailsNotifier = ValueNotifier(false);
+  final ValueNotifier<int> selectedPokemonFilterIndex = ValueNotifier(0);
 
 }
 
@@ -290,6 +327,14 @@ class _DesktopReplayFiltersWidgetState extends _AbstractReplayFiltersWidgetState
       ],  // Explicitly specify a list of widgets
     );
   }
+
+  @override
+  Widget opponentTeamGridView(List<Widget> children) {
+    return AutoGridView(columnsCount: 3,
+        horizontalCellSpacing: 32.0,
+        verticalCellSpacing: 16.0,
+        children: children);
+  }
 }
 
 class _MobileReplayFiltersWidgetState extends _AbstractReplayFiltersWidgetState {
@@ -303,6 +348,14 @@ class _MobileReplayFiltersWidgetState extends _AbstractReplayFiltersWidgetState 
           Expanded(child: textInput(labelText: "Max Elo", controller: _filters.maxEloController, numberInput: true)),
         ]// Explicitly specify a list of widgets
     );
+  }
+
+  @override
+  Widget opponentTeamGridView(List<Widget> children) {
+    return AutoGridView(columnsCount: 2,
+        horizontalCellSpacing: 16.0,
+        verticalCellSpacing: 4.0,
+        children: children);
   }
 }
 
@@ -407,8 +460,10 @@ class PokemonFilters {
         : null;
   }
 
-  void clear() {
-    pokemonNameController.clear();
+  void clear({bool clearName = true}) {
+    if (clearName) {
+      pokemonNameController.clear();
+    }
     itemController.clear();
     abilityController.clear();
     teraTypeController.clear();
