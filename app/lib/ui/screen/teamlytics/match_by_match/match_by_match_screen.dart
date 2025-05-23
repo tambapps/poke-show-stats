@@ -12,7 +12,7 @@ import 'match_by_match_viewmodel.dart';
 class MatchByMatchComponent extends StatefulWidget {
   final MatchByMatchViewModel viewModel;
   final bool isMobile;
-  // TODO hide selection filters as we don't want to filter one specific game of a BO
+  // TODO hide selection filters as we don't want to filter one specific game of a BO. OR, display a warning when there is such filter
   final ReplayFiltersWidget filtersWidget;
   final List<Replay> filteredReplays;
 
@@ -30,7 +30,7 @@ abstract class _AbstractMatchByMatchComponentState extends AbstractState<MatchBy
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    return Text('TODO');
+    return Text('Coming Soon');
   }
 }
 
