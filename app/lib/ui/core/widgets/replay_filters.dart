@@ -14,6 +14,7 @@ import 'controlled_autocomplete.dart';
 typedef ReplayPredicate = bool Function(Replay);
 typedef PokemonPredicate = bool Function(Pokemon);
 
+// TODO add checkbox to add details to opponent's team (just display the 6 pokemonNames by default)
 class ReplayFiltersWidget extends StatefulWidget {
   final ReplayFiltersViewModel viewModel;
   final void Function(ReplayPredicate?) applyFilters;
@@ -156,7 +157,16 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
     }
   }
 
-  Widget pokemonNameTextInput({String labelText = "Pokemon", required TextEditingController controller}) => autoCompleteMapTextInput(labelText: labelText, suggestions: _viewModel.pokemonResourceService.pokemonMappings, controller: controller);
+  Widget pokemonNameTextInput({String labelText = "Pokemon", required TextEditingController controller}) => autoCompleteMapTextInput(
+      labelText: labelText,
+      suggestions: _viewModel.pokemonResourceService.pokemonMappings,
+      controller: controller,
+      optionToWidget: (MapEntry<dynamic, dynamic> option, String displayOption) => Row(children: [
+        Text(displayOption),
+        const SizedBox(width: 16.0,),
+        _viewModel.pokemonResourceService.getItemSpriteFromUri(option.value['name'], Uri.parse(option.value['sprite']), width: 64.0, height: 64.0)
+      ],)
+  );
 
   Widget eloFiltersWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme);
   Widget _pokemonFilterWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, int index) {
@@ -183,21 +193,22 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
     return autoCompleteTextInput(labelText: labelText, suggestions: suggestions, controller: controller, displayStringForOption: (s) => _displayedName(s.replaceAll('-', ' ')));
   }
 
-  Widget autoCompleteMapTextInput({required String labelText, required Map<dynamic, dynamic> suggestions, required TextEditingController controller}) {
-    return autoCompleteListTextInput(labelText: labelText, suggestions: suggestions.entries.toList(), controller: controller);
+  Widget autoCompleteMapTextInput({required String labelText, required Map<dynamic, dynamic> suggestions, required TextEditingController controller, AutocompleteOptionToWidget<MapEntry<dynamic, dynamic>>? optionToWidget}) {
+    return autoCompleteListTextInput(labelText: labelText, suggestions: suggestions.entries.toList(), controller: controller, optionToWidget: optionToWidget);
   }
 
-  Widget autoCompleteListTextInput({required String labelText, required List<MapEntry<dynamic, dynamic>> suggestions, required TextEditingController controller}) {
+  Widget autoCompleteListTextInput({required String labelText, required List<MapEntry<dynamic, dynamic>> suggestions, required TextEditingController controller, AutocompleteOptionToWidget<MapEntry<dynamic, dynamic>>? optionToWidget}) {
     return autoCompleteTextInput(labelText: labelText, suggestions: suggestions,
         controller: controller,
         displayStringForOption: (entry) => _displayedName(entry.key.replaceAll('-', ' ')),
-        suggestionsMatcher: (textEditingValue, option) => Pokemon.normalize(option.key).contains(Pokemon.normalize(textEditingValue.text)));
+        suggestionsMatcher: (textEditingValue, option) => Pokemon.normalize(option.key).contains(Pokemon.normalize(textEditingValue.text)),
+        optionToWidget: optionToWidget);
   }
 
   Widget autoCompleteTextInput<T extends Object>({required String labelText,
     required List<T> suggestions, required TextEditingController controller,
     required String Function(T) displayStringForOption,
-    SuggestionsMatcher<T>? suggestionsMatcher}) {
+    SuggestionsMatcher<T>? suggestionsMatcher, AutocompleteOptionToWidget<T>? optionToWidget}) {
     return Padding(
       padding: EdgeInsets.only(top: 8.0),
       child: ControlledAutoComplete<T>(
@@ -206,6 +217,7 @@ abstract class _AbstractReplayFiltersWidgetState extends AbstractState<ReplayFil
         onSelected: (_) => _viewModel.dirty.value = true,
         displayStringForOption: displayStringForOption,
         suggestionsMatcher: suggestionsMatcher,
+        optionToWidget: optionToWidget,
         fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
           return TextField(
             controller: controller,

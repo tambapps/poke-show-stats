@@ -7,6 +7,7 @@ class ControlledAutoComplete<T extends Object> extends StatefulWidget {
 
   final TextEditingController controller;
   final AutocompleteOptionToString<T> displayStringForOption;
+  final AutocompleteOptionToWidget<T>? optionToWidget;
   final OptionsViewOpenDirection optionsViewOpenDirection;
   final TextEditingValue? initialValue;
   final AutocompleteOnSelected<T>? onSelected;
@@ -20,7 +21,7 @@ class ControlledAutoComplete<T extends Object> extends StatefulWidget {
     required this.controller, required this.suggestions,
     this.displayStringForOption = defaultStringForOption, this.initialValue,
     this.onSelected, this.fieldViewBuilder, this.optionsMaxHeight = 200.0,
-    this.optionsViewOpenDirection = OptionsViewOpenDirection.down, this.suggestionsMatcher
+    this.optionsViewOpenDirection = OptionsViewOpenDirection.down, this.suggestionsMatcher, this.optionToWidget
   });
 
   static String defaultStringForOption(Object? option) {
@@ -54,12 +55,15 @@ class _ControlledAutoCompleteState<T extends Object> extends State<ControlledAut
           options: options,
           openDirection: widget.optionsViewOpenDirection,
           maxOptionsHeight: widget.optionsMaxHeight,
+          optionToWidget: widget.optionToWidget,
         );
       },
       onSelected: widget.onSelected,
     );
   }
 }
+
+typedef AutocompleteOptionToWidget<T extends Object> = Widget Function(T option, String displayOption);
 
 // copied from material/autocomplete.dart
 class _AutocompleteOptions<T extends Object> extends StatelessWidget {
@@ -70,9 +74,11 @@ class _AutocompleteOptions<T extends Object> extends StatelessWidget {
     required this.openDirection,
     required this.options,
     required this.maxOptionsHeight,
+    this.optionToWidget,
   });
 
   final AutocompleteOptionToString<T> displayStringForOption;
+  final AutocompleteOptionToWidget<T>? optionToWidget;
 
   final AutocompleteOnSelected<T> onSelected;
   final OptionsViewOpenDirection openDirection;
@@ -113,7 +119,7 @@ class _AutocompleteOptions<T extends Object> extends StatelessWidget {
                       return Container(
                         color: highlight ? Theme.of(context).focusColor : null,
                         padding: const EdgeInsets.all(16.0),
-                        child: Text(displayStringForOption(option)),
+                        child: optionToWidget?.call(option, displayStringForOption(option)) ?? Text(displayStringForOption(option)),
                       );
                     }
                 ),

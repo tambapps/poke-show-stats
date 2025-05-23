@@ -64,6 +64,10 @@ class PokemonResourceService extends ChangeNotifier {
       if (_itemMappings.isNotEmpty) developer.log("Sprite URL for item $itemName was not found on mapping file");
       return _getDefaultSprite(tooltip: itemName);
     }
+    return getItemSpriteFromUri(itemName, uri, width: width, height: height);
+  }
+
+  Widget getItemSpriteFromUri(String itemName, Uri uri, {double? width, double? height}) {
     return Tooltip(
       message: itemName,
       child: _getImageWidget(uri, width: width, height: height, tooltip: itemName),
@@ -104,6 +108,15 @@ class PokemonResourceService extends ChangeNotifier {
     );
   }
 
+  double _getSize({double? width, double? height}) {
+    if (width != null && height != null) {
+      return width >= height ? width : height;
+    } else if (width == null && height == null) {
+      return Dimens.pokemonLogoSize;
+    }
+    return width ?? height!;
+  }
+
   Widget _getImageWidget(Uri uri, {double? width, double? height, String? tooltip}) {
     // use the flag flutter run "--web-renderer html" to make this work.
     // don't forget to use it also when building the release app
@@ -117,13 +130,13 @@ class PokemonResourceService extends ChangeNotifier {
       placeholder: (context, url) => CircularProgressIndicator(),
       errorWidget: (context, url, error) {
         developer.log('Image load failed: $url, Error: $error', error: error);
-        return _getDefaultSprite(tooltip: tooltip);
+        return _getDefaultSprite(tooltip: tooltip, size: _getSize(width: width, height: height));
       },
     );
   }
 
-  Widget _getDefaultSprite({String? tooltip}) {
-    final widget = Icon(Icons.catching_pokemon, size: Dimens.pokemonLogoSize);
+  Widget _getDefaultSprite({String? tooltip, double size = Dimens.pokemonLogoSize}) {
+    final widget = Icon(Icons.catching_pokemon, size: size);
     return tooltip != null ? Tooltip(message: tooltip, child: widget,) : widget;
   }
 
