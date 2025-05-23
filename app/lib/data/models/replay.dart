@@ -20,6 +20,7 @@ class Replay {
   factory Replay.fromJson(Map<String, dynamic> json) => _$ReplayFromJson(json);
   Map<String, dynamic> toJson() => _$ReplayToJson(this);
 
+  bool isNextBattleOf(Replay other) => other.data.nextBattle != null && uri.toString().contains(other.data.nextBattle!);
 
   void trySetElo(List<Replay> replays) {
     for (Replay replay in replays) {

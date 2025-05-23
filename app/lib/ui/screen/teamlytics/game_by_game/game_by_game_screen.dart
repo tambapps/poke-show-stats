@@ -29,6 +29,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
+    final filteredReplays = widget.filteredReplays;
     return ListView.separated(
       padding: EdgeInsets.zero,
         itemBuilder: (context, index) {
@@ -37,18 +38,22 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
           } else if (index == 1) {
             return headerWidget(context, localization, dimens, theme);
           }
-          final replay = widget.filteredReplays[index - 2];
+          final replay = filteredReplays[index - 2];
           return _gbgWidget(context, localization, dimens, theme, replay);
         },
         separatorBuilder: (context, index) {
-          if (index <= 1) return Container();
+          if (index <= 1 || index >= filteredReplays.length + 2) return Container();
+          final previous = filteredReplays[index - 2];
+          final next = filteredReplays[index - 1];
+          // using a bigger separator when we change match (BO)
+          final thickness = next.isNextBattleOf(previous) ? 2.0 : 7.0;
           return Padding(padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 64.0), child: Divider(
             color: Colors.grey,
-            thickness: 2,
+            thickness: thickness,
             height: 1,
           ),);
         },
-        itemCount: widget.filteredReplays.length + 2 // + 2 because filters and header component
+        itemCount: filteredReplays.length + 2 // + 2 because filters and header component
     );
   }
 
