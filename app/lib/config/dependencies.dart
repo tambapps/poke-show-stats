@@ -66,7 +66,8 @@ List<SingleChildWidget> teamlyticsProviders(Teamlytic teamlytic) {
       dispose: (_, viewModel) => viewModel.dispose(),
     ),
     ProxyProvider<TeamlyticsViewModel, MatchByMatchViewModel> (
-      update: (context, teamlyticsViewModel, _) => MatchByMatchViewModel(),
+      update: (context, teamlyticsViewModel, _) => MatchByMatchViewModel(teamlyticsViewModel: teamlyticsViewModel),
+      dispose: (_, viewModel) => viewModel.dispose(),
     ),
     Provider(
       create: (context) => MoveUsageViewModel(),

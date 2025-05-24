@@ -12,6 +12,7 @@ class GameByGameViewModel  {
 
   GameByGameViewModel({required TeamlyticsViewModel teamlyticsViewModel}) : _teamlyticsViewModel = teamlyticsViewModel;
 
+  List<List<Replay>> get filteredMatches => _teamlyticsViewModel.filteredMatches;
 
   NoteEditingContext getEditingContext(Replay replay) => _replayNoteEditingContextMap.putIfAbsent(replay, () => NoteEditingContext());
 

@@ -39,6 +39,29 @@ class TeamlyticsViewModel {
   late ChangeNotifier teamlyticChangeNotifier = CompositeChangeNotifier([sdNamesNotifier, replaysNotifier, filteredReplaysNotifier, pokepasteNotifier, matchUpsNotifiers, teamNotesNotifier]);
 
   List<Replay> get replays => replaysNotifier.value;
+  List<List<Replay>> get filteredMatches {
+    List<List<Replay>> matches = [];
+    final filteredReplays = this.filteredReplays;
+    if (filteredReplays.isEmpty) {
+      return matches;
+    }
+    List<Replay> currentMatch = [filteredReplays.first];
+    int i = 1;
+    while(i < filteredReplays.length) {
+      final currentReplay = filteredReplays[i++];
+      if (currentReplay.isNextBattleOf(currentMatch.last)) {
+        currentMatch.add(currentReplay);
+      } else {
+        matches.add(currentMatch);
+        currentMatch = [currentReplay];
+      }
+    }
+    if (matches.last != currentMatch) {
+      matches.add(currentMatch);
+    }
+    return matches;
+  }
+
   List<MatchUp> get matchUps => matchUpsNotifiers.value;
   List<Replay> get filteredReplays => filteredReplaysNotifier.value;
   List<String> get sdNames => sdNamesNotifier.value;
