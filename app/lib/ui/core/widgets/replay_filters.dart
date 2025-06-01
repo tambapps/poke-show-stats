@@ -313,6 +313,7 @@ class ReplayFiltersViewModel {
   final ValueNotifier<bool> showDetailsNotifier = ValueNotifier(false);
   final ValueNotifier<int> selectedPokemonFilterIndex = ValueNotifier(0);
 
+  bool get hasSelectionFilters => filters.selectionFilters.any((filter) => filter.pokemonNameController.text.isNotEmpty);
 }
 
 class _DesktopReplayFiltersWidgetState extends _AbstractReplayFiltersWidgetState {

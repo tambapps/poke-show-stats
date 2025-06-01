@@ -49,12 +49,6 @@ class CompositeChangeNotifier extends ChangeNotifier {
   }
 
   @override
-  void dispose() {
-    for (final notifier in notifiers) notifier.dispose();
-    super.dispose();
-  }
-
-  @override
   void notifyListeners() {
     for (final notifier in notifiers) notifier.notifyListeners();
     super.notifyListeners();

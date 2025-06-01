@@ -29,14 +29,65 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
 
   @override
   Widget doBuild(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    final filteredReplays = widget.filteredReplays;
+    return ValueListenableBuilder(valueListenable: viewModel.matchMode, builder: (context, matchMode, _) {
+      if (matchMode) {
+        return byMatch(context, localization, dimens, theme);
+      }
+      return byGame(context, localization, dimens, theme);
+    });
+  }
+
+  double _countWins(List<List<Replay>> matches) {
+    return matches.where((replays) {
+      final wins = replays.where((replay) => replay.gameOutput == GameOutput.WIN).length;
+      return wins > replays.length / 2;
+    }).length.toDouble();
+  }
+
+  Widget byMatch(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
+    final matches = viewModel.filteredMatches;
     return ListView.separated(
-      padding: EdgeInsets.zero,
+        padding: EdgeInsets.zero,
         itemBuilder: (context, index) {
           if (index == 0) {
             return widget.filtersWidget;
           } else if (index == 1) {
-            return headerWidget(context, localization, dimens, theme);
+            final double? winRateRatio = matches.isNotEmpty ? _countWins(matches) / matches.length.toDouble() : null;
+            String? warning;
+            if (widget.filtersWidget.viewModel.hasSelectionFilters) {
+              warning = "⚠️ As you specified selection filters, some matches might miss game(s) ⚠️";
+            }
+            return headerWidget(context, localization, dimens, theme, winRateRatio, warning: warning);
+          }
+          final match = matches[index - 2];
+          if (match.length == 1) {
+            return _gbgWidget(context, localization, dimens, theme, match.first);
+          }
+          return _mbmWidget(context, localization, dimens, theme, match);
+        },
+        separatorBuilder: (context, index) {
+          if (index <= 1) return Container();
+          return Padding(padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 64.0), child: Divider(
+            color: Colors.grey,
+            thickness: 2.0,
+            height: 1,
+          ),);
+        },
+        itemCount: matches.length + 2 // + 2 because filters and header component
+    );
+  }
+
+  Widget byGame(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
+    final filteredReplays = widget.filteredReplays;
+    return ListView.separated(
+        padding: EdgeInsets.zero,
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            return widget.filtersWidget;
+          } else if (index == 1) {
+            final double? winRateRatio = widget.filteredReplays.isEmpty ? null
+                : widget.filteredReplays.where((replay) => replay.gameOutput == GameOutput.WIN).length.toDouble() / widget.filteredReplays.length.toDouble();
+            return headerWidget(context, localization, dimens, theme, winRateRatio);
           }
           final replay = filteredReplays[index - 2];
           return _gbgWidget(context, localization, dimens, theme, replay);
@@ -57,24 +108,100 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
     );
   }
 
-  Widget headerWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme) {
-    final double? winRateRatio = widget.filteredReplays.isEmpty ? null
-             : widget.filteredReplays.where((replay) => replay.gameOutput == GameOutput.WIN).length.toDouble() / widget.filteredReplays.length.toDouble();
+  Widget warningText(String text) {
+    return Center(
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.8,
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          border: Border.all(color: Colors.orange, width: 2),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Text(
+          text,
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+
+  Widget headerWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, double? winRateRatio, {String? warning}) {
     final textStyle = theme.textTheme.titleLarge;
+
+    final gameModeSwitch = Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+      Text("By game"),
+      Switch(
+        value: viewModel.matchMode.value,
+        onChanged: (bool value) => (viewModel.matchMode.value = value),
+      ),
+      Text("By match"),
+    ]);
     return Padding(
-        padding: const EdgeInsets.only(left: 32.0, top: 8.0, bottom: 64.0),
+        padding: const EdgeInsets.only(right: 32.0, left: 32.0, top: 8.0, bottom: 64.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (winRateRatio != null)
-            Text("Win rate ${(winRateRatio * 100).toStringAsFixed(1)}%", style: textStyle),
+          if (warning != null)
+            warningText(warning),
+          Row(
+            children: [
+              if (winRateRatio != null)
+                Text("Win rate ${(winRateRatio * 100).toStringAsFixed(1)}%", style: textStyle),
+              Spacer(flex: 1,),
+              if (!Dimens.of(context).isMobile)
+                gameModeSwitch
+            ],
+          ),
+          if (Dimens.of(context).isMobile)
+            Padding(padding: EdgeInsets.only(top: 16.0), child: gameModeSwitch,)
         ],
       ),
     );
   }
 
   Widget playWidgetContainer(List<Widget> children);
+
+  Widget _mbmWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, List<Replay> match) {
+    final indexListener = ValueNotifier(0);
+    return Column(
+      children: [
+        mbmHeader(context, localization, dimens, theme, match, indexListener),
+        const SizedBox(height: 16.0,),
+        ValueListenableBuilder(valueListenable: indexListener, builder: (_, currentIndex, __) {
+          return Column(children: [
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              transitionBuilder: (child, animation) => FadeTransition(
+                opacity: animation,
+                child: child,
+              ),
+              child: IndexedStack(
+                key: ValueKey<int>(currentIndex), // important for animation to trigger
+                index: currentIndex,
+                children: match.map((replay) => Column(children: [
+                  playWidgetContainer([
+                    Expanded(child: _playerWidget(context, localization, dimens, theme, replay, replay.otherPlayer),),
+                    Expanded(child: _playerWidget(context, localization, dimens, theme, replay, replay.opposingPlayer),),
+                  ]),
+                  const SizedBox(height: 8.0,),
+                  _gbgNotesWidget(context, localization, dimens, theme, replay),
+                ],)).toList(),
+              ),
+            ),
+            const SizedBox(height: 8.0,),
+          ],);
+        })
+      ],
+    );
+  }
 
   Widget _gbgWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay) {
     return Column(children: [
@@ -142,23 +269,52 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
 
   Widget vsText(ThemeData theme, Replay replay) => SelectableText("vs ${replay.opposingPlayer.name}", style: theme.textTheme.titleLarge,);
 
-  Widget viewReplayButton(AppLocalization localization, Replay replay) => TextButton(
+  Widget viewReplayButton(AppLocalization localization, Replay replay, {int? gameIndex}) => TextButton(
     onPressed: () => openLink(replay.uri.toString().replaceFirst('.json', '')),
-    child: Text(localization.replay, overflow: TextOverflow.ellipsis, style: TextStyle(
+    child: Text(gameIndex != null ? "G${gameIndex + 1} ${localization.replay}" : localization.replay, overflow: TextOverflow.ellipsis, style: TextStyle(
       color: Colors.blue,
       decoration: TextDecoration.underline,
     ),),
   );
 
-  Widget winLooseWidget(ThemeData theme, Replay replay) => Container(
-    decoration: BoxDecoration(
-      color: replay.gameOutput == GameOutput.WIN ? Colors.green : Colors.red,
-      borderRadius: BorderRadius.circular(10), // Rounded corners
-    ),
-    child:  SizedBox(width: 45, height: 45,
-      child: Center(child: Text(replay.gameOutput == GameOutput.WIN ? 'W' : 'L', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),),),),);
+  Widget winLooseWidget(ThemeData theme, Replay replay, {bool selected = false}) {
+    Color color;
+    String text;
+    switch (replay.gameOutput) {
+      case GameOutput.WIN:
+        text = 'W';
+        color = Colors.green;
+        break;
+      case GameOutput.LOSS:
+        text = 'L';
+        color = Colors.red;
+        break;
+      case GameOutput.UNKNOWN:
+        text = 'U';
+        color = Colors.black12;
+        break;
+    }
+    final component = Container(
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(10), // Rounded corners
+      ),
+      child:  SizedBox(width: 45, height: 45,
+        child: Center(child: Text(text, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),),),),);
+    if (!selected) {
+      return component;
+    }
+    return Container(
+        padding: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: component);
+  }
 
   Widget gbgHeader(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay);
+  Widget mbmHeader(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, List<Replay> replays, ValueNotifier indexNotifier);
 
   Widget _playerWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay, PlayerData player) {
     bool isOpponent = replay.opposingPlayer.name == player.name;
@@ -211,6 +367,42 @@ class _MobileGameByGameComponentState extends _AbstractGameByGameComponentState 
   Widget playerPickContainer(List<Widget> children) => Column(mainAxisSize: MainAxisSize.min, children: children,);
 
   @override
+  Widget mbmHeader(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, List<Replay> replays, ValueNotifier indexNotifier) {
+    return ValueListenableBuilder(valueListenable: indexNotifier, builder: (context, currentIndex, _) {
+      final replay = replays[currentIndex];
+      return Column(children: [
+        vsText(theme, replay),
+        const SizedBox(height: 8,),
+        Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+          ...replays.indexed.map((tuple) => Padding(padding: EdgeInsets.symmetric(horizontal: 8),
+            child: InkWell(
+              child: Tooltip(message: "Click to show game", child: winLooseWidget(theme, tuple.$2, selected: tuple.$1 == currentIndex),),
+              onTap: () => (indexNotifier.value = tuple.$1),
+            ),))
+        ],),
+        // opponent team
+        Row(
+          children: replay.opposingPlayer.team
+              .map((pokemon) =>
+              Expanded(child: viewModel.pokemonResourceService.getPokemonSprite(pokemon)))
+              .toList(),
+        ),
+        const SizedBox(height: 4,),
+        if (replay.data.isOts)
+          ...[OutlinedButton(onPressed: () => showTeamSheetDialog(
+              context: context,
+              title: "${replay.opposingPlayer.name}'s team",
+              pokepaste: replay.opposingPlayer.pokepaste!,
+              pokemonResourceService: viewModel.pokemonResourceService), child: Text("OTS")), const SizedBox(height: 4.0,)],
+        viewReplayButton(localization, replay, gameIndex: currentIndex)
+      ],);
+    });
+  }
+
+  @override
   Widget gbgHeader(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay) {
     return Column(children: [
       Row(children: [
@@ -246,6 +438,35 @@ class _DesktopGameByGameComponentState extends _AbstractGameByGameComponentState
   @override
   Widget playerPickContainer(List<Widget> children) => Row(mainAxisSize: MainAxisSize.min, children: children,);
 
+  @override
+  Widget mbmHeader(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, List<Replay> replays, ValueNotifier indexNotifier) {
+    return ValueListenableBuilder(valueListenable: indexNotifier, builder: (context, currentIndex, _) {
+      final replay = replays[currentIndex];
+      return Row(children: [
+        SizedBox(width: 32.0,),
+        ...replays.indexed.map((tuple) => Padding(padding: EdgeInsets.symmetric(horizontal: 8),
+          child: InkWell(
+            child: Tooltip(message: "Click to show game", child: winLooseWidget(theme, tuple.$2, selected: tuple.$1 == currentIndex),),
+            onTap: () => (indexNotifier.value = tuple.$1),
+          ),)),
+        const SizedBox(width: 8,),
+        vsText(theme, replay),
+        const SizedBox(width: 8,),
+        // opponent team
+        ...replay.opposingPlayer.team
+            .map((pokemon) =>
+            viewModel.pokemonResourceService.getPokemonSprite(pokemon)),
+        const SizedBox(width: 16.0,),
+        if (replay.data.isOts)
+          ...[OutlinedButton(onPressed: () => showTeamSheetDialog(
+              context: context,
+              title: "${replay.opposingPlayer.name}'s team",
+              pokepaste: replay.opposingPlayer.pokepaste!,
+              pokemonResourceService: viewModel.pokemonResourceService), child: Text("OTS")), const SizedBox(width: 16.0,)],
+        viewReplayButton(localization, replay, gameIndex: currentIndex)
+      ],);
+    });
+  }
   @override
   Widget gbgHeader(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay) {
     return Row(children: [

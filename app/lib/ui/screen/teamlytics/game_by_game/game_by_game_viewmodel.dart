@@ -8,6 +8,8 @@ class GameByGameViewModel  {
 
   final Map<Replay, NoteEditingContext> _replayNoteEditingContextMap = {};
   final TeamlyticsViewModel _teamlyticsViewModel;
+  ValueNotifier<bool> get matchMode => _teamlyticsViewModel.matchMode;
+
   PokemonResourceService get pokemonResourceService => _teamlyticsViewModel.pokemonResourceService;
 
   GameByGameViewModel({required TeamlyticsViewModel teamlyticsViewModel}) : _teamlyticsViewModel = teamlyticsViewModel;

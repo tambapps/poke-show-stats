@@ -30,6 +30,7 @@ class TeamlyticsViewModel {
   final SaveService saveService;
 
   final String saveName;
+  final ValueNotifier<bool> matchMode = ValueNotifier(false);
   final ValueNotifier<List<String>> sdNamesNotifier = ValueNotifier([]);
   final ValueNotifier<List<Replay>> replaysNotifier = ValueNotifier([]);
   final ValueNotifier<List<Replay>> filteredReplaysNotifier = ValueNotifier([]);
@@ -37,6 +38,17 @@ class TeamlyticsViewModel {
   final ValueNotifier<Pokepaste?> pokepasteNotifier = ValueNotifier(null);
   final ValueNotifier<String?> teamNotesNotifier = ValueNotifier(null);
   late ChangeNotifier teamlyticChangeNotifier = CompositeChangeNotifier([sdNamesNotifier, replaysNotifier, filteredReplaysNotifier, pokepasteNotifier, matchUpsNotifiers, teamNotesNotifier]);
+
+  void dispose() {
+    matchMode.dispose();
+    sdNamesNotifier.dispose();
+    replaysNotifier.dispose();
+    filteredReplaysNotifier.dispose();
+    matchUpsNotifiers.dispose();
+    pokepasteNotifier.dispose();
+    teamNotesNotifier.dispose();
+    teamlyticChangeNotifier.dispose();
+  }
 
   List<Replay> get replays => replaysNotifier.value;
   List<List<Replay>> get filteredMatches {
@@ -163,10 +175,6 @@ class TeamlyticsViewModel {
     replaysNotifier.value = updatedReplays;
   }
 
-  void dispose() {
-    // will remove listener of replaysNotifier
-    //teamlyticChangeNotifier.dispose();
-  }
 
   void storeSave() async => await saveService.storeSave(Teamlytic(saveName: saveName, sdNames: sdNames, replays: replays, matchUps: matchUps, pokepaste: pokepaste, lastUpdatedAt: currentTimeMillis(), teamNotes: teamNotes));
 
