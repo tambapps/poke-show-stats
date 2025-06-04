@@ -27,6 +27,15 @@ class HomeScreen extends StatefulWidget {
   State<StatefulWidget> createState() => isMobile ? _MobileHomeState() : _DesktopHomeState();
 }
 
+class Sample {
+
+  final String name;
+  final String ruleset;
+
+  Sample(this.name, this.ruleset);
+
+}
+
 abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
 
   HomeViewModel get viewModel => widget.viewModel;
@@ -140,8 +149,13 @@ abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
     });
   }
 
+
   void _sampleTeamDialog(BuildContext context, AppLocalization localization) async {
-    final List<String> items = ['electrizer', 'delpHOx'];
+    final List<Sample> samples = [
+      Sample('Electrizer', 'Reg G'),
+      Sample('DelpHOx', 'Reg H'),
+      Sample('Sunny day Happy day', 'Reg I')
+    ];
     String? sampleName = await showDialog<String>(
       context: context,
       builder: (BuildContext context) {
@@ -150,10 +164,10 @@ abstract class _AbstractHomeState extends AbstractScreenState<HomeScreen> {
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: items.map((item) {
+              children: samples.map((sample) {
                 return ListTile(
-                  title: Text(item),
-                  onTap: () => Navigator.pop(context, item),
+                  title: Text("${sample.name} | ${sample.ruleset}"),
+                  onTap: () => Navigator.pop(context, sample.name),
                 );
               }).toList(),
             ),
