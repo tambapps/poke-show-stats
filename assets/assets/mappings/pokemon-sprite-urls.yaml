@@ -4202,6 +4202,10 @@ zoroark:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/zoroark.png"
   name: "Zoroark"
   artwork: "https://www.pokepedia.fr/images/thumb/4/41/Zoroark-NB.png/637px-Zoroark-NB.png"
+zoroark-hisui:
+  sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/zoroark-hisuian.png"
+  name: "Hisuian Zoroark"
+  artwork: "https://www.pokepedia.fr/images/8/8f/Zoroark_de_Hisui-LPA.png"
 zorua:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/zorua.png"
   name: "Zorua"
