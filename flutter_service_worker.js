@@ -3,7 +3,7 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"flutter_bootstrap.js": "19bc3d7106c23c31e2aaf06a90faab68",
+const RESOURCES = {"flutter_bootstrap.js": "c0a476ad526841b3fa286319f980709a",
 "flutter.js": "4b2350e14c6650ba82871f60906437ea",
 "favicon.png": "df4f04beee348ddade0c5dfbf71539c0",
 "icons/Icon-maskable-512.png": "5ad58cd5f5db1b25752ef248f81c74ef",
@@ -77,7 +77,7 @@ const RESOURCES = {"flutter_bootstrap.js": "19bc3d7106c23c31e2aaf06a90faab68",
 "assets/assets/images/tera-types/steel.png": "03972bf13730d010ca1478fb43eb9b41",
 "assets/assets/mappings/items-mapping.yaml": "a206e65186bef04f9ce006be238b5b1a",
 "assets/assets/mappings/moves.yaml": "8d75647af60269c318f6e3908bb94bae",
-"assets/assets/mappings/pokemon-sprite-urls.yaml": "d176baa7af6ed062f1774ee63e311f2e",
+"assets/assets/mappings/pokemon-sprite-urls.yaml": "6c2557b7adbbad763b616ad46ec4f15f",
 "assets/assets/mappings/abilities.yaml": "fa55b7b9686c9d079b5007d4e8171eae",
 "assets/assets/samples/DelpHOx.json": "7eb1b9b8713661afa6c93a9fc0501263",
 "assets/assets/samples/Sunny%2520day%2520Happy%2520day.json": "bdd8b86428710cd1b95591d2c05162f5",
