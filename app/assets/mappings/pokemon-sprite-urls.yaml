@@ -1,7 +1,7 @@
 abomasnow:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/abomasnow.png"
   name: "Abomasnow"
-  artwork: "https://www.pokepedia.fr/images/2/21/Blizzaroi-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/8/85/Blizzaroi-DP.png"
 abra:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/abra.png"
   name: "Abra"
@@ -97,7 +97,7 @@ arcanine:
 arceus:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/arceus.png"
   name: "Arceus"
-  artwork: "https://www.pokepedia.fr/images/thumb/2/26/Arceus-DEPS.png/513px-Arceus-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/a/a3/Arceus-HGSS.png"
 archaludon:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/archaludon.png"
   name: "Archaludon"
@@ -173,7 +173,7 @@ axew:
 azelf:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/azelf.png"
   name: "Azelf"
-  artwork: "https://www.pokepedia.fr/images/thumb/8/87/Cr%C3%A9fadet-DEPS.png/800px-Cr%C3%A9fadet-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/7/75/Cr%C3%A9fadet-DP.png"
 azumarill:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/azumarill.png"
   name: "Azumarill"
@@ -225,7 +225,7 @@ basculin:
 bastiodon:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/bastiodon.png"
   name: "Bastiodon"
-  artwork: "https://www.pokepedia.fr/images/2/2c/Bastiodon-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/1/1f/Bastiodon-DP.png"
 baxcalibur:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/baxcalibur.png"
   name: "Baxcalibur"
@@ -281,7 +281,7 @@ bibarel:
 bidoof:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/bidoof.png"
   name: "Bidoof"
-  artwork: "https://www.pokepedia.fr/images/thumb/1/12/Keunotor-DEPS.png/661px-Keunotor-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/2/28/Keunotor-DP.png"
 binacle:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/binacle.png"
   name: "Binacle"
@@ -385,7 +385,7 @@ budew:
 buizel:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/buizel.png"
   name: "Buizel"
-  artwork: "https://www.pokepedia.fr/images/thumb/f/f0/Must%C3%A9bou%C3%A9e-DEPS.png/482px-Must%C3%A9bou%C3%A9e-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/c/c4/Must%C3%A9bou%C3%A9e-DP.png"
 bulbasaur:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/bulbasaur.png"
   name: "Bulbasaur"
@@ -501,7 +501,7 @@ chandelure:
 chansey:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/chansey.png"
   name: "Chansey"
-  artwork: "https://www.pokepedia.fr/images/thumb/b/b0/Leveinard-DEPS.png/622px-Leveinard-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/9/96/Leveinard-RFVF.png"
 charcadet:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/charcadet.png"
   name: "Charcadet"
@@ -561,7 +561,7 @@ chikorita:
 chimchar:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/chimchar.png"
   name: "Chimchar"
-  artwork: "https://www.pokepedia.fr/images/thumb/7/76/Ouisticram-DEPS.png/518px-Ouisticram-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/9/93/Ouisticram-DP.png"
 chimecho:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/chimecho.png"
   name: "Chimecho"
@@ -701,7 +701,7 @@ cramorant:
 cranidos:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/cranidos.png"
   name: "Cranidos"
-  artwork: "https://www.pokepedia.fr/images/thumb/1/1c/Kranidos-DEPS.png/579px-Kranidos-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/d/d4/Kranidos-DP.png"
 crawdaunt:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/crawdaunt.png"
   name: "Crawdaunt"
@@ -709,7 +709,7 @@ crawdaunt:
 cresselia:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/cresselia.png"
   name: "Cresselia"
-  artwork: "https://www.pokepedia.fr/images/a/a5/Cresselia-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/b/bf/Cresselia-DP.png"
 croagunk:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/croagunk.png"
   name: "Croagunk"
@@ -769,7 +769,7 @@ dachsbun:
 darkrai:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/darkrai.png"
   name: "Darkrai"
-  artwork: "https://www.pokepedia.fr/images/thumb/1/17/Darkrai-DEPS.png/582px-Darkrai-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/5/59/Darkrai-DP.png"
 darmanitan:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/darmanitan.png"
   name: "Darmanitan"
@@ -833,7 +833,7 @@ dhelmise:
 dialga:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/dialga.png"
   name: "Dialga"
-  artwork: "https://www.pokepedia.fr/images/thumb/e/e4/Dialga-DEPS.png/555px-Dialga-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/c/ca/Dialga-DP.png"
 diancie:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/diancie.png"
   name: "Diancie"
@@ -1037,7 +1037,7 @@ electabuzz:
 electivire:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/electivire.png"
   name: "Electivire"
-  artwork: "https://www.pokepedia.fr/images/thumb/b/b0/%C3%89lekable-DEPS.png/625px-%C3%89lekable-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/9/92/%C3%89lekable-DP.png"
 electrike:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/electrike.png"
   name: "Electrike"
@@ -1065,7 +1065,7 @@ emolga:
 empoleon:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/empoleon.png"
   name: "Empoleon"
-  artwork: "https://www.pokepedia.fr/images/1/14/Pingol%C3%A9on-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/6/66/Pingol%C3%A9on-DP.png"
 entei:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/entei.png"
   name: "Entei"
@@ -1193,7 +1193,7 @@ flittle:
 floatzel:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/floatzel.png"
   name: "Floatzel"
-  artwork: "https://www.pokepedia.fr/images/e/e1/Must%C3%A9flott-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/0/0a/Must%C3%A9flott-DP.png"
 floette:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/floette.png"
   name: "Floette"
@@ -1285,7 +1285,7 @@ garbodor:
 garchomp:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/garchomp.png"
   name: "Garchomp"
-  artwork: "https://www.pokepedia.fr/images/thumb/6/69/Carchacrok-DEPS.png/612px-Carchacrok-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/a/ae/Carchacrok-DP.png"
 gardevoir:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/gardevoir.png"
   name: "Gardevoir"
@@ -1337,11 +1337,11 @@ girafarig:
 giratina:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/giratina.png"
   name: "Giratina"
-  artwork: "https://www.pokepedia.fr/images/2/2d/Giratina_%28Forme_Alternative%29-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/1/10/Giratina_%28Forme_Alternative%29-DP.png"
 glaceon:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/glaceon.png"
   name: "Glaceon"
-  artwork: "https://www.pokepedia.fr/images/thumb/1/1b/Givrali-DEPS.png/730px-Givrali-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/7/76/Givrali-DP.png"
 glalie:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/glalie.png"
   name: "Glalie"
@@ -1369,7 +1369,7 @@ glimmora:
 gliscor:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/gliscor.png"
   name: "Gliscor"
-  artwork: "https://www.pokepedia.fr/images/thumb/8/82/Scorvol-DEPS.png/567px-Scorvol-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/8/8b/Scorvol-DP.png"
 gloom:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/gloom.png"
   name: "Gloom"
@@ -1489,7 +1489,7 @@ grookey:
 grotle:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/grotle.png"
   name: "Grotle"
-  artwork: "https://www.pokepedia.fr/images/a/ad/Boskara-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/b/b1/Boskara-DP.png"
 groudon:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/groudon.png"
   name: "Groudon"
@@ -1573,7 +1573,7 @@ heatmor:
 heatran:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/heatran.png"
   name: "Heatran"
-  artwork: "https://www.pokepedia.fr/images/c/c2/Heatran-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/b/bf/Heatran-DP.png/800px-Heatran-DP.png"
 heliolisk:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/heliolisk.png"
   name: "Heliolisk"
@@ -1697,7 +1697,7 @@ indeedee-f:
 infernape:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/infernape.png"
   name: "Infernape"
-  artwork: "https://www.pokepedia.fr/images/4/4b/Simiabraz-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/7/70/Simiabraz-DP.png/711px-Simiabraz-DP.png"
 inkay:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/inkay.png"
   name: "Inkay"
@@ -1765,7 +1765,7 @@ jigglypuff:
 jirachi:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/jirachi.png"
   name: "Jirachi"
-  artwork: "https://www.pokepedia.fr/images/thumb/7/74/Jirachi-DEPS.png/691px-Jirachi-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/0/0a/Jirachi-RS.png/797px-Jirachi-RS.png"
 jolteon:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/jolteon.png"
   name: "Jolteon"
@@ -1957,7 +1957,7 @@ latios:
 leafeon:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/leafeon.png"
   name: "Leafeon"
-  artwork: "https://www.pokepedia.fr/images/thumb/f/ff/Phyllali-DEPS.png/514px-Phyllali-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/4/43/Phyllali-DP.png/512px-Phyllali-DP.png"
 leavanny:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/leavanny.png"
   name: "Leavanny"
@@ -2041,7 +2041,7 @@ lovetolos:
 lucario:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/lucario.png"
   name: "Lucario"
-  artwork: "https://www.pokepedia.fr/images/thumb/7/7e/Lucario-DEPS.png/492px-Lucario-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/e/e6/Lucario-DP.png/388px-Lucario-DP.png"
 ludicolo:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/ludicolo.png"
   name: "Ludicolo"
@@ -2077,7 +2077,7 @@ luxio:
 luxray:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/luxray.png"
   name: "Luxray"
-  artwork: "https://www.pokepedia.fr/images/b/bf/Luxray-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/a/ae/Luxray-DP.png/650px-Luxray-DP.png"
 lycanroc:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/lycanroc.png"
   name: "Lycanroc"
@@ -2121,7 +2121,7 @@ magmar:
 magmortar:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/magmortar.png"
   name: "Magmortar"
-  artwork: "https://www.pokepedia.fr/images/thumb/c/cc/Maganon-DEPS.png/643px-Maganon-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/a/a8/Maganon-DP.png/562px-Maganon-DP.png"
 magnemite:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/magnemite.png"
   name: "Magnemite"
@@ -2149,7 +2149,7 @@ mamoswine:
 manaphy:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/manaphy.png"
   name: "Manaphy"
-  artwork: "https://www.pokepedia.fr/images/5/52/Manaphy-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/a/a4/Manaphy-DP.png/800px-Manaphy-DP.png"
 mandibuzz:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/mandibuzz.png"
   name: "Mandibuzz"
@@ -2257,7 +2257,7 @@ meowth:
 mesprit:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/mesprit.png"
   name: "Mesprit"
-  artwork: "https://www.pokepedia.fr/images/thumb/b/b9/Cr%C3%A9follet-DEPS.png/800px-Cr%C3%A9follet-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/0/02/Cr%C3%A9follet-DP.png/426px-Cr%C3%A9follet-DP.png"
 metagross:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/metagross.png"
   name: "Metagross"
@@ -2273,11 +2273,11 @@ metapod:
 mew:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/mew.png"
   name: "Mew"
-  artwork: "https://www.pokepedia.fr/images/thumb/1/16/Mew-DEPS.png/669px-Mew-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/e/e6/Mew-RFVF.png/590px-Mew-RFVF.png"
 mewtwo:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/mewtwo.png"
   name: "Mewtwo"
-  artwork: "https://www.pokepedia.fr/images/thumb/d/d8/Mewtwo-DEPS.png/647px-Mewtwo-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/d/db/Mewtwo-RFVF.png/489px-Mewtwo-RFVF.png"
 mienfoo:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/mienfoo.png"
   name: "Mienfoo"
@@ -2333,11 +2333,11 @@ misdreavus:
 mismagius:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/mismagius.png"
   name: "Mismagius"
-  artwork: "https://www.pokepedia.fr/images/4/41/Magir%C3%AAve-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/5/57/Magir%C3%AAve-DP.png/393px-Magir%C3%AAve-DP.png"
 moltres:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/moltres.png"
   name: "Moltres"
-  artwork: "https://www.pokepedia.fr/images/thumb/d/db/Sulfura-DEPS.png/709px-Sulfura-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/6/67/Sulfura-RFVF.png/800px-Sulfura-RFVF.png"
 moltres-galar:
   name: "Galarian Moltres"
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/moltres-galarian.png"
@@ -2345,7 +2345,7 @@ moltres-galar:
 monferno:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/monferno.png"
   name: "Monferno"
-  artwork: "https://www.pokepedia.fr/images/2/2b/Chimpenfeu-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/4/4e/Chimpenfeu-DP.png/712px-Chimpenfeu-DP.png"
 morelull:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/morelull.png"
   name: "Morelull"
@@ -2585,7 +2585,7 @@ overqwil:
 pachirisu:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/pachirisu.png"
   name: "Pachirisu"
-  artwork: "https://www.pokepedia.fr/images/thumb/7/7c/Pachirisu-DEPS.png/611px-Pachirisu-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/e/e6/Pachirisu-DP.png/484px-Pachirisu-DP.png"
 palafin:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/palafin.png"
   name: "Palafin"
@@ -2593,7 +2593,7 @@ palafin:
 palkia:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/palkia.png"
   name: "Palkia"
-  artwork: "https://www.pokepedia.fr/images/thumb/c/c7/Palkia-DEPS.png/703px-Palkia-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/5/5c/Palkia-DP.png/643px-Palkia-DP.png"
 palossand:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/palossand.png"
   name: "Palossand"
@@ -2689,7 +2689,7 @@ pheromosa:
 phione:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/phione.png"
   name: "Phione"
-  artwork: "https://www.pokepedia.fr/images/c/ca/Phione-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/a/a3/Phione-DP.png/800px-Phione-DP.png"
 pichu:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/pichu.png"
   name: "Pichu"
@@ -2717,7 +2717,7 @@ pignite:
 pikachu:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/pikachu.png"
   name: "Pikachu"
-  artwork: "https://www.pokepedia.fr/images/thumb/7/76/Pikachu-DEPS.png/615px-Pikachu-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/e/e7/Pikachu-RFVF.png/640px-Pikachu-RFVF.png"
 pikipek:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/pikipek.png"
   name: "Pikipek"
@@ -2741,7 +2741,7 @@ pinsir:
 piplup:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/piplup.png"
   name: "Piplup"
-  artwork: "https://www.pokepedia.fr/images/thumb/c/c2/Tiplouf-DEPS.png/427px-Tiplouf-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/e/ed/Tiplouf-DP.png/398px-Tiplouf-DP.png"
 plusle:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/plusle.png"
   name: "Plusle"
@@ -2809,7 +2809,7 @@ primeape:
 prinplup:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/prinplup.png"
   name: "Prinplup"
-  artwork: "https://www.pokepedia.fr/images/c/c5/Prinplouf-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/6/65/Prinplouf-DP.png/543px-Prinplouf-DP.png"
 probopass:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/probopass.png"
   name: "Probopass"
@@ -2833,7 +2833,7 @@ purrloin:
 purugly:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/purugly.png"
   name: "Purugly"
-  artwork: "https://www.pokepedia.fr/images/c/c4/Chaffreux-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/7/76/Chaffreux-DP.png/545px-Chaffreux-DP.png"
 pyroar:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/pyroar.png"
   name: "Pyroar"
@@ -2913,7 +2913,7 @@ rattata:
 rayquaza:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/rayquaza.png"
   name: "Rayquaza"
-  artwork: "https://www.pokepedia.fr/images/thumb/1/1a/Rayquaza-DEPS.png/576px-Rayquaza-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/9/92/Rayquaza-RS.png/663px-Rayquaza-RS.png"
 regice:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/regice.png"
   name: "Regice"
@@ -2929,7 +2929,7 @@ regieleki:
 regigigas:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/regigigas.png"
   name: "Regigigas"
-  artwork: "https://www.pokepedia.fr/images/0/0a/Regigigas-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/c/cb/Regigigas-DP.png/800px-Regigigas-DP.png"
 regirock:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/regirock.png"
   name: "Regirock"
@@ -2985,7 +2985,7 @@ rillaboom:
 riolu:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/riolu.png"
   name: "Riolu"
-  artwork: "https://www.pokepedia.fr/images/thumb/0/03/Riolu-DEPS.png/469px-Riolu-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/7/7b/Riolu-DP.png/558px-Riolu-DP.png"
 roaring-moon:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/roaring-moon.png"
   name: "Roaring-Moon"
@@ -3013,11 +3013,11 @@ roselia:
 roserade:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/roserade.png"
   name: "Roserade"
-  artwork: "https://www.pokepedia.fr/images/thumb/e/e6/Roserade-DEPS.png/612px-Roserade-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/3/34/Roserade-DP.png/421px-Roserade-DP.png"
 rotom:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/rotom.png"
   name: "Rotom"
-  artwork: "https://www.pokepedia.fr/images/thumb/d/dd/Motisma_%28Forme_Normale%29-DEPS.png/749px-Motisma_%28Forme_Normale%29-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/b/bd/Motisma_%28Forme_Normale%29-DP.png/623px-Motisma_%28Forme_Normale%29-DP.png"
 rotom-fan:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/rotom-fan.png"
   name: "Rotom Fan"
@@ -3193,7 +3193,7 @@ sharpedo:
 shaymin:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/shaymin.png"
   name: "Shaymin"
-  artwork: "https://www.pokepedia.fr/images/3/3d/Shaymin_%28Forme_Terrestre%29-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/0/05/Shaymin_%28Forme_Terrestre%29-DP.png/708px-Shaymin_%28Forme_Terrestre%29-DP.png"
 shedinja:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/shedinja.png"
   name: "Shedinja"
@@ -3229,7 +3229,7 @@ shiinotic:
 shinx:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/shinx.png"
   name: "Shinx"
-  artwork: "https://www.pokepedia.fr/images/thumb/8/8d/Lixy-DEPS.png/702px-Lixy-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/2/23/Lixy-DP.png/659px-Lixy-DP.png"
 shroodle:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/shroodle.png"
   name: "Shroodle"
@@ -3325,7 +3325,7 @@ skrelp:
 skuntank:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/skuntank.png"
   name: "Skuntank"
-  artwork: "https://www.pokepedia.fr/images/8/88/Moufflair-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/6/6d/Moufflair-DP.png/800px-Moufflair-DP.png"
 skwovet:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/skwovet.png"
   name: "Skwovet"
@@ -3493,11 +3493,11 @@ staraptor:
 staravia:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/staravia.png"
   name: "Staravia"
-  artwork: "https://www.pokepedia.fr/images/thumb/9/9f/%C3%89tourvol-DEPS.png/411px-%C3%89tourvol-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/e/e6/%C3%89tourvol-DP.png/400px-%C3%89tourvol-DP.png"
 starly:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/starly.png"
   name: "Starly"
-  artwork: "https://www.pokepedia.fr/images/6/64/%C3%89tourmi-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/e/ee/%C3%89tourmi-DP.png/498px-%C3%89tourmi-DP.png"
 starmie:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/starmie.png"
   name: "Starmie"
@@ -3541,7 +3541,7 @@ sudowoodo:
 suicune:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/suicune.png"
   name: "Suicune"
-  artwork: "https://www.pokepedia.fr/images/thumb/5/51/Suicune-DEPS.png/688px-Suicune-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/9/9a/Suicune-HGSS.png/625px-Suicune-HGSS.png"
 sunflora:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/sunflora.png"
   name: "Sunflora"
@@ -3753,7 +3753,7 @@ torracat:
 torterra:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/torterra.png"
   name: "Torterra"
-  artwork: "https://www.pokepedia.fr/images/b/b3/Torterra-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/9/99/Torterra-DP.png/659px-Torterra-DP.png"
 totodile:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/totodile.png"
   name: "Totodile"
@@ -3773,7 +3773,7 @@ toxel:
 toxicroak:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/toxicroak.png"
   name: "Toxicroak"
-  artwork: "https://www.pokepedia.fr/images/5/56/Coatox-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/3/39/Coatox-DP.png/668px-Coatox-DP.png"
 toxtricity:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/toxtricity.png"
   name: "Toxtricity"
@@ -3817,7 +3817,7 @@ turtonator:
 turtwig:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/turtwig.png"
   name: "Turtwig"
-  artwork: "https://www.pokepedia.fr/images/thumb/f/f0/Tortipouss-DEPS.png/440px-Tortipouss-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/c/c5/Tortipouss-DP.png/426px-Tortipouss-DP.png"
 tympole:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/tympole.png"
   name: "Tympole"
@@ -3889,7 +3889,7 @@ urshifu-single-strike:
 uxie:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/uxie.png"
   name: "Uxie"
-  artwork: "https://www.pokepedia.fr/images/thumb/d/d0/Cr%C3%A9helf-DEPS.png/638px-Cr%C3%A9helf-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/e/e1/Cr%C3%A9helf-DP.png/525px-Cr%C3%A9helf-DP.png"
 vanillish:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/vanillish.png"
   name: "Vanillish"
@@ -4021,7 +4021,7 @@ wattrel:
 weavile:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/weavile.png"
   name: "Weavile"
-  artwork: "https://www.pokepedia.fr/images/e/e7/Dimoret-DEPS.png"
+  artwork: "https://www.pokepedia.fr/images/thumb/a/a7/Dimoret-DP.png/580px-Dimoret-DP.png"
 weedle:
   sprite: "https://img.pokemondb.net/sprites/scarlet-violet/normal/weedle.png"
   name: "Weedle"
