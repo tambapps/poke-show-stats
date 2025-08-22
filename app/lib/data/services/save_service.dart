@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:poke_showstats/data/models/matchup.dart';
 
 import '../models/replay.dart';
@@ -243,7 +245,7 @@ class SaveServiceImpl implements SaveService {
       saveName = newSaveName;
     }
     Teamlytic teamlytic = await _doLoadFromMap(saveName, map);
-    storeSave(teamlytic);
+    await storeSave(teamlytic);
     return teamlytic;
   }
 
@@ -293,7 +295,25 @@ class SaveServiceImpl implements SaveService {
   @override
   Future<void> storeSave(Teamlytic save) async {
     save.lastUpdatedAt = currentTimeMillis();
-    await _storage.store(save.saveName, jsonEncode(save.toJson()));
+    try {
+      await _storage.store(save.saveName, jsonEncode(save.toJson()));
+    } catch(e) {
+      String message;
+      if (e.toString().contains("QuotaExceededError")) {
+        message = "You exceeded your local storage memory quota. Please export some teams and then delete them on this app to free some memory";
+      } else {
+        message = "An unexpected error occurred: $e";
+      }
+      Fluttertoast.showToast(
+        msg: "ERROR: The team was NOT saved.\n$message",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 10,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
   }
 
   List<String> _loadSdNames(List<dynamic> rawSdNames) => rawSdNames.map((sdName) => sdName.toString()).toList();
