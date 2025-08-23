@@ -1,3 +1,5 @@
+import 'package:pokemon_core/pokemon_core.dart';
+
 import '../../../../data/models/replay.dart';
 import '../../../../data/services/pokemon_resource_service.dart';
 
@@ -24,8 +26,9 @@ class PokemonUsageStats {
 
   static void _fill(Map<String, UsageStats> pokemonUsageStatsMap, Replay replay) {
     for (String pokemon in replay.otherPlayer.selection) {
+      String basePokemon = Pokemon.normalizeToBase(pokemon);
       UsageStats stats = pokemonUsageStatsMap.putIfAbsent(pokemon, () => UsageStats());
-      bool terastilized = replay.otherPlayer.terastallization?.pokemon == pokemon;
+      bool terastilized = replay.otherPlayer.terastallization?.pokemon == basePokemon;
       bool won = replay.gameOutput == GameOutput.WIN;
       if (won) {
         stats.winCount++;

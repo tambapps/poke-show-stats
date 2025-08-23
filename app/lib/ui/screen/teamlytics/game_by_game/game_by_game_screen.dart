@@ -1,3 +1,5 @@
+import 'package:pokemon_core/pokemon_core.dart';
+
 import '../../../../data/models/replay.dart';
 import '../../../core/dialogs.dart';
 import '../../../core/widgets/replay_filters.dart';
@@ -331,7 +333,7 @@ abstract class _AbstractGameByGameComponentState extends AbstractState<GameByGam
 
   Widget _playerPickWidget(BuildContext context, AppLocalization localization, Dimens dimens, ThemeData theme, Replay replay, PlayerData player) {
     List<Widget> children = player.selection.map((pokemon) {
-      final String? teraType = player.terastallization?.pokemon == pokemon ? player.terastallization?.type : null;
+      final String? teraType = player.terastallization?.pokemon == Pokemon.normalizeToBase(pokemon) ? player.terastallization?.type : null;
       return SizedBox(
         height: 128.0,
         width: 128.0,
