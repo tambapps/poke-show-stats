@@ -356,8 +356,7 @@ class SaveServiceImpl implements SaveService {
     }
     // reversed because in case of 3 games, G2 must have its elo in order for G1 to find it
     for (Replay replay in replays.reversed) {
-      if (replay.data.player1.beforeElo == null && replay.data.player1.afterElo == null
-          && replay.data.nextBattle != null) {
+      if (replay.data.player1.beforeElo == null && replay.data.player1.afterElo == null) {
         // we're in an intermediate battle (G1 or G2 when it is not the last game) and we need to fetch elo from final battle
         replay.trySetElo(replays);
       }

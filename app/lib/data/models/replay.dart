@@ -23,6 +23,9 @@ class Replay {
   bool isNextBattleOf(Replay other) => other.data.nextBattle != null && uri.toString().contains(other.data.nextBattle!);
 
   void trySetElo(List<Replay> replays) {
+    if (data.nextBattle == null) {
+      return;
+    }
     for (Replay replay in replays) {
       if (replay.uri.toString().contains(data.nextBattle!)) {
         // always using before because the player did not win/loose yet
